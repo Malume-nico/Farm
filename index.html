@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard (ZAR) + rewards</title>
+  <title>POULTRY · luxury dashboard + INFRASTRUCTURE MODULE</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,7 +83,7 @@
       position: absolute;
       top: 70px;
       right: 20px;
-      width: 200px;
+      width: 240px;
       background: rgba(20, 20, 20, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -238,6 +238,11 @@
       border-radius: 40px;
       font-size: 0.7rem;
     }
+    .alert-badge {
+      background: #b85a3a30;
+      border: 1px solid #b85a3a;
+      color: #f0a58b;
+    }
 
     .batch-row {
       display: flex;
@@ -339,7 +344,6 @@
       align-items: center;
     }
 
-    /* rewards card swipe */
     .cards-scroll {
       display: flex;
       overflow-x: auto;
@@ -369,13 +373,13 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three dots (replaced QR) -->
+  <!-- header with three dots -->
   <div class="header">
     <h1>🐔 POULTRY</h1>
     <i class="fas fa-ellipsis-v" id="moreMenuToggle"></i>
   </div>
 
-  <!-- three-dots panel (Settings + Rewards) -->
+  <!-- three-dots panel: Settings + Rewards + Infrastructure -->
   <div class="more-panel" id="morePanel">
     <div class="more-item" data-tab="settings">
       <i class="fas fa-gear"></i> <span>Settings</span>
@@ -383,11 +387,14 @@
     <div class="more-item" data-tab="rewards">
       <i class="fas fa-gift"></i> <span>Rewards</span>
     </div>
+    <div class="more-item" data-tab="infra">
+      <i class="fas fa-hard-hat"></i> <span>Infrastructure</span>
+    </div>
   </div>
 
-  <!-- main content area: all 7 panes (unchanged) -->
+  <!-- main content area: all 8 panes -->
   <div class="main-content" id="mainContent">
-    <!-- DASHBOARD PANE -->
+    <!-- DASHBOARD PANE (original full content) -->
     <div class="tab-pane active" id="dashboardPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
@@ -437,7 +444,7 @@
         <p class="badge" style="margin-top: 12px;"><i class="fas-regular fa-truck"></i> expansion: new farm in Q3</p>
       </div>
 
-      <!-- Net Profit & Projection Card (updated with ZAR) -->
+      <!-- Net Profit & Projection Card -->
       <div class="card" id="profitOverviewCard">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> net profit & projection</div>
         <div class="grid-2">
@@ -458,7 +465,7 @@
       </div>
     </div>
 
-    <!-- INVENTORY PANE -->
+    <!-- INVENTORY PANE (original full content) -->
     <div class="tab-pane" id="inventoryPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
@@ -503,7 +510,7 @@
       </div>
     </div>
 
-    <!-- SALES PANE -->
+    <!-- SALES PANE (original full content) -->
     <div class="tab-pane" id="salesPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
@@ -551,7 +558,7 @@
       </div>
     </div>
 
-    <!-- LOGISTICS PANE -->
+    <!-- LOGISTICS PANE (original full content) -->
     <div class="tab-pane" id="logisticsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-truck gold-text"></i> active deliveries</div>
@@ -580,7 +587,7 @@
       </div>
     </div>
 
-    <!-- BUDGET PANE -->
+    <!-- BUDGET PANE (original full content) -->
     <div class="tab-pane" id="budgetPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
@@ -630,7 +637,7 @@
       </div>
     </div>
 
-    <!-- SETTINGS PANE (unchanged, but now only reachable via three-dots) -->
+    <!-- SETTINGS PANE (original full content) -->
     <div class="tab-pane" id="settingsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
@@ -659,7 +666,7 @@
       </div>
     </div>
 
-    <!-- REWARDS PANE (only via three-dots) -->
+    <!-- REWARDS PANE (original full content) -->
     <div class="tab-pane" id="rewardsPane">
       <!-- KPI cards -->
       <div class="card">
@@ -689,7 +696,7 @@
       <div class="card">
         <div class="card-title"><i class="fas fa-id-card gold-text"></i> active rewards (swipe)</div>
         <div class="cards-scroll" id="rewardCardsContainer">
-          <!-- dynamically filled from js -->
+          <!-- dynamically filled -->
         </div>
       </div>
 
@@ -704,9 +711,84 @@
         </div>
       </div>
     </div>
+
+    <!-- ========== NEW INFRASTRUCTURE & EMERGENCY BUDGET PANE ========== -->
+    <div class="tab-pane" id="infraPane">
+      <!-- 1. Infrastructure status & growth trigger -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> capacity vs demand</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">current capacity (birds)</span><div class="stat-value"><input type="number" id="currentCapacity" value="2500" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+          <div class="stat"><span class="stat-label">proj. monthly demand</span><div class="stat-value"><input type="number" id="projectedDemand" value="2800" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+        </div>
+        <div class="cost-item"><span>📊 utilization</span> <span id="capacityUtilization" class="gold-text">89%</span></div>
+        <div id="infraSuggestion" class="badge" style="margin-top:8px;">⚙️ infrastructure upgrade suggested (40% of profit)</div>
+        <div class="cost-item"><span>🏗️ estimated upgrade investment</span> <span id="requiredInvestment">R 0</span></div>
+        <p class="helper-text" id="upgradeDetails">units, feeders, water, climate, tech</p>
+      </div>
+
+      <!-- 2. Emergency fund & categories -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-shield-halved gold-text"></i> emergency fund</div>
+        <div class="cost-input"><label>💰 current balance</label> <input type="number" id="emergencyBalance" value="15000" step="1000"></div>
+        <div class="cost-input"><label>⚠️ minimum threshold</label> <input type="number" id="emergencyMin" value="20000" step="1000"></div>
+        <div id="emergencyAlert" class="badge alert-badge" style="margin-top:6px;">⚠️ below minimum!</div>
+        <hr>
+        <div class="card-title" style="margin-top:0;">📦 budget categories (% of remaining after infra)</div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="catEquipment" value="30" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🛠️ new tooling</label> <input type="number" id="catTooling" value="20" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🚚 logistics</label> <input type="number" id="catLogistics" value="25" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📦 packaging/marketing</label> <input type="number" id="catPackaging" value="25" min="0" max="100" step="1"></div>
+        <p class="helper-text" id="catSum" style="color:#d4af37;">total 100%</p>
+      </div>
+
+      <!-- 3. Dynamic allocation result (based on monthly profit) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-scale-balanced gold-text"></i> this month's allocation</div>
+        <div class="cost-item"><span>📈 available profit (month)</span> <span id="availProfit">R 86,400</span></div>
+        <div class="cost-item"><span>🏗️ infrastructure (40% if needed)</span> <span id="allocInfra">R 34,560</span></div>
+        <div class="cost-item"><span>🆘 emergency top‑up</span> <span id="allocEmergency">R 5,000</span></div>
+        <div class="cost-item"><span>🔧 equipment</span> <span id="allocEquipment">R 0</span></div>
+        <div class="cost-item"><span>🛠️ tooling</span> <span id="allocTooling">R 0</span></div>
+        <div class="cost-item"><span>🚚 logistics</span> <span id="allocLogistics">R 0</span></div>
+        <div class="cost-item"><span>📦 packaging</span> <span id="allocPackaging">R 0</span></div>
+        <button class="btn-small" id="recalcAllocBtn"><i class="fas fa-sync-alt"></i> recalc from current profit</button>
+      </div>
+
+      <!-- 4. Long‑term planning goals -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-tree gold-text"></i> long‑term goals</div>
+        <div class="cost-input"><label>🏞️ land acquisition</label> <input type="number" id="goalLand" value="250000" step="1000"></div>
+        <div class="cost-input"><label>🏭 facility expansion</label> <input type="number" id="goalFacility" value="180000" step="1000"></div>
+        <div class="cost-input"><label>⚙️ new machinery</label> <input type="number" id="goalMachinery" value="95000" step="1000"></div>
+        <div class="cost-input"><label>📅 timeline (months)</label> <input type="number" id="goalTimeline" value="12" min="1"></div>
+        <hr>
+        <div class="cost-item"><span>📊 total investment</span> <span id="totalGoals">R 525,000</span></div>
+        <div class="cost-item"><span>📆 monthly requirement</span> <span id="monthlyGoalReq">R 43,750</span></div>
+        <div class="cost-item"><span>📈 impact on profit</span> <span id="profitAfterGoals">R 42,650</span></div>
+      </div>
+
+      <!-- 5. Year‑end rollover & alerts -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-check gold-text"></i> emergency fund cycle</div>
+        <p class="helper-text">year‑end: if unused >0, 40% reinvested, 60% rolls over</p>
+        <button class="btn-gold" id="simulateYearEndBtn"><i class="fas fa-rotate-right"></i> simulate year‑end rollover</button>
+        <div id="rolloverSummary" style="margin-top:12px; font-size:0.9rem;"></div>
+        <div id="yearEndAlert" class="badge" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- notifications / alerts (dynamic) -->
+      <div class="card" style="background:#2a2a2a50;">
+        <div class="card-title"><i class="fas fa-bell gold-text"></i> live alerts</div>
+        <div id="infraNotifications">
+          <p class="badge alert-badge">⚠️ capacity nearing limit (consider upgrade)</p>
+          <p class="badge alert-badge">⚠️ emergency fund below minimum</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- bottom navigation (only 5 items: settings & rewards removed) -->
+  <!-- bottom navigation (unchanged, 5 items) -->
   <div class="bottom-nav">
     <div class="nav-item active" data-tab="dashboard"><i class="fas fa-chart-pie"></i><span>Home</span></div>
     <div class="nav-item" data-tab="inventory"><i class="fas fa-egg"></i><span>Stock</span></div>
@@ -716,6 +798,7 @@
   </div>
 </div>
 
+<!-- ORIGINAL DASHBOARD SCRIPT (full, unchanged) -->
 <script>
   (function() {
     // ----- tab switching (updated with rewards) -----
@@ -727,18 +810,16 @@
       logistics: document.getElementById('logisticsPane'),
       budget: document.getElementById('budgetPane'),
       settings: document.getElementById('settingsPane'),
-      rewards: document.getElementById('rewardsPane')
+      rewards: document.getElementById('rewardsPane'),
+      infra: document.getElementById('infraPane')   // added for infra
     };
 
     function setActiveTab(tabId) {
       navItems.forEach(item => item.classList.remove('active'));
       Object.values(panes).forEach(pane => pane.classList.remove('active'));
-      // find bottom nav item with this tab
       const activeNav = Array.from(navItems).find(item => item.dataset.tab === tabId);
       if (activeNav) activeNav.classList.add('active');
       if (panes[tabId]) panes[tabId].classList.add('active');
-
-      // also close the more panel if open
       document.getElementById('morePanel').classList.remove('show');
     }
 
@@ -758,15 +839,13 @@
       morePanel.classList.toggle('show');
     });
 
-    // panel items click
     document.querySelectorAll('.more-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        const tabId = item.dataset.tab; // 'settings' or 'rewards'
+        const tabId = item.dataset.tab; // 'settings' or 'rewards' or 'infra'
         setActiveTab(tabId);
       });
     });
 
-    // close panel when clicking outside
     document.addEventListener('click', (e) => {
       if (!morePanel.contains(e.target) && !moreToggle.contains(e.target)) {
         morePanel.classList.remove('show');
@@ -1042,16 +1121,186 @@
       });
     });
 
-    console.log('Luxury Poultry Dashboard — with 3-dots navigation');
+    console.log('Luxury Poultry Dashboard — with 3-dots navigation + infra module');
   })();
 </script>
 
-<!-- backend notes extended with rewards tables -->
-<!-- 
-  DATABASE (SUPABASE) tables extended:
-  - cost_tracker, product_mix, byproduct_settings, expansion_triggers
-  - NEW rewards (customer_id, name, type, progress, target, status, expiry, discount, byproduct_boost, referral_credit)
-  - reward_settings (enabled, chickens_per_reward, streak_days, base_discount, double_byproduct, referral_credit_value)
--->
+<!-- INFRASTRUCTURE MODULE SCRIPT (additional, integrated) -->
+<script>
+  (function() {
+    // Ensure infra elements exist before using
+    const currentCapacity = document.getElementById('currentCapacity');
+    if (!currentCapacity) return; // exit if infra pane not loaded
+
+    const projectedDemand = document.getElementById('projectedDemand');
+    const emergencyBalance = document.getElementById('emergencyBalance');
+    const emergencyMin = document.getElementById('emergencyMin');
+    const catEquipment = document.getElementById('catEquipment');
+    const catTooling = document.getElementById('catTooling');
+    const catLogistics = document.getElementById('catLogistics');
+    const catPackaging = document.getElementById('catPackaging');
+    const goalLand = document.getElementById('goalLand');
+    const goalFacility = document.getElementById('goalFacility');
+    const goalMachinery = document.getElementById('goalMachinery');
+    const goalTimeline = document.getElementById('goalTimeline');
+    const capacityUtil = document.getElementById('capacityUtilization');
+    const infraSuggestion = document.getElementById('infraSuggestion');
+    const requiredInvestment = document.getElementById('requiredInvestment');
+    const upgradeDetails = document.getElementById('upgradeDetails');
+    const emergencyAlert = document.getElementById('emergencyAlert');
+    const catSum = document.getElementById('catSum');
+    const availProfitSpan = document.getElementById('availProfit');
+    const allocInfra = document.getElementById('allocInfra');
+    const allocEmergency = document.getElementById('allocEmergency');
+    const allocEquipment = document.getElementById('allocEquipment');
+    const allocTooling = document.getElementById('allocTooling');
+    const allocLogistics = document.getElementById('allocLogistics');
+    const allocPackaging = document.getElementById('allocPackaging');
+    const totalGoalsSpan = document.getElementById('totalGoals');
+    const monthlyGoalReqSpan = document.getElementById('monthlyGoalReq');
+    const profitAfterGoalsSpan = document.getElementById('profitAfterGoals');
+    const rolloverSummary = document.getElementById('rolloverSummary');
+    const yearEndAlert = document.getElementById('yearEndAlert');
+    const infraNotifications = document.getElementById('infraNotifications');
+
+    function getMonthlyNetProfit() {
+      const netElem = document.getElementById('netMonthly');
+      if (!netElem) return 86400;
+      const text = netElem.innerText.replace('R', '').replace(/,/g, '').trim();
+      return parseFloat(text) || 86400;
+    }
+
+    function validateCategorySum() {
+      let e = parseFloat(catEquipment.value) || 0;
+      let t = parseFloat(catTooling.value) || 0;
+      let l = parseFloat(catLogistics.value) || 0;
+      let p = parseFloat(catPackaging.value) || 0;
+      let sum = e + t + l + p;
+      catSum.innerText = `total ${sum}%`;
+      catSum.style.color = (sum !== 100) ? '#b85a3a' : '#d4af37';
+      return sum;
+    }
+
+    function updateInfraModule() {
+      const profit = getMonthlyNetProfit();
+      availProfitSpan.innerText = 'R ' + profit.toLocaleString();
+
+      const cap = parseFloat(currentCapacity.value) || 0;
+      const demand = parseFloat(projectedDemand.value) || 0;
+      const util = cap ? (demand / cap) * 100 : 0;
+      capacityUtil.innerText = util.toFixed(0) + '%';
+
+      const needInfra = cap < demand;
+      let infraAlloc = 0;
+      if (needInfra) {
+        infraAlloc = profit * 0.4;
+        infraSuggestion.innerHTML = '⚙️ infrastructure upgrade active (40% of profit)';
+        infraSuggestion.className = 'badge';
+      } else {
+        infraSuggestion.innerHTML = '✅ capacity sufficient – no forced infra allocation';
+        infraSuggestion.className = 'badge green-text';
+      }
+
+      let remaining = profit - infraAlloc;
+      const emergBal = parseFloat(emergencyBalance.value) || 0;
+      const emergMinVal = parseFloat(emergencyMin.value) || 0;
+      const emergDeficit = Math.max(0, emergMinVal - emergBal);
+      const emergTopUp = Math.min(emergDeficit, remaining * 0.3);
+      remaining -= emergTopUp;
+
+      let ePct = parseFloat(catEquipment.value) || 0;
+      let tPct = parseFloat(catTooling.value) || 0;
+      let lPct = parseFloat(catLogistics.value) || 0;
+      let pPct = parseFloat(catPackaging.value) || 0;
+      let sum = ePct + tPct + lPct + pPct;
+      if (sum === 0) sum = 1;
+
+      const allocE = (remaining * ePct) / sum;
+      const allocT = (remaining * tPct) / sum;
+      const allocL = (remaining * lPct) / sum;
+      const allocP = (remaining * pPct) / sum;
+
+      allocInfra.innerText = 'R ' + infraAlloc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      allocEmergency.innerText = 'R ' + emergTopUp.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      allocEquipment.innerText = 'R ' + allocE.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      allocTooling.innerText = 'R ' + allocT.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      allocLogistics.innerText = 'R ' + allocL.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      allocPackaging.innerText = 'R ' + allocP.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      if (needInfra) {
+        const shortfall = demand - cap;
+        const investPerBird = 150;
+        const invest = shortfall * investPerBird;
+        requiredInvestment.innerText = 'R ' + invest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        upgradeDetails.innerText = `🔧 add ${shortfall} units, feeders, water, climate, tech`;
+      } else {
+        requiredInvestment.innerText = 'R 0';
+        upgradeDetails.innerText = 'capacity meets demand';
+      }
+
+      if (emergBal < emergMinVal) {
+        emergencyAlert.innerHTML = '⚠️ below minimum!';
+        emergencyAlert.className = 'badge alert-badge';
+      } else {
+        emergencyAlert.innerHTML = '✅ above minimum';
+        emergencyAlert.className = 'badge';
+      }
+
+      const land = parseFloat(goalLand.value) || 0;
+      const fac = parseFloat(goalFacility.value) || 0;
+      const mach = parseFloat(goalMachinery.value) || 0;
+      const totalGoals = land + fac + mach;
+      totalGoalsSpan.innerText = 'R ' + totalGoals.toLocaleString();
+      const months = parseFloat(goalTimeline.value) || 1;
+      const monthlyReq = totalGoals / months;
+      monthlyGoalReqSpan.innerText = 'R ' + monthlyReq.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const profitAfter = profit - monthlyReq;
+      profitAfterGoalsSpan.innerText = 'R ' + profitAfter.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      let notifHtml = '';
+      if (util > 80) notifHtml += '<p class="badge alert-badge">⚠️ capacity nearing limit (consider upgrade)</p>';
+      if (emergBal < emergMinVal) notifHtml += '<p class="badge alert-badge">⚠️ emergency fund below minimum</p>';
+      if (needInfra) notifHtml += '<p class="badge">📈 infrastructure investment suggested</p>';
+      infraNotifications.innerHTML = notifHtml || '<p class="badge">✅ all systems nominal</p>';
+    }
+
+    function simulateYearEnd() {
+      const emergBal = parseFloat(emergencyBalance.value) || 0;
+      const emergMinVal = parseFloat(emergencyMin.value) || 0;
+      const unused = Math.max(0, emergBal - emergMinVal);
+      if (unused > 0) {
+        const reinvest = unused * 0.4;
+        const rollover = unused * 0.6;
+        const newBalance = emergMinVal + rollover;
+        emergencyBalance.value = newBalance.toFixed(0);
+        rolloverSummary.innerHTML = `🔄 reinvested R ${reinvest.toFixed(0)} into infrastructure/equipment/tooling · R ${rollover.toFixed(0)} rolled over`;
+        yearEndAlert.innerHTML = '✅ year‑end rollover applied';
+      } else {
+        rolloverSummary.innerHTML = '⚠️ no unused emergency funds to roll over';
+        yearEndAlert.innerHTML = '';
+      }
+      updateInfraModule();
+    }
+
+    // Attach listeners
+    [currentCapacity, projectedDemand, emergencyBalance, emergencyMin,
+     catEquipment, catTooling, catLogistics, catPackaging,
+     goalLand, goalFacility, goalMachinery, goalTimeline].forEach(el => {
+      el.addEventListener('input', () => { validateCategorySum(); updateInfraModule(); });
+    });
+
+    document.getElementById('recalcAllocBtn').addEventListener('click', updateInfraModule);
+    document.getElementById('simulateYearEndBtn').addEventListener('click', simulateYearEnd);
+
+    // Observe profit changes
+    const profitObserver = new MutationObserver(updateInfraModule);
+    const netMonthlyEl = document.getElementById('netMonthly');
+    if (netMonthlyEl) profitObserver.observe(netMonthlyEl, { childList: true, characterData: true, subtree: true });
+
+    validateCategorySum();
+    updateInfraModule();
+  })();
+</script>
+<!-- backend notes extended -->
 </body>
 </html>
