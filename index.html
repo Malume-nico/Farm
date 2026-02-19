@@ -246,6 +246,57 @@
     hr { border: 0.5px solid #2a2a2a; margin: 16px 0; }
 
     .cost-item { display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.95rem; }
+
+    /* new styles for input fields (keeps the same aesthetic) */
+    .cost-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .cost-input label {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+    .cost-input input {
+      width: 100px;
+      background: #2a2a2a;
+      border: 1px solid #d4af3740;
+      border-radius: 30px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+    .cost-input input:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+    .helper-text {
+      font-size: 0.7rem;
+      color: #aaa;
+      margin-top: 4px;
+    }
+    .btn-small {
+      background: transparent;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+    .btn-small.active {
+      background: #d4af37;
+      color: #0a0a0a;
+    }
+    .flex-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
@@ -293,6 +344,26 @@
         </div>
         <p class="badge" style="margin-top: 12px;"><i class="fas-regular fa-truck"></i> expansion: new farm in Q3</p>
       </div>
+
+      <!-- NEW: Net Profit + 3‑Month Projection Card -->
+      <div class="card" id="profitOverviewCard">
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> net profit & projection</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">net monthly profit</span><div class="stat-value" id="netMonthly">$15,000</div></div>
+          <div class="stat"><span class="stat-label">profit / chicken</span><div class="stat-value" id="profitPerChicken">$4.85</div></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+          <span>📊 3‑month projection</span>
+          <strong class="gold-text" id="projectedProfit">$45,000</strong>
+        </div>
+        <div class="flex-row" style="margin: 10px 0;">
+          <button class="btn-small" data-growth="10">+10% growth</button>
+          <button class="btn-small" data-growth="20">+20%</button>
+          <button class="btn-small" data-growth="30">+30%</button>
+          <span class="helper-text" id="growthHint">simulate</span>
+        </div>
+        <p class="badge" id="profitTrend"><i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month</p>
+      </div>
     </div>
 
     <!-- INVENTORY PANE -->
@@ -320,6 +391,26 @@
         <p>Batch B2402: 8 deaths <span class="green-text">(-0.6%)</span></p>
         <p style="color:#d4af37;">recommend: check ventilation</p>
       </div>
+
+      <!-- NEW: Growth Checkpoint Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-flag-checkered gold-text"></i> growth checkpoint</div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>current profit level:</span>
+          <strong class="gold-text" id="currentProfitLevel">R3 (15k)</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>next target:</span>
+          <strong>R5 (30k)</strong>
+        </div>
+        <div class="chart-bar" style="margin:10px 0;"><div class="bar-fill" id="profitGapFill" style="width:50%"></div></div>
+        <p id="gapText">gap to next level: $15,000</p>
+        <ul style="margin-left:20px; color:#ccc; font-size:0.9rem;">
+          <li>✓ increase sales volume</li>
+          <li>✓ reduce feed waste</li>
+          <li>→ add subscriptions</li>
+        </ul>
+      </div>
     </div>
 
     <!-- SALES PANE -->
@@ -341,6 +432,18 @@
         <div>retail 22% <div class="chart-bar"><div class="bar-fill" style="width:22%"></div></div></div>
         <div>restaurant 10% <div class="chart-bar"><div class="bar-fill" style="width:10%"></div></div></div>
       </div>
+
+      <!-- NEW: Revenue Breakdown Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-simple gold-text"></i> revenue breakdown</div>
+        <div class="cost-item"><span>🐔 live chickens</span> <span>$32,500</span></div>
+        <div class="cost-item"><span>🍗 prepared</span> <span>$8,200</span></div>
+        <div class="cost-item"><span>📦 bulk</span> <span>$12,400</span></div>
+        <div class="cost-item"><span>🔄 by‑products</span> <span>$2,100</span></div>
+        <div class="cost-item"><span>🌱 manure sales</span> <span>$3,000</span></div>
+        <div class="cost-item" style="border-top:1px solid #333;"><span>💰 total revenue</span> <span class="gold-text" id="totalRevenue">$58,200</span></div>
+        <div class="cost-item"><span>🐔 revenue / chicken</span> <span id="revenuePerChicken">$18.97</span></div>
+      </div>
     </div>
 
     <!-- LOGISTICS PANE -->
@@ -357,6 +460,17 @@
         <p>18 Mar: 2.4t @ $580/t</p>
         <p>12 Mar: 3.0t @ $575/t</p>
         <p style="color:#6b8e4c;">📊 optimal reorder: 3 days</p>
+      </div>
+
+      <!-- NEW: Expansion Trigger Engine Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-rocket gold-text"></i> expansion triggers</div>
+        <div id="triggerSuggestions">
+          <p>✅ profit = $15,000 → next: delivery vehicle at $40k</p>
+          <p>🚀 stock expansion at $60k profit</p>
+        </div>
+        <p class="badge">you are 62% toward vehicle trigger</p>
+        <button class="btn-gold" style="margin-top:8px; width:100%;">customize triggers</button>
       </div>
     </div>
 
@@ -381,6 +495,31 @@
           <li>🌾 buy feed before April price hike</li>
         </ul>
       </div>
+
+      <!-- NEW: Cost Tracker Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calculator gold-text"></i> monthly cost tracker</div>
+        <div class="cost-input"><label>🐤 chicks purchased</label> <input type="number" id="chicksCost" value="21400" step="100"></div>
+        <div class="cost-input"><label>🌾 feed cost</label> <input type="number" id="feedCost" value="11200" step="100"></div>
+        <div class="cost-input"><label>🚚 transport</label> <input type="number" id="transportCost" value="4300" step="100"></div>
+        <div class="cost-input"><label>👩‍🌾 labor</label> <input type="number" id="laborCost" value="6500" step="100"></div>
+        <div class="cost-input"><label>⚡ utilities</label> <input type="number" id="utilitiesCost" value="2100" step="100"></div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="equipmentCost" value="900" step="100"></div>
+        <div class="cost-input"><label>💀 losses</label> <input type="number" id="lossesCost" value="600" step="100"></div>
+        <hr>
+        <div class="cost-item"><span>📉 total expenses</span> <span class="gold-text" id="totalExpenses">$48,200</span></div>
+        <div class="cost-item"><span>🐔 cost per chicken</span> <span id="costPerChicken">$12.55</span></div>
+      </div>
+
+      <!-- NEW: Efficiency Monitor Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> efficiency monitor</div>
+        <div class="cost-item"><span>🌾 feed / chicken</span> <span>5.2 kg</span></div>
+        <div class="cost-item"><span>💀 death rate</span> <span>1.8%</span></div>
+        <div class="cost-item"><span>👩‍🌾 labor cost / bird</span> <span>$2.10</span></div>
+        <div class="cost-item"><span>💰 profit / worker</span> <span>$3,750</span></div>
+        <p class="badge" style="margin-top:6px;">⚠️ feed usage above optimal</p>
+      </div>
     </div>
 
     <!-- SETTINGS PANE -->
@@ -394,6 +533,15 @@
         <p><i class="fas fa-cloud-sun"></i> multi‑location ready</p>
         <p><i class="fas fa-qrcode"></i> QR batch scanning active</p>
         <button class="btn-gold" style="width:100%;"><i class="fas fa-link"></i> connect supabase</button>
+      </div>
+
+      <!-- NEW: Expansion Triggers Settings Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gears gold-text"></i> expansion triggers (custom)</div>
+        <div class="cost-input"><label>🚛 vehicle trigger ($)</label> <input type="number" id="vehicleTrigger" value="40000" step="1000"></div>
+        <div class="cost-input"><label>📦 stock expansion ($)</label> <input type="number" id="stockTrigger" value="60000" step="1000"></div>
+        <div class="cost-input"><label>🏭 new farm ($)</label> <input type="number" id="farmTrigger" value="100000" step="1000"></div>
+        <button class="btn-gold" style="margin-top:8px;">save triggers</button>
       </div>
     </div>
   </div>
@@ -411,7 +559,7 @@
 
 <script>
   (function() {
-    // Tab switching logic
+    // Tab switching logic (unchanged)
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -423,11 +571,8 @@
     };
 
     function setActiveTab(tabId) {
-      // deactivate all nav items & panes
       navItems.forEach(item => item.classList.remove('active'));
       Object.values(panes).forEach(pane => pane.classList.remove('active'));
-
-      // activate selected
       const activeNav = Array.from(navItems).find(item => item.dataset.tab === tabId);
       if (activeNav) activeNav.classList.add('active');
       if (panes[tabId]) panes[tabId].classList.add('active');
@@ -440,27 +585,136 @@
       });
     });
 
-    // optional: keep dashboard active by default (already set in html)
-    // Simulate future backend readiness: localStorage or API calls can be added.
-    // For now, we'll attach a small demo to show "add batch" or "add sale" modals? 
-    // Instead we can make the buttons show an alert that says "backend ready"
-
+    // Keep existing button alerts
     const btns = document.querySelectorAll('.btn-gold');
     btns.forEach(btn => {
       btn.addEventListener('click', (e) => {
-        if (btn.innerText.includes('register') || btn.innerText.includes('add') || btn.innerText.includes('assign')) {
+        if (btn.innerText.includes('register') || btn.innerText.includes('add') || btn.innerText.includes('assign') || btn.innerText.includes('customize') || btn.innerText.includes('save')) {
           e.preventDefault();
-          alert('✨ This would open a form. Data would be saved to Supabase (backend ready).');
+          alert('✨ This would open a form / save data. Backend ready (Supabase).');
         }
       });
     });
 
-    // Optional: dynamic update of mock data (e.g., could be tied to real supabase later)
-    console.log('Luxury Poultry Dashboard — ready for Supabase + Railway deployment.');
+    // ---------- NEW BUSINESS INTELLIGENCE LOGIC ----------
+    // References to dynamic fields
+    const chicksInput = document.getElementById('chicksCost');
+    const feedInput = document.getElementById('feedCost');
+    const transportInput = document.getElementById('transportCost');
+    const laborInput = document.getElementById('laborCost');
+    const utilitiesInput = document.getElementById('utilitiesCost');
+    const equipmentInput = document.getElementById('equipmentCost');
+    const lossesInput = document.getElementById('lossesCost');
+
+    const totalExpensesSpan = document.getElementById('totalExpenses');
+    const costPerChickenSpan = document.getElementById('costPerChicken');
+    const totalRevenueSpan = document.getElementById('totalRevenue');
+    const revenuePerChickenSpan = document.getElementById('revenuePerChicken');
+    const netMonthlySpan = document.getElementById('netMonthly');
+    const profitPerChickenSpan = document.getElementById('profitPerChicken');
+    const projectedProfitSpan = document.getElementById('projectedProfit');
+    const profitTrendSpan = document.getElementById('profitTrend');
+    const currentProfitLevelSpan = document.getElementById('currentProfitLevel');
+    const gapText = document.getElementById('gapText');
+    const profitGapFill = document.getElementById('profitGapFill');
+
+    // Constants (mock revenue, chickens sold)
+    const monthlyRevenue = 58200;   // from P&L
+    const chickensSoldMonthly = 3840; // from sales pane "this month"
+
+    function updateAll() {
+      // Read cost inputs
+      const chicks = parseFloat(chicksInput.value) || 0;
+      const feed = parseFloat(feedInput.value) || 0;
+      const transport = parseFloat(transportInput.value) || 0;
+      const labor = parseFloat(laborInput.value) || 0;
+      const utilities = parseFloat(utilitiesInput.value) || 0;
+      const equipment = parseFloat(equipmentInput.value) || 0;
+      const losses = parseFloat(lossesInput.value) || 0;
+
+      const totalCost = chicks + feed + transport + labor + utilities + equipment + losses;
+      totalExpensesSpan.innerText = '$' + totalCost.toLocaleString();
+
+      const costPerChicken = totalCost / chickensSoldMonthly;
+      costPerChickenSpan.innerText = '$' + costPerChicken.toFixed(2);
+
+      // Revenue (from sales breakdown, but we use fixed for demo)
+      totalRevenueSpan.innerText = '$' + monthlyRevenue.toLocaleString();
+      const revenuePerChicken = monthlyRevenue / chickensSoldMonthly;
+      revenuePerChickenSpan.innerText = '$' + revenuePerChicken.toFixed(2);
+
+      // Net profit
+      const netProfit = monthlyRevenue - totalCost;
+      netMonthlySpan.innerText = '$' + netProfit.toLocaleString();
+      const profitPerBird = netProfit / chickensSoldMonthly;
+      profitPerChickenSpan.innerText = '$' + profitPerBird.toFixed(2);
+
+      // Projection (simple 3x, could be modified by growth buttons)
+      let baseProjection = netProfit * 3;
+      projectedProfitSpan.innerText = '$' + baseProjection.toLocaleString();
+
+      // Profit trend mock
+      profitTrendSpan.innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
+
+      // Growth checkpoint (R3 = 15k, R5 = 30k, etc.)
+      const profitK = netProfit / 1000;
+      let level = 'R1';
+      if (profitK >= 50) level = 'R8';
+      else if (profitK >= 30) level = 'R5';
+      else if (profitK >= 15) level = 'R3';
+      else level = 'R1';
+      currentProfitLevelSpan.innerText = level + ' ($' + (profitK*1000).toLocaleString() + ')';
+
+      // Next target: e.g., if at R3 (15k), next is R5 (30k)
+      let nextTarget = 30000;
+      if (profitK >= 30) nextTarget = 50000;
+      if (profitK >= 50) nextTarget = 80000;
+      const gap = nextTarget - netProfit;
+      gapText.innerText = gap > 0 ? `gap to next level: $${gap.toLocaleString()}` : 'target reached!';
+      const fillPercent = Math.min(100, (netProfit / nextTarget) * 100);
+      profitGapFill.style.width = fillPercent + '%';
+
+      // Expansion triggers (simple text update based on net profit)
+      const vehicleTrigger = parseFloat(document.getElementById('vehicleTrigger').value) || 40000;
+      const stockTrigger = parseFloat(document.getElementById('stockTrigger').value) || 60000;
+      const farmTrigger = parseFloat(document.getElementById('farmTrigger').value) || 100000;
+      let suggestions = '';
+      if (netProfit >= farmTrigger) suggestions = '✅ new farm triggered!';
+      else if (netProfit >= stockTrigger) suggestions = '✅ stock expansion triggered!';
+      else if (netProfit >= vehicleTrigger) suggestions = '✅ delivery vehicle triggered!';
+      else suggestions = `🚀 next: vehicle at $${vehicleTrigger.toLocaleString()}`;
+      document.getElementById('triggerSuggestions').innerHTML = `<p>${suggestions}</p>`;
+    }
+
+    // Attach input listeners
+    const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput];
+    costInputs.forEach(inp => inp.addEventListener('input', updateAll));
+
+    // Growth simulation buttons
+    const growthBtns = document.querySelectorAll('[data-growth]');
+    growthBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const growth = parseInt(btn.dataset.growth) / 100;
+        const netProfit = parseFloat(netMonthlySpan.innerText.replace('$', '').replace(',', '')) || 15000;
+        const projected = netProfit * 3 * (1 + growth);
+        projectedProfitSpan.innerText = '$' + projected.toFixed(0).toLocaleString();
+        document.getElementById('growthHint').innerText = `simulating +${btn.dataset.growth}% growth`;
+      });
+    });
+
+    // Also update when trigger inputs change
+    document.getElementById('vehicleTrigger').addEventListener('input', updateAll);
+    document.getElementById('stockTrigger').addEventListener('input', updateAll);
+    document.getElementById('farmTrigger').addEventListener('input', updateAll);
+
+    // Initial update
+    updateAll();
+
+    console.log('Luxury Poultry Dashboard — BI modules added (cards only, existing content unchanged).');
   })();
 </script>
 
-<!-- backend ready note (invisible, but hints for pipeline) -->
+<!-- backend ready note (unchanged, but extended with new tables) -->
 <!-- 
   DATABASE (SUPABASE) tables expected:
   - inventory (id, batch_code, breed, purchase_date, initial_qty, deaths, available, expected_growth)
@@ -469,6 +723,11 @@
   - expenses (feed, labor, fuel, etc)
   - users (role, permissions)
   - analytics (pre-calculated KPIs)
+
+  NEW TABLES FOR BI:
+  - cost_tracker (month, chicks, feed, transport, labor, utilities, equipment, losses)
+  - revenue_breakdown (month, live, prepared, bulk, byproducts, manure)
+  - expansion_triggers (id, trigger_name, threshold, active)
 
   API endpoints would be built with DeepSeek backend, deployed to Railway.
   This frontend can be hosted on Netlify and connected via Supabase JS client.
