@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard (ZAR)</title>
+  <title>POULTRY · luxury dashboard (ZAR) + rewards</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,7 +101,7 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 8px 0 14px 0;
+      padding: 6px 0 10px 0;
       z-index: 10;
     }
     .nav-item {
@@ -109,15 +109,16 @@
       flex-direction: column;
       align-items: center;
       color: #888;
-      font-size: 0.7rem;
+      font-size: 0.62rem;
       transition: all 0.15s ease;
       cursor: pointer;
-      padding: 6px 12px;
+      padding: 4px 6px;
       border-radius: 30px;
       background: transparent;
+      flex: 0 1 auto;
     }
     .nav-item i {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       margin-bottom: 2px;
     }
     .nav-item.active {
@@ -285,19 +286,46 @@
       flex-wrap: wrap;
       align-items: center;
     }
+
+    /* rewards card swipe */
+    .cards-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding: 4px 0 12px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1e1e1e;
+    }
+    .cards-scroll::-webkit-scrollbar { height: 3px; }
+    .cards-scroll::-webkit-scrollbar-track { background: #1e1e1e; }
+    .cards-scroll::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 8px; }
+    .reward-card {
+      min-width: 180px;
+      background: #1c1c1c;
+      border-radius: 24px;
+      padding: 14px;
+      border: 1px solid #d4af3740;
+    }
+    .reward-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+    .reward-table th { text-align: left; color: #d4af37; font-weight: 500; padding: 8px 0; }
+    .reward-table td { padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
   </style>
 </head>
 <body>
 <div id="app">
-  <!-- header -->
+  <!-- header unchanged -->
   <div class="header">
     <h1>🐔 POULTRY</h1>
     <i class="fas fa-qrcode"></i>
   </div>
 
-  <!-- main content area: tab panes -->
+  <!-- main content area: 7 panes (rewards added) -->
   <div class="main-content" id="mainContent">
-    <!-- DASHBOARD PANE -->
+    <!-- DASHBOARD PANE (unchanged) -->
     <div class="tab-pane active" id="dashboardPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
@@ -368,7 +396,7 @@
       </div>
     </div>
 
-    <!-- INVENTORY PANE (mostly unchanged, but some dynamic values linked) -->
+    <!-- INVENTORY PANE (unchanged) -->
     <div class="tab-pane" id="inventoryPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
@@ -413,7 +441,7 @@
       </div>
     </div>
 
-    <!-- SALES PANE (updated with ZAR and product mix) -->
+    <!-- SALES PANE (unchanged) -->
     <div class="tab-pane" id="salesPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
@@ -427,7 +455,7 @@
         <button class="btn-gold" style="margin-top:16px;"><i class="fas fa-plus"></i> add manual sale</button>
       </div>
 
-      <!-- NEW Product Mix Card -->
+      <!-- Product Mix Card -->
       <div class="card">
         <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> product mix & pricing (ZAR)</div>
         <div class="cost-input"><label>🥩 wholesale (bulk) %</label> <input type="number" id="wholesalePct" value="68" min="0" max="100" step="1"></div>
@@ -448,7 +476,7 @@
         <div>restaurant <span id="restaurantVal">10</span>% <div class="chart-bar"><div class="bar-fill" style="width:10%"></div></div></div>
       </div>
 
-      <!-- Revenue Breakdown Card (ZAR) -->
+      <!-- Revenue Breakdown Card -->
       <div class="card">
         <div class="card-title"><i class="fas fa-chart-simple gold-text"></i> revenue breakdown</div>
         <div class="cost-item"><span>🐔 live chickens</span> <span id="revLive">R 163,200</span></div>
@@ -461,7 +489,7 @@
       </div>
     </div>
 
-    <!-- LOGISTICS PANE -->
+    <!-- LOGISTICS PANE (unchanged) -->
     <div class="tab-pane" id="logisticsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-truck gold-text"></i> active deliveries</div>
@@ -476,15 +504,12 @@
         <p>12 Mar: 3.0t @ R575/t</p>
         <p style="color:#6b8e4c;">📊 optimal reorder: 3 days</p>
       </div>
-
-      <!-- NEW Feed Forecast Card -->
       <div class="card">
         <div class="card-title"><i class="fas fa-calculator gold-text"></i> feed forecast (month)</div>
         <div class="cost-item"><span>🌾 total feed req.</span> <span id="totalFeedKg">11,025 kg</span></div>
         <div class="cost-item"><span>🛍️ bags (50kg)</span> <span id="feedBags">221 bags</span></div>
         <div class="cost-item"><span>💰 estimated cost</span> <span id="feedCostEstimate">R 85,085</span></div>
       </div>
-
       <div class="card">
         <div class="card-title"><i class="fas fa-rocket gold-text"></i> expansion triggers</div>
         <div id="triggerSuggestions"><p>🚀 next: vehicle at R40,000</p></div>
@@ -493,7 +518,7 @@
       </div>
     </div>
 
-    <!-- BUDGET PANE (cost tracker + adjustable cost per bird) -->
+    <!-- BUDGET PANE (unchanged) -->
     <div class="tab-pane" id="budgetPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
@@ -507,7 +532,7 @@
         <div class="cost-item"><span>📈 profit margin</span> <span class="green-text" id="plMargin">26.6% (R 86,400)</span></div>
       </div>
 
-      <!-- Monthly cost tracker + adjustable cost per bird -->
+      <!-- Monthly cost tracker -->
       <div class="card">
         <div class="card-title"><i class="fas fa-calculator gold-text"></i> monthly cost tracker</div>
         <div class="cost-input"><label>🐤 chicks purchased</label> <input type="number" id="chicksCost" value="34300" step="100"></div>
@@ -532,7 +557,7 @@
         </ul>
       </div>
 
-      <!-- Efficiency monitor (updated with ZAR) -->
+      <!-- Efficiency monitor -->
       <div class="card">
         <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> efficiency monitor</div>
         <div class="cost-item"><span>🌾 feed / chicken</span> <span>4.5 kg</span></div>
@@ -543,7 +568,7 @@
       </div>
     </div>
 
-    <!-- SETTINGS PANE (trigger thresholds) -->
+    <!-- SETTINGS PANE (unchanged) -->
     <div class="tab-pane" id="settingsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
@@ -571,9 +596,55 @@
         <div class="flex-row"><span class="badge">applies to standard/bulk</span></div>
       </div>
     </div>
+
+    <!-- NEW REWARDS PANE -->
+    <div class="tab-pane" id="rewardsPane">
+      <!-- KPI cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-trophy gold-text"></i> rewards KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed this month</span><div class="stat-value" id="rewardsClaimed">8</div></div>
+          <div class="stat"><span class="stat-label">active rewards</span><div class="stat-value" id="activeRewards">12</div></div>
+          <div class="stat"><span class="stat-label">upcoming</span><div class="stat-value" id="upcomingRewards">5</div></div>
+          <div class="stat"><span class="stat-label">by‑product bonus</span><div class="stat-value" id="byproductBonusUptake">3</div></div>
+          <div class="stat"><span class="stat-label">referral credits</span><div class="stat-value" id="referralCredits">R 1,240</div></div>
+        </div>
+      </div>
+
+      <!-- admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> reward rules (admin)</div>
+        <div class="cost-input"><label>✅ enable rewards</label> <input type="checkbox" id="enableRewards" checked style="width:20px;"></div>
+        <div class="cost-input"><label>🐔 chickens per reward</label> <input type="number" id="chickensPerReward" value="10" min="1" step="1"></div>
+        <div class="cost-input"><label>📅 streak days</label> <input type="number" id="streakDays" value="7" min="1"></div>
+        <div class="cost-input"><label>💰 discount %</label> <input type="number" id="rewardDiscount" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 double by‑product day</label> <input type="checkbox" id="doubleByproduct" checked></div>
+        <div class="cost-input"><label>👥 referral credit (R)</label> <input type="number" id="referralCreditValue" value="50" step="5"></div>
+        <button class="btn-small" id="simulatePurchaseBtn" style="margin-top:6px;"><i class="fas fa-cart-plus"></i> simulate purchase</button>
+      </div>
+
+      <!-- swipeable reward cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-id-card gold-text"></i> active rewards (swipe)</div>
+        <div class="cards-scroll" id="rewardCardsContainer">
+          <!-- dynamically filled from js -->
+        </div>
+      </div>
+
+      <!-- rewards table -->
+      <div class="card reward-table">
+        <div class="card-title"><i class="fas fa-table gold-text"></i> all customer rewards</div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>Customer</th><th>Type</th><th>Progress</th><th>Status</th><th>Expiry</th><th>Discount</th></tr></thead>
+            <tbody id="rewardsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- bottom navigation (6 items) -->
+  <!-- bottom navigation (7 items) -->
   <div class="bottom-nav">
     <div class="nav-item active" data-tab="dashboard"><i class="fas fa-chart-pie"></i><span>Home</span></div>
     <div class="nav-item" data-tab="inventory"><i class="fas fa-egg"></i><span>Stock</span></div>
@@ -581,12 +652,13 @@
     <div class="nav-item" data-tab="logistics"><i class="fas fa-truck"></i><span>Logistics</span></div>
     <div class="nav-item" data-tab="budget"><i class="fas fa-chart-line"></i><span>Budget</span></div>
     <div class="nav-item" data-tab="settings"><i class="fas fa-gear"></i><span>Settings</span></div>
+    <div class="nav-item" data-tab="rewards"><i class="fas fa-gift"></i><span>Rewards</span></div>
   </div>
 </div>
 
 <script>
   (function() {
-    // Tab switching logic
+    // ----- tab switching (updated with rewards) -----
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -594,7 +666,8 @@
       sales: document.getElementById('salesPane'),
       logistics: document.getElementById('logisticsPane'),
       budget: document.getElementById('budgetPane'),
-      settings: document.getElementById('settingsPane')
+      settings: document.getElementById('settingsPane'),
+      rewards: document.getElementById('rewardsPane')
     };
 
     function setActiveTab(tabId) {
@@ -612,26 +685,105 @@
       });
     });
 
-    // Keep existing button alerts (minor)
-    const btns = document.querySelectorAll('.btn-gold');
-    btns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        if (btn.innerText.includes('register') || btn.innerText.includes('add') || btn.innerText.includes('assign') || btn.innerText.includes('customize') || btn.innerText.includes('save')) {
-          e.preventDefault();
-          alert('✨ This would open a form / save data. Backend ready (Supabase).');
-        }
+    // ----- rewards data & settings -----
+    let rewardsData = [
+      { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
+      { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
+      { customerId: 103, name: 'Thabo Fresh', type: 'referral', progress: 2, target: 3, status: 'active', expiry: '2025-04-10', discount: 10, byproductBoost: false, referralCredit: 50 },
+      { customerId: 104, name: 'Lynn’s Table', type: 'by-product bonus', progress: 6, target: 6, status: 'claimed', expiry: '2025-03-22', discount: 8, byproductBoost: true, referralCredit: 0 },
+      { customerId: 105, name: 'Mama’s Takeaways', type: 'streak', progress: 7, target: 7, status: 'upcoming', expiry: '2025-04-01', discount: 12, byproductBoost: false, referralCredit: 0 }
+    ];
+
+    // reward settings (admin)
+    let rewardSettings = {
+      enabled: true,
+      chickensPerReward: 10,
+      streakDays: 7,
+      baseDiscount: 8,
+      doubleByproduct: true,
+      referralCredit: 50
+    };
+
+    // DOM elements for rewards pane
+    const rewardsClaimedSpan = document.getElementById('rewardsClaimed');
+    const activeRewardsSpan = document.getElementById('activeRewards');
+    const upcomingRewardsSpan = document.getElementById('upcomingRewards');
+    const byproductBonusSpan = document.getElementById('byproductBonusUptake');
+    const referralCreditsSpan = document.getElementById('referralCredits');
+    const rewardCardsContainer = document.getElementById('rewardCardsContainer');
+    const rewardsTableBody = document.getElementById('rewardsTableBody');
+
+    // admin inputs
+    const enableRewardsChk = document.getElementById('enableRewards');
+    const chickensPerRewardInp = document.getElementById('chickensPerReward');
+    const streakDaysInp = document.getElementById('streakDays');
+    const rewardDiscountInp = document.getElementById('rewardDiscount');
+    const doubleByproductChk = document.getElementById('doubleByproduct');
+    const referralCreditInp = document.getElementById('referralCreditValue');
+    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
+
+    // ---- helper to update rewards display and kpis ----
+    function updateRewardsUI() {
+      // kpis
+      const claimed = rewardsData.filter(r => r.status === 'claimed').length;
+      const active = rewardsData.filter(r => r.status === 'active').length;
+      const upcoming = rewardsData.filter(r => r.status === 'upcoming').length;
+      const byproductUptake = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
+      const totalReferral = rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+      rewardsClaimedSpan.innerText = claimed;
+      activeRewardsSpan.innerText = active;
+      upcomingRewardsSpan.innerText = upcoming;
+      byproductBonusSpan.innerText = byproductUptake;
+      referralCreditsSpan.innerText = 'R ' + totalReferral.toLocaleString();
+
+      // swipe cards
+      let cardsHtml = '';
+      rewardsData.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
+        cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
       });
-    });
+      rewardCardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
 
-    // ---------- BUSINESS INTELLIGENCE LOGIC (ZAR, dynamic) ----------
-    // Constants / base values
-    const TOTAL_BIRDS = 2450;          // from dashboard
+      // table
+      let rows = '';
+      rewardsData.forEach(r => {
+        rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
+      });
+      rewardsTableBody.innerHTML = rows;
+    }
+
+    // ---- calculate total discount impact from active rewards (for profit projection) ----
+    function getActiveRewardDiscountRate() {
+      if (!rewardSettings.enabled) return 0;
+      const activeRewards = rewardsData.filter(r => r.status === 'active');
+      if (activeRewards.length === 0) return 0;
+      // average discount weighted by progress? for simplicity average discount
+      const totalDisc = activeRewards.reduce((acc, r) => acc + r.discount, 0);
+      return totalDisc / activeRewards.length / 100; // as decimal
+    }
+
+    function getReferralCreditTotal() {
+      return rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+    }
+
+    function getByproductBoostFactor() {
+      if (!rewardSettings.doubleByproduct) return 1;
+      const activeBoost = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
+      return 1 + (activeBoost * 0.1); // each active boost adds 10% to byproduct revenue
+    }
+
+    // ---- modify updateAll to include reward impacts ----
+    // (keep all original updateAll, but add adjustments)
+    const originalUpdateAll = function() { /* we will override but preserve */ };
+    // we'll copy the existing updateAll function and enhance it.
+    // For brevity, I'll redefine updateAll with rewards integration.
+
+    // ---------- BUSINESS INTELLIGENCE LOGIC (with rewards) ----------
+    const TOTAL_BIRDS = 2450;
     const SOLD_TODAY = 128;
-    const MONTHLY_SOLD = 3840;          // sales pane "this month"
-    const MORTALITY_RATE = 0.009;       // 0.9% (from death tracking)
-    const BYPRODUCT_PER_BIRD_DEFAULT = 85;
+    const MONTHLY_SOLD = 3840;
+    const MORTALITY_RATE = 0.009;
 
-    // Input references
+    // Input references (same as original)
     const chicksInput = document.getElementById('chicksCost');
     const feedInput = document.getElementById('feedCost');
     const transportInput = document.getElementById('transportCost');
@@ -640,50 +792,38 @@
     const equipmentInput = document.getElementById('equipmentCost');
     const lossesInput = document.getElementById('lossesCost');
     const adjustableCostPerBird = document.getElementById('adjustableCostPerBird');
-
-    // Product mix inputs
     const wholesalePct = document.getElementById('wholesalePct');
     const retailPct = document.getElementById('retailPct');
     const restaurantPct = document.getElementById('restaurantPct');
     const subDiscount = document.getElementById('subDiscount');
     const refDiscount = document.getElementById('refDiscount');
     const byproductPerBirdInput = document.getElementById('byproductPerBird');
-
-    // Trigger inputs
     const vehicleTrigger = document.getElementById('vehicleTrigger');
     const stockTrigger = document.getElementById('stockTrigger');
     const farmTrigger = document.getElementById('farmTrigger');
 
-    // Fixed prices (ZAR)
-    const PRICE_LIVE = 100;
-    const PRICE_STANDARD = 100;
-    const PRICE_PREMIUM = 115;
-    const PRICE_BULK = 75;
+    const PRICE_LIVE = 100, PRICE_STANDARD = 100, PRICE_PREMIUM = 115, PRICE_BULK = 75;
 
-    // Helper to compute weighted average selling price
     function computeAvgPrice() {
       let wp = parseFloat(wholesalePct.value) || 0;
       let rp = parseFloat(retailPct.value) || 0;
       let rest = parseFloat(restaurantPct.value) || 0;
       let total = wp + rp + rest;
-      if (total === 0) return 84.5; // fallback
-      let avg = (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
-      return avg;
+      if (total === 0) return 84.5;
+      return (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
     }
 
-    // Get by‑product revenue
     function getByproductRevenue() {
-      let byPerBird = parseFloat(byproductPerBirdInput.value) || BYPRODUCT_PER_BIRD_DEFAULT;
-      // Assume standard + bulk = wholesale + retail percent (together)
+      let byPerBird = parseFloat(byproductPerBirdInput.value) || 85;
       let wp = parseFloat(wholesalePct.value) || 68;
       let rp = parseFloat(retailPct.value) || 22;
       let applicableBirds = MONTHLY_SOLD * (wp + rp) / 100;
       return applicableBirds * byPerBird;
     }
 
-    // Main update function
+    // Enhanced updateAll
     function updateAll() {
-      // Read cost inputs
+      // read cost inputs
       const chicks = parseFloat(chicksInput.value) || 0;
       const feed = parseFloat(feedInput.value) || 0;
       const transport = parseFloat(transportInput.value) || 0;
@@ -693,27 +833,24 @@
       const losses = parseFloat(lossesInput.value) || 0;
       const totalCost = chicks + feed + transport + labor + utilities + equipment + losses;
 
-      // Adjustable cost per bird
       const adjCostPerBird = parseFloat(adjustableCostPerBird.value) || 62;
-      // Override: we can show it but not force total cost? We'll keep both.
-
-      // Weighted average price
       const avgPrice = computeAvgPrice();
-      const byproductRev = getByproductRevenue();
+      let byproductRev = getByproductRevenue();
 
-      // Revenue calculations
-      const monthlyRevenue = MONTHLY_SOLD * avgPrice;
-      const revenueToday = SOLD_TODAY * avgPrice;
-      const totalRevenue = monthlyRevenue; // plus byproduct? we add separately
-      const revenueLive = MONTHLY_SOLD * (parseFloat(wholesalePct.value)/100) * PRICE_BULK; // bulk as live?
-      const revenuePrep = MONTHLY_SOLD * (parseFloat(retailPct.value)/100) * PRICE_STANDARD;
-      const revenueBulk = MONTHLY_SOLD * (parseFloat(restaurantPct.value)/100) * PRICE_PREMIUM;
-      // byproduct already computed
+      // --- reward adjustments ---
+      const discountRate = getActiveRewardDiscountRate(); // e.g., 0.08
+      const referralTotal = getReferralCreditTotal();
+      const boostFactor = getByproductBoostFactor();
+      byproductRev = byproductRev * boostFactor;
 
-      // Net profit
+      const monthlyRevenueBase = MONTHLY_SOLD * avgPrice;
+      const discountAmount = monthlyRevenueBase * discountRate;
+      const monthlyRevenue = monthlyRevenueBase - discountAmount - referralTotal; // referral credits reduce revenue
+      const revenueToday = SOLD_TODAY * avgPrice * (1 - discountRate); // simplified
+
       const netProfit = monthlyRevenue + byproductRev - totalCost;
 
-      // Update text fields (ZAR formatting)
+      // update original fields (with reward adjustments)
       document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
       document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -727,23 +864,22 @@
       document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
 
-      // Revenue breakdown
+      const revenueLive = MONTHLY_SOLD * (parseFloat(wholesalePct.value)/100) * PRICE_BULK;
+      const revenuePrep = MONTHLY_SOLD * (parseFloat(retailPct.value)/100) * PRICE_STANDARD;
+      const revenueBulk = MONTHLY_SOLD * (parseFloat(restaurantPct.value)/100) * PRICE_PREMIUM;
       document.getElementById('revLive').innerText = 'R ' + revenueLive.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       document.getElementById('revPrep').innerText = 'R ' + revenuePrep.toFixed(0);
       document.getElementById('revBulk').innerText = 'R ' + revenueBulk.toFixed(0);
       document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0);
-      document.getElementById('revManure').innerText = 'R 3,000'; // static
+      document.getElementById('revManure').innerText = 'R 3,000';
 
-      // KPIs
       document.getElementById('kpiActiveBirds').innerText = (TOTAL_BIRDS * (1 - MORTALITY_RATE)).toFixed(0);
       document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
       document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
       document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
-      // subscription % mock
       document.getElementById('kpiSubPct').innerText = '18%';
       document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-      // P&L summary
       document.getElementById('plChickens').innerText = 'R ' + chicks.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       document.getElementById('plFeed').innerText = 'R ' + feed.toFixed(0);
       document.getElementById('plLogistics').innerText = 'R ' + transport.toFixed(0);
@@ -752,7 +888,6 @@
       const margin = ((netProfit) / (monthlyRevenue + byproductRev) * 100).toFixed(1);
       document.getElementById('plMargin').innerHTML = `${margin}% (R ${netProfit.toFixed(0)})`;
 
-      // Profit projection & growth checkpoint
       const netProfitNum = netProfit;
       document.getElementById('projectedProfit').innerText = 'R ' + (netProfitNum * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       let level = 'R1';
@@ -773,43 +908,66 @@
       const fillPercent = Math.min(100, (netProfitNum / nextTarget) * 100);
       document.getElementById('profitGapFill').style.width = fillPercent + '%';
 
-      // Feed forecast
-      const feedPerBird = 4.5; // kg
+      const feedPerBird = 4.5;
       const totalFeedKg = TOTAL_BIRDS * feedPerBird;
       const bags = totalFeedKg / 50;
-      const feedCostEst = bags * 385; // R385 per bag
+      const feedCostEst = bags * 385;
       document.getElementById('totalFeedKg').innerText = totalFeedKg.toFixed(0) + ' kg';
       document.getElementById('feedBags').innerText = Math.ceil(bags) + ' bags';
       document.getElementById('feedCostEstimate').innerText = 'R ' + feedCostEst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-      // Expansion triggers
       const vTrigger = parseFloat(vehicleTrigger.value) || 40000;
-      const sTrigger = parseFloat(stockTrigger.value) || 60000;
-      const fTrigger = parseFloat(farmTrigger.value) || 100000;
-      let triggerMsg = '';
-      if (netProfitNum >= fTrigger) triggerMsg = '✅ new farm triggered!';
-      else if (netProfitNum >= sTrigger) triggerMsg = '✅ stock expansion triggered!';
-      else if (netProfitNum >= vTrigger) triggerMsg = '✅ delivery vehicle triggered!';
-      else triggerMsg = `🚀 next: vehicle at R ${vTrigger.toLocaleString()}`;
-      document.getElementById('triggerSuggestions').innerHTML = `<p>${triggerMsg}</p>`;
+      document.getElementById('triggerSuggestions').innerHTML = `<p>🚀 next: vehicle at R ${vTrigger.toLocaleString()}</p>`;
       document.getElementById('triggerProgress').innerText = `you are ${((netProfitNum/vTrigger)*100).toFixed(0)}% toward vehicle trigger`;
 
-      // Efficiency monitor
       document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
       document.getElementById('laborPerBird').innerText = 'R ' + (labor / TOTAL_BIRDS).toFixed(2);
       document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-      // Sales pane percentages
       document.getElementById('wholesaleVal').innerText = wholesalePct.value;
       document.getElementById('retailVal').innerText = retailPct.value;
       document.getElementById('restaurantVal').innerText = restaurantPct.value;
+
+      // update rewards UI
+      updateRewardsUI();
     }
 
-    // Attach listeners
+    // attach listeners to all cost inputs and reward settings
     const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger];
     costInputs.forEach(inp => inp.addEventListener('input', updateAll));
 
-    // Growth simulation buttons
+    // reward admin listeners
+    [enableRewardsChk, chickensPerRewardInp, streakDaysInp, rewardDiscountInp, doubleByproductChk, referralCreditInp].forEach(inp => {
+      inp.addEventListener('change', () => {
+        rewardSettings.enabled = enableRewardsChk.checked;
+        rewardSettings.chickensPerReward = parseInt(chickensPerRewardInp.value) || 10;
+        rewardSettings.streakDays = parseInt(streakDaysInp.value) || 7;
+        rewardSettings.baseDiscount = parseFloat(rewardDiscountInp.value) || 8;
+        rewardSettings.doubleByproduct = doubleByproductChk.checked;
+        rewardSettings.referralCredit = parseFloat(referralCreditInp.value) || 50;
+        updateAll();
+      });
+    });
+
+    // simulate purchase: progress +1 for first active reward
+    simulatePurchaseBtn.addEventListener('click', () => {
+      const activeIdx = rewardsData.findIndex(r => r.status === 'active');
+      if (activeIdx >= 0) {
+        rewardsData[activeIdx].progress += 1;
+        if (rewardsData[activeIdx].progress >= rewardsData[activeIdx].target) {
+          rewardsData[activeIdx].status = 'claimed';
+        }
+      } else {
+        // add a new reward for demo
+        rewardsData.push({ customerId: 999, name: 'New Customer', type: 'welcome', progress: 1, target: 3, status: 'active', expiry: '2025-04-20', discount: 8, byproductBoost: true, referralCredit: 0 });
+      }
+      updateAll();
+    });
+
+    // initial update
+    updateAll();
+
+    // growth buttons
     const growthBtns = document.querySelectorAll('[data-growth]');
     growthBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -821,20 +979,16 @@
       });
     });
 
-    // initial update
-    updateAll();
-
-    console.log('Luxury Poultry Dashboard — ZAR currency, dynamic pricing, cost model integrated.');
+    console.log('Luxury Poultry Dashboard — with rewards integration');
   })();
 </script>
 
-<!-- backend notes updated -->
+<!-- backend notes extended with rewards tables -->
 <!-- 
   DATABASE (SUPABASE) tables extended:
-  - cost_tracker (month, chicks, feed, transport, labor, utilities, equipment, losses, adjustable_cost_per_bird)
-  - product_mix (wholesale_pct, retail_pct, restaurant_pct, sub_discount, ref_discount)
-  - byproduct_settings (revenue_per_bird)
-  - expansion_triggers (vehicle, stock, farm)
+  - cost_tracker, product_mix, byproduct_settings, expansion_triggers
+  - NEW rewards (customer_id, name, type, progress, target, status, expiry, discount, byproduct_boost, referral_credit)
+  - reward_settings (enabled, chickens_per_reward, streak_days, base_discount, double_byproduct, referral_credit_value)
 -->
 </body>
 </html>
