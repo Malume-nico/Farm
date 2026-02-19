@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard</title>
+  <title>POULTRY · luxury dashboard (ZAR)</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
     }
 
     body {
-      background-color: #0a0a0a; /* matte black */
+      background-color: #0a0a0a;
       color: #f0f0f0;
       display: flex;
       justify-content: center;
@@ -26,10 +26,9 @@
       min-height: 100vh;
     }
 
-    /* mobile container */
     #app {
       width: 100%;
-      max-width: 420px; /* typical mobile width */
+      max-width: 420px;
       height: 780px;
       background: #0f0f0f;
       border-radius: 32px;
@@ -40,7 +39,6 @@
       position: relative;
     }
 
-    /* glass panel base */
     .glass {
       background: rgba(30, 30, 30, 0.7);
       backdrop-filter: blur(12px);
@@ -50,7 +48,6 @@
       box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6);
     }
 
-    /* header */
     .header {
       padding: 18px 20px 10px 20px;
       display: flex;
@@ -74,11 +71,10 @@
       border-radius: 50%;
     }
 
-    /* main scrollable content */
     .main-content {
       flex: 1;
       overflow-y: auto;
-      padding: 12px 16px 80px 16px; /* bottom space for nav */
+      padding: 12px 16px 80px 16px;
       scrollbar-width: thin;
       scrollbar-color: #d4af37 #1e1e1e;
     }
@@ -93,7 +89,6 @@
       border-radius: 8px;
     }
 
-    /* bottom navigation – TikTok style */
     .bottom-nav {
       position: absolute;
       bottom: 0;
@@ -131,7 +126,6 @@
       text-shadow: 0 0 8px #d4af3740;
     }
 
-    /* cards & elements */
     .card {
       background: rgba(20, 20, 20, 0.6);
       backdrop-filter: blur(8px);
@@ -192,7 +186,6 @@
       font-size: 0.7rem;
     }
 
-    /* inventory rows */
     .batch-row {
       display: flex;
       justify-content: space-between;
@@ -222,7 +215,6 @@
     .btn-gold i { margin-right: 6px; }
     .btn-gold:active { background: #d4af3740; }
 
-    /* simple chart bar */
     .chart-bar {
       background: #2b2b2b;
       height: 8px;
@@ -236,18 +228,14 @@
       width: 0%;
     }
 
-    /* tab content — hidden by default, shown via JS */
     .tab-pane { display: none; }
     .tab-pane.active { display: block; }
 
-    /* luxury small touches */
     .gold-text { color: #d4af37; }
     .green-text { color: #6b8e4c; }
     hr { border: 0.5px solid #2a2a2a; margin: 16px 0; }
 
     .cost-item { display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.95rem; }
-
-    /* new styles for input fields (keeps the same aesthetic) */
     .cost-input {
       display: flex;
       justify-content: space-between;
@@ -314,20 +302,34 @@
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
         <div class="grid-2">
-          <div class="stat"><span class="stat-label">chickens</span><div class="stat-value">2,450</div><span class="stat-sub">+200 today</span></div>
-          <div class="stat"><span class="stat-label">sold today</span><div class="stat-value">128</div><span class="stat-sub">$896</span></div>
-          <div class="stat"><span class="stat-label">lost</span><div class="stat-value">12</div><span class="stat-sub">⬇️ 0.5%</span></div>
-          <div class="stat"><span class="stat-label">revenue today</span><div class="stat-value">$1,280</div><span class="stat-sub">+18%</span></div>
+          <div class="stat"><span class="stat-label">chickens</span><div class="stat-value" id="totalBirdsDisplay">2,450</div><span class="stat-sub" id="birdsChange">+200 today</span></div>
+          <div class="stat"><span class="stat-label">sold today</span><div class="stat-value" id="soldTodayDisplay">128</div><span class="stat-sub" id="revenueTodayDisplay">R 896</span></div>
+          <div class="stat"><span class="stat-label">lost</span><div class="stat-value" id="lostTodayDisplay">12</div><span class="stat-sub">⬇️ 0.5%</span></div>
+          <div class="stat"><span class="stat-label">revenue today</span><div class="stat-value" id="revenueTodayValue">R 1,280</div><span class="stat-sub" id="revenueTodayPercent">+18%</span></div>
         </div>
         <div style="margin-top: 16px;">
-          <div style="display: flex; justify-content: space-between;"><span>📆 monthly revenue</span> <strong class="gold-text">$38,400</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>📆 monthly revenue</span> <strong class="gold-text" id="monthlyRevenueDisplay">R 324,480</strong></div>
           <div class="chart-bar" style="margin:6px 0 12px;"><div class="bar-fill" style="width:76%"></div></div>
-          <div style="display: flex; justify-content: space-between;"><span>🐔 remaining stock</span> <strong>2,322</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>🐔 remaining stock</span> <strong id="remainingStockDisplay">2,322</strong></div>
           <div style="display: flex; justify-content: space-between;"><span>📦 upcoming batch</span> <strong>650 (in 4d)</strong></div>
           <hr>
-          <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 profit est.</span> <strong class="green-text">$11,230</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 net profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
         </div>
       </div>
+
+      <!-- NEW KPI CARD (Admin) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> key performance indicators</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active birds</span><div class="stat-value" id="kpiActiveBirds">2,322</div></div>
+          <div class="stat"><span class="stat-label">mortality %</span><div class="stat-value" id="kpiMortality">0.9%</div></div>
+          <div class="stat"><span class="stat-label">avg selling price</span><div class="stat-value" id="kpiAvgPrice">R 84.50</div></div>
+          <div class="stat"><span class="stat-label">cost / bird</span><div class="stat-value" id="kpiCostPerBird">R 62.00</div></div>
+          <div class="stat"><span class="stat-label">subscription %</span><div class="stat-value" id="kpiSubPct">18%</div></div>
+          <div class="stat"><span class="stat-label">by‑product rev</span><div class="stat-value" id="kpiByproduct">R 12,750</div></div>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-title"><i class="fas fa-chart-line gold-text"></i> weekly trend</div>
         <div style="display: flex; gap: 10px; justify-content: space-between;">
@@ -345,16 +347,16 @@
         <p class="badge" style="margin-top: 12px;"><i class="fas-regular fa-truck"></i> expansion: new farm in Q3</p>
       </div>
 
-      <!-- NEW: Net Profit + 3‑Month Projection Card -->
+      <!-- Net Profit & Projection Card (updated with ZAR) -->
       <div class="card" id="profitOverviewCard">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> net profit & projection</div>
         <div class="grid-2">
-          <div class="stat"><span class="stat-label">net monthly profit</span><div class="stat-value" id="netMonthly">$15,000</div></div>
-          <div class="stat"><span class="stat-label">profit / chicken</span><div class="stat-value" id="profitPerChicken">$4.85</div></div>
+          <div class="stat"><span class="stat-label">net monthly profit</span><div class="stat-value" id="netMonthly">R 86,400</div></div>
+          <div class="stat"><span class="stat-label">profit / chicken</span><div class="stat-value" id="profitPerChicken">R 22.50</div></div>
         </div>
         <div style="display: flex; justify-content: space-between; margin: 8px 0;">
           <span>📊 3‑month projection</span>
-          <strong class="gold-text" id="projectedProfit">$45,000</strong>
+          <strong class="gold-text" id="projectedProfit">R 259,200</strong>
         </div>
         <div class="flex-row" style="margin: 10px 0;">
           <button class="btn-small" data-growth="10">+10% growth</button>
@@ -366,7 +368,7 @@
       </div>
     </div>
 
-    <!-- INVENTORY PANE -->
+    <!-- INVENTORY PANE (mostly unchanged, but some dynamic values linked) -->
     <div class="tab-pane" id="inventoryPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
@@ -391,20 +393,18 @@
         <p>Batch B2402: 8 deaths <span class="green-text">(-0.6%)</span></p>
         <p style="color:#d4af37;">recommend: check ventilation</p>
       </div>
-
-      <!-- NEW: Growth Checkpoint Card -->
       <div class="card">
         <div class="card-title"><i class="fas fa-flag-checkered gold-text"></i> growth checkpoint</div>
         <div style="display: flex; justify-content: space-between;">
           <span>current profit level:</span>
-          <strong class="gold-text" id="currentProfitLevel">R3 (15k)</strong>
+          <strong class="gold-text" id="currentProfitLevel">R3 (86.4k)</strong>
         </div>
         <div style="display: flex; justify-content: space-between;">
           <span>next target:</span>
-          <strong>R5 (30k)</strong>
+          <strong id="nextTargetDisplay">R5 (150k)</strong>
         </div>
-        <div class="chart-bar" style="margin:10px 0;"><div class="bar-fill" id="profitGapFill" style="width:50%"></div></div>
-        <p id="gapText">gap to next level: $15,000</p>
+        <div class="chart-bar" style="margin:10px 0;"><div class="bar-fill" id="profitGapFill" style="width:57%"></div></div>
+        <p id="gapText">gap to next level: R 63,600</p>
         <ul style="margin-left:20px; color:#ccc; font-size:0.9rem;">
           <li>✓ increase sales volume</li>
           <li>✓ reduce feed waste</li>
@@ -413,36 +413,51 @@
       </div>
     </div>
 
-    <!-- SALES PANE -->
+    <!-- SALES PANE (updated with ZAR and product mix) -->
     <div class="tab-pane" id="salesPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
-        <div style="font-size: 2.2rem; font-weight:600;">128 <span style="font-size:1rem;">chickens</span></div>
-        <p>avg price $7.00 → $896 revenue</p>
+        <div style="font-size: 2.2rem; font-weight:600;" id="todaySalesQty">128 <span style="font-size:1rem;">chickens</span></div>
+        <p id="todaySalesAvgPrice">avg price R 84.50 → <span id="todayRevenueCalc">R 10,816</span> revenue</p>
         <hr>
         <div style="display:flex; gap:10px;">
-          <div><span class="stat-label">this month</span><div class="stat-value">3,840</div></div>
+          <div><span class="stat-label">this month</span><div class="stat-value" id="monthlySold">3,840</div></div>
           <div><span class="stat-label">last month</span><div class="stat-value">3,210</div></div>
         </div>
         <button class="btn-gold" style="margin-top:16px;"><i class="fas fa-plus"></i> add manual sale</button>
       </div>
+
+      <!-- NEW Product Mix Card -->
       <div class="card">
-        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> by customer type</div>
-        <div>wholesale 68% <div class="chart-bar"><div class="bar-fill" style="width:68%"></div></div></div>
-        <div>retail 22% <div class="chart-bar"><div class="bar-fill" style="width:22%"></div></div></div>
-        <div>restaurant 10% <div class="chart-bar"><div class="bar-fill" style="width:10%"></div></div></div>
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> product mix & pricing (ZAR)</div>
+        <div class="cost-input"><label>🥩 wholesale (bulk) %</label> <input type="number" id="wholesalePct" value="68" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🏪 retail (standard) %</label> <input type="number" id="retailPct" value="22" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🍽️ restaurant (premium) %</label> <input type="number" id="restaurantPct" value="10" min="0" max="100" step="1"></div>
+        <div class="cost-item"><span>📊 weighted avg price</span> <span class="gold-text" id="weightedAvgPrice">R 84.50</span></div>
+        <div class="flex-row" style="margin-top:8px;">
+          <span class="badge">live R100 | std R100 | prem R115 | bulk R75</span>
+        </div>
+        <div class="cost-input"><label>🔁 subscription discount %</label> <input type="number" id="subDiscount" value="6" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🤝 referral discount %</label> <input type="number" id="refDiscount" value="10" min="0" max="100" step="0.5"></div>
       </div>
 
-      <!-- NEW: Revenue Breakdown Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> by customer type</div>
+        <div>wholesale <span id="wholesaleVal">68</span>% <div class="chart-bar"><div class="bar-fill" style="width:68%"></div></div></div>
+        <div>retail <span id="retailVal">22</span>% <div class="chart-bar"><div class="bar-fill" style="width:22%"></div></div></div>
+        <div>restaurant <span id="restaurantVal">10</span>% <div class="chart-bar"><div class="bar-fill" style="width:10%"></div></div></div>
+      </div>
+
+      <!-- Revenue Breakdown Card (ZAR) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-chart-simple gold-text"></i> revenue breakdown</div>
-        <div class="cost-item"><span>🐔 live chickens</span> <span>$32,500</span></div>
-        <div class="cost-item"><span>🍗 prepared</span> <span>$8,200</span></div>
-        <div class="cost-item"><span>📦 bulk</span> <span>$12,400</span></div>
-        <div class="cost-item"><span>🔄 by‑products</span> <span>$2,100</span></div>
-        <div class="cost-item"><span>🌱 manure sales</span> <span>$3,000</span></div>
-        <div class="cost-item" style="border-top:1px solid #333;"><span>💰 total revenue</span> <span class="gold-text" id="totalRevenue">$58,200</span></div>
-        <div class="cost-item"><span>🐔 revenue / chicken</span> <span id="revenuePerChicken">$18.97</span></div>
+        <div class="cost-item"><span>🐔 live chickens</span> <span id="revLive">R 163,200</span></div>
+        <div class="cost-item"><span>🍗 prepared</span> <span id="revPrep">R 41,200</span></div>
+        <div class="cost-item"><span>📦 bulk</span> <span id="revBulk">R 97,920</span></div>
+        <div class="cost-item"><span>🔄 by‑products</span> <span id="revByproduct">R 12,750</span></div>
+        <div class="cost-item"><span>🌱 manure sales</span> <span id="revManure">R 3,000</span></div>
+        <div class="cost-item" style="border-top:1px solid #333;"><span>💰 total revenue</span> <span class="gold-text" id="totalRevenue">R 324,480</span></div>
+        <div class="cost-item"><span>🐔 revenue / chicken</span> <span id="revenuePerChicken">R 84.50</span></div>
       </div>
     </div>
 
@@ -457,36 +472,57 @@
       </div>
       <div class="card">
         <div class="card-title">🌾 feed purchase log</div>
-        <p>18 Mar: 2.4t @ $580/t</p>
-        <p>12 Mar: 3.0t @ $575/t</p>
+        <p>18 Mar: 2.4t @ R580/t</p>
+        <p>12 Mar: 3.0t @ R575/t</p>
         <p style="color:#6b8e4c;">📊 optimal reorder: 3 days</p>
       </div>
 
-      <!-- NEW: Expansion Trigger Engine Card -->
+      <!-- NEW Feed Forecast Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calculator gold-text"></i> feed forecast (month)</div>
+        <div class="cost-item"><span>🌾 total feed req.</span> <span id="totalFeedKg">11,025 kg</span></div>
+        <div class="cost-item"><span>🛍️ bags (50kg)</span> <span id="feedBags">221 bags</span></div>
+        <div class="cost-item"><span>💰 estimated cost</span> <span id="feedCostEstimate">R 85,085</span></div>
+      </div>
+
       <div class="card">
         <div class="card-title"><i class="fas fa-rocket gold-text"></i> expansion triggers</div>
-        <div id="triggerSuggestions">
-          <p>✅ profit = $15,000 → next: delivery vehicle at $40k</p>
-          <p>🚀 stock expansion at $60k profit</p>
-        </div>
-        <p class="badge">you are 62% toward vehicle trigger</p>
+        <div id="triggerSuggestions"><p>🚀 next: vehicle at R40,000</p></div>
+        <p class="badge" id="triggerProgress">you are 216% toward vehicle trigger</p>
         <button class="btn-gold" style="margin-top:8px; width:100%;">customize triggers</button>
       </div>
     </div>
 
-    <!-- BUDGET PANE -->
+    <!-- BUDGET PANE (cost tracker + adjustable cost per bird) -->
     <div class="tab-pane" id="budgetPane">
       <div class="card">
-        <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary</div>
-        <div class="cost-item"><span>🐔 chicken cost</span> <span>$21,400</span></div>
-        <div class="cost-item"><span>🌾 feed cost</span> <span>$11,200</span></div>
-        <div class="cost-item"><span>🚚 logistics</span> <span>$4,300</span></div>
-        <div class="cost-item"><span>👩‍🌾 labor</span> <span>$6,500</span></div>
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
+        <div class="cost-item"><span>🐔 chicken cost</span> <span id="plChickens">R 34,300</span></div>
+        <div class="cost-item"><span>🌾 feed cost</span> <span id="plFeed">R 85,085</span></div>
+        <div class="cost-item"><span>🚚 logistics</span> <span id="plLogistics">R 4,300</span></div>
+        <div class="cost-item"><span>👩‍🌾 labor</span> <span id="plLabor">R 6,500</span></div>
         <div class="cost-item" style="border-top:1px solid #333; margin-top:8px; padding-top:8px;">
-          <span class="gold-text">💰 revenue</span> <span>$58,200</span>
+          <span class="gold-text">💰 revenue</span> <span id="plRevenue">R 324,480</span>
         </div>
-        <div class="cost-item"><span>📈 profit margin</span> <span class="green-text">26% ($15,000)</span></div>
+        <div class="cost-item"><span>📈 profit margin</span> <span class="green-text" id="plMargin">26.6% (R 86,400)</span></div>
       </div>
+
+      <!-- Monthly cost tracker + adjustable cost per bird -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calculator gold-text"></i> monthly cost tracker</div>
+        <div class="cost-input"><label>🐤 chicks purchased</label> <input type="number" id="chicksCost" value="34300" step="100"></div>
+        <div class="cost-input"><label>🌾 feed cost</label> <input type="number" id="feedCost" value="85085" step="100"></div>
+        <div class="cost-input"><label>🚚 transport</label> <input type="number" id="transportCost" value="4300" step="100"></div>
+        <div class="cost-input"><label>👩‍🌾 labor</label> <input type="number" id="laborCost" value="6500" step="100"></div>
+        <div class="cost-input"><label>⚡ utilities</label> <input type="number" id="utilitiesCost" value="2100" step="100"></div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="equipmentCost" value="900" step="100"></div>
+        <div class="cost-input"><label>💀 losses</label> <input type="number" id="lossesCost" value="600" step="100"></div>
+        <hr>
+        <div class="cost-input"><label>🐔 adjustable cost/bird</label> <input type="number" id="adjustableCostPerBird" value="62" step="0.5"></div>
+        <div class="cost-item"><span>📉 total expenses</span> <span class="gold-text" id="totalExpenses">R 133,785</span></div>
+        <div class="cost-item"><span>🐔 cost per chicken</span> <span id="costPerChicken">R 34.84</span></div>
+      </div>
+
       <div class="card">
         <div class="card-title">⚡ optimization suggestions</div>
         <ul style="margin-left:20px; color:#ccc;">
@@ -496,33 +532,18 @@
         </ul>
       </div>
 
-      <!-- NEW: Cost Tracker Card -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-calculator gold-text"></i> monthly cost tracker</div>
-        <div class="cost-input"><label>🐤 chicks purchased</label> <input type="number" id="chicksCost" value="21400" step="100"></div>
-        <div class="cost-input"><label>🌾 feed cost</label> <input type="number" id="feedCost" value="11200" step="100"></div>
-        <div class="cost-input"><label>🚚 transport</label> <input type="number" id="transportCost" value="4300" step="100"></div>
-        <div class="cost-input"><label>👩‍🌾 labor</label> <input type="number" id="laborCost" value="6500" step="100"></div>
-        <div class="cost-input"><label>⚡ utilities</label> <input type="number" id="utilitiesCost" value="2100" step="100"></div>
-        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="equipmentCost" value="900" step="100"></div>
-        <div class="cost-input"><label>💀 losses</label> <input type="number" id="lossesCost" value="600" step="100"></div>
-        <hr>
-        <div class="cost-item"><span>📉 total expenses</span> <span class="gold-text" id="totalExpenses">$48,200</span></div>
-        <div class="cost-item"><span>🐔 cost per chicken</span> <span id="costPerChicken">$12.55</span></div>
-      </div>
-
-      <!-- NEW: Efficiency Monitor Card -->
+      <!-- Efficiency monitor (updated with ZAR) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> efficiency monitor</div>
-        <div class="cost-item"><span>🌾 feed / chicken</span> <span>5.2 kg</span></div>
-        <div class="cost-item"><span>💀 death rate</span> <span>1.8%</span></div>
-        <div class="cost-item"><span>👩‍🌾 labor cost / bird</span> <span>$2.10</span></div>
-        <div class="cost-item"><span>💰 profit / worker</span> <span>$3,750</span></div>
+        <div class="cost-item"><span>🌾 feed / chicken</span> <span>4.5 kg</span></div>
+        <div class="cost-item"><span>💀 death rate</span> <span id="deathRateDisplay">0.9%</span></div>
+        <div class="cost-item"><span>👩‍🌾 labor cost / bird</span> <span id="laborPerBird">R 1.69</span></div>
+        <div class="cost-item"><span>💰 profit / worker</span> <span id="profitPerWorker">R 28,800</span></div>
         <p class="badge" style="margin-top:6px;">⚠️ feed usage above optimal</p>
       </div>
     </div>
 
-    <!-- SETTINGS PANE -->
+    <!-- SETTINGS PANE (trigger thresholds) -->
     <div class="tab-pane" id="settingsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
@@ -535,13 +556,19 @@
         <button class="btn-gold" style="width:100%;"><i class="fas fa-link"></i> connect supabase</button>
       </div>
 
-      <!-- NEW: Expansion Triggers Settings Card -->
       <div class="card">
-        <div class="card-title"><i class="fas fa-gears gold-text"></i> expansion triggers (custom)</div>
-        <div class="cost-input"><label>🚛 vehicle trigger ($)</label> <input type="number" id="vehicleTrigger" value="40000" step="1000"></div>
-        <div class="cost-input"><label>📦 stock expansion ($)</label> <input type="number" id="stockTrigger" value="60000" step="1000"></div>
-        <div class="cost-input"><label>🏭 new farm ($)</label> <input type="number" id="farmTrigger" value="100000" step="1000"></div>
+        <div class="card-title"><i class="fas fa-gears gold-text"></i> expansion triggers (ZAR)</div>
+        <div class="cost-input"><label>🚛 vehicle trigger</label> <input type="number" id="vehicleTrigger" value="40000" step="1000"></div>
+        <div class="cost-input"><label>📦 stock expansion</label> <input type="number" id="stockTrigger" value="60000" step="1000"></div>
+        <div class="cost-input"><label>🏭 new farm</label> <input type="number" id="farmTrigger" value="100000" step="1000"></div>
         <button class="btn-gold" style="margin-top:8px;">save triggers</button>
+      </div>
+
+      <!-- by-product toggle -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-toggle-on gold-text"></i> by‑product settings</div>
+        <div class="cost-input"><label>💩 by‑product rev/bird</label> <input type="number" id="byproductPerBird" value="85" step="5"></div>
+        <div class="flex-row"><span class="badge">applies to standard/bulk</span></div>
       </div>
     </div>
   </div>
@@ -559,7 +586,7 @@
 
 <script>
   (function() {
-    // Tab switching logic (unchanged)
+    // Tab switching logic
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -585,7 +612,7 @@
       });
     });
 
-    // Keep existing button alerts
+    // Keep existing button alerts (minor)
     const btns = document.querySelectorAll('.btn-gold');
     btns.forEach(btn => {
       btn.addEventListener('click', (e) => {
@@ -596,8 +623,15 @@
       });
     });
 
-    // ---------- NEW BUSINESS INTELLIGENCE LOGIC ----------
-    // References to dynamic fields
+    // ---------- BUSINESS INTELLIGENCE LOGIC (ZAR, dynamic) ----------
+    // Constants / base values
+    const TOTAL_BIRDS = 2450;          // from dashboard
+    const SOLD_TODAY = 128;
+    const MONTHLY_SOLD = 3840;          // sales pane "this month"
+    const MORTALITY_RATE = 0.009;       // 0.9% (from death tracking)
+    const BYPRODUCT_PER_BIRD_DEFAULT = 85;
+
+    // Input references
     const chicksInput = document.getElementById('chicksCost');
     const feedInput = document.getElementById('feedCost');
     const transportInput = document.getElementById('transportCost');
@@ -605,23 +639,49 @@
     const utilitiesInput = document.getElementById('utilitiesCost');
     const equipmentInput = document.getElementById('equipmentCost');
     const lossesInput = document.getElementById('lossesCost');
+    const adjustableCostPerBird = document.getElementById('adjustableCostPerBird');
 
-    const totalExpensesSpan = document.getElementById('totalExpenses');
-    const costPerChickenSpan = document.getElementById('costPerChicken');
-    const totalRevenueSpan = document.getElementById('totalRevenue');
-    const revenuePerChickenSpan = document.getElementById('revenuePerChicken');
-    const netMonthlySpan = document.getElementById('netMonthly');
-    const profitPerChickenSpan = document.getElementById('profitPerChicken');
-    const projectedProfitSpan = document.getElementById('projectedProfit');
-    const profitTrendSpan = document.getElementById('profitTrend');
-    const currentProfitLevelSpan = document.getElementById('currentProfitLevel');
-    const gapText = document.getElementById('gapText');
-    const profitGapFill = document.getElementById('profitGapFill');
+    // Product mix inputs
+    const wholesalePct = document.getElementById('wholesalePct');
+    const retailPct = document.getElementById('retailPct');
+    const restaurantPct = document.getElementById('restaurantPct');
+    const subDiscount = document.getElementById('subDiscount');
+    const refDiscount = document.getElementById('refDiscount');
+    const byproductPerBirdInput = document.getElementById('byproductPerBird');
 
-    // Constants (mock revenue, chickens sold)
-    const monthlyRevenue = 58200;   // from P&L
-    const chickensSoldMonthly = 3840; // from sales pane "this month"
+    // Trigger inputs
+    const vehicleTrigger = document.getElementById('vehicleTrigger');
+    const stockTrigger = document.getElementById('stockTrigger');
+    const farmTrigger = document.getElementById('farmTrigger');
 
+    // Fixed prices (ZAR)
+    const PRICE_LIVE = 100;
+    const PRICE_STANDARD = 100;
+    const PRICE_PREMIUM = 115;
+    const PRICE_BULK = 75;
+
+    // Helper to compute weighted average selling price
+    function computeAvgPrice() {
+      let wp = parseFloat(wholesalePct.value) || 0;
+      let rp = parseFloat(retailPct.value) || 0;
+      let rest = parseFloat(restaurantPct.value) || 0;
+      let total = wp + rp + rest;
+      if (total === 0) return 84.5; // fallback
+      let avg = (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
+      return avg;
+    }
+
+    // Get by‑product revenue
+    function getByproductRevenue() {
+      let byPerBird = parseFloat(byproductPerBirdInput.value) || BYPRODUCT_PER_BIRD_DEFAULT;
+      // Assume standard + bulk = wholesale + retail percent (together)
+      let wp = parseFloat(wholesalePct.value) || 68;
+      let rp = parseFloat(retailPct.value) || 22;
+      let applicableBirds = MONTHLY_SOLD * (wp + rp) / 100;
+      return applicableBirds * byPerBird;
+    }
+
+    // Main update function
     function updateAll() {
       // Read cost inputs
       const chicks = parseFloat(chicksInput.value) || 0;
@@ -631,63 +691,122 @@
       const utilities = parseFloat(utilitiesInput.value) || 0;
       const equipment = parseFloat(equipmentInput.value) || 0;
       const losses = parseFloat(lossesInput.value) || 0;
-
       const totalCost = chicks + feed + transport + labor + utilities + equipment + losses;
-      totalExpensesSpan.innerText = '$' + totalCost.toLocaleString();
 
-      const costPerChicken = totalCost / chickensSoldMonthly;
-      costPerChickenSpan.innerText = '$' + costPerChicken.toFixed(2);
+      // Adjustable cost per bird
+      const adjCostPerBird = parseFloat(adjustableCostPerBird.value) || 62;
+      // Override: we can show it but not force total cost? We'll keep both.
 
-      // Revenue (from sales breakdown, but we use fixed for demo)
-      totalRevenueSpan.innerText = '$' + monthlyRevenue.toLocaleString();
-      const revenuePerChicken = monthlyRevenue / chickensSoldMonthly;
-      revenuePerChickenSpan.innerText = '$' + revenuePerChicken.toFixed(2);
+      // Weighted average price
+      const avgPrice = computeAvgPrice();
+      const byproductRev = getByproductRevenue();
+
+      // Revenue calculations
+      const monthlyRevenue = MONTHLY_SOLD * avgPrice;
+      const revenueToday = SOLD_TODAY * avgPrice;
+      const totalRevenue = monthlyRevenue; // plus byproduct? we add separately
+      const revenueLive = MONTHLY_SOLD * (parseFloat(wholesalePct.value)/100) * PRICE_BULK; // bulk as live?
+      const revenuePrep = MONTHLY_SOLD * (parseFloat(retailPct.value)/100) * PRICE_STANDARD;
+      const revenueBulk = MONTHLY_SOLD * (parseFloat(restaurantPct.value)/100) * PRICE_PREMIUM;
+      // byproduct already computed
 
       // Net profit
-      const netProfit = monthlyRevenue - totalCost;
-      netMonthlySpan.innerText = '$' + netProfit.toLocaleString();
-      const profitPerBird = netProfit / chickensSoldMonthly;
-      profitPerChickenSpan.innerText = '$' + profitPerBird.toFixed(2);
+      const netProfit = monthlyRevenue + byproductRev - totalCost;
 
-      // Projection (simple 3x, could be modified by growth buttons)
-      let baseProjection = netProfit * 3;
-      projectedProfitSpan.innerText = '$' + baseProjection.toLocaleString();
+      // Update text fields (ZAR formatting)
+      document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenueTodayValue').innerText = 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenueTodayDisplay').innerText = 'R ' + revenueToday.toFixed(0);
+      document.getElementById('netMonthly').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('profitPerChicken').innerText = 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2);
+      document.getElementById('weightedAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('todaySalesAvgPrice').innerHTML = `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`;
+      document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
+      document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
 
-      // Profit trend mock
-      profitTrendSpan.innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
+      // Revenue breakdown
+      document.getElementById('revLive').innerText = 'R ' + revenueLive.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revPrep').innerText = 'R ' + revenuePrep.toFixed(0);
+      document.getElementById('revBulk').innerText = 'R ' + revenueBulk.toFixed(0);
+      document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0);
+      document.getElementById('revManure').innerText = 'R 3,000'; // static
 
-      // Growth checkpoint (R3 = 15k, R5 = 30k, etc.)
-      const profitK = netProfit / 1000;
+      // KPIs
+      document.getElementById('kpiActiveBirds').innerText = (TOTAL_BIRDS * (1 - MORTALITY_RATE)).toFixed(0);
+      document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
+      // subscription % mock
+      document.getElementById('kpiSubPct').innerText = '18%';
+      document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // P&L summary
+      document.getElementById('plChickens').innerText = 'R ' + chicks.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('plFeed').innerText = 'R ' + feed.toFixed(0);
+      document.getElementById('plLogistics').innerText = 'R ' + transport.toFixed(0);
+      document.getElementById('plLabor').innerText = 'R ' + labor.toFixed(0);
+      document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const margin = ((netProfit) / (monthlyRevenue + byproductRev) * 100).toFixed(1);
+      document.getElementById('plMargin').innerHTML = `${margin}% (R ${netProfit.toFixed(0)})`;
+
+      // Profit projection & growth checkpoint
+      const netProfitNum = netProfit;
+      document.getElementById('projectedProfit').innerText = 'R ' + (netProfitNum * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       let level = 'R1';
-      if (profitK >= 50) level = 'R8';
-      else if (profitK >= 30) level = 'R5';
-      else if (profitK >= 15) level = 'R3';
-      else level = 'R1';
-      currentProfitLevelSpan.innerText = level + ' ($' + (profitK*1000).toLocaleString() + ')';
+      if (netProfitNum >= 80000) level = 'R5 (80k+)';
+      else if (netProfitNum >= 50000) level = 'R4 (50k)';
+      else if (netProfitNum >= 30000) level = 'R3 (30k)';
+      else level = 'R2 (15k)';
+      document.getElementById('currentProfitLevel').innerText = level;
 
-      // Next target: e.g., if at R3 (15k), next is R5 (30k)
-      let nextTarget = 30000;
-      if (profitK >= 30) nextTarget = 50000;
-      if (profitK >= 50) nextTarget = 80000;
-      const gap = nextTarget - netProfit;
-      gapText.innerText = gap > 0 ? `gap to next level: $${gap.toLocaleString()}` : 'target reached!';
-      const fillPercent = Math.min(100, (netProfit / nextTarget) * 100);
-      profitGapFill.style.width = fillPercent + '%';
+      let nextTarget = 150000;
+      if (netProfitNum < 30000) nextTarget = 30000;
+      else if (netProfitNum < 50000) nextTarget = 50000;
+      else if (netProfitNum < 80000) nextTarget = 80000;
+      else nextTarget = 150000;
+      document.getElementById('nextTargetDisplay').innerText = 'R ' + nextTarget.toLocaleString();
+      const gap = nextTarget - netProfitNum;
+      document.getElementById('gapText').innerText = gap > 0 ? `gap to next level: R ${gap.toLocaleString()}` : 'target reached!';
+      const fillPercent = Math.min(100, (netProfitNum / nextTarget) * 100);
+      document.getElementById('profitGapFill').style.width = fillPercent + '%';
 
-      // Expansion triggers (simple text update based on net profit)
-      const vehicleTrigger = parseFloat(document.getElementById('vehicleTrigger').value) || 40000;
-      const stockTrigger = parseFloat(document.getElementById('stockTrigger').value) || 60000;
-      const farmTrigger = parseFloat(document.getElementById('farmTrigger').value) || 100000;
-      let suggestions = '';
-      if (netProfit >= farmTrigger) suggestions = '✅ new farm triggered!';
-      else if (netProfit >= stockTrigger) suggestions = '✅ stock expansion triggered!';
-      else if (netProfit >= vehicleTrigger) suggestions = '✅ delivery vehicle triggered!';
-      else suggestions = `🚀 next: vehicle at $${vehicleTrigger.toLocaleString()}`;
-      document.getElementById('triggerSuggestions').innerHTML = `<p>${suggestions}</p>`;
+      // Feed forecast
+      const feedPerBird = 4.5; // kg
+      const totalFeedKg = TOTAL_BIRDS * feedPerBird;
+      const bags = totalFeedKg / 50;
+      const feedCostEst = bags * 385; // R385 per bag
+      document.getElementById('totalFeedKg').innerText = totalFeedKg.toFixed(0) + ' kg';
+      document.getElementById('feedBags').innerText = Math.ceil(bags) + ' bags';
+      document.getElementById('feedCostEstimate').innerText = 'R ' + feedCostEst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // Expansion triggers
+      const vTrigger = parseFloat(vehicleTrigger.value) || 40000;
+      const sTrigger = parseFloat(stockTrigger.value) || 60000;
+      const fTrigger = parseFloat(farmTrigger.value) || 100000;
+      let triggerMsg = '';
+      if (netProfitNum >= fTrigger) triggerMsg = '✅ new farm triggered!';
+      else if (netProfitNum >= sTrigger) triggerMsg = '✅ stock expansion triggered!';
+      else if (netProfitNum >= vTrigger) triggerMsg = '✅ delivery vehicle triggered!';
+      else triggerMsg = `🚀 next: vehicle at R ${vTrigger.toLocaleString()}`;
+      document.getElementById('triggerSuggestions').innerHTML = `<p>${triggerMsg}</p>`;
+      document.getElementById('triggerProgress').innerText = `you are ${((netProfitNum/vTrigger)*100).toFixed(0)}% toward vehicle trigger`;
+
+      // Efficiency monitor
+      document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      document.getElementById('laborPerBird').innerText = 'R ' + (labor / TOTAL_BIRDS).toFixed(2);
+      document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      // Sales pane percentages
+      document.getElementById('wholesaleVal').innerText = wholesalePct.value;
+      document.getElementById('retailVal').innerText = retailPct.value;
+      document.getElementById('restaurantVal').innerText = restaurantPct.value;
     }
 
-    // Attach input listeners
-    const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput];
+    // Attach listeners
+    const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger];
     costInputs.forEach(inp => inp.addEventListener('input', updateAll));
 
     // Growth simulation buttons
@@ -695,42 +814,27 @@
     growthBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const growth = parseInt(btn.dataset.growth) / 100;
-        const netProfit = parseFloat(netMonthlySpan.innerText.replace('$', '').replace(',', '')) || 15000;
+        const netProfit = parseFloat(document.getElementById('netMonthly').innerText.replace('R', '').replace(',', '')) || 86400;
         const projected = netProfit * 3 * (1 + growth);
-        projectedProfitSpan.innerText = '$' + projected.toFixed(0).toLocaleString();
+        document.getElementById('projectedProfit').innerText = 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         document.getElementById('growthHint').innerText = `simulating +${btn.dataset.growth}% growth`;
       });
     });
 
-    // Also update when trigger inputs change
-    document.getElementById('vehicleTrigger').addEventListener('input', updateAll);
-    document.getElementById('stockTrigger').addEventListener('input', updateAll);
-    document.getElementById('farmTrigger').addEventListener('input', updateAll);
-
-    // Initial update
+    // initial update
     updateAll();
 
-    console.log('Luxury Poultry Dashboard — BI modules added (cards only, existing content unchanged).');
+    console.log('Luxury Poultry Dashboard — ZAR currency, dynamic pricing, cost model integrated.');
   })();
 </script>
 
-<!-- backend ready note (unchanged, but extended with new tables) -->
+<!-- backend notes updated -->
 <!-- 
-  DATABASE (SUPABASE) tables expected:
-  - inventory (id, batch_code, breed, purchase_date, initial_qty, deaths, available, expected_growth)
-  - sales (id, date, quantity, price_per_unit, customer_type)
-  - logistics (id, driver, vehicle, assignment, feed_purchases)
-  - expenses (feed, labor, fuel, etc)
-  - users (role, permissions)
-  - analytics (pre-calculated KPIs)
-
-  NEW TABLES FOR BI:
-  - cost_tracker (month, chicks, feed, transport, labor, utilities, equipment, losses)
-  - revenue_breakdown (month, live, prepared, bulk, byproducts, manure)
-  - expansion_triggers (id, trigger_name, threshold, active)
-
-  API endpoints would be built with DeepSeek backend, deployed to Railway.
-  This frontend can be hosted on Netlify and connected via Supabase JS client.
+  DATABASE (SUPABASE) tables extended:
+  - cost_tracker (month, chicks, feed, transport, labor, utilities, equipment, losses, adjustable_cost_per_bird)
+  - product_mix (wholesale_pct, retail_pct, restaurant_pct, sub_discount, ref_discount)
+  - byproduct_settings (revenue_per_bird)
+  - expansion_triggers (vehicle, stock, farm)
 -->
 </body>
 </html>
