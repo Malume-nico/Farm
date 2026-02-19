@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard + INFRA/EMERGENCY</title>
+  <title>POULTRY · luxury dashboard (ZAR) + rewards</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -78,12 +78,12 @@
       background: rgba(212, 175, 55, 0.3);
     }
 
-    /* three-dots dropdown panel — now with 3 items */
+    /* three-dots dropdown panel */
     .more-panel {
       position: absolute;
       top: 70px;
       right: 20px;
-      width: 220px;
+      width: 200px;
       background: rgba(20, 20, 20, 0.95);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -369,13 +369,13 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three dots -->
+  <!-- header with three dots (replaced QR) -->
   <div class="header">
     <h1>🐔 POULTRY</h1>
     <i class="fas fa-ellipsis-v" id="moreMenuToggle"></i>
   </div>
 
-  <!-- three-dots panel: Settings, Rewards, INFRA & EMERGENCY (new) -->
+  <!-- three-dots panel (Settings + Rewards) -->
   <div class="more-panel" id="morePanel">
     <div class="more-item" data-tab="settings">
       <i class="fas fa-gear"></i> <span>Settings</span>
@@ -383,14 +383,11 @@
     <div class="more-item" data-tab="rewards">
       <i class="fas fa-gift"></i> <span>Rewards</span>
     </div>
-    <div class="more-item" data-tab="infraEmergency">
-      <i class="fas fa-hard-hat"></i> <span>Infra & Emergency</span>
-    </div>
   </div>
 
-  <!-- main content area: all panes (existing + infraEmergencyPane) -->
+  <!-- main content area: all 7 panes (unchanged) -->
   <div class="main-content" id="mainContent">
-    <!-- DASHBOARD PANE (unchanged except added net after infra) -->
+    <!-- DASHBOARD PANE -->
     <div class="tab-pane active" id="dashboardPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
@@ -406,14 +403,11 @@
           <div style="display: flex; justify-content: space-between;"><span>🐔 remaining stock</span> <strong id="remainingStockDisplay">2,322</strong></div>
           <div style="display: flex; justify-content: space-between;"><span>📦 upcoming batch</span> <strong>650 (in 4d)</strong></div>
           <hr>
-          <!-- Original net profit (operating) -->
-          <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 operating profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
-          <!-- NEW: net after infra/emergency allocations -->
-          <div style="display: flex; justify-content: space-between; font-size: 1.1rem; margin-top: 8px;"><span>🏗️ net after infra/emergency</span> <strong class="gold-text" id="netAfterAllocationsDisplay">R 69,120</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 net profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
         </div>
       </div>
 
-      <!-- NEW KPI CARD (unchanged) -->
+      <!-- NEW KPI CARD (Admin) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> key performance indicators</div>
         <div class="grid-2">
@@ -445,9 +439,9 @@
 
       <!-- Net Profit & Projection Card (updated with ZAR) -->
       <div class="card" id="profitOverviewCard">
-        <div class="card-title"><i class="fas fa-coins gold-text"></i> operating profit & projection</div>
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> net profit & projection</div>
         <div class="grid-2">
-          <div class="stat"><span class="stat-label">monthly operating</span><div class="stat-value" id="netMonthly">R 86,400</div></div>
+          <div class="stat"><span class="stat-label">net monthly profit</span><div class="stat-value" id="netMonthly">R 86,400</div></div>
           <div class="stat"><span class="stat-label">profit / chicken</span><div class="stat-value" id="profitPerChicken">R 22.50</div></div>
         </div>
         <div style="display: flex; justify-content: space-between; margin: 8px 0;">
@@ -464,7 +458,7 @@
       </div>
     </div>
 
-        <!-- INVENTORY PANE -->
+    <!-- INVENTORY PANE -->
     <div class="tab-pane" id="inventoryPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
@@ -679,87 +673,40 @@
         </div>
       </div>
 
-    <!-- NEW INFRA & EMERGENCY PANE (fully implemented) -->
-    <div class="tab-pane" id="infraEmergencyPane">
-      <!-- 1. Budget Categories Overview -->
+      <!-- admin controls -->
       <div class="card">
-        <div class="card-title"><i class="fas fa-layer-group gold-text"></i> budget categories (current)</div>
-        <div class="cost-item"><span>🏗️ infrastructure upgrades</span> <span class="gold-text" id="budgetInfra">R 12,000</span></div>
-        <div class="cost-item"><span>🔧 equipment upgrades</span> <span id="budgetEquip">R 8,000</span></div>
-        <div class="cost-item"><span>🛠️ new tooling</span> <span id="budgetTool">R 3,500</span></div>
-        <div class="cost-item"><span>🚚 transport & logistics</span> <span id="budgetLogi">R 4,200</span></div>
-        <div class="cost-item"><span>📦 packaging & marketing</span> <span id="budgetPack">R 2,800</span></div>
-        <div class="cost-item"><span>🆘 emergency fund (insured)</span> <span id="emergencyIns">R 10,000</span></div>
-        <div class="cost-item"><span>⚠️ emergency fund (non‑insured)</span> <span id="emergencyNon">R 5,000</span></div>
-        <div class="cost-item" style="border-top:1px solid #333;"><span>💰 total allocated</span> <span class="gold-text" id="totalAllocated">R 45,500</span></div>
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> reward rules (admin)</div>
+        <div class="cost-input"><label>✅ enable rewards</label> <input type="checkbox" id="enableRewards" checked style="width:20px;"></div>
+        <div class="cost-input"><label>🐔 chickens per reward</label> <input type="number" id="chickensPerReward" value="10" min="1" step="1"></div>
+        <div class="cost-input"><label>📅 streak days</label> <input type="number" id="streakDays" value="7" min="1"></div>
+        <div class="cost-input"><label>💰 discount %</label> <input type="number" id="rewardDiscount" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 double by‑product day</label> <input type="checkbox" id="doubleByproduct" checked></div>
+        <div class="cost-input"><label>👥 referral credit (R)</label> <input type="number" id="referralCreditValue" value="50" step="5"></div>
+        <button class="btn-small" id="simulatePurchaseBtn" style="margin-top:6px;"><i class="fas fa-cart-plus"></i> simulate purchase</button>
       </div>
 
-      <!-- 2. Dynamic Allocation Rules -->
+      <!-- swipeable reward cards -->
       <div class="card">
-        <div class="card-title"><i class="fas fa-arrow-right-arrow-left gold-text"></i> dynamic allocation</div>
-        <div class="cost-item"><span>📊 available operating profit</span> <span id="allocProfitBase">R 86,400</span></div>
-        <div class="cost-item"><span>🏭 current capacity / demand</span> <span id="capacityStatus">2,450 / 3,200</span></div>
-        <div class="cost-item"><span>📈 40% to infra (if needed)</span> <span id="infraAlloc">R 34,560</span></div>
-        <div class="cost-item"><span>⚖️ remaining split (equip/tool/logi/pack)</span> <span id="remainingSplit">R 51,840</span></div>
-        <div class="cost-item"><span>🆘 emergency top‑up needed</span> <span id="emergencyTopup">R 2,000</span></div>
-        <p class="badge" id="allocRuleDesc">rule: 40% to infra because capacity < projected demand</p>
-        <button class="btn-small" id="applyAllocationBtn">apply this month</button>
+        <div class="card-title"><i class="fas fa-id-card gold-text"></i> active rewards (swipe)</div>
+        <div class="cards-scroll" id="rewardCardsContainer">
+          <!-- dynamically filled from js -->
+        </div>
       </div>
 
-      <!-- 3. Emergency Fund Annual Cycle -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-rotate-left gold-text"></i> emergency fund cycle</div>
-        <div class="cost-item"><span>🔄 current emergency total</span> <span id="emergencyTotal">R 15,000</span></div>
-        <div class="cost-item"><span>📅 year‑end rollover (60%)</span> <span id="rolloverAmount">R 9,000</span></div>
-        <div class="cost-item"><span>📈 reinvest 40% (infra/equip/tool)</span> <span id="reinvestAmount">R 6,000</span></div>
-        <div class="cost-item"><span>🎯 next year base</span> <span id="nextYearBase">R 9,000</span></div>
-        <p class="helper-text" id="rolloverNote">if rollover >60% of planned, next allocation reduced</p>
-      </div>
-
-      <!-- 4. Growth‑Linked Infrastructure -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> growth‑linked infra</div>
-        <div class="cost-input"><label>📊 projected monthly demand</label> <input type="number" id="projectedDemand" value="3200" step="50"></div>
-        <div class="cost-input"><label>🏭 current capacity (birds)</label> <input type="number" id="currentCapacity" value="2450" step="50"></div>
-        <div class="cost-item"><span>⚙️ required investment</span> <span class="gold-text" id="requiredInvestment">R 187,500</span></div>
-        <div class="cost-item"><span>💡 suggestion</span> <span id="upgradeSuggestion">add 2 feeders, 1 climate unit</span></div>
-        <button class="btn-gold" style="width:100%;" id="triggerUpgradeBtn">trigger upgrade suggestion</button>
-      </div>
-
-      <!-- 5. Long‑Term Planning Section -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> long‑term planning</div>
-        <div class="cost-input"><label>🏞️ land acquisition (R)</label> <input type="number" id="landGoal" value="350000" step="1000"></div>
-        <div class="cost-input"><label>🏭 facility expansion (R)</label> <input type="number" id="facilityGoal" value="500000" step="1000"></div>
-        <div class="cost-input"><label>⚙️ new machinery (R)</label> <input type="number" id="machineryGoal" value="120000" step="1000"></div>
-        <div class="cost-input"><label>📅 timeline (months)</label> <input type="number" id="timelineMonths" value="12" min="1"></div>
-        <hr>
-        <div class="cost-item"><span>📈 total investment needed</span> <span class="gold-text" id="totalLongTerm">R 970,000</span></div>
-        <div class="cost-item"><span>💰 monthly allocation required</span> <span id="monthlyAllocNeeded">R 80,833</span></div>
-        <p class="badge" id="feasibilityMsg">feasible with current profit</p>
-      </div>
-
-      <!-- 6. Integration with Profit Forecast (already shown in dashboard) -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> net profit after allocations</div>
-        <div class="cost-item"><span>📉 operating profit</span> <span id="netOpForInfra">R 86,400</span></div>
-        <div class="cost-item"><span>➖ total allocated this month</span> <span id="totalAllocThisMonth">R 17,280</span></div>
-        <div class="cost-item" style="border-top:1px solid #333;"><span>✅ net after infra/emergency</span> <span class="gold-text" id="netAfterInfraDisplay">R 69,120</span></div>
-      </div>
-
-      <!-- 7. Notifications / Alerts -->
-      <div class="card">
-        <div class="card-title"><i class="fas fa-bell gold-text"></i> alerts & notifications</div>
-        <ul style="margin-left:20px; color:#ccc;" id="alertList">
-          <li>⚠️ capacity at 77% – consider infrastructure upgrade</li>
-          <li>🆘 emergency fund below min threshold (R 15,000 / R 20,000)</li>
-          <li>📆 year‑end rollover coming: 40% to reinvest</li>
-        </ul>
+      <!-- rewards table -->
+      <div class="card reward-table">
+        <div class="card-title"><i class="fas fa-table gold-text"></i> all customer rewards</div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>Customer</th><th>Type</th><th>Progress</th><th>Status</th><th>Expiry</th><th>Discount</th></tr></thead>
+            <tbody id="rewardsTableBody"></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- bottom navigation (unchanged, 5 items) -->
+  <!-- bottom navigation (only 5 items: settings & rewards removed) -->
   <div class="bottom-nav">
     <div class="nav-item active" data-tab="dashboard"><i class="fas fa-chart-pie"></i><span>Home</span></div>
     <div class="nav-item" data-tab="inventory"><i class="fas fa-egg"></i><span>Stock</span></div>
@@ -771,7 +718,7 @@
 
 <script>
   (function() {
-    // ----- tab switching (updated with infraEmergency) -----
+    // ----- tab switching (updated with rewards) -----
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -780,16 +727,18 @@
       logistics: document.getElementById('logisticsPane'),
       budget: document.getElementById('budgetPane'),
       settings: document.getElementById('settingsPane'),
-      rewards: document.getElementById('rewardsPane'),
-      infraEmergency: document.getElementById('infraEmergencyPane')
+      rewards: document.getElementById('rewardsPane')
     };
 
     function setActiveTab(tabId) {
       navItems.forEach(item => item.classList.remove('active'));
       Object.values(panes).forEach(pane => pane.classList.remove('active'));
+      // find bottom nav item with this tab
       const activeNav = Array.from(navItems).find(item => item.dataset.tab === tabId);
       if (activeNav) activeNav.classList.add('active');
       if (panes[tabId]) panes[tabId].classList.add('active');
+
+      // also close the more panel if open
       document.getElementById('morePanel').classList.remove('show');
     }
 
@@ -800,272 +749,309 @@
       });
     });
 
-    // three-dots menu
+    // ----- three-dots menu handling -----
     const moreToggle = document.getElementById('moreMenuToggle');
     const morePanel = document.getElementById('morePanel');
+
     moreToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       morePanel.classList.toggle('show');
     });
+
+    // panel items click
     document.querySelectorAll('.more-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        const tabId = item.dataset.tab; // 'settings', 'rewards', 'infraEmergency'
+        const tabId = item.dataset.tab; // 'settings' or 'rewards'
         setActiveTab(tabId);
       });
     });
+
+    // close panel when clicking outside
     document.addEventListener('click', (e) => {
       if (!morePanel.contains(e.target) && !moreToggle.contains(e.target)) {
         morePanel.classList.remove('show');
       }
     });
 
-    // ========== INFRASTRUCTURE & EMERGENCY MODULE STATE ==========
-    // Budget categories (monthly allocation amounts)
-    let budgetAllocations = {
-      infra: 12000,
-      equip: 8000,
-      tool: 3500,
-      logistics: 4200,
-      packaging: 2800,
-      emergencyIns: 10000,
-      emergencyNon: 5000
+    // ----- rewards data & settings (identical to original) -----
+    let rewardsData = [
+      { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
+      { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
+      { customerId: 103, name: 'Thabo Fresh', type: 'referral', progress: 2, target: 3, status: 'active', expiry: '2025-04-10', discount: 10, byproductBoost: false, referralCredit: 50 },
+      { customerId: 104, name: 'Lynn’s Table', type: 'by-product bonus', progress: 6, target: 6, status: 'claimed', expiry: '2025-03-22', discount: 8, byproductBoost: true, referralCredit: 0 },
+      { customerId: 105, name: 'Mama’s Takeaways', type: 'streak', progress: 7, target: 7, status: 'upcoming', expiry: '2025-04-01', discount: 12, byproductBoost: false, referralCredit: 0 }
+    ];
+
+    let rewardSettings = {
+      enabled: true,
+      chickensPerReward: 10,
+      streakDays: 7,
+      baseDiscount: 8,
+      doubleByproduct: true,
+      referralCredit: 50
     };
 
-    // Emergency fund thresholds
-    const EMERGENCY_MIN_TOTAL = 20000; // minimum desired total
-    let emergencyTotal = budgetAllocations.emergencyIns + budgetAllocations.emergencyNon;
+    // DOM elements for rewards pane
+    const rewardsClaimedSpan = document.getElementById('rewardsClaimed');
+    const activeRewardsSpan = document.getElementById('activeRewards');
+    const upcomingRewardsSpan = document.getElementById('upcomingRewards');
+    const byproductBonusSpan = document.getElementById('byproductBonusUptake');
+    const referralCreditsSpan = document.getElementById('referralCredits');
+    const rewardCardsContainer = document.getElementById('rewardCardsContainer');
+    const rewardsTableBody = document.getElementById('rewardsTableBody');
 
-    // Growth-linked infrastructure
-    let projectedDemand = 3200;
-    let currentCapacity = 2450;
-    const COST_PER_UNIT_CAPACITY = 250; // rough R per bird capacity increase
+    // admin inputs
+    const enableRewardsChk = document.getElementById('enableRewards');
+    const chickensPerRewardInp = document.getElementById('chickensPerReward');
+    const streakDaysInp = document.getElementById('streakDays');
+    const rewardDiscountInp = document.getElementById('rewardDiscount');
+    const doubleByproductChk = document.getElementById('doubleByproduct');
+    const referralCreditInp = document.getElementById('referralCreditValue');
+    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
 
-    // Long-term goals
-    let landGoal = 350000;
-    let facilityGoal = 500000;
-    let machineryGoal = 120000;
-    let timelineMonths = 12;
+    function updateRewardsUI() {
+      const claimed = rewardsData.filter(r => r.status === 'claimed').length;
+      const active = rewardsData.filter(r => r.status === 'active').length;
+      const upcoming = rewardsData.filter(r => r.status === 'upcoming').length;
+      const byproductUptake = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
+      const totalReferral = rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+      rewardsClaimedSpan.innerText = claimed;
+      activeRewardsSpan.innerText = active;
+      upcomingRewardsSpan.innerText = upcoming;
+      byproductBonusSpan.innerText = byproductUptake;
+      referralCreditsSpan.innerText = 'R ' + totalReferral.toLocaleString();
 
-    // References to new UI elements
-    const budgetInfraEl = document.getElementById('budgetInfra');
-    const budgetEquipEl = document.getElementById('budgetEquip');
-    const budgetToolEl = document.getElementById('budgetTool');
-    const budgetLogiEl = document.getElementById('budgetLogi');
-    const budgetPackEl = document.getElementById('budgetPack');
-    const emergencyInsEl = document.getElementById('emergencyIns');
-    const emergencyNonEl = document.getElementById('emergencyNon');
-    const totalAllocatedEl = document.getElementById('totalAllocated');
-    const allocProfitBaseEl = document.getElementById('allocProfitBase');
-    const capacityStatusEl = document.getElementById('capacityStatus');
-    const infraAllocEl = document.getElementById('infraAlloc');
-    const remainingSplitEl = document.getElementById('remainingSplit');
-    const emergencyTopupEl = document.getElementById('emergencyTopup');
-    const allocRuleDescEl = document.getElementById('allocRuleDesc');
-    const emergencyTotalEl = document.getElementById('emergencyTotal');
-    const rolloverAmountEl = document.getElementById('rolloverAmount');
-    const reinvestAmountEl = document.getElementById('reinvestAmount');
-    const nextYearBaseEl = document.getElementById('nextYearBase');
-    const requiredInvestmentEl = document.getElementById('requiredInvestment');
-    const upgradeSuggestionEl = document.getElementById('upgradeSuggestion');
-    const totalLongTermEl = document.getElementById('totalLongTerm');
-    const monthlyAllocNeededEl = document.getElementById('monthlyAllocNeeded');
-    const feasibilityMsgEl = document.getElementById('feasibilityMsg');
-    const netAfterInfraDisplay = document.getElementById('netAfterInfraDisplay');
-    const netAfterAllocationsDisplay = document.getElementById('netAfterAllocationsDisplay');
-    const netOpForInfraEl = document.getElementById('netOpForInfra');
-    const totalAllocThisMonthEl = document.getElementById('totalAllocThisMonth');
-    const alertListEl = document.getElementById('alertList');
-
-    // Inputs
-    const projectedDemandInp = document.getElementById('projectedDemand');
-    const currentCapacityInp = document.getElementById('currentCapacity');
-    const landGoalInp = document.getElementById('landGoal');
-    const facilityGoalInp = document.getElementById('facilityGoal');
-    const machineryGoalInp = document.getElementById('machineryGoal');
-    const timelineMonthsInp = document.getElementById('timelineMonths');
-    const applyAllocationBtn = document.getElementById('applyAllocationBtn');
-    const triggerUpgradeBtn = document.getElementById('triggerUpgradeBtn');
-
-    // Helper: get current operating profit from the main dashboard (reuse existing logic)
-    function getOperatingProfit() {
-      const netMonthlyEl = document.getElementById('netMonthly');
-      if (netMonthlyEl) {
-        return parseFloat(netMonthlyEl.innerText.replace('R', '').replace(',', '')) || 86400;
-      }
-      return 86400; // fallback
-    }
-
-    // Update all infra/emergency UI based on current state and profit
-    function updateInfraEmergencyUI() {
-      const operatingProfit = getOperatingProfit();
-      allocProfitBaseEl.innerText = 'R ' + operatingProfit.toLocaleString();
-
-      // capacity / demand
-      projectedDemand = parseInt(projectedDemandInp.value) || 3200;
-      currentCapacity = parseInt(currentCapacityInp.value) || 2450;
-      capacityStatusEl.innerText = currentCapacity + ' / ' + projectedDemand;
-
-      // Dynamic allocation rule: 40% to infra if currentCapacity < projectedDemand
-      let infraAlloc = 0, remaining = operatingProfit;
-      if (currentCapacity < projectedDemand) {
-        infraAlloc = operatingProfit * 0.4;
-        remaining = operatingProfit - infraAlloc;
-        allocRuleDescEl.innerText = 'rule: 40% to infra because capacity < projected demand';
-      } else {
-        allocRuleDescEl.innerText = 'rule: capacity sufficient, no forced infra allocation';
-      }
-      infraAllocEl.innerText = 'R ' + infraAlloc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      remainingSplitEl.innerText = 'R ' + remaining.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-      // Emergency top-up needed to reach minimum threshold
-      emergencyTotal = budgetAllocations.emergencyIns + budgetAllocations.emergencyNon;
-      let topupNeeded = Math.max(0, EMERGENCY_MIN_TOTAL - emergencyTotal);
-      emergencyTopupEl.innerText = 'R ' + topupNeeded.toLocaleString();
-
-      // Apply hypothetical allocation (if we click "apply", we'd modify budgetAllocations)
-      // For display, we show the current budget categories
-      budgetInfraEl.innerText = 'R ' + budgetAllocations.infra.toLocaleString();
-      budgetEquipEl.innerText = 'R ' + budgetAllocations.equip.toLocaleString();
-      budgetToolEl.innerText = 'R ' + budgetAllocations.tool.toLocaleString();
-      budgetLogiEl.innerText = 'R ' + budgetAllocations.logistics.toLocaleString();
-      budgetPackEl.innerText = 'R ' + budgetAllocations.packaging.toLocaleString();
-      emergencyInsEl.innerText = 'R ' + budgetAllocations.emergencyIns.toLocaleString();
-      emergencyNonEl.innerText = 'R ' + budgetAllocations.emergencyNon.toLocaleString();
-      let totalAlloc = Object.values(budgetAllocations).reduce((a,b)=>a+b,0);
-      totalAllocatedEl.innerText = 'R ' + totalAlloc.toLocaleString();
-
-      // Emergency cycle
-      emergencyTotalEl.innerText = 'R ' + emergencyTotal.toLocaleString();
-      let rollover = emergencyTotal * 0.6;
-      let reinvest = emergencyTotal * 0.4;
-      rolloverAmountEl.innerText = 'R ' + rollover.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      reinvestAmountEl.innerText = 'R ' + reinvest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      nextYearBaseEl.innerText = 'R ' + rollover.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-      // Growth-linked infrastructure investment suggestion
-      let capacityGap = Math.max(0, projectedDemand - currentCapacity);
-      let requiredInvestment = capacityGap * COST_PER_UNIT_CAPACITY;
-      requiredInvestmentEl.innerText = 'R ' + requiredInvestment.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (capacityGap > 0) {
-        let feeders = Math.ceil(capacityGap / 500);
-        let climate = capacityGap > 1000 ? '1 climate unit' : 'ventilation upgrade';
-        upgradeSuggestionEl.innerText = `add ${feeders} feeders, ${climate}`;
-      } else {
-        upgradeSuggestionEl.innerText = 'capacity sufficient';
-      }
-
-      // Long-term planning
-      landGoal = parseFloat(landGoalInp.value) || 350000;
-      facilityGoal = parseFloat(facilityGoalInp.value) || 500000;
-      machineryGoal = parseFloat(machineryGoalInp.value) || 120000;
-      timelineMonths = parseInt(timelineMonthsInp.value) || 12;
-      let totalLongTerm = landGoal + facilityGoal + machineryGoal;
-      totalLongTermEl.innerText = 'R ' + totalLongTerm.toLocaleString();
-      let monthlyNeeded = totalLongTerm / timelineMonths;
-      monthlyAllocNeededEl.innerText = 'R ' + monthlyNeeded.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if (monthlyNeeded <= operatingProfit * 0.5) {
-        feasibilityMsgEl.innerText = '✅ feasible with current profit';
-      } else {
-        feasibilityMsgEl.innerText = '⚠️可能需要调整目标或延长周期';
-      }
-
-      // Net profit after allocations (example: suppose we allocate 20% of operating profit to all categories)
-      let totalAllocThisMonth = operatingProfit * 0.2; // placeholder, could be dynamic
-      totalAllocThisMonthEl.innerText = 'R ' + totalAllocThisMonth.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      let netAfter = operatingProfit - totalAllocThisMonth;
-      netAfterInfraDisplay.innerText = 'R ' + netAfter.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      netAfterAllocationsDisplay.innerText = 'R ' + netAfter.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      netOpForInfraEl.innerText = 'R ' + operatingProfit.toLocaleString();
-
-      // Alerts
-      let alerts = [];
-      if (currentCapacity / projectedDemand > 0.75) {
-        alerts.push('⚠️ capacity at ' + Math.round(currentCapacity/projectedDemand*100) + '% – consider infrastructure upgrade');
-      }
-      if (emergencyTotal < EMERGENCY_MIN_TOTAL) {
-        alerts.push('🆘 emergency fund below min threshold (R ' + emergencyTotal + ' / R ' + EMERGENCY_MIN_TOTAL + ')');
-      }
-      alerts.push('📆 year‑end rollover: 40% to reinvest');
-      alertListEl.innerHTML = alerts.map(a => '<li>' + a + '</li>').join('');
-    }
-
-    // Event listeners for infraEmergency inputs
-    projectedDemandInp.addEventListener('input', updateInfraEmergencyUI);
-    currentCapacityInp.addEventListener('input', updateInfraEmergencyUI);
-    landGoalInp.addEventListener('input', updateInfraEmergencyUI);
-    facilityGoalInp.addEventListener('input', updateInfraEmergencyUI);
-    machineryGoalInp.addEventListener('input', updateInfraEmergencyUI);
-    timelineMonthsInp.addEventListener('input', updateInfraEmergencyUI);
-
-    applyAllocationBtn.addEventListener('click', () => {
-      // Simulate applying allocation: add to budget categories (simplified)
-      const operatingProfit = getOperatingProfit();
-      let infraAdd = 0;
-      if (currentCapacity < projectedDemand) {
-        infraAdd = operatingProfit * 0.4;
-      }
-      // Distribute remaining proportionally (just a demo)
-      let remaining = operatingProfit - infraAdd;
-      budgetAllocations.infra += infraAdd * 0.1; // just for demo
-      budgetAllocations.equip += remaining * 0.2;
-      budgetAllocations.tool += remaining * 0.1;
-      budgetAllocations.logistics += remaining * 0.1;
-      budgetAllocations.packaging += remaining * 0.05;
-      // emergency top-up
-      if (emergencyTotal < EMERGENCY_MIN_TOTAL) {
-        let topup = Math.min(remaining * 0.15, EMERGENCY_MIN_TOTAL - emergencyTotal);
-        budgetAllocations.emergencyIns += topup * 0.6;
-        budgetAllocations.emergencyNon += topup * 0.4;
-      }
-      updateInfraEmergencyUI();
-      alert('Allocation applied (demo)');
-    });
-
-    triggerUpgradeBtn.addEventListener('click', () => {
-      alert('Upgrade suggestion: ' + upgradeSuggestionEl.innerText);
-    });
-
-    // Also need to update when main profit changes (by linking to existing updateAll)
-    // We'll override the existing updateAll to also call updateInfraEmergencyUI
-    // But we must not break existing. We'll patch the original updateAll if possible.
-    // Since the original updateAll is defined inside the self-invoking function, we can't easily modify.
-    // Instead we'll add a MutationObserver to watch netMonthly changes.
-    const targetNode = document.getElementById('netMonthly');
-    if (targetNode) {
-      const observer = new MutationObserver(() => {
-        updateInfraEmergencyUI();
+      let cardsHtml = '';
+      rewardsData.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
+        cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
       });
-      observer.observe(targetNode, { childList: true, characterData: true, subtree: true });
+      rewardCardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
+
+      let rows = '';
+      rewardsData.forEach(r => {
+        rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
+      });
+      rewardsTableBody.innerHTML = rows;
     }
 
-    // Initial update
-    updateInfraEmergencyUI();
+    function getActiveRewardDiscountRate() {
+      if (!rewardSettings.enabled) return 0;
+      const activeRewards = rewardsData.filter(r => r.status === 'active');
+      if (activeRewards.length === 0) return 0;
+      const totalDisc = activeRewards.reduce((acc, r) => acc + r.discount, 0);
+      return totalDisc / activeRewards.length / 100;
+    }
 
-    // ----- existing dashboard logic remains (copied from original, but we keep it concise) -----
-    // We'll quickly reattach original event listeners (the original script is still present, we just added above)
-    // But to avoid double execution, we rely on the original script in the bottom.
-    // However the original script is inside <script> tag at the bottom, which already runs.
-    // We must ensure our new code runs after that, so we place our script after it.
-    // Since we are in the same script block (the one we are writing now is after original), it's fine.
-    // We'll also call updateInfraEmergencyUI after original updateAll by hooking into input events.
-    // For simplicity, we also attach listeners to main cost inputs to trigger infra update.
-    const mainInputs = ['chicksCost', 'feedCost', 'transportCost', 'laborCost', 'utilitiesCost', 'equipmentCost', 'lossesCost', 'adjustableCostPerBird', 'wholesalePct', 'retailPct', 'restaurantPct'];
-    mainInputs.forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', () => setTimeout(updateInfraEmergencyUI, 10));
+    function getReferralCreditTotal() {
+      return rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+    }
+
+    function getByproductBoostFactor() {
+      if (!rewardSettings.doubleByproduct) return 1;
+      const activeBoost = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
+      return 1 + (activeBoost * 0.1);
+    }
+
+    // ---------- BUSINESS INTELLIGENCE LOGIC (with rewards) ----------
+    const TOTAL_BIRDS = 2450;
+    const SOLD_TODAY = 128;
+    const MONTHLY_SOLD = 3840;
+    const MORTALITY_RATE = 0.009;
+
+    const chicksInput = document.getElementById('chicksCost');
+    const feedInput = document.getElementById('feedCost');
+    const transportInput = document.getElementById('transportCost');
+    const laborInput = document.getElementById('laborCost');
+    const utilitiesInput = document.getElementById('utilitiesCost');
+    const equipmentInput = document.getElementById('equipmentCost');
+    const lossesInput = document.getElementById('lossesCost');
+    const adjustableCostPerBird = document.getElementById('adjustableCostPerBird');
+    const wholesalePct = document.getElementById('wholesalePct');
+    const retailPct = document.getElementById('retailPct');
+    const restaurantPct = document.getElementById('restaurantPct');
+    const subDiscount = document.getElementById('subDiscount');
+    const refDiscount = document.getElementById('refDiscount');
+    const byproductPerBirdInput = document.getElementById('byproductPerBird');
+    const vehicleTrigger = document.getElementById('vehicleTrigger');
+    const stockTrigger = document.getElementById('stockTrigger');
+    const farmTrigger = document.getElementById('farmTrigger');
+
+    const PRICE_LIVE = 100, PRICE_STANDARD = 100, PRICE_PREMIUM = 115, PRICE_BULK = 75;
+
+    function computeAvgPrice() {
+      let wp = parseFloat(wholesalePct.value) || 0;
+      let rp = parseFloat(retailPct.value) || 0;
+      let rest = parseFloat(restaurantPct.value) || 0;
+      let total = wp + rp + rest;
+      if (total === 0) return 84.5;
+      return (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
+    }
+
+    function getByproductRevenue() {
+      let byPerBird = parseFloat(byproductPerBirdInput.value) || 85;
+      let wp = parseFloat(wholesalePct.value) || 68;
+      let rp = parseFloat(retailPct.value) || 22;
+      let applicableBirds = MONTHLY_SOLD * (wp + rp) / 100;
+      return applicableBirds * byPerBird;
+    }
+
+    function updateAll() {
+      const chicks = parseFloat(chicksInput.value) || 0;
+      const feed = parseFloat(feedInput.value) || 0;
+      const transport = parseFloat(transportInput.value) || 0;
+      const labor = parseFloat(laborInput.value) || 0;
+      const utilities = parseFloat(utilitiesInput.value) || 0;
+      const equipment = parseFloat(equipmentInput.value) || 0;
+      const losses = parseFloat(lossesInput.value) || 0;
+      const totalCost = chicks + feed + transport + labor + utilities + equipment + losses;
+
+      const adjCostPerBird = parseFloat(adjustableCostPerBird.value) || 62;
+      const avgPrice = computeAvgPrice();
+      let byproductRev = getByproductRevenue();
+
+      const discountRate = getActiveRewardDiscountRate();
+      const referralTotal = getReferralCreditTotal();
+      const boostFactor = getByproductBoostFactor();
+      byproductRev = byproductRev * boostFactor;
+
+      const monthlyRevenueBase = MONTHLY_SOLD * avgPrice;
+      const discountAmount = monthlyRevenueBase * discountRate;
+      const monthlyRevenue = monthlyRevenueBase - discountAmount - referralTotal;
+      const revenueToday = SOLD_TODAY * avgPrice * (1 - discountRate);
+
+      const netProfit = monthlyRevenue + byproductRev - totalCost;
+
+      document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenueTodayValue').innerText = 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revenueTodayDisplay').innerText = 'R ' + revenueToday.toFixed(0);
+      document.getElementById('netMonthly').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('profitPerChicken').innerText = 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2);
+      document.getElementById('weightedAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('todaySalesAvgPrice').innerHTML = `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`;
+      document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
+      document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
+
+      const revenueLive = MONTHLY_SOLD * (parseFloat(wholesalePct.value)/100) * PRICE_BULK;
+      const revenuePrep = MONTHLY_SOLD * (parseFloat(retailPct.value)/100) * PRICE_STANDARD;
+      const revenueBulk = MONTHLY_SOLD * (parseFloat(restaurantPct.value)/100) * PRICE_PREMIUM;
+      document.getElementById('revLive').innerText = 'R ' + revenueLive.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('revPrep').innerText = 'R ' + revenuePrep.toFixed(0);
+      document.getElementById('revBulk').innerText = 'R ' + revenueBulk.toFixed(0);
+      document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0);
+      document.getElementById('revManure').innerText = 'R 3,000';
+
+      document.getElementById('kpiActiveBirds').innerText = (TOTAL_BIRDS * (1 - MORTALITY_RATE)).toFixed(0);
+      document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
+      document.getElementById('kpiSubPct').innerText = '18%';
+      document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      document.getElementById('plChickens').innerText = 'R ' + chicks.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('plFeed').innerText = 'R ' + feed.toFixed(0);
+      document.getElementById('plLogistics').innerText = 'R ' + transport.toFixed(0);
+      document.getElementById('plLabor').innerText = 'R ' + labor.toFixed(0);
+      document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      const margin = ((netProfit) / (monthlyRevenue + byproductRev) * 100).toFixed(1);
+      document.getElementById('plMargin').innerHTML = `${margin}% (R ${netProfit.toFixed(0)})`;
+
+      const netProfitNum = netProfit;
+      document.getElementById('projectedProfit').innerText = 'R ' + (netProfitNum * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      let level = 'R1';
+      if (netProfitNum >= 80000) level = 'R5 (80k+)';
+      else if (netProfitNum >= 50000) level = 'R4 (50k)';
+      else if (netProfitNum >= 30000) level = 'R3 (30k)';
+      else level = 'R2 (15k)';
+      document.getElementById('currentProfitLevel').innerText = level;
+
+      let nextTarget = 150000;
+      if (netProfitNum < 30000) nextTarget = 30000;
+      else if (netProfitNum < 50000) nextTarget = 50000;
+      else if (netProfitNum < 80000) nextTarget = 80000;
+      else nextTarget = 150000;
+      document.getElementById('nextTargetDisplay').innerText = 'R ' + nextTarget.toLocaleString();
+      const gap = nextTarget - netProfitNum;
+      document.getElementById('gapText').innerText = gap > 0 ? `gap to next level: R ${gap.toLocaleString()}` : 'target reached!';
+      const fillPercent = Math.min(100, (netProfitNum / nextTarget) * 100);
+      document.getElementById('profitGapFill').style.width = fillPercent + '%';
+
+      const feedPerBird = 4.5;
+      const totalFeedKg = TOTAL_BIRDS * feedPerBird;
+      const bags = totalFeedKg / 50;
+      const feedCostEst = bags * 385;
+      document.getElementById('totalFeedKg').innerText = totalFeedKg.toFixed(0) + ' kg';
+      document.getElementById('feedBags').innerText = Math.ceil(bags) + ' bags';
+      document.getElementById('feedCostEstimate').innerText = 'R ' + feedCostEst.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      const vTrigger = parseFloat(vehicleTrigger.value) || 40000;
+      document.getElementById('triggerSuggestions').innerHTML = `<p>🚀 next: vehicle at R ${vTrigger.toLocaleString()}</p>`;
+      document.getElementById('triggerProgress').innerText = `you are ${((netProfitNum/vTrigger)*100).toFixed(0)}% toward vehicle trigger`;
+
+      document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      document.getElementById('laborPerBird').innerText = 'R ' + (labor / TOTAL_BIRDS).toFixed(2);
+      document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+      document.getElementById('wholesaleVal').innerText = wholesalePct.value;
+      document.getElementById('retailVal').innerText = retailPct.value;
+      document.getElementById('restaurantVal').innerText = restaurantPct.value;
+
+      updateRewardsUI();
+    }
+
+    const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger];
+    costInputs.forEach(inp => inp.addEventListener('input', updateAll));
+
+    [enableRewardsChk, chickensPerRewardInp, streakDaysInp, rewardDiscountInp, doubleByproductChk, referralCreditInp].forEach(inp => {
+      inp.addEventListener('change', () => {
+        rewardSettings.enabled = enableRewardsChk.checked;
+        rewardSettings.chickensPerReward = parseInt(chickensPerRewardInp.value) || 10;
+        rewardSettings.streakDays = parseInt(streakDaysInp.value) || 7;
+        rewardSettings.baseDiscount = parseFloat(rewardDiscountInp.value) || 8;
+        rewardSettings.doubleByproduct = doubleByproductChk.checked;
+        rewardSettings.referralCredit = parseFloat(referralCreditInp.value) || 50;
+        updateAll();
+      });
     });
 
-    console.log('Infra & Emergency module fully loaded');
+    simulatePurchaseBtn.addEventListener('click', () => {
+      const activeIdx = rewardsData.findIndex(r => r.status === 'active');
+      if (activeIdx >= 0) {
+        rewardsData[activeIdx].progress += 1;
+        if (rewardsData[activeIdx].progress >= rewardsData[activeIdx].target) {
+          rewardsData[activeIdx].status = 'claimed';
+        }
+      } else {
+        rewardsData.push({ customerId: 999, name: 'New Customer', type: 'welcome', progress: 1, target: 3, status: 'active', expiry: '2025-04-20', discount: 8, byproductBoost: true, referralCredit: 0 });
+      }
+      updateAll();
+    });
+
+    updateAll();
+
+    const growthBtns = document.querySelectorAll('[data-growth]');
+    growthBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const growth = parseInt(btn.dataset.growth) / 100;
+        const netProfit = parseFloat(document.getElementById('netMonthly').innerText.replace('R', '').replace(',', '')) || 86400;
+        const projected = netProfit * 3 * (1 + growth);
+        document.getElementById('projectedProfit').innerText = 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        document.getElementById('growthHint').innerText = `simulating +${btn.dataset.growth}% growth`;
+      });
+    });
+
+    console.log('Luxury Poultry Dashboard — with 3-dots navigation');
   })();
 </script>
 
-<!-- backend notes extended with infra & emergency tables -->
+<!-- backend notes extended with rewards tables -->
 <!-- 
   DATABASE (SUPABASE) tables extended:
-  - infra_budget_categories (monthly allocations)
-  - emergency_fund (insured, non_insured, min_threshold, rollover)
-  - growth_linked_infra (projected_demand, current_capacity, upgrade_suggestions)
-  - long_term_goals (land, facility, machinery, timeline)
+  - cost_tracker, product_mix, byproduct_settings, expansion_triggers
+  - NEW rewards (customer_id, name, type, progress, target, status, expiry, discount, byproduct_boost, referral_credit)
+  - reward_settings (enabled, chickens_per_reward, streak_days, base_discount, double_byproduct, referral_credit_value)
 -->
 </body>
 </html>
