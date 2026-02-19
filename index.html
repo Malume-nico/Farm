@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard + INFRASTRUCTURE MODULE</title>
+  <title>POULTRY · luxury dashboard + CRM & REWARDS</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -369,6 +369,81 @@
     }
     .reward-table th { text-align: left; color: #d4af37; font-weight: 500; padding: 8px 0; }
     .reward-table td { padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
+
+    /* new CRM specific */
+    .crm-customer-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .crm-avatar {
+      width: 40px; height: 40px;
+      background: #d4af3720;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d4af37;
+      font-weight: 600;
+    }
+    .crm-info {
+      flex: 1;
+    }
+    .crm-info h4 { font-size: 0.95rem; font-weight: 500; }
+    .crm-info p { font-size: 0.7rem; color: #aaa; }
+    .crm-badge {
+      font-size: 0.7rem;
+      background: #d4af3720;
+      padding: 2px 6px;
+      border-radius: 30px;
+    }
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .filter-chip {
+      background: #2a2a2a;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .filter-chip.active {
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+    .message-preview {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .unread-dot {
+      width: 10px; height: 10px;
+      background: #d4af37;
+      border-radius: 50%;
+      margin-top: 6px;
+    }
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .quick-action-btn {
+      background: #1e1e1e;
+      border: 1px solid #d4af3740;
+      border-radius: 40px;
+      padding: 8px;
+      font-size: 0.7rem;
+      text-align: center;
+      cursor: pointer;
+    }
+    .quick-action-btn i { color: #d4af37; }
   </style>
 </head>
 <body>
@@ -379,7 +454,7 @@
     <i class="fas fa-ellipsis-v" id="moreMenuToggle"></i>
   </div>
 
-  <!-- three-dots panel: Settings + Rewards + Infrastructure -->
+  <!-- three-dots panel: Settings + Rewards + Infrastructure + NEW CRM -->
   <div class="more-panel" id="morePanel">
     <div class="more-item" data-tab="settings">
       <i class="fas fa-gear"></i> <span>Settings</span>
@@ -390,9 +465,13 @@
     <div class="more-item" data-tab="infra">
       <i class="fas fa-hard-hat"></i> <span>Infrastructure</span>
     </div>
+    <!-- NEW CRM / CUSTOMER SERVICE ITEM -->
+    <div class="more-item" data-tab="crm">
+      <i class="fas fa-users"></i> <span>Customer</span>
+    </div>
   </div>
 
-  <!-- main content area: all 8 panes -->
+  <!-- main content area: all panes (original 7 + infra + new CRM) -->
   <div class="main-content" id="mainContent">
     <!-- DASHBOARD PANE (original full content) -->
     <div class="tab-pane active" id="dashboardPane">
@@ -712,7 +791,7 @@
       </div>
     </div>
 
-    <!-- ========== NEW INFRASTRUCTURE & EMERGENCY BUDGET PANE ========== -->
+    <!-- INFRASTRUCTURE PANE (original full content) -->
     <div class="tab-pane" id="infraPane">
       <!-- 1. Infrastructure status & growth trigger -->
       <div class="card">
@@ -786,6 +865,130 @@
         </div>
       </div>
     </div>
+
+    <!-- ========== NEW CRM / CUSTOMER SERVICE PANE ========== -->
+    <div class="tab-pane" id="crmPane">
+      <!-- Customer Overview -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> customer overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">one‑time</span><div class="stat-value">42</div><span class="stat-sub">18% revenue</span></div>
+          <div class="stat"><span class="stat-label">bulk buyers</span><div class="stat-value">18</div><span class="stat-sub">52% revenue</span></div>
+          <div class="stat"><span class="stat-label">subscribers</span><div class="stat-value">12</div><span class="stat-sub">30% revenue</span></div>
+          <div class="stat"><span class="stat-label">total customers</span><div class="stat-value">72</div><span class="stat-sub">+8 this month</span></div>
+        </div>
+        <div class="cards-scroll" style="margin-top: 12px;">
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">JD</div>
+            <h4>John Doe</h4>
+            <p>⭐ 340 pts · last: 12 Mar</p>
+            <span class="crm-badge">bulk</span> <span class="crm-badge">R 12k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">SW</div>
+            <h4>Spier Wines</h4>
+            <p>🏆 1,200 pts · last: 15 Mar</p>
+            <span class="crm-badge">subscriber</span> <span class="crm-badge">R 45k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">MT</div>
+            <h4>Mama's Take</h4>
+            <p>⭐ 80 pts · last: 10 Mar</p>
+            <span class="crm-badge">one‑time</span> <span class="crm-badge">R 2k</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Requests & Complaints -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-headset gold-text"></i> requests & complaints</div>
+        <div class="filter-row">
+          <span class="filter-chip active">all</span>
+          <span class="filter-chip">open</span>
+          <span class="filter-chip">in progress</span>
+          <span class="filter-chip">resolved</span>
+          <span class="filter-chip">high priority</span>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-exclamation-circle" style="color:#b85a3a;"></i> <strong>Refund</strong> <span class="badge">high</span></div>
+          <div><span>#O-3421 · John D.</span><br><small>open, assigned to you</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-question-circle" style="color:#d4af37;"></i> <strong>Query</strong> <span class="badge">medium</span></div>
+          <div><span>#O-3419 · Spier</span><br><small>in progress (Ahmed)</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-comment-dots" style="color:#6b8e4c;"></i> <strong>Complaint</strong> <span class="badge">low</span></div>
+          <div><span>#O-3415 · Mama's</span><br><small>resolved</small></div>
+        </div>
+      </div>
+
+      <!-- Inbox / Messaging -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-inbox gold-text"></i> inbox <span class="badge" style="margin-left:8px;">3 unread</span></div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>Spier Wines</strong> <span style="font-size:0.7rem; color:#aaa;">about order #O-3422</span><br>“When will the bulk delivery arrive?...”</div>
+        </div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>John Doe</strong> <span style="font-size:0.7rem; color:#aaa;">refund #R-12</span><br>“I haven't received my refund yet...”</div>
+        </div>
+        <div class="message-preview">
+          <div></div>
+          <div><strong>Kyle's Grill</strong> <span style="font-size:0.7rem; color:#aaa;">invoice</span><br>“Thanks for the quick response!”</div>
+        </div>
+        <div class="flex-row" style="margin-top:8px;">
+          <button class="btn-small"><i class="fas fa-reply"></i> reply</button>
+          <button class="btn-small"><i class="fas fa-file-alt"></i> templates</button>
+        </div>
+      </div>
+
+      <!-- Reviews & Ratings -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-star gold-text"></i> reviews & ratings</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">avg rating</span><div class="stat-value">4.6 ★</div></div>
+          <div class="stat"><span class="stat-label">trend (month)</span><div class="stat-value">+0.2</div></div>
+        </div>
+        <div class="batch-row">
+          <div><span>Spier Wines:</span> “Excellent quality” ★★★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+        <div class="batch-row">
+          <div><span>Mama's Take:</span> “Late delivery” ★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+      </div>
+
+      <!-- Rewards Integration & Analytics -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gift gold-text"></i> rewards & KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed</span><div class="stat-value">8</div></div>
+          <div class="stat"><span class="stat-label">active</span><div class="stat-value">12</div></div>
+          <div class="stat"><span class="stat-label">complaint rate</span><div class="stat-value">4.2%</div></div>
+          <div class="stat"><span class="stat-label">avg resolution</span><div class="stat-value">2.3d</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📈 retention rate</span> <span class="gold-text">78%</span></div>
+        <div class="cost-item"><span>🏆 top spender</span> <span>Spier Wines (R 45k)</span></div>
+        <div class="cost-item"><span>⭐ most loyal</span> <span>Kyle's Grill (8 orders)</span></div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn"><i class="fas fa-undo-alt"></i> approve refund</div>
+          <div class="quick-action-btn"><i class="fas fa-tag"></i> issue reward</div>
+          <div class="quick-action-btn"><i class="fas fa-arrow-up"></i> upgrade sub</div>
+          <div class="quick-action-btn"><i class="fas fa-pen"></i> add note</div>
+          <div class="quick-action-btn"><i class="fas fa-envelope"></i> bulk msg</div>
+          <div class="quick-action-btn"><i class="fas fa-tags"></i> tag customer</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- bottom navigation (unchanged, 5 items) -->
@@ -798,10 +1001,10 @@
   </div>
 </div>
 
-<!-- ORIGINAL DASHBOARD SCRIPT (full, unchanged) -->
+<!-- ORIGINAL DASHBOARD SCRIPT (full, unchanged, but added crm pane to panes) -->
 <script>
   (function() {
-    // ----- tab switching (updated with rewards) -----
+    // ----- tab switching (updated with crm) -----
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -811,7 +1014,8 @@
       budget: document.getElementById('budgetPane'),
       settings: document.getElementById('settingsPane'),
       rewards: document.getElementById('rewardsPane'),
-      infra: document.getElementById('infraPane')   // added for infra
+      infra: document.getElementById('infraPane'),
+      crm: document.getElementById('crmPane')   // NEW CRM PANE
     };
 
     function setActiveTab(tabId) {
@@ -841,7 +1045,7 @@
 
     document.querySelectorAll('.more-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        const tabId = item.dataset.tab; // 'settings' or 'rewards' or 'infra'
+        const tabId = item.dataset.tab; // 'settings', 'rewards', 'infra', 'crm'
         setActiveTab(tabId);
       });
     });
@@ -1121,7 +1325,7 @@
       });
     });
 
-    console.log('Luxury Poultry Dashboard — with 3-dots navigation + infra module');
+    console.log('Luxury Poultry Dashboard — with 3-dots navigation + infra module + CRM pane');
   })();
 </script>
 
@@ -1301,6 +1505,27 @@
     updateInfraModule();
   })();
 </script>
+
+<!-- CRM pane minor interactivity (optional) -->
+<script>
+  (function() {
+    const crmPane = document.getElementById('crmPane');
+    if (!crmPane) return;
+    // Quick action buttons (simple console feedback)
+    crmPane.querySelectorAll('.quick-action-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        alert(`🔧 ${btn.innerText} clicked (demo)`);
+      });
+    });
+    // Filter chips (toggle active)
+    crmPane.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('active');
+      });
+    });
+  })();
+</script>
+
 <!-- backend notes extended -->
 </body>
 </html>
