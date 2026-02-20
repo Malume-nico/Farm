@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>POULTRY · luxury dashboard + CRM & REWARDS</title>
+  <title>The Golden Feather · luxury dashboard + CRM & REWARDS</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,36 +47,87 @@
       box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6);
     }
 
-    /* ----- fixed header (TikTok style) ----- */
+    /* ----- fixed header with animated brand (TikTok style) ----- */
     .header {
       position: fixed;
       top: 0;
       left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%) translateZ(0); /* establishes containing block for absolute children */
       width: 100%;
       max-width: 420px;
       z-index: 1000;
       box-sizing: border-box;
-      padding: 18px 20px 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 14px 20px 8px 20px;              /* adjusted to fit tagline */
       background: rgba(30, 30, 30, 0.7);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 32px 32px 0 0;              /* seamless with #app */
+      border-radius: 32px 32px 0 0;
       box-shadow: 0 6px 12px -6px rgba(90, 70, 40, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;                   /* align top to keep icon from stretching */
     }
-    .header h1 {
-      font-size: 1.6rem;
-      font-weight: 500;
+
+    /* left side (title + tagline) */
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .header-left h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #fff 0%, #d4af37 80%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #2c4532;                           /* from snippet, overrides gradient */
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+      margin: 0;
+      background: none;                          /* remove gradient */
+      -webkit-text-fill-color: initial;
     }
-    .header i {
+
+    /* animated feather */
+    .main-feather {
+      color: #c9a43b;
+      font-size: 1.8rem;
+      display: inline-block;
+      animation: floatFall 4s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    /* floating / falling animation */
+    @keyframes floatFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      25% { transform: translateY(-6px) rotate(-10deg); opacity: 1; }
+      60% { transform: translateY(4px) rotate(7deg); opacity: 0.8; }
+      100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+    }
+
+    /* tagline exactly from snippet */
+    .tagline {
+      font-size: 0.75rem;
+      color: #7e6b4b;
+      margin-top: 0px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tagline span {
+      background: #e9dbc9;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      color: #3a2e1f;
+      font-size: 0.65rem;
+    }
+
+    /* three‑dots icon stays on right */
+    .header i.fa-ellipsis-v {
       font-size: 1.5rem;
       color: #d4af37;
       background: rgba(212, 175, 55, 0.1);
@@ -84,15 +135,17 @@
       border-radius: 50%;
       cursor: pointer;
       transition: 0.2s;
+      margin-top: 4px;                           /* fine tune vertical alignment */
+      flex-shrink: 0;
     }
     .header i:active {
       background: rgba(212, 175, 55, 0.3);
     }
 
-    /* three‑dots panel now inside header */
+    /* three‑dots panel now positioned relative to .header (thanks to transform) */
     .more-panel {
       position: absolute;
-      top: 60px;                 /* below header */
+      top: calc(100% + 5px);                    /* directly below header */
       right: 20px;
       width: 240px;
       background: rgba(20, 20, 20, 0.95);
@@ -138,7 +191,7 @@
     .main-content {
       height: 100%;
       overflow-y: auto;
-      padding: 70px 16px 80px 16px;   /* top for fixed header, bottom for fixed nav */
+      padding: 88px 16px 80px 16px;   /* increased top padding to accommodate taller header */
       scrollbar-width: thin;
       scrollbar-color: #d4af37 #1e1e1e;
     }
@@ -170,7 +223,7 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-top: 1px solid rgba(212, 175, 55, 0.3);
-      border-radius: 0 0 32px 32px;            /* matches #app bottom curve */
+      border-radius: 0 0 32px 32px;
       padding: 6px 0 10px 0;
     }
     .nav-item {
@@ -466,9 +519,17 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three dots – now fixed and containing the dropdown panel -->
+  <!-- header with animated brand, three dots, and dropdown panel -->
   <div class="header">
-    <h1>🐔 POULTRY</h1>
+    <div class="header-left">
+      <h1>
+        <i class="fas fa-feather main-feather"></i> The Golden Feather
+      </h1>
+      <div class="tagline">
+        <i class="fas fa-seedling" style="color:#4e7f5a;"></i> quality from growth to table
+        <span><i class="far fa-star"></i> ethically raised</span>
+      </div>
+    </div>
     <i class="fas fa-ellipsis-v" id="moreMenuToggle"></i>
     <div class="more-panel" id="morePanel">
       <div class="more-item" data-tab="settings">
@@ -480,7 +541,6 @@
       <div class="more-item" data-tab="infra">
         <i class="fas fa-hard-hat"></i> <span>Infrastructure</span>
       </div>
-      <!-- NEW CRM / CUSTOMER SERVICE ITEM -->
       <div class="more-item" data-tab="crm">
         <i class="fas fa-users"></i> <span>Customer</span>
       </div>
@@ -1341,7 +1401,7 @@
       });
     });
 
-    console.log('Luxury Poultry Dashboard — with fixed header/footer (TikTok style) + CRM pane');
+    console.log('Luxury Poultry Dashboard — with animated golden feather header + CRM pane');
   })();
 </script>
 
