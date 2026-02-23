@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION</title>
+  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -562,7 +562,7 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three‑dots panel (includes Village Expansion) -->
+  <!-- header with three‑dots panel (includes Village Expansion + NEW Stock Sale) -->
   <div class="header">
     <div class="header-left">
       <h1>
@@ -582,12 +582,14 @@
       <div class="more-item" data-tab="festive"><i class="fas fa-people-group"></i> <span>Community</span></div>
       <div class="more-item" data-tab="subscription"><i class="fas fa-calendar-check"></i> <span>Subscription</span></div>
       <div class="more-item" data-tab="assurance"><i class="fas fa-shield-alt"></i> <span>Assurance</span></div>
-      <!-- NEW: Village Expansion -->
+      <!-- Village Expansion -->
       <div class="more-item" data-tab="villageExpansion"><i class="fas fa-handshake"></i> <span>Village Expansion</span></div>
+      <!-- NEW: Stock Sale Program -->
+      <div class="more-item" data-tab="stockSale"><i class="fas fa-chart-line"></i> <span>Stock Sale</span></div>
     </div>
   </div>
 
-  <!-- main content area – all panes (including new villageExpansionPane) -->
+  <!-- main content area – all panes (including new stockSalePane) -->
   <div class="main-content" id="mainContent">
     <!-- DASHBOARD PANE (original) -->
     <div class="tab-pane active" id="dashboardPane">
@@ -1313,7 +1315,7 @@
       </div>
     </div>
 
-    <!-- ========== NEW VILLAGE EXPANSION PANE ========== -->
+    <!-- VILLAGE EXPANSION PANE (original) -->
     <div class="tab-pane" id="villageExpansionPane">
       <!-- Analytics & summary cards -->
       <div class="card">
@@ -1375,6 +1377,64 @@
         <div class="flex-row" style="justify-content:space-between; margin-top:6px;" id="villageLabels"></div>
       </div>
     </div>
+
+    <!-- ========== NEW STOCK SALE PROGRAM PANE ========== -->
+    <div class="tab-pane" id="stockSalePane">
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> stock sale program · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active offerings</span><div class="stat-value" id="activeOfferings">3</div></div>
+          <div class="stat"><span class="stat-label">total shares sold</span><div class="stat-value" id="sharesSold">1,250</div></div>
+          <div class="stat"><span class="stat-label">capital raised</span><div class="stat-value" id="capitalRaised">R 87,500</div></div>
+          <div class="stat"><span class="stat-label">expected dividend</span><div class="stat-value" id="expectedDividend">R 13,125</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 avg share price</span> <span class="gold-text" id="avgSharePrice">R 70.00</span></div>
+        <div class="cost-item"><span>📈 projected ROI (6m)</span> <span class="green-text" id="projectedROI">15%</span></div>
+      </div>
+
+      <!-- List of stock offerings with admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list gold-text"></i> current offerings · <span class="btn-small" id="addOfferingBtn"><i class="fas fa-plus"></i> new</span></div>
+        <div id="offeringsListContainer">
+          <!-- dynamic rows injected -->
+        </div>
+      </div>
+
+      <!-- Investor / shareholder list -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> recent investments</div>
+        <div id="investorsList">
+          <div class="batch-row"><span>Spier Wines · 200 shares</span><span>R 14,000</span><span class="badge">dividend R 2,100</span></div>
+          <div class="batch-row"><span>Kyle's Grill · 80 shares</span><span>R 5,600</span><span class="badge">dividend R 840</span></div>
+          <div class="batch-row"><span>Mama's Take · 50 shares</span><span>R 3,500</span><span class="badge">dividend R 525</span></div>
+          <div class="batch-row"><span>Thabo Fresh · 120 shares</span><span>R 8,400</span><span class="badge">dividend R 1,260</span></div>
+        </div>
+        <button class="btn-small" style="margin-top:8px;"><i class="fas fa-file-export"></i> export investor list</button>
+      </div>
+
+      <!-- Admin settings for stock program -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> stock settings</div>
+        <div class="cost-input"><label>🐔 base share price</label> <input type="number" id="baseSharePrice" value="70" step="5"></div>
+        <div class="cost-input"><label>📈 dividend % of profit</label> <input type="number" id="dividendPercent" value="15" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📅 dividend frequency</label> <select id="dividendFreq"><option value="monthly">monthly</option><option value="quarterly" selected>quarterly</option><option value="yearly">yearly</option></select></div>
+        <div class="cost-input"><label>🔒 lock-up period (days)</label> <input type="number" id="lockupDays" value="90" step="10"></div>
+        <button class="btn-small" id="applyStockSettings">apply</button>
+      </div>
+
+      <!-- Quick action: simulate dividend payout -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="simulatePayoutBtn"><i class="fas fa-coins"></i> simulate payout</div>
+          <div class="quick-action-btn" id="syncFromSubsBtn"><i class="fas fa-sync-alt"></i> sync subscribers</div>
+          <div class="quick-action-btn" id="generateProspectusBtn"><i class="fas fa-file-pdf"></i> prospectus</div>
+          <div class="quick-action-btn" id="closeOfferingBtn"><i class="fas fa-ban"></i> close offering</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- bottom navigation (unchanged) -->
@@ -1386,7 +1446,7 @@
     <div class="nav-item" data-tab="budget"><i class="fas fa-chart-line"></i><span>Budget</span></div>
   </div>
 
-  <!-- Modal for adding/editing contract -->
+  <!-- Modal for adding/editing contract (village expansion) -->
   <div class="modal-overlay" id="contractModal">
     <div class="modal-card">
       <h3 id="modalTitle">➕ new village contract</h3>
@@ -1407,9 +1467,9 @@
   </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS (condensed but fully functional) plus NEW VILLAGE EXPANSION module -->
+<!-- ALL ORIGINAL SCRIPTS + NEW STOCK SALE MODULE -->
 <script>
-  // ----- tab switching (updated with 'villageExpansion') -----
+  // ----- tab switching (updated with 'stockSale') -----
   (function() {
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
@@ -1425,7 +1485,8 @@
       festive: document.getElementById('festivePane'),
       subscription: document.getElementById('subscriptionPane'),
       assurance: document.getElementById('assurancePane'),
-      villageExpansion: document.getElementById('villageExpansionPane')   // NEW
+      villageExpansion: document.getElementById('villageExpansionPane'),
+      stockSale: document.getElementById('stockSalePane')   // NEW
     };
 
     function setActiveTab(tabId) {
@@ -2087,7 +2148,7 @@
     updateSubUI();
   })();
 
-  // ========== NEW ASSURANCE MODULE (fully integrated with subscription/rewards) ==========
+  // ========== ASSURANCE MODULE (original) ==========
   (function() {
     const assurancePane = document.getElementById('assurancePane');
     if (!assurancePane) return;
@@ -2213,7 +2274,7 @@
     updateAssuranceUI();
   })();
 
-  // ========== NEW VILLAGE EXPANSION MODULE ==========
+  // ========== VILLAGE EXPANSION MODULE (original) ==========
   (function() {
     const pane = document.getElementById('villageExpansionPane');
     if (!pane) return;
@@ -2426,6 +2487,122 @@
     });
 
     updateVillageUI();
+  })();
+
+  // ========== NEW STOCK SALE MODULE ==========
+  (function() {
+    const pane = document.getElementById('stockSalePane');
+    if (!pane) return;
+
+    // Mock offerings data
+    let offerings = [
+      { id: 1, name: 'Batch B2401 · Cornish', sharesTotal: 1000, sharesSold: 680, sharePrice: 70, raised: 47600, expectedDividend: 7140, status: 'active' },
+      { id: 2, name: 'Batch B2402 · Ross', sharesTotal: 1500, sharesSold: 420, sharePrice: 68, raised: 28560, expectedDividend: 4284, status: 'active' },
+      { id: 3, name: 'New Free-range (B2403)', sharesTotal: 800, sharesSold: 150, sharePrice: 75, raised: 11250, expectedDividend: 1688, status: 'active' },
+    ];
+
+    function updateStockUI() {
+      const active = offerings.filter(o => o.status === 'active').length;
+      const totalShares = offerings.reduce((acc, o) => acc + o.sharesSold, 0);
+      const totalRaised = offerings.reduce((acc, o) => acc + o.raised, 0);
+      const totalDividend = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
+      const avgPrice = totalShares ? (totalRaised / totalShares).toFixed(2) : 70;
+
+      document.getElementById('activeOfferings').innerText = active;
+      document.getElementById('sharesSold').innerText = totalShares.toLocaleString();
+      document.getElementById('capitalRaised').innerText = 'R ' + totalRaised.toLocaleString();
+      document.getElementById('expectedDividend').innerText = 'R ' + totalDividend.toLocaleString();
+      document.getElementById('avgSharePrice').innerText = 'R ' + avgPrice;
+      document.getElementById('projectedROI').innerText = ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%';
+
+      // offerings list
+      let html = '';
+      offerings.forEach(o => {
+        const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${o.name}</h4><p>shares ${o.sharesSold}/${o.sharesTotal} · R ${o.sharePrice}/share</p></div>
+          <div class="batch-numbers"><span class="quantity">R ${o.raised}</span><br><span class="badge">${progress}% sold</span></div>
+          <div><button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell</button>
+          <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button></div>
+        </div>`;
+      });
+      document.getElementById('offeringsListContainer').innerHTML = html;
+    }
+
+    // add new offering
+    document.getElementById('addOfferingBtn').addEventListener('click', () => {
+      const newId = offerings.length ? Math.max(...offerings.map(o => o.id)) + 1 : 4;
+      const name = prompt('Offering name (e.g., Batch B2404):', 'Batch B2404 · Free-range');
+      if (!name) return;
+      const total = parseInt(prompt('Total shares:', '1000')) || 1000;
+      const price = parseInt(prompt('Share price (R):', '70')) || 70;
+      offerings.push({
+        id: newId,
+        name: name,
+        sharesTotal: total,
+        sharesSold: 0,
+        sharePrice: price,
+        raised: 0,
+        expectedDividend: 0,
+        status: 'active'
+      });
+      updateStockUI();
+    });
+
+    // actions on offerings
+    document.addEventListener('click', (e) => {
+      if (!pane.contains(e.target)) return;
+      const target = e.target;
+      if (target.matches('[data-offer-action="sell"]')) {
+        const id = parseInt(target.dataset.offerId);
+        const offer = offerings.find(o => o.id === id);
+        if (offer) {
+          const qty = parseInt(prompt('Number of shares to sell:', '10')) || 0;
+          if (qty > 0 && offer.sharesSold + qty <= offer.sharesTotal) {
+            offer.sharesSold += qty;
+            offer.raised += qty * offer.sharePrice;
+            offer.expectedDividend += qty * offer.sharePrice * 0.15; // 15% mock dividend
+            updateStockUI();
+          } else {
+            alert('Not enough shares available.');
+          }
+        }
+      }
+      if (target.matches('[data-offer-action="close"]')) {
+        const id = parseInt(target.dataset.offerId);
+        const offer = offerings.find(o => o.id === id);
+        if (offer) {
+          offer.status = 'closed';
+          updateStockUI();
+        }
+      }
+    });
+
+    // settings
+    document.getElementById('applyStockSettings').addEventListener('click', () => {
+      const basePrice = parseFloat(document.getElementById('baseSharePrice').value) || 70;
+      const divPct = parseFloat(document.getElementById('dividendPercent').value) || 15;
+      const freq = document.getElementById('dividendFreq').value;
+      const lockup = parseInt(document.getElementById('lockupDays').value) || 90;
+      alert(`Stock settings updated: base price R${basePrice}, dividend ${divPct}%, ${freq}, lockup ${lockup} days.`);
+    });
+
+    // quick actions
+    document.getElementById('simulatePayoutBtn').addEventListener('click', () => {
+      const totalDiv = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
+      alert(`💸 Simulated dividend payout: R ${totalDiv.toLocaleString()} to all shareholders.`);
+    });
+    document.getElementById('syncFromSubsBtn').addEventListener('click', () => {
+      alert('Syncing subscribers as potential investors... (mock)');
+    });
+    document.getElementById('generateProspectusBtn').addEventListener('click', () => {
+      alert('📄 Generating prospectus PDF... (mock)');
+    });
+    document.getElementById('closeOfferingBtn').addEventListener('click', () => {
+      alert('Closing selected offering (mock)');
+    });
+
+    updateStockUI();
   })();
 </script>
 </body>
