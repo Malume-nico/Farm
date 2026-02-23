@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Golden Feather · Business Architecture Blueprint</title>
+  <!-- Fonts & Icons (same as original) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- base styles (inspired by original) ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .blueprint-container {
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    /* header */
+    .blueprint-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .blueprint-header h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #d4af37;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .blueprint-header h1 i {
+      font-size: 2.2rem;
+      animation: floatFall 4s ease-in-out infinite;
+    }
+
+    .blueprint-header .sub {
+      color: #7e6b4b;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    @keyframes floatFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      25% { transform: translateY(-6px) rotate(-10deg); opacity: 1; }
+      60% { transform: translateY(4px) rotate(7deg); opacity: 0.8; }
+      100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+    }
+
+    /* accordion sections */
+    .blueprint-section {
+      background: rgba(20, 20, 20, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 24px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px -10px black;
+    }
+
+    .section-header {
+      padding: 20px 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .section-header:hover {
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    .section-header h2 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: #d4af37;
+      margin: 0;
+    }
+
+    .section-header .toggle-icon {
+      color: #d4af37;
+      font-size: 1.2rem;
+      transition: transform 0.3s;
+    }
+
+    .blueprint-section.open .section-header {
+      border-bottom-color: rgba(212, 175, 55, 0.3);
+    }
+
+    .blueprint-section.open .toggle-icon {
+      transform: rotate(180deg);
+    }
+
+    .section-content {
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+      padding: 0 24px;
+    }
+
+    .blueprint-section.open .section-content {
+      max-height: 3000px; /* high enough to accommodate content */
+      opacity: 1;
+      padding: 0 24px 24px 24px;
+    }
+
+    /* content styling */
+    .section-content p {
+      margin: 1rem 0;
+      line-height: 1.6;
+      color: #ddd;
+    }
+
+    .section-content h3 {
+      color: #d4af37;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 1.5rem 0 0.5rem 0;
+    }
+
+    .section-content h4 {
+      color: #6b8e4c;
+      font-size: 1rem;
+      font-weight: 500;
+      margin: 1rem 0 0.3rem 0;
+    }
+
+    .section-content ul, .section-content ol {
+      margin-left: 1.5rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .section-content li {
+      margin: 0.5rem 0;
+    }
+
+    .section-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.9rem;
+    }
+
+    .section-content th {
+      text-align: left;
+      color: #d4af37;
+      font-weight: 500;
+      padding: 8px 4px;
+      border-bottom: 1px solid #d4af3740;
+    }
+
+    .section-content td {
+      padding: 8px 4px;
+      border-bottom: 1px solid #2a2a2a;
+      color: #ccc;
+    }
+
+    .badge {
+      background: #6b8e4c20;
+      border: 1px solid #6b8e4c;
+      color: #b7d99e;
+      padding: 2px 8px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      display: inline-block;
+    }
+
+    .gold-text {
+      color: #d4af37;
+    }
+
+    .green-text {
+      color: #6b8e4c;
+    }
+
+    hr {
+      border: 0.5px solid #2a2a2a;
+      margin: 1.5rem 0;
+    }
+
+    /* link to original dashboard */
+    .back-link {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .back-link a {
+      color: #d4af37;
+      text-decoration: none;
+      border: 1px solid #d4af37;
+      padding: 10px 20px;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      transition: 0.2s;
+      display: inline-block;
+    }
+
+    .back-link a:hover {
+      background: #d4af3720;
+    }
+
+    /* responsive adjustments */
+    @media (max-width: 600px) {
+      .blueprint-header h1 {
+        font-size: 1.5rem;
+      }
+      .section-header h2 {
+        font-size: 1.1rem;
+      }
+      .section-header {
+        padding: 16px 18px;
+      }
+      .section-content {
+        padding: 0 18px;
+      }
+      .blueprint-section.open .section-content {
+        padding: 0 18px 18px 18px;
+      }
+    }
+
+    /* mini table style from original */
+    .mini-table {
+      font-size: 0.8rem;
+      width: 100%;
+    }
+    .mini-table td, .mini-table th {
+      padding: 6px 4px;
+    }
+  </style>
+</head>
+<body>
+<div class="blueprint-container">
+  <div class="blueprint-header">
+    <h1>
+      <i class="fas fa-feather main-feather"></i> The Golden Feather
+    </h1>
+    <div class="sub">Business Architecture Blueprint · Investment‑Grade Documentation</div>
+  </div>
+
+  <!-- accordion sections – full content from the generated documentation -->
+  <div class="blueprint-section" id="section1">
+    <div class="section-header">
+      <h2>1. Executive Overview</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Golden Feather is a vertically integrated poultry ecosystem that combines direct-to-consumer sales, subscription-based recurring revenue, community-driven festive planning, and a scalable village farming network. The system is engineered for <strong>high margins (target 78%)</strong>, <strong>low spoilage</strong>, and <strong>parallel scalability</strong> across multiple revenue streams. Unlike traditional poultry resellers, The Golden Feather leverages aggregated demand planning, community prepayments, and data-driven supply contracts to achieve structural efficiency.</p>
+      <p><strong>Core Value Proposition:</strong></p>
+      <ul>
+        <li><strong>Direct-to-consumer</strong> eliminates intermediary margins.</li>
+        <li><strong>Subscription & reserve programs</strong> provide predictable cash flow and customer lock-in.</li>
+        <li><strong>Festive & village models</strong> tap into community purchasing power and expand supply organically.</li>
+        <li><strong>Marketing command center</strong> attributes every revenue rand to a source, enabling precise ROI optimisation.</li>
+        <li><strong>Stock sale program</strong> transforms customers into investors, deepening loyalty and raising capital.</li>
+      </ul>
+      <p>The system is designed to scale horizontally—new villages, farms, and marketing channels can be added without disrupting core operations. Data flows from frontend to admin in real time, enabling proactive decision-making and automated profit allocation.</p>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section2">
+    <div class="section-header">
+      <h2>2. System Architecture Overview</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Golden Feather operates as a <strong>modular, event-driven platform</strong> connecting customers, farms, admin, and financial flows. The architecture is built around seven core modules, each with its own data models and business logic, but tightly integrated through shared customer, order, and inventory data.</p>
+      
+      <h3>2.1 Core Modules and Their Functions</h3>
+      <table class="mini-table">
+        <thead><tr><th>Module</th><th>Primary Function</th><th>Key Entities</th></tr></thead>
+        <tbody>
+          <tr><td>Customer Management (CRM)</td><td>Central customer repository with purchase history, tier, loyalty points, and communication logs.</td><td>Customers, Contacts, Requests, Reviews</td></tr>
+          <tr><td>Inventory & Production</td><td>Tracks live birds by batch, mortality, feed consumption, growth stages.</td><td>Batches, Birds, Deaths, Feed Purchases</td></tr>
+          <tr><td>Sales & Checkout</td><td>Handles one-time, bulk, and restaurant sales; integrates pricing rules and discounts.</td><td>Orders, Line Items, Pricing Rules</td></tr>
+          <tr><td>Subscription Engine</td><td>Manages recurring plans (Steady, Celebration, Signature), monthly billing, holiday allocations, and deposit tracking.</td><td>Subscribers, Tiers, Deliveries, Deposits</td></tr>
+          <tr><td>Assurance (Reserve) Program</td><td>Members contribute monthly to a communal reserve; can claim in emergencies; earn loyalty credits.</td><td>Assurance Members, Contributions, Claims, Loyalty Credits</td></tr>
+          <tr><td>Festive Plan</td><td>Community groups prepay for bulk chickens for celebrations; admin manages group capacity, deadlines, and fulfillment.</td><td>Villages, Participants, Contributions, Deadlines</td></tr>
+          <tr><td>Village Expansion</td><td>Contracts with external farms to supply additional birds under margin agreements; handles logistics and digital signatures.</td><td>Contracts, Farms, Supply Agreements</td></tr>
+          <tr><td>Stock Sale Program</td><td>Issues shares in specific batches; investors receive dividends; transforms customers into stakeholders.</td><td>Offerings, Shares, Investors, Dividends</td></tr>
+          <tr><td>Marketing Command Center</td><td>Tracks campaigns, influencers, platforms; attributes revenue to source; calculates ROI and CPA.</td><td>Campaigns, Influencers, Platforms, Attribution</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2.2 Connectivity Map</h3>
+      <ul>
+        <li><strong>Frontend ↔ Admin:</strong> All customer-facing actions (orders, subscriptions, claims) flow into admin dashboards in real time. Admin can override, approve, or adjust any transaction.</li>
+        <li><strong>Subscriptions ↔ Stock:</strong> Subscription demand is aggregated and locked against current and future batches. Priority fulfillment ensures VIP subscribers never face stockouts.</li>
+        <li><strong>Marketing ↔ Checkout:</strong> Every checkout includes UTM parameters and influencer codes; revenue is attributed back to the originating campaign/platform.</li>
+        <li><strong>Loyalty Credits ↔ System:</strong> Credits earned via Assurance or Rewards automatically apply at checkout, reducing cash revenue but increasing retention.</li>
+        <li><strong>Contracts ↔ Supply:</strong> Village expansion contracts guarantee a fixed monthly supply at a predetermined margin. These are digitally signed and feed into demand forecasting.</li>
+        <li><strong>Supply ↔ Subscription Demand:</strong> The system forecasts total demand (subscriptions + festive + one-time) and allocates supply accordingly. Any shortfall triggers automated reordering or contract expansion.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section3">
+    <div class="section-header">
+      <h2>3. Revenue Engine Breakdown</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Golden Feather generates revenue through <strong>six parallel streams</strong>, each with distinct characteristics. The system is designed to maximise high-margin recurring and prepaid revenue while maintaining flexibility for spot sales.</p>
+      
+      <h3>3.1 Revenue Streams</h3>
+      <table class="mini-table">
+        <thead><tr><th>Stream</th><th>Description</th><th>Frequency</th><th>Margin Profile</th><th>% of Total Revenue (Illustrative)</th></tr></thead>
+        <tbody>
+          <tr><td>One-Time Sales</td><td>Individual retail purchases at market price.</td><td>Daily</td><td>Standard (30-40%)</td><td>18%</td></tr>
+          <tr><td>Bulk Sales</td><td>Wholesale to restaurants, caterers, and small businesses.</td><td>Weekly</td><td>Volume-driven (20-30%)</td><td>52%</td></tr>
+          <tr><td>Subscription Recurring</td><td>Monthly delivery of fixed quantities at discounted rates.</td><td>Monthly</td><td>High (50-60%) due to predictability</td><td>30%</td></tr>
+          <tr><td>Festive Prepayments</td><td>Community groups pay upfront for future events; funds collected before chickens are raised.</td><td>Seasonal</td><td>Very High (60-70%) – zero holding cost, prepaid</td><td>Variable (peak seasons)</td></tr>
+          <tr><td>Assurance Contributions</td><td>Monthly membership fees for reserve access; not redeemed immediately, creating float.</td><td>Monthly</td><td>100% margin on unclaimed contributions</td><td>~5% of gross</td></tr>
+          <tr><td>Stock Sale Dividends</td><td>Capital raised through share offerings; investors receive dividend from profits.</td><td>One-time + recurring</td><td>Cost of capital (15% dividend)</td><td>Funds expansion</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.2 Revenue Flow Example (Monthly)</h3>
+      <ul>
+        <li><strong>Total Birds Sold:</strong> 3,840</li>
+        <li><strong>Average Selling Price:</strong> R84.50</li>
+        <li><strong>Gross Revenue:</strong> R324,480</li>
+        <li><strong>By-Product Revenue:</strong> R12,750 (manure, feathers, etc.)</li>
+        <li><strong>Subscription Revenue:</strong> R18,240 (embedded in gross)</li>
+        <li><strong>Assurance Contributions:</strong> R8,450 (separate)</li>
+        <li><strong>Total Top-Line:</strong> R345,680</li>
+      </ul>
+      <p>All revenue is tracked in real time and attributed to the source customer, campaign, and channel.</p>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section4">
+    <div class="section-header">
+      <h2>4. Subscription System Logic</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The subscription engine is designed for <strong>predictable recurring revenue</strong> and <strong>customer lock-in</strong>. It operates on a tiered model with escalating value.</p>
+      
+      <h3>4.1 Tier Structure</h3>
+      <table class="mini-table">
+        <thead><tr><th>Tier</th><th>Price/Chicken</th><th>Min Monthly Qty</th><th>Benefits</th></tr></thead>
+        <tbody>
+          <tr><td>Steady Supply</td><td>R100</td><td>5</td><td>Guaranteed weekly delivery, 6% discount on extras</td></tr>
+          <tr><td>Celebration</td><td>R115</td><td>8</td><td>Priority holiday allocation, 10% referral credit</td></tr>
+          <tr><td>Signature Reserve</td><td>R140</td><td>6</td><td>VIP fulfillment, double loyalty credits, first access to new offerings</td></tr>
+        </tbody>
+      </table>
+
+      <h3>4.2 Key Logic</h3>
+      <ul>
+        <li><strong>Deposit Collection:</strong> For holiday/event orders, a 30% deposit is collected upfront. This improves cash flow and reduces cancellation risk.</li>
+        <li><strong>Holiday Allocations:</strong> Each subscriber has a reserved holiday quantity that is locked in stock planning.</li>
+        <li><strong>Priority Fulfillment:</strong> In case of supply constraints, Signature and Celebration tiers are fulfilled first.</li>
+        <li><strong>Upgrade/Downgrade Paths:</strong> Admin can adjust tiers; system recalculates monthly total.</li>
+        <li><strong>Integration with Assurance:</strong> Subscribers are automatically eligible for Assurance; contributions can be deducted from monthly invoice.</li>
+      </ul>
+
+      <h3>4.3 Financial Impact</h3>
+      <p>Subscription revenue has a <strong>higher effective margin</strong> because demand is known in advance, allowing for optimised batch sizing and reduced spoilage. The 6% discount offered is more than offset by lower marketing and holding costs.</p>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section5">
+    <div class="section-header">
+      <h2>5. Reserve Program (Assurance) Logic</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Assurance program functions as a <strong>customer-funded reserve fund</strong> that also drives loyalty. It is inspired by informal community savings groups but formalised with digital tracking.</p>
+      
+      <h3>5.1 How It Works</h3>
+      <ul>
+        <li>Members pay a monthly contribution (e.g., R25 per chicken they commit to buying).</li>
+        <li>Contributions pool into a communal reserve.</li>
+        <li>Members can file claims for emergencies (e.g., lost income, funeral, unexpected expenses).</li>
+        <li>Approved claims are paid out from the reserve.</li>
+        <li>Unclaimed contributions generate <strong>loyalty credits</strong> (e.g., 8% of contributions returned as store credit).</li>
+      </ul>
+
+      <h3>5.2 Key Logic</h3>
+      <ul>
+        <li><strong>Contribution per Chicken:</strong> Admin sets a fixed rate (default R25).</li>
+        <li><strong>Loyalty Return %:</strong> Admin sets the percentage of contributions returned as credits (default 8%).</li>
+        <li><strong>Max Allocation per Member:</strong> Prevents overuse.</li>
+        <li><strong>Pending Claims:</strong> Admin reviews and approves/rejects claims; approved claims are paid out, reducing reserve.</li>
+        <li><strong>Sync with Subscriptions:</strong> Members can have contributions deducted automatically from their monthly bill.</li>
+      </ul>
+
+      <h3>5.3 Financial Mechanics</h3>
+      <ul>
+        <li>The reserve creates a <strong>float</strong> that can be used for short-term liquidity or invested in expansion.</li>
+        <li>Loyalty credits are redeemed against future purchases, increasing retention and reducing cash leakage.</li>
+        <li>Unclaimed funds eventually become profit (if not paid out).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section6">
+    <div class="section-header">
+      <h2>6. Festive Plan Logic</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Festive Plan leverages <strong>community group purchasing</strong> for celebrations (Easter, Christmas, weddings). It aggregates demand and collects payment <strong>before</strong> chickens are raised, eliminating working capital requirements.</p>
+      
+      <h3>6.1 Village Group Dynamics</h3>
+      <ul>
+        <li>Admin creates village groups with a target capacity and deadline.</li>
+        <li>Participants join and pledge chickens; contributions are collected (partial or full).</li>
+        <li>Once capacity is reached, the group is locked, and production is scheduled.</li>
+        <li>If deadline passes without full capacity, admin can adjust or refund.</li>
+      </ul>
+
+      <h3>6.2 Key Logic</h3>
+      <ul>
+        <li><strong>Capacity Management:</strong> Each village has a maximum chicken capacity. Progress is shown as a fill percentage.</li>
+        <li><strong>Pending Adjustments:</strong> Admin can approve capacity changes; groups can be locked manually.</li>
+        <li><strong>Global Settings:</strong> Default capacity and deadline can be applied to all groups.</li>
+        <li><strong>Integration with Production:</strong> Total festive chickens are added to demand forecast; production batches are sized accordingly.</li>
+      </ul>
+
+      <h3>6.3 Financial Impact</h3>
+      <ul>
+        <li>Prepayments provide <strong>negative working capital</strong>—cash is received before costs are incurred.</li>
+        <li>Reduces risk of overproduction; only what is paid for is raised.</li>
+        <li>Builds community engagement and word-of-mouth marketing.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section7">
+    <div class="section-header">
+      <h2>7. Marketing Attribution System</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Marketing Command Center is a <strong>closed-loop attribution engine</strong> that tracks every rand spent and every rand earned back to its source.</p>
+      
+      <h3>7.1 Components</h3>
+      <ul>
+        <li><strong>Platforms:</strong> TikTok, Instagram, Facebook, WhatsApp, YouTube, etc. Each has revenue, clicks, conversions, ad spend, and ROI.</li>
+        <li><strong>Influencers:</strong> Individual content creators tracked by name, platform, revenue generated, orders, commission, payout.</li>
+        <li><strong>Campaigns:</strong> Time-bound initiatives with budget, spent, revenue, profit, ROI, and status.</li>
+      </ul>
+
+      <h3>7.2 Attribution Logic</h3>
+      <ul>
+        <li>Every checkout includes UTM parameters, influencer codes, and campaign IDs.</li>
+        <li>Revenue is attributed based on last-click or multi-touch (admin configurable).</li>
+        <li>ROI = (Revenue - Ad Spend) / Ad Spend.</li>
+        <li>CPA = Ad Spend / Conversions.</li>
+        <li>The system automatically calculates influencer commissions and suggests payouts.</li>
+      </ul>
+
+      <h3>7.3 Integration with Other Modules</h3>
+      <ul>
+        <li><strong>Subscription sign-ups</strong> are attributed to the campaign that drove the lead.</li>
+        <li><strong>Stock sale investments</strong> are tracked back to influencer if they promoted it.</li>
+        <li><strong>Festive plan participants</strong> can be linked to a marketing source.</li>
+      </ul>
+
+      <h3>7.4 Decision Support</h3>
+      <ul>
+        <li>Top-performing platforms and influencers are highlighted.</li>
+        <li>Underperforming campaigns are flagged for optimisation.</li>
+        <li>Budget allocation recommendations are generated based on historical ROI.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section8">
+    <div class="section-header">
+      <h2>8. Village Expansion Model</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Village Expansion model enables <strong>horizontal scaling</strong> by onboarding external farms as supply partners. This turns The Golden Feather into a network orchestrator rather than just a producer.</p>
+      
+      <h3>8.1 Contract Farming Structure</h3>
+      <ul>
+        <li><strong>Contract:</strong> Legal agreement with a village farm specifying monthly chicken supply, margin for The Golden Feather, duration, and notes.</li>
+        <li><strong>Digital Signing:</strong> Contracts are signed electronically; a unique link is generated for each farm.</li>
+        <li><strong>Margin Model:</strong> The Golden Feather takes a percentage of the farm's revenue (e.g., 12%) as its margin. This is pure profit with no production cost.</li>
+      </ul>
+
+      <h3>8.2 Key Logic</h3>
+      <ul>
+        <li><strong>Supply Forecasting:</strong> Each contract adds a fixed monthly supply to the system. This is matched against subscription and festive demand.</li>
+        <li><strong>Expiration Alerts:</strong> Contracts nearing end are flagged for renewal.</li>
+        <li><strong>Budget Allocation:</strong> Admin sets monthly budgets for travel, management, and supply infrastructure. These are allocated per contract.</li>
+        <li><strong>Transport Fees:</strong> Collected from customers or farms; tracked separately.</li>
+      </ul>
+
+      <h3>8.3 Scalability</h3>
+      <ul>
+        <li>New villages can be added without centralising production.</li>
+        <li>Each village operates independently but feeds into the central demand plan.</li>
+        <li>As the network grows, The Golden Feather gains negotiating power with feed suppliers and logistics providers.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section9">
+    <div class="section-header">
+      <h2>9. Profit Margin Analysis (Target 78%)</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Golden Feather targets a <strong>net profit margin of 78%</strong> on its core operations, far above the South African poultry industry average of 10-15%. This is achieved through structural efficiencies.</p>
+      
+      <h3>9.1 Structural Efficiency Factors</h3>
+      <table class="mini-table">
+        <thead><tr><th>Factor</th><th>Impact on Margin</th></tr></thead>
+        <tbody>
+          <tr><td>Direct-to-Consumer</td><td>Eliminates wholesaler/retailer margins (typically 30-40%).</td></tr>
+          <tr><td>Subscription Predictability</td><td>Reduces spoilage to near zero; chickens are pre-sold before maturity.</td></tr>
+          <tr><td>Aggregated Demand Planning</td><td>Enables bulk purchasing of feed and chicks at lower prices.</td></tr>
+          <tr><td>Community Prepayments</td><td>Negative working capital; no interest costs.</td></tr>
+          <tr><td>Supply Contracts with Controlled Margin</td><td>Expands supply without capital expenditure; margin is pure profit.</td></tr>
+          <tr><td>By-Product Monetisation</td><td>Manure, feathers, and offal add 3-5% to revenue with minimal cost.</td></tr>
+          <tr><td>Automated Admin</td><td>Low overhead; one admin can manage hundreds of contracts and customers.</td></tr>
+          <tr><td>Data-Driven Marketing</td><td>High ROI spend; low wastage.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>9.2 Margin Calculation (Illustrative)</h3>
+      <table class="mini-table">
+        <thead><tr><th>Item</th><th>Amount (R)</th></tr></thead>
+        <tbody>
+          <tr><td>Revenue per chicken (avg)</td><td>84.50</td></tr>
+          <tr><td>Less: Chicks cost</td><td>(8.90)</td></tr>
+          <tr><td>Less: Feed cost</td><td>(22.20)</td></tr>
+          <tr><td>Less: Labour & overhead</td><td>(5.00)</td></tr>
+          <tr><td>Less: Marketing & admin</td><td>(2.50)</td></tr>
+          <tr><td><strong>Gross Profit per chicken</strong></td><td><strong>45.90</strong></td></tr>
+          <tr><td>Gross Margin %</td><td>54%</td></tr>
+          <tr><td>Plus: By-product revenue</td><td>+3.30</td></tr>
+          <tr><td>Plus: Assurance contribution (float)</td><td>+2.20</td></tr>
+          <tr><td><strong>Effective Margin</strong></td><td><strong>60%</strong></td></tr>
+        </tbody>
+      </table>
+      <p>To reach 78%, the model relies on:</p>
+      <ul>
+        <li>Higher subscription penetration (target 50% of sales)</li>
+        <li>Increased village contract margins (target 20%)</li>
+        <li>Reduced feed costs through forward contracts</li>
+        <li>Scale economies in logistics</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section10">
+    <div class="section-header">
+      <h2>10. Parallel Scaling Strategy</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The system is designed for <strong>horizontal scaling</strong>—multiple growth vectors can be activated simultaneously without conflict.</p>
+      
+      <h3>10.1 Independent Growth Vectors</h3>
+      <table class="mini-table">
+        <thead><tr><th>Vector</th><th>How It Scales</th><th>Constraints</th></tr></thead>
+        <tbody>
+          <tr><td>Village Farms</td><td>Sign more contracts; each adds supply and margin.</td><td>Administrative capacity; logistics reach.</td></tr>
+          <tr><td>Subscriptions</td><td>Marketing campaigns to acquire subscribers; system can handle unlimited members.</td><td>Production capacity (mitigated by village expansion).</td></tr>
+          <tr><td>Festive Groups</td><td>Add more villages or increase group capacity.</td><td>Community engagement bandwidth.</td></tr>
+          <tr><td>Stock Offerings</td><td>Issue new batches; attract more investors.</td><td>Regulatory compliance; investor demand.</td></tr>
+          <tr><td>Influencer Marketing</td><td>Onboard more influencers; each drives traffic independently.</td><td>Management overhead; brand alignment.</td></tr>
+          <tr><td>Platform Ads</td><td>Increase ad spend on high-ROI platforms; scale horizontally across platforms.</td><td>Budget; diminishing returns.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>10.2 Synergies</h3>
+      <ul>
+        <li><strong>Subscribers become investors</strong> via stock offerings.</li>
+        <li><strong>Festive participants become subscribers</strong> after experiencing quality.</li>
+        <li><strong>Village farms become customers</strong> for feed and chicks.</li>
+        <li><strong>Influencers become affiliates</strong> with commission structures.</li>
+      </ul>
+
+      <h3>10.3 Technology Enablers</h3>
+      <ul>
+        <li><strong>Modular codebase</strong> allows adding new features without disrupting core.</li>
+        <li><strong>Cloud database</strong> scales with data volume.</li>
+        <li><strong>Automated workflows</strong> (digital signing, billing, claims) reduce manual overhead.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section11">
+    <div class="section-header">
+      <h2>11. Data Flow & Connectivity Map</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>Data flows seamlessly from customer touchpoints to admin dashboards and back, enabling real-time control.</p>
+      
+      <h3>11.1 Order Lifecycle</h3>
+      <ol>
+        <li><strong>Customer places order</strong> (web, WhatsApp, or manual entry by admin).</li>
+        <li><strong>Payment is processed</strong> (card, EFT, or loyalty credits).</li>
+        <li><strong>Order data</strong> flows to:
+          <ul>
+            <li>Inventory: birds are reserved/allocated.</li>
+            <li>CRM: customer history updated.</li>
+            <li>Marketing: revenue attributed to source.</li>
+            <li>Logistics: delivery scheduled.</li>
+          </ul>
+        </li>
+        <li><strong>Admin can approve/override</strong> any step (e.g., refund, adjust quantity).</li>
+        <li><strong>Fulfillment</strong> triggers stock reduction and batch update.</li>
+        <li><strong>Post-purchase</strong>:
+          <ul>
+            <li>Loyalty credits earned (if applicable).</li>
+            <li>Assurance contributions deducted (if member).</li>
+            <li>Referral credits issued (if referred).</li>
+          </ul>
+        </li>
+      </ol>
+
+      <h3>11.2 Subscription Cycle</h3>
+      <ol>
+        <li><strong>Monthly billing</strong> run automatically.</li>
+        <li><strong>Payments collected</strong>; deposits for upcoming events tracked.</li>
+        <li><strong>Delivery schedule</strong> generated based on tier and preferences.</li>
+        <li><strong>Stock locked</strong> for each subscriber.</li>
+        <li><strong>Renewal/upgrade</strong> actions logged.</li>
+      </ol>
+
+      <h3>11.3 Assurance Claim Flow</h3>
+      <ol>
+        <li>Member submits claim via portal or admin.</li>
+        <li>Admin reviews in pending claims list.</li>
+        <li>Approve/reject action updates:
+          <ul>
+            <li>Reserve balance.</li>
+            <li>Member's loyalty credits (if approved, claim paid; if rejected, no action).</li>
+          </ul>
+        </li>
+        <li>Approved claim triggers payout (EFT or credit).</li>
+      </ol>
+
+      <h3>11.4 Village Contract Flow</h3>
+      <ol>
+        <li>Admin creates contract; digital signature link generated.</li>
+        <li>Farm signs; contract becomes active.</li>
+        <li>Monthly supply added to demand forecast.</li>
+        <li>Deliveries assigned to farms based on subscription orders.</li>
+        <li>Transport fees collected and allocated.</li>
+        <li>Expiry alerts trigger renewal process.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section12">
+    <div class="section-header">
+      <h2>12. Long-Term Expansion Blueprint</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The vision is to become a <strong>national poultry network</strong> with thousands of contracted farms and hundreds of thousands of subscribers.</p>
+      
+      <h3>12.1 Village Node Expansion Model</h3>
+      <ul>
+        <li>Each village farm becomes a <strong>node</strong> that can serve its local community.</li>
+        <li>Nodes are managed remotely via the central system.</li>
+        <li>Nodes can recruit sub-farms (franchise-like expansion).</li>
+      </ul>
+
+      <h3>12.2 Agent-Driven Expansion</h3>
+      <ul>
+        <li>Local agents identify and onboard new farms.</li>
+        <li>Agents earn commission on contracts they bring.</li>
+        <li>System provides agents with digital tools and real-time tracking.</li>
+      </ul>
+
+      <h3>12.3 Digital Contract Onboarding</h3>
+      <ul>
+        <li>Fully automated contract generation and e-signature.</li>
+        <li>Farms can self-onboard via web portal.</li>
+        <li>Background checks and credit scoring integrated.</li>
+      </ul>
+
+      <h3>12.4 National Farm Network Vision</h3>
+      <ul>
+        <li>Target: 8,000+ contracted farms.</li>
+        <li>Each farm supplies 500-1,000 birds/month.</li>
+        <li>Total supply: 4-8 million birds/month.</li>
+        <li>Data from all farms enables predictive demand planning and bulk purchasing.</li>
+      </ul>
+
+      <h3>12.5 Multi-Region Distribution Logic</h3>
+      <ul>
+        <li>Regional hubs for feed distribution and processing.</li>
+        <li>Last-mile delivery handled by local farms (peer-to-peer).</li>
+        <li>Cross-region balancing via central logistics.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section13">
+    <div class="section-header">
+      <h2>13. Risk Factors & Stability Factors</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <h3>13.1 Risks</h3>
+      <table class="mini-table">
+        <thead><tr><th>Risk</th><th>Mitigation</th></tr></thead>
+        <tbody>
+          <tr><td>Disease outbreak</td><td>Bio-security protocols; insurance; diversified farm network.</td></tr>
+          <tr><td>Feed price volatility</td><td>Forward contracts; bulk purchasing; pass-through pricing.</td></tr>
+          <tr><td>Contract farm default</td><td>Performance bonds; gradual scaling; multiple small farms.</td></tr>
+          <tr><td>Regulatory changes</td><td>Legal counsel; industry association membership.</td></tr>
+          <tr><td>Cash flow crunch</td><td>Prepayments; subscription float; emergency fund.</td></tr>
+          <tr><td>Customer churn</td><td>Loyalty programs; high switching costs (assurance, shares).</td></tr>
+        </tbody>
+      </table>
+
+      <h3>13.2 Stability Factors</h3>
+      <ul>
+        <li><strong>Recurring revenue</strong> from subscriptions (30%+).</li>
+        <li><strong>Prepayments</strong> from festive groups (negative working capital).</li>
+        <li><strong>Reserve float</strong> from assurance (internal liquidity).</li>
+        <li><strong>Diversified supply</strong> via village farms (not dependent on single producer).</li>
+        <li><strong>Data-driven decisions</strong> reduce waste and overproduction.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section14">
+    <div class="section-header">
+      <h2>14. Competitive Advantage Analysis</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <p>The Golden Feather’s competitive moat is built on <strong>network effects, data, and community</strong>.</p>
+      
+      <h3>14.1 Defensibility</h3>
+      <ul>
+        <li><strong>Network Effects:</strong> More farms attract more subscribers; more subscribers attract more farms. This creates a self-reinforcing loop.</li>
+        <li><strong>Data Leverage:</strong> Historical data enables predictive demand, optimised pricing, and personalised offers. Competitors cannot replicate this without similar scale.</li>
+        <li><strong>Community Lock-In:</strong> Assurance and stock programs create financial ties that go beyond transactional loyalty. Members become stakeholders.</li>
+        <li><strong>Operational Efficiency:</strong> Direct-to-consumer and automated workflows yield cost advantages that competitors with legacy models cannot match.</li>
+      </ul>
+
+      <h3>14.2 Why It’s Hard to Copy</h3>
+      <ul>
+        <li><strong>Two-sided platform:</strong> Requires simultaneous growth of supply (farms) and demand (customers). New entrants face a chicken-and-egg problem.</li>
+        <li><strong>Cultural embeddedness:</strong> Festive plans tap into deep community traditions; superficial imitations lack authenticity.</li>
+        <li><strong>Technology investment:</strong> The integrated system with real-time attribution, contract management, and financial flows is non-trivial to build.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section15">
+    <div class="section-header">
+      <h2>15. Why This System Is Above Market Average</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <table class="mini-table">
+        <thead><tr><th>Attribute</th><th>Industry Average</th><th>The Golden Feather</th></tr></thead>
+        <tbody>
+          <tr><td>Gross Margin</td><td>15-20%</td><td>60%+ (target 78%)</td></tr>
+          <tr><td>Customer Retention</td><td>40-50%</td><td>78% (observed)</td></tr>
+          <tr><td>Working Capital</td><td>Negative (prepayments)</td><td>Strongly positive</td></tr>
+          <tr><td>Marketing ROI</td><td>100-150%</td><td>176%+</td></tr>
+          <tr><td>Scalability</td><td>Linear with capital</td><td>Non-linear with network</td></tr>
+          <tr><td>Risk Diversification</td><td>Low</td><td>High (multiple streams)</td></tr>
+          <tr><td>Data Utilisation</td><td>Minimal</td><td>Full attribution</td></tr>
+        </tbody>
+      </table>
+      <p>The system is not just a poultry business; it is a <strong>financial technology platform</strong> layered on top of agricultural production.</p>
+    </div>
+  </div>
+
+  <div class="blueprint-section" id="section16">
+    <div class="section-header">
+      <h2>16. Future Scalability Pathways</h2>
+      <span class="toggle-icon"><i class="fas fa-chevron-down"></i></span>
+    </div>
+    <div class="section-content">
+      <h3>16.1 Geographic Expansion</h3>
+      <ul>
+        <li>Replicate the model in neighbouring countries (Botswana, Namibia, Zimbabwe).</li>
+        <li>Adapt festive plans to local cultural events.</li>
+        <li>Partner with regional feed mills.</li>
+      </ul>
+
+      <h3>16.2 Product Line Extension</h3>
+      <ul>
+        <li>Introduce value-added products (spatchcock, marinades, ready-to-cook meals).</li>
+        <li>Use by-products for pet food or fertiliser.</li>
+        <li>Launch a consumer brand for retail stores.</li>
+      </ul>
+
+      <h3>16.3 Financial Services</h3>
+      <ul>
+        <li>Offer micro-loans to contracted farms using assurance float.</li>
+        <li>Create a cooperative bank for members.</li>
+        <li>Issue digital tokens representing shares in future batches (blockchain-based).</li>
+      </ul>
+
+      <h3>16.4 Data Monetisation</h3>
+      <ul>
+        <li>Sell anonymised demand data to feed suppliers and equipment manufacturers.</li>
+        <li>Provide benchmarking services to other farming networks.</li>
+      </ul>
+
+      <h3>16.5 Platform-as-a-Service</h3>
+      <ul>
+        <li>White-label the software for other agricultural sectors (beef, pork, vegetables).</li>
+        <li>Become the operating system for community-supported agriculture.</li>
+      </ul>
+      <hr>
+      <p><em>This document constitutes the internal business architecture blueprint of The Golden Feather. It is intended for strategic planning, investor communication, and operational alignment.</em></p>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="javascript:history.back()" onclick="window.location.href='index.html'">← Back to Dashboard</a>
+    <p style="margin-top: 1rem; color: #7e6b4b; font-size: 0.8rem;">Add this to your more‑panel: <code style="background:#2a2a2a; padding:4px 8px; border-radius:30px;">&lt;div class="more-item" onclick="window.location.href='blueprint.html'"&gt;&lt;i class="fas fa-book"&gt;&lt;/i&gt; &lt;span&gt;Business Blueprint&lt;/span&gt;&lt;/div&gt;</code></p>
+  </div>
+</div>
+
+<script>
+  (function() {
+    // Accordion functionality: only one section open at a time
+    const sections = document.querySelectorAll('.blueprint-section');
+    
+    function closeAllExcept(exceptSection) {
+      sections.forEach(section => {
+        if (section !== exceptSection) {
+          section.classList.remove('open');
+        }
+      });
+    }
+
+    sections.forEach(section => {
+      const header = section.querySelector('.section-header');
+      header.addEventListener('click', () => {
+        const isOpen = section.classList.contains('open');
+        if (isOpen) {
+          // if it's open, just close it (optional: keep it open? but we want exclusive open)
+          section.classList.remove('open');
+        } else {
+          closeAllExcept(section);
+          section.classList.add('open');
+          // smooth scroll to section
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        }
+      });
+    });
+
+    // Optionally open first section by default
+    // sections[0].classList.add('open');
+  })();
+</script>
+</body>
+</html>
