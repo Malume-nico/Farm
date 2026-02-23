@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE + MARKETING PLAYBOOK</title>
+  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE + MARKETING COMMAND CENTER</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -570,7 +570,7 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three‑dots panel (now includes Marketing Playbook) -->
+  <!-- header with three‑dots panel (now includes Marketing Command Center) -->
   <div class="header">
     <div class="header-left">
       <h1>
@@ -592,16 +592,15 @@
       <div class="more-item" data-tab="assurance"><i class="fas fa-shield-alt"></i> <span>Assurance</span></div>
       <div class="more-item" data-tab="villageExpansion"><i class="fas fa-handshake"></i> <span>Village Expansion</span></div>
       <div class="more-item" data-tab="stockSale"><i class="fas fa-chart-line"></i> <span>Stock Sale</span></div>
-      <!-- NEW: Marketing Playbook -->
-      <div class="more-item" data-tab="marketing"><i class="fas fa-bullhorn"></i> <span>Marketing Playbook</span></div>
+      <!-- NEW: Marketing Command Center -->
+      <div class="more-item" data-tab="marketing"><i class="fas fa-bullhorn"></i> <span>Marketing Command Center</span></div>
     </div>
   </div>
 
-  <!-- main content area – all panes (including new marketingPane) -->
+  <!-- main content area – all panes (including marketingPane) -->
   <div class="main-content" id="mainContent">
-    <!-- DASHBOARD PANE (original) -->
+    <!-- DASHBOARD PANE (original full content) -->
     <div class="tab-pane active" id="dashboardPane">
-      <!-- ... (original dashboard content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
         <div class="grid-2">
@@ -671,9 +670,8 @@
       </div>
     </div>
 
-    <!-- INVENTORY PANE (original) -->
+    <!-- INVENTORY PANE (original full content) -->
     <div class="tab-pane" id="inventoryPane">
-      <!-- ... (original inventory content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
         <div class="batch-row">
@@ -717,9 +715,8 @@
       </div>
     </div>
 
-    <!-- SALES PANE (original) -->
+    <!-- SALES PANE (original full content) -->
     <div class="tab-pane" id="salesPane">
-      <!-- ... (original sales content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
         <div style="font-size: 2.2rem; font-weight:600;" id="todaySalesQty">128 <span style="font-size:1rem;">chickens</span></div>
@@ -766,9 +763,8 @@
       </div>
     </div>
 
-    <!-- LOGISTICS PANE (original) -->
+    <!-- LOGISTICS PANE (original full content) -->
     <div class="tab-pane" id="logisticsPane">
-      <!-- ... (original logistics content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-truck gold-text"></i> active deliveries</div>
         <div class="batch-row"><span>🚚 driver: Ahmed</span> <span class="badge">to city market</span></div>
@@ -796,9 +792,8 @@
       </div>
     </div>
 
-    <!-- BUDGET PANE (original) -->
+    <!-- BUDGET PANE (original full content) -->
     <div class="tab-pane" id="budgetPane">
-      <!-- ... (original budget content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
         <div class="cost-item"><span>🐔 chicken cost</span> <span id="plChickens">R 34,300</span></div>
@@ -847,9 +842,8 @@
       </div>
     </div>
 
-    <!-- SETTINGS PANE (original) -->
+    <!-- SETTINGS PANE (original full content) -->
     <div class="tab-pane" id="settingsPane">
-      <!-- ... (original settings content, unchanged) ... -->
       <div class="card">
         <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
         <p><i class="fas fa-user"></i> Owner: Rana family</p>
@@ -877,44 +871,577 @@
       </div>
     </div>
 
-    <!-- REWARDS PANE (original) -->
+    <!-- REWARDS PANE (original full content) -->
     <div class="tab-pane" id="rewardsPane">
-      <!-- ... (original rewards content, unchanged) ... -->
+      <!-- KPI cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-trophy gold-text"></i> rewards KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed this month</span><div class="stat-value" id="rewardsClaimed">8</div></div>
+          <div class="stat"><span class="stat-label">active rewards</span><div class="stat-value" id="activeRewards">12</div></div>
+          <div class="stat"><span class="stat-label">upcoming</span><div class="stat-value" id="upcomingRewards">5</div></div>
+          <div class="stat"><span class="stat-label">by‑product bonus</span><div class="stat-value" id="byproductBonusUptake">3</div></div>
+          <div class="stat"><span class="stat-label">referral credits</span><div class="stat-value" id="referralCredits">R 1,240</div></div>
+        </div>
+      </div>
+
+      <!-- admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> reward rules (admin)</div>
+        <div class="cost-input"><label>✅ enable rewards</label> <input type="checkbox" id="enableRewards" checked style="width:20px;"></div>
+        <div class="cost-input"><label>🐔 chickens per reward</label> <input type="number" id="chickensPerReward" value="10" min="1" step="1"></div>
+        <div class="cost-input"><label>📅 streak days</label> <input type="number" id="streakDays" value="7" min="1"></div>
+        <div class="cost-input"><label>💰 discount %</label> <input type="number" id="rewardDiscount" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 double by‑product day</label> <input type="checkbox" id="doubleByproduct" checked></div>
+        <div class="cost-input"><label>👥 referral credit (R)</label> <input type="number" id="referralCreditValue" value="50" step="5"></div>
+        <button class="btn-small" id="simulatePurchaseBtn" style="margin-top:6px;"><i class="fas fa-cart-plus"></i> simulate purchase</button>
+      </div>
+
+      <!-- swipeable reward cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-id-card gold-text"></i> active rewards (swipe)</div>
+        <div class="cards-scroll" id="rewardCardsContainer">
+          <!-- dynamically filled -->
+        </div>
+      </div>
+
+      <!-- rewards table -->
+      <div class="card reward-table">
+        <div class="card-title"><i class="fas fa-table gold-text"></i> all customer rewards</div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>Customer</th><th>Type</th><th>Progress</th><th>Status</th><th>Expiry</th><th>Discount</th></tr></thead>
+            <tbody id="rewardsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <!-- INFRASTRUCTURE PANE (original) -->
+    <!-- INFRASTRUCTURE PANE (original full content) -->
     <div class="tab-pane" id="infraPane">
-      <!-- ... (original infra content, unchanged) ... -->
+      <!-- 1. Infrastructure status & growth trigger -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> capacity vs demand</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">current capacity (birds)</span><div class="stat-value"><input type="number" id="currentCapacity" value="2500" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+          <div class="stat"><span class="stat-label">proj. monthly demand</span><div class="stat-value"><input type="number" id="projectedDemand" value="2800" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+        </div>
+        <div class="cost-item"><span>📊 utilization</span> <span id="capacityUtilization" class="gold-text">89%</span></div>
+        <div id="infraSuggestion" class="badge" style="margin-top:8px;">⚙️ infrastructure upgrade suggested (40% of profit)</div>
+        <div class="cost-item"><span>🏗️ estimated upgrade investment</span> <span id="requiredInvestment">R 0</span></div>
+        <p class="helper-text" id="upgradeDetails">units, feeders, water, climate, tech</p>
+      </div>
+
+      <!-- 2. Emergency fund & categories -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-shield-halved gold-text"></i> emergency fund</div>
+        <div class="cost-input"><label>💰 current balance</label> <input type="number" id="emergencyBalance" value="15000" step="1000"></div>
+        <div class="cost-input"><label>⚠️ minimum threshold</label> <input type="number" id="emergencyMin" value="20000" step="1000"></div>
+        <div id="emergencyAlert" class="badge alert-badge" style="margin-top:6px;">⚠️ below minimum!</div>
+        <hr>
+        <div class="card-title" style="margin-top:0;">📦 budget categories (% of remaining after infra)</div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="catEquipment" value="30" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🛠️ new tooling</label> <input type="number" id="catTooling" value="20" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🚚 logistics</label> <input type="number" id="catLogistics" value="25" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📦 packaging/marketing</label> <input type="number" id="catPackaging" value="25" min="0" max="100" step="1"></div>
+        <p class="helper-text" id="catSum" style="color:#d4af37;">total 100%</p>
+      </div>
+
+      <!-- 3. Dynamic allocation result (based on monthly profit) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-scale-balanced gold-text"></i> this month's allocation</div>
+        <div class="cost-item"><span>📈 available profit (month)</span> <span id="availProfit">R 86,400</span></div>
+        <div class="cost-item"><span>🏗️ infrastructure (40% if needed)</span> <span id="allocInfra">R 34,560</span></div>
+        <div class="cost-item"><span>🆘 emergency top‑up</span> <span id="allocEmergency">R 5,000</span></div>
+        <div class="cost-item"><span>🔧 equipment</span> <span id="allocEquipment">R 0</span></div>
+        <div class="cost-item"><span>🛠️ tooling</span> <span id="allocTooling">R 0</span></div>
+        <div class="cost-item"><span>🚚 logistics</span> <span id="allocLogistics">R 0</span></div>
+        <div class="cost-item"><span>📦 packaging</span> <span id="allocPackaging">R 0</span></div>
+        <button class="btn-small" id="recalcAllocBtn"><i class="fas fa-sync-alt"></i> recalc from current profit</button>
+      </div>
+
+      <!-- 4. Long‑term planning goals -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-tree gold-text"></i> long‑term goals</div>
+        <div class="cost-input"><label>🏞️ land acquisition</label> <input type="number" id="goalLand" value="250000" step="1000"></div>
+        <div class="cost-input"><label>🏭 facility expansion</label> <input type="number" id="goalFacility" value="180000" step="1000"></div>
+        <div class="cost-input"><label>⚙️ new machinery</label> <input type="number" id="goalMachinery" value="95000" step="1000"></div>
+        <div class="cost-input"><label>📅 timeline (months)</label> <input type="number" id="goalTimeline" value="12" min="1"></div>
+        <hr>
+        <div class="cost-item"><span>📊 total investment</span> <span id="totalGoals">R 525,000</span></div>
+        <div class="cost-item"><span>📆 monthly requirement</span> <span id="monthlyGoalReq">R 43,750</span></div>
+        <div class="cost-item"><span>📈 impact on profit</span> <span id="profitAfterGoals">R 42,650</span></div>
+      </div>
+
+      <!-- 5. Year‑end rollover & alerts -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-check gold-text"></i> emergency fund cycle</div>
+        <p class="helper-text">year‑end: if unused >0, 40% reinvested, 60% rolls over</p>
+        <button class="btn-gold" id="simulateYearEndBtn"><i class="fas fa-rotate-right"></i> simulate year‑end rollover</button>
+        <div id="rolloverSummary" style="margin-top:12px; font-size:0.9rem;"></div>
+        <div id="yearEndAlert" class="badge" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- notifications / alerts (dynamic) -->
+      <div class="card" style="background:#2a2a2a50;">
+        <div class="card-title"><i class="fas fa-bell gold-text"></i> live alerts</div>
+        <div id="infraNotifications">
+          <p class="badge alert-badge">⚠️ capacity nearing limit (consider upgrade)</p>
+          <p class="badge alert-badge">⚠️ emergency fund below minimum</p>
+        </div>
+      </div>
     </div>
 
-    <!-- CRM PANE (original) -->
+    <!-- CRM PANE (original full content) -->
     <div class="tab-pane" id="crmPane">
-      <!-- ... (original crm content, unchanged) ... -->
+      <!-- Customer Overview -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> customer overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">one‑time</span><div class="stat-value">42</div><span class="stat-sub">18% revenue</span></div>
+          <div class="stat"><span class="stat-label">bulk buyers</span><div class="stat-value">18</div><span class="stat-sub">52% revenue</span></div>
+          <div class="stat"><span class="stat-label">subscribers</span><div class="stat-value">12</div><span class="stat-sub">30% revenue</span></div>
+          <div class="stat"><span class="stat-label">total customers</span><div class="stat-value">72</div><span class="stat-sub">+8 this month</span></div>
+        </div>
+        <div class="cards-scroll" style="margin-top: 12px;">
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">JD</div>
+            <h4>John Doe</h4>
+            <p>⭐ 340 pts · last: 12 Mar</p>
+            <span class="crm-badge">bulk</span> <span class="crm-badge">R 12k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">SW</div>
+            <h4>Spier Wines</h4>
+            <p>🏆 1,200 pts · last: 15 Mar</p>
+            <span class="crm-badge">subscriber</span> <span class="crm-badge">R 45k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">MT</div>
+            <h4>Mama's Take</h4>
+            <p>⭐ 80 pts · last: 10 Mar</p>
+            <span class="crm-badge">one‑time</span> <span class="crm-badge">R 2k</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Requests & Complaints -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-headset gold-text"></i> requests & complaints</div>
+        <div class="filter-row">
+          <span class="filter-chip active">all</span>
+          <span class="filter-chip">open</span>
+          <span class="filter-chip">in progress</span>
+          <span class="filter-chip">resolved</span>
+          <span class="filter-chip">high priority</span>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-exclamation-circle" style="color:#b85a3a;"></i> <strong>Refund</strong> <span class="badge">high</span></div>
+          <div><span>#O-3421 · John D.</span><br><small>open, assigned to you</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-question-circle" style="color:#d4af37;"></i> <strong>Query</strong> <span class="badge">medium</span></div>
+          <div><span>#O-3419 · Spier</span><br><small>in progress (Ahmed)</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-comment-dots" style="color:#6b8e4c;"></i> <strong>Complaint</strong> <span class="badge">low</span></div>
+          <div><span>#O-3415 · Mama's</span><br><small>resolved</small></div>
+        </div>
+      </div>
+
+      <!-- Inbox / Messaging -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-inbox gold-text"></i> inbox <span class="badge" style="margin-left:8px;">3 unread</span></div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>Spier Wines</strong> <span style="font-size:0.7rem; color:#aaa;">about order #O-3422</span><br>“When will the bulk delivery arrive?...”</div>
+        </div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>John Doe</strong> <span style="font-size:0.7rem; color:#aaa;">refund #R-12</span><br>“I haven't received my refund yet...”</div>
+        </div>
+        <div class="message-preview">
+          <div></div>
+          <div><strong>Kyle's Grill</strong> <span style="font-size:0.7rem; color:#aaa;">invoice</span><br>“Thanks for the quick response!”</div>
+        </div>
+        <div class="flex-row" style="margin-top:8px;">
+          <button class="btn-small"><i class="fas fa-reply"></i> reply</button>
+          <button class="btn-small"><i class="fas fa-file-alt"></i> templates</button>
+        </div>
+      </div>
+
+      <!-- Reviews & Ratings -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-star gold-text"></i> reviews & ratings</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">avg rating</span><div class="stat-value">4.6 ★</div></div>
+          <div class="stat"><span class="stat-label">trend (month)</span><div class="stat-value">+0.2</div></div>
+        </div>
+        <div class="batch-row">
+          <div><span>Spier Wines:</span> “Excellent quality” ★★★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+        <div class="batch-row">
+          <div><span>Mama's Take:</span> “Late delivery” ★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+      </div>
+
+      <!-- Rewards Integration & Analytics -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gift gold-text"></i> rewards & KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed</span><div class="stat-value">8</div></div>
+          <div class="stat"><span class="stat-label">active</span><div class="stat-value">12</div></div>
+          <div class="stat"><span class="stat-label">complaint rate</span><div class="stat-value">4.2%</div></div>
+          <div class="stat"><span class="stat-label">avg resolution</span><div class="stat-value">2.3d</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📈 retention rate</span> <span class="gold-text">78%</span></div>
+        <div class="cost-item"><span>🏆 top spender</span> <span>Spier Wines (R 45k)</span></div>
+        <div class="cost-item"><span>⭐ most loyal</span> <span>Kyle's Grill (8 orders)</span></div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn"><i class="fas fa-undo-alt"></i> approve refund</div>
+          <div class="quick-action-btn"><i class="fas fa-tag"></i> issue reward</div>
+          <div class="quick-action-btn"><i class="fas fa-arrow-up"></i> upgrade sub</div>
+          <div class="quick-action-btn"><i class="fas fa-pen"></i> add note</div>
+          <div class="quick-action-btn"><i class="fas fa-envelope"></i> bulk msg</div>
+          <div class="quick-action-btn"><i class="fas fa-tags"></i> tag customer</div>
+        </div>
+      </div>
     </div>
 
-    <!-- FESTIVE PANE (original) -->
+    <!-- FESTIVE PANE (original full content) -->
     <div class="tab-pane" id="festivePane">
-      <!-- ... (original festive content, unchanged) ... -->
+      <!-- Village overview stats -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-people-group gold-text"></i> community festive plan · admin</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">villages</span><div class="stat-value" id="totalVillages">6</div></div>
+          <div class="stat"><span class="stat-label">participants</span><div class="stat-value" id="totalParticipants">187</div><span class="stat-sub">+12 this week</span></div>
+          <div class="stat"><span class="stat-label">chickens req.</span><div class="stat-value" id="totalChickensReq">2,340</div></div>
+          <div class="stat"><span class="stat-label">contributions</span><div class="stat-value" id="totalContributions">R 87,450</div><span class="stat-sub">78% collected</span></div>
+        </div>
+      </div>
+
+      <!-- Analytics dashboard (participation trends) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> participation trend (last 5 weeks)</div>
+        <div style="display: flex; gap: 8px; align-items: flex-end; height: 70px;">
+          <div style="flex:1; background:#d4af37; height:40px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:55px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:30px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:62px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:48px; border-radius: 8px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 6px; color:#aaa; font-size:0.7rem;">
+          <span>w-8</span><span>w-9</span><span>w-10</span><span>w-11</span><span>this wk</span>
+        </div>
+        <p class="badge" style="margin-top:12px;"><i class="fas fa-arrow-up"></i> expected fulfillment: 92% (2,150 chickens)</p>
+      </div>
+
+      <!-- Village groups list with admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list gold-text"></i> village groups · live slots</div>
+        <div id="villageListContainer">
+          <!-- dynamic village rows will be inserted here -->
+        </div>
+        <button class="btn-gold" style="width:100%; margin-top:12px;" id="addVillageBtn"><i class="fas fa-plus"></i> add village group</button>
+      </div>
+
+      <!-- Global adjustments (capacity, deadlines) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders gold-text"></i> adjust global settings</div>
+        <div class="cost-input"><label>default capacity</label> <input type="number" id="globalCapacity" value="500" min="0" step="10"></div>
+        <div class="cost-input"><label>deadline (days)</label> <input type="number" id="globalDeadline" value="14" min="1"></div>
+        <div class="flex-row"><button class="btn-small" id="applyGlobalSettings">apply to all</button><span class="helper-text">overwrites village values</span></div>
+      </div>
+
+      <!-- Approve/adjust contributions panel -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-check-circle gold-text"></i> pending approvals</div>
+        <div id="pendingApprovals">✅ No pending adjustments</div>
+        <hr>
+        <div class="cost-item"><span>🔒 manually lock group</span> <select id="lockGroupSelect"><option>-- select village --</option></select> <button class="btn-small" id="lockGroupBtn">lock</button></div>
+      </div>
     </div>
 
-    <!-- SUBSCRIPTION PANE (original) -->
+    <!-- SUBSCRIPTION PANE (original full content) -->
     <div class="tab-pane" id="subscriptionPane">
-      <!-- ... (original subscription content, unchanged) ... -->
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> subscription analytics</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">total members</span><div class="stat-value" id="subTotalMembers">24</div></div>
+          <div class="stat"><span class="stat-label">monthly revenue</span><div class="stat-value" id="subMonthlyRev">R 18,240</div></div>
+          <div class="stat"><span class="stat-label">expected deliveries</span><div class="stat-value" id="subExpectedDel">187</div></div>
+          <div class="stat"><span class="stat-label">priority fulfillment</span><div class="stat-value" id="subPriorityFulfill">92%</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 forecast next month</span> <span class="gold-text" id="subForecast">R 21,500</span></div>
+      </div>
+
+      <!-- Tier summary -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-layer-group gold-text"></i> per‑tier summary</div>
+        <div class="batch-row">
+          <div><strong>Steady Supply</strong> <span class="badge">8 members</span></div>
+          <div>🐔 42 chickens <br> <span class="stat-sub">R 4,200</span></div>
+        </div>
+        <div class="batch-row">
+          <div><strong>Celebration</strong> <span class="badge">10 members</span></div>
+          <div>🐔 85 chickens <br> <span class="stat-sub">R 9,775</span></div>
+        </div>
+        <div class="batch-row">
+          <div><strong>Signature Reserve</strong> <span class="badge">6 members</span></div>
+          <div>🐔 60 chickens <br> <span class="stat-sub">R 8,400</span></div>
+        </div>
+        <div class="cost-item"><span>🥩 holiday allocation total</span> <span>430 chickens</span></div>
+      </div>
+
+      <!-- Member list with admin actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> members · <span class="filter-row" style="display:inline-flex; margin-left:8px;"><span class="filter-chip active" data-tier="all">all</span><span class="filter-chip" data-tier="steady">steady</span><span class="filter-chip" data-tier="celeb">celeb</span><span class="filter-chip" data-tier="sig">sig</span></span></div>
+        <div id="subscriptionMembersList">
+          <!-- dynamic rows -->
+        </div>
+        <button class="btn-gold" style="width:100%; margin-top:12px;" id="addTestMember"><i class="fas fa-user-plus"></i> add test member</button>
+      </div>
+
+      <!-- Global settings -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> subscription settings (admin)</div>
+        <div class="cost-input"><label>🐔 min monthly quantity</label> <input type="number" id="subMinQty" value="5" min="1" step="1"></div>
+        <div class="cost-input"><label>💰 deposit % (events)</label> <input type="number" id="subDepositPct" value="30" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🏷️ Steady price/chicken</label> <input type="number" id="priceSteady" value="100" step="5"></div>
+        <div class="cost-input"><label>🎉 Celebration price</label> <input type="number" id="priceCeleb" value="115" step="5"></div>
+        <div class="cost-input"><label>👑 Signature price</label> <input type="number" id="priceSig" value="140" step="5"></div>
+        <button class="btn-small" id="applySubSettings">apply to all</button>
+      </div>
+
+      <!-- Event reservations & balances -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> upcoming events & reservations</div>
+        <div class="batch-row"><span>Easter weekend</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
+        <div class="batch-row"><span>Farmers' market (May)</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
+        <div class="cost-item"><span>💰 outstanding balances</span> <span class="gold-text" id="outstandingBalance">R 8,925</span></div>
+      </div>
+
+      <!-- VIP flags & lock override -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-crown gold-text"></i> VIP & overrides</div>
+        <div class="flex-row"><span class="badge">⭐ Spier Wines (guaranteed)</span><button class="btn-small" data-vip="unlock">unlock</button></div>
+        <div class="flex-row"><span class="badge">⭐ Kyle's Grill (priority)</span><button class="btn-small" data-vip="lock">lock</button></div>
+        <p class="helper-text">lock/unlock guaranteed allocation</p>
+      </div>
     </div>
 
-    <!-- ASSURANCE PANE (original) -->
+    <!-- ASSURANCE PANE (original full content) -->
     <div class="tab-pane" id="assurancePane">
-      <!-- ... (original assurance content, unchanged) ... -->
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> assurance plan · analytics</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">total members</span><div class="stat-value" id="assuranceMembers">18</div></div>
+          <div class="stat"><span class="stat-label">monthly contributions</span><div class="stat-value" id="assuranceMonthlyContrib">R 8,450</div></div>
+          <div class="stat"><span class="stat-label">pending claims</span><div class="stat-value" id="assurancePendingClaims">3</div></div>
+          <div class="stat"><span class="stat-label">loyalty credits (month)</span><div class="stat-value" id="assuranceLoyaltyCredits">R 1,860</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 expected claims next 30d</span> <span class="gold-text" id="assuranceExpectedClaims">R 12,400</span></div>
+        <div class="cost-item"><span>✅ total allocations (chickens)</span> <span id="assuranceAllocations">340</span></div>
+      </div>
+
+      <!-- Members list with filters & admin actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> assurance members · 
+          <span class="filter-row" style="display:inline-flex; margin-left:8px;">
+            <span class="filter-chip active" data-assurance-filter="all">all</span>
+            <span class="filter-chip" data-assurance-filter="active">active</span>
+            <span class="filter-chip" data-assurance-filter="pending">pending</span>
+          </span>
+        </div>
+        <div id="assuranceMembersList">
+          <!-- dynamic rows injected via JS -->
+        </div>
+        <div class="flex-row" style="margin-top:12px;">
+          <input type="text" placeholder="search member..." style="flex:1; background:#2a2a2a; border:1px solid #d4af3740; border-radius:30px; padding:8px 12px; color:white;">
+          <button class="btn-small"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+
+      <!-- Approve claims / issue loyalty credits -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-check-circle gold-text"></i> pending claims (3)</div>
+        <div id="pendingClaimsList">
+          <div class="batch-row">
+            <div><strong>Spier Wines</strong> <span class="badge">R 1,200</span></div>
+            <div><button class="btn-small" data-claim-id="c1" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c1" data-action="reject-claim">✗</button></div>
+          </div>
+          <div class="batch-row">
+            <div><strong>Kyle's Grill</strong> <span class="badge">R 860</span></div>
+            <div><button class="btn-small" data-claim-id="c2" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c2" data-action="reject-claim">✗</button></div>
+          </div>
+          <div class="batch-row">
+            <div><strong>Mama's Take</strong> <span class="badge">R 500</span></div>
+            <div><button class="btn-small" data-claim-id="c3" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c3" data-action="reject-claim">✗</button></div>
+          </div>
+        </div>
+        <button class="btn-gold" style="margin-top:12px;" id="issueLoyaltyCreditBtn"><i class="fas fa-gift"></i> issue loyalty credit to selected</button>
+      </div>
+
+      <!-- Admin controls: pricing, return %, toggle per user -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> assurance settings</div>
+        <div class="cost-input"><label>🐔 contribution per chicken</label> <input type="number" id="assurancePricePerChicken" value="25" step="1"></div>
+        <div class="cost-input"><label>📈 loyalty return %</label> <input type="number" id="assuranceReturnPct" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 max allocation per member</label> <input type="number" id="assuranceMaxAlloc" value="50" step="5"></div>
+        <div class="assurance-toggle">
+          <span>🔛 enable for all subscribers?</span>
+          <input type="checkbox" id="assuranceGlobalToggle" checked>
+        </div>
+        <div class="flex-row" style="margin-top:12px;">
+          <button class="btn-small" id="applyAssuranceSettings">apply to all</button>
+          <span class="helper-text">overwrites member‑level settings</span>
+        </div>
+      </div>
+
+      <!-- Quick actions integration with subscription/rewards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="syncSubsBtn"><i class="fas fa-sync-alt"></i> sync subs</div>
+          <div class="quick-action-btn" id="issueAllLoyaltyBtn"><i class="fas fa-coins"></i> issue all loyalty</div>
+          <div class="quick-action-btn" id="resetClaimsBtn"><i class="fas fa-undo"></i> reset claims</div>
+          <div class="quick-action-btn" id="assuranceReportBtn"><i class="fas fa-file-alt"></i> report</div>
+        </div>
+      </div>
     </div>
 
-    <!-- VILLAGE EXPANSION PANE (original) -->
+    <!-- VILLAGE EXPANSION PANE (original full content) -->
     <div class="tab-pane" id="villageExpansionPane">
-      <!-- ... (original village expansion content, unchanged) ... -->
+      <!-- Analytics & summary cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> village expansion · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active villages</span><div class="stat-value" id="villageCount">5</div></div>
+          <div class="stat"><span class="stat-label">total chickens</span><div class="stat-value" id="totalChickensVillage">3,450</div><span class="stat-sub">supplied/month</span></div>
+          <div class="stat"><span class="stat-label">expected profit</span><div class="stat-value" id="expectedProfitVillage">R 82,500</div></div>
+          <div class="stat"><span class="stat-label">expiring soon</span><div class="stat-value" id="expiringContracts">2</div><span class="stat-sub">in 30d</span></div>
+        </div>
+      </div>
+
+      <!-- Contracts list with admin actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-file-signature gold-text"></i> active contracts · <span class="btn-small" id="openAddContractModal"><i class="fas fa-plus"></i> new</span></div>
+        <div id="contractsListContainer">
+          <!-- dynamic contract rows injected by JS -->
+        </div>
+      </div>
+
+      <!-- Budget tracker for village expansion -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> expansion budget (monthly)</div>
+        <div class="cost-input"><label>🚚 travel/logistics</label> <input type="number" id="budgetTravel" value="5000" step="500"></div>
+        <div class="cost-input"><label>📄 contract management</label> <input type="number" id="budgetMgmt" value="2500" step="200"></div>
+        <div class="cost-input"><label>🔧 supply/infrastructure</label> <input type="number" id="budgetSupply" value="8000" step="1000"></div>
+        <hr>
+        <div class="cost-item"><span>📊 total allocated</span> <span class="gold-text" id="totalBudget">R 15,500</span></div>
+        <div class="cost-item"><span>📈 projected monthly supply</span> <span id="projectedSupply">3,450 chickens</span></div>
+        <div class="cost-item"><span>🧾 cost per chicken</span> <span id="costPerChickenVillage">R 4.49</span></div>
+        <div class="chart-bar"><div class="bar-fill" id="budgetBar" style="width:65%"></div></div>
+        <p class="helper-text">based on active contracts & subscription demand</p>
+      </div>
+
+      <!-- Integration with customer site / delivery assignment -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-link gold-text"></i> sync with customer site</div>
+        <div class="batch-row"><span>🌍 farms can view earnings</span><span class="badge">active link</span></div>
+        <div class="batch-row"><span>📦 pending deliveries to assign</span><span class="badge" id="pendingDeliveries">3</span></div>
+        <button class="btn-small" id="syncDeliveriesBtn"><i class="fas fa-sync-alt"></i> sync from subscriptions</button>
+        <button class="btn-small" id="generateFarmLinkBtn"><i class="fas fa-link"></i> generate farm access</button>
+        <div id="tempFarmLink" class="signature-link" style="display:none;">https://farm.goldenfeather.com/join?token=abc123</div>
+      </div>
+
+      <!-- Expiring contracts alert & transport fee collection -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-exclamation-triangle gold-text"></i> alerts & fees</div>
+        <div id="expiringAlerts" class="badge alert-badge" style="margin-bottom:8px;">⚠️ 2 contracts expire in May</div>
+        <div class="cost-item"><span>🚛 transport fees collected</span> <span id="transportFees">R 2,400</span></div>
+        <div class="cost-item"><span>📆 next renewal batch</span> <span>15 May 2025</span></div>
+      </div>
+
+      <!-- Simple chart: supply per village (bar) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-bar gold-text"></i> chickens supplied per village</div>
+        <div id="villageChart" style="display:flex; gap:4px; align-items:flex-end; height:80px;">
+          <!-- dynamic bars -->
+        </div>
+        <div class="flex-row" style="justify-content:space-between; margin-top:6px;" id="villageLabels"></div>
+      </div>
     </div>
 
-    <!-- STOCK SALE PANE (original) -->
+    <!-- STOCK SALE PANE (original full content) -->
     <div class="tab-pane" id="stockSalePane">
-      <!-- ... (original stock sale content, unchanged) ... -->
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> stock sale program · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active offerings</span><div class="stat-value" id="activeOfferings">3</div></div>
+          <div class="stat"><span class="stat-label">total shares sold</span><div class="stat-value" id="sharesSold">1,250</div></div>
+          <div class="stat"><span class="stat-label">capital raised</span><div class="stat-value" id="capitalRaised">R 87,500</div></div>
+          <div class="stat"><span class="stat-label">expected dividend</span><div class="stat-value" id="expectedDividend">R 13,125</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 avg share price</span> <span class="gold-text" id="avgSharePrice">R 70.00</span></div>
+        <div class="cost-item"><span>📈 projected ROI (6m)</span> <span class="green-text" id="projectedROI">15%</span></div>
+      </div>
+
+      <!-- List of stock offerings with admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list gold-text"></i> current offerings · <span class="btn-small" id="addOfferingBtn"><i class="fas fa-plus"></i> new</span></div>
+        <div id="offeringsListContainer">
+          <!-- dynamic rows injected -->
+        </div>
+      </div>
+
+      <!-- Investor / shareholder list -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> recent investments</div>
+        <div id="investorsList">
+          <div class="batch-row"><span>Spier Wines · 200 shares</span><span>R 14,000</span><span class="badge">dividend R 2,100</span></div>
+          <div class="batch-row"><span>Kyle's Grill · 80 shares</span><span>R 5,600</span><span class="badge">dividend R 840</span></div>
+          <div class="batch-row"><span>Mama's Take · 50 shares</span><span>R 3,500</span><span class="badge">dividend R 525</span></div>
+          <div class="batch-row"><span>Thabo Fresh · 120 shares</span><span>R 8,400</span><span class="badge">dividend R 1,260</span></div>
+        </div>
+        <button class="btn-small" style="margin-top:8px;"><i class="fas fa-file-export"></i> export investor list</button>
+      </div>
+
+      <!-- Admin settings for stock program -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> stock settings</div>
+        <div class="cost-input"><label>🐔 base share price</label> <input type="number" id="baseSharePrice" value="70" step="5"></div>
+        <div class="cost-input"><label>📈 dividend % of profit</label> <input type="number" id="dividendPercent" value="15" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📅 dividend frequency</label> <select id="dividendFreq"><option value="monthly">monthly</option><option value="quarterly" selected>quarterly</option><option value="yearly">yearly</option></select></div>
+        <div class="cost-input"><label>🔒 lock-up period (days)</label> <input type="number" id="lockupDays" value="90" step="10"></div>
+        <button class="btn-small" id="applyStockSettings">apply</button>
+      </div>
+
+      <!-- Quick action: simulate dividend payout -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="simulatePayoutBtn"><i class="fas fa-coins"></i> simulate payout</div>
+          <div class="quick-action-btn" id="syncFromSubsBtn"><i class="fas fa-sync-alt"></i> sync subscribers</div>
+          <div class="quick-action-btn" id="generateProspectusBtn"><i class="fas fa-file-pdf"></i> prospectus</div>
+          <div class="quick-action-btn" id="closeOfferingBtn"><i class="fas fa-ban"></i> close offering</div>
+        </div>
+      </div>
     </div>
 
     <!-- ========== ENHANCED MARKETING COMMAND CENTER ========== -->
@@ -1029,7 +1556,24 @@
   </div>
 
   <!-- Modals (original) -->
-  <div class="modal-overlay" id="contractModal"><!-- ... unchanged ... --></div>
+  <div class="modal-overlay" id="contractModal">
+    <div class="modal-card">
+      <h3 id="modalTitle">➕ new village contract</h3>
+      <div class="cost-input"><label>farm name</label> <input type="text" id="modalFarmName" placeholder="e.g. Mvula Poultry"></div>
+      <div class="cost-input"><label>village</label> <input type="text" id="modalVillage" placeholder="e.g. Lwandle"></div>
+      <div class="cost-input"><label>🐔 chickens/month</label> <input type="number" id="modalChickens" value="500" step="10"></div>
+      <div class="cost-input"><label>💰 our margin %</label> <input type="number" id="modalMargin" value="12" step="0.5" min="0" max="100"></div>
+      <div class="cost-input"><label>📅 start date</label> <input type="date" id="modalStart" value="2025-05-01"></div>
+      <div class="cost-input"><label>📅 end date</label> <input type="date" id="modalEnd" value="2025-10-31"></div>
+      <div class="cost-input"><label>📝 admin notes</label> <input type="text" id="modalNotes" placeholder="negotiation notes"></div>
+      <div class="cost-input"><label>🔗 generate sign link?</label> <input type="checkbox" id="modalGenerateLink" checked></div>
+      <div id="modalSignaturePreview" class="signature-link" style="display:none;">farm.goldenfeather.com/sign/xyz</div>
+      <div class="flex-row" style="justify-content:flex-end;">
+        <button class="btn-small" id="modalCancel">cancel</button>
+        <button class="btn-gold" id="modalSave">save contract</button>
+      </div>
+    </div>
+  </div>
   <div class="modal-overlay" id="campaignModal">
     <div class="modal-card">
       <h3 id="campaignModalTitle">➕ new campaign</h3>
@@ -1047,7 +1591,7 @@
   </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS (unchanged, but we keep them as they were) -->
+<!-- ALL ORIGINAL SCRIPTS (unchanged) and NEW MARKETING JS (appended) -->
 <script>
   // ----- tab switching (updated with 'marketing') -----
   (function() {
@@ -1067,7 +1611,7 @@
       assurance: document.getElementById('assurancePane'),
       villageExpansion: document.getElementById('villageExpansionPane'),
       stockSale: document.getElementById('stockSalePane'),
-      marketing: document.getElementById('marketingPane')   // NEW
+      marketing: document.getElementById('marketingPane')
     };
 
     function setActiveTab(tabId) {
