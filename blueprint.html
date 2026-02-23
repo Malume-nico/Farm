@@ -1034,9 +1034,7 @@
   <button id="ttsPlayBtn"><i class="fas fa-play"></i> <span>Listen</span></button>
   <button id="ttsStopBtn" style="display: none;"><i class="fas fa-stop"></i> <span>Stop</span></button>
   <select id="ttsVoiceSelect">
-    <option value="nova" selected>Nova (Professional Female)</option>
-    <option value="shimmer">Shimmer (Friendly Female)</option>
-    <option value="fable">Fable (British Female)</option>
+    <!-- populated by JavaScript -->
   </select>
   <span id="ttsLoading" class="loading-spinner" style="display: none;"></span>
 </div>
@@ -1070,14 +1068,41 @@
       });
     });
 
-    // TTS Implementation
+    // ---------- TTS Implementation using Web Speech API ----------
     const playBtn = document.getElementById('ttsPlayBtn');
     const stopBtn = document.getElementById('ttsStopBtn');
     const voiceSelect = document.getElementById('ttsVoiceSelect');
     const loadingSpinner = document.getElementById('ttsLoading');
-    let currentAudio = null;
     let isPlaying = false;
+    let voices = [];
 
+    // Check for browser support
+    if (!window.speechSynthesis) {
+      playBtn.disabled = true;
+      playBtn.title = "Text-to-speech not supported in this browser";
+      console.warn("SpeechSynthesis not supported");
+    } else {
+      // Load available voices and populate dropdown
+      function loadVoices() {
+        voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+          voiceSelect.innerHTML = ''; // clear existing options
+          voices.forEach((voice, index) => {
+            const option = document.createElement('option');
+            option.value = index; // store the index
+            option.textContent = `${voice.name} (${voice.lang})${voice.default ? ' [Default]' : ''}`;
+            voiceSelect.appendChild(option);
+          });
+        }
+      }
+      loadVoices();
+      // For browsers that fire an event when voices are loaded (like Chrome)
+      if (window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = loadVoices;
+      }
+    }
+
+    // Gather all text content from the page (same as before)
     function getAllText() {
       let text = "The Golden Feather Business Architecture Documentation. ";
       const sections = document.querySelectorAll('.blueprint-section');
@@ -1095,68 +1120,65 @@
       return text.replace(/\s+/g, ' ').trim();
     }
 
-    async function synthesizeSpeech(text, voice) {
-      const enhancedText = "[calm] " + text;
-      const response = await fetch('https://text.pollinations.ai/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: enhancedText, voice: voice, model: 'openai' })
-      });
-      if (!response.ok) throw new Error(`TTS API error: ${response.status}`);
-      const audioBlob = await response.blob();
-      return URL.createObjectURL(audioBlob);
-    }
-
-    playBtn.addEventListener('click', async () => {
-      if (isPlaying && currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
-        isPlaying = false;
-        toggleButtons(false);
-      }
-      const text = getAllText();
-      const voice = voiceSelect.value;
-      playBtn.style.display = 'none';
-      stopBtn.style.display = 'inline-flex';
-      loadingSpinner.style.display = 'inline-block';
-      playBtn.disabled = true;
-
-      try {
-        const audioUrl = await synthesizeSpeech(text, voice);
-        const audio = new Audio(audioUrl);
-        currentAudio = audio;
-        isPlaying = true;
-
-        audio.onended = () => {
-          isPlaying = false;
-          currentAudio = null;
-          toggleButtons(false);
-        };
-        audio.onerror = () => {
-          alert('Audio playback error. Please try again.');
-          isPlaying = false;
-          currentAudio = null;
-          toggleButtons(false);
-        };
-        await audio.play();
-        toggleButtons(true);
-      } catch (error) {
-        console.error(error);
-        alert('Failed to generate speech. Please try again later.');
-        toggleButtons(false);
-      } finally {
-        loadingSpinner.style.display = 'none';
-      }
-    });
-
-    stopBtn.addEventListener('click', () => {
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio = null;
+    function stopSpeaking() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
       }
       isPlaying = false;
       toggleButtons(false);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        stopSpeaking();
+      } else {
+        const text = getAllText();
+        if (!text) {
+          alert('No text to read.');
+          return;
+        }
+
+        // Cancel any ongoing speech (just in case)
+        stopSpeaking();
+
+        const utterance = new SpeechSynthesisUtterance(text);
+
+        // Set the selected voice if available
+        if (voices.length > 0 && voiceSelect.selectedIndex >= 0) {
+          const selectedVoice = voices[voiceSelect.selectedIndex];
+          utterance.voice = selectedVoice;
+        }
+
+        // Optional: adjust rate/pitch
+        utterance.rate = 1;
+        utterance.pitch = 1;
+
+        utterance.onstart = () => {
+          isPlaying = true;
+          toggleButtons(true);
+          loadingSpinner.style.display = 'none';
+        };
+
+        utterance.onend = () => {
+          isPlaying = false;
+          toggleButtons(false);
+        };
+
+        utterance.onerror = (event) => {
+          console.error('Speech synthesis error', event);
+          alert('An error occurred during speech. Please try again.');
+          isPlaying = false;
+          toggleButtons(false);
+        };
+
+        // Start speaking
+        window.speechSynthesis.speak(utterance);
+        loadingSpinner.style.display = 'inline-block';
+        playBtn.disabled = true; // disable while loading (will be re‑enabled by toggleButtons)
+      }
     });
+
+    stopBtn.addEventListener('click', stopSpeaking);
 
     function toggleButtons(playing) {
       if (playing) {
@@ -1170,7 +1192,7 @@
         loadingSpinner.style.display = 'none';
       }
     }
-    toggleButtons(false);
+    toggleButtons(false); // initial state
   })();
 </script>
 </body>
