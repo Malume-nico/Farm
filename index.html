@@ -1890,7 +1890,7 @@
           <div class="batch-info"><h4>${lockIcon} ${v.name}</h4><p>${v.participants} part · ${v.chickensRequired} chks</p></div>
           <div class="batch-numbers"><span class="quantity">R ${v.contributions}</span><br><span class="badge">due ${v.deadline}</span></div>
           <div class="village-status"><div class="capacity-bar"><div class="capacity-fill" style="width:${fillPercent}%"></div></div>
-          <button class="btn-small" data-id="${v.id}" data-action="adjust">adj</button>
+          <button class="btn-small" data-id="${v.id}" data-action="adj">adj</button>
           <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button></div>
         </div>`;
       });
@@ -1909,7 +1909,7 @@
 
     document.addEventListener('click', (e) => {
       const target = e.target;
-      if (target.matches('[data-action="adjust"]')) {
+      if (target.matches('[data-action="adj"]')) {
         const id = parseInt(target.dataset.id);
         const village = villages.find(v => v.id === id);
         if (village) {
