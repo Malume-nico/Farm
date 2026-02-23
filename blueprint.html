@@ -252,6 +252,89 @@
     .mini-table td, .mini-table th {
       padding: 6px 4px;
     }
+
+    /* ===== TTS Player Styles (added) ===== */
+    .tts-player {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 60px;
+      padding: 8px 16px 8px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 30px -10px black;
+      z-index: 2000;
+      flex-wrap: wrap;
+    }
+
+    .tts-player button {
+      background: transparent;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      border-radius: 40px;
+      padding: 8px 16px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tts-player button:hover {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .tts-player button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .tts-player select {
+      background: #2a2a2a;
+      border: 1px solid #d4af3740;
+      color: white;
+      border-radius: 40px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .tts-player select:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+
+    .tts-player .loading-spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #d4af3740;
+      border-top-color: #d4af37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 600px) {
+      .tts-player {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+        border-radius: 40px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
   </style>
 </head>
 <body>
@@ -850,9 +933,21 @@
   </div>
 </div>
 
+<!-- ===== TTS Player (added) ===== -->
+<div class="tts-player">
+  <button id="ttsPlayBtn"><i class="fas fa-play"></i> <span>Listen</span></button>
+  <button id="ttsStopBtn" style="display: none;"><i class="fas fa-stop"></i> <span>Stop</span></button>
+  <select id="ttsVoiceSelect">
+    <option value="nova" selected>Nova (Professional Female)</option>
+    <option value="shimmer">Shimmer (Friendly Female)</option>
+    <option value="fable">Fable (British Female)</option>
+  </select>
+  <span id="ttsLoading" class="loading-spinner" style="display: none;"></span>
+</div>
+
 <script>
   (function() {
-    // Accordion functionality: only one section open at a time
+    // Accordion functionality (original)
     const sections = document.querySelectorAll('.blueprint-section');
     
     function closeAllExcept(exceptSection) {
@@ -868,12 +963,10 @@
       header.addEventListener('click', () => {
         const isOpen = section.classList.contains('open');
         if (isOpen) {
-          // if it's open, just close it (optional: keep it open? but we want exclusive open)
           section.classList.remove('open');
         } else {
           closeAllExcept(section);
           section.classList.add('open');
-          // smooth scroll to section
           setTimeout(() => {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }, 100);
@@ -881,8 +974,136 @@
       });
     });
 
-    // Optionally open first section by default
-    // sections[0].classList.add('open');
+    // ========== TTS Implementation ==========
+    const playBtn = document.getElementById('ttsPlayBtn');
+    const stopBtn = document.getElementById('ttsStopBtn');
+    const voiceSelect = document.getElementById('ttsVoiceSelect');
+    const loadingSpinner = document.getElementById('ttsLoading');
+    let currentAudio = null;
+    let isPlaying = false;
+
+    // Helper to collect all text from the blueprint
+    function getAllText() {
+      let text = "The Golden Feather Business Architecture Documentation. ";
+      const sections = document.querySelectorAll('.blueprint-section');
+      sections.forEach(section => {
+        const title = section.querySelector('h2')?.innerText || '';
+        const contentDiv = section.querySelector('.section-content');
+        let content = '';
+        if (contentDiv) {
+          // Clone to avoid modifying the actual DOM, then extract text
+          const clone = contentDiv.cloneNode(true);
+          // Remove elements that shouldn't be read (e.g., buttons, icons)
+          clone.querySelectorAll('button, .btn-small, .btn-gold, i').forEach(el => el.remove());
+          content = clone.innerText || '';
+        }
+        text += title + '. ' + content + ' ';
+      });
+      // Clean up extra whitespace
+      text = text.replace(/\s+/g, ' ').trim();
+      return text;
+    }
+
+    // Function to call Pollinations TTS API
+    async function synthesizeSpeech(text, voice) {
+      // Add calm tone instruction at the beginning
+      const enhancedText = "[calm] " + text;
+
+      const response = await fetch('https://text.pollinations.ai/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          text: enhancedText,
+          voice: voice,
+          model: 'openai'  // Use OpenAI-compatible TTS
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`TTS API error: ${response.status}`);
+      }
+
+      const audioBlob = await response.blob();
+      return URL.createObjectURL(audioBlob);
+    }
+
+    // Play button click
+    playBtn.addEventListener('click', async () => {
+      if (isPlaying && currentAudio) {
+        // If already playing, just stop and restart? For simplicity, we'll stop and start fresh.
+        currentAudio.pause();
+        currentAudio = null;
+        isPlaying = false;
+        toggleButtons(false);
+      }
+
+      const text = getAllText();
+      const voice = voiceSelect.value;
+
+      // Show loading spinner, hide play button
+      playBtn.style.display = 'none';
+      stopBtn.style.display = 'inline-flex';
+      loadingSpinner.style.display = 'inline-block';
+      playBtn.disabled = true;
+
+      try {
+        const audioUrl = await synthesizeSpeech(text, voice);
+        const audio = new Audio(audioUrl);
+        currentAudio = audio;
+        isPlaying = true;
+
+        audio.onended = () => {
+          isPlaying = false;
+          currentAudio = null;
+          toggleButtons(false);
+        };
+
+        audio.onerror = (e) => {
+          console.error('Audio playback error:', e);
+          alert('Sorry, there was an error playing the audio. Please try again.');
+          isPlaying = false;
+          currentAudio = null;
+          toggleButtons(false);
+        };
+
+        await audio.play();
+        toggleButtons(true);
+      } catch (error) {
+        console.error('TTS error:', error);
+        alert('Failed to generate speech. Please try again later.');
+        toggleButtons(false);
+      } finally {
+        loadingSpinner.style.display = 'none';
+      }
+    });
+
+    // Stop button click
+    stopBtn.addEventListener('click', () => {
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+      }
+      isPlaying = false;
+      toggleButtons(false);
+    });
+
+    function toggleButtons(playing) {
+      if (playing) {
+        playBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-flex';
+        playBtn.disabled = false;
+      } else {
+        playBtn.style.display = 'inline-flex';
+        stopBtn.style.display = 'none';
+        playBtn.disabled = false;
+        loadingSpinner.style.display = 'none';
+      }
+    }
+
+    // Ensure stop button is hidden initially
+    toggleButtons(false);
   })();
 </script>
 </body>
