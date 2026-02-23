@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE</title>
+  <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE + MARKETING PLAYBOOK</title>
   <!-- Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -526,7 +526,7 @@
       gap: 8px;
     }
 
-    /* NEW: village expansion modal overlay */
+    /* modal overlay (unchanged) */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -562,7 +562,7 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three‑dots panel (includes Village Expansion + NEW Stock Sale) -->
+  <!-- header with three‑dots panel (now includes Marketing Playbook) -->
   <div class="header">
     <div class="header-left">
       <h1>
@@ -582,14 +582,14 @@
       <div class="more-item" data-tab="festive"><i class="fas fa-people-group"></i> <span>Community</span></div>
       <div class="more-item" data-tab="subscription"><i class="fas fa-calendar-check"></i> <span>Subscription</span></div>
       <div class="more-item" data-tab="assurance"><i class="fas fa-shield-alt"></i> <span>Assurance</span></div>
-      <!-- Village Expansion -->
       <div class="more-item" data-tab="villageExpansion"><i class="fas fa-handshake"></i> <span>Village Expansion</span></div>
-      <!-- NEW: Stock Sale Program -->
       <div class="more-item" data-tab="stockSale"><i class="fas fa-chart-line"></i> <span>Stock Sale</span></div>
+      <!-- NEW: Marketing Playbook -->
+      <div class="more-item" data-tab="marketing"><i class="fas fa-bullhorn"></i> <span>Marketing Playbook</span></div>
     </div>
   </div>
 
-  <!-- main content area – all panes (including new stockSalePane) -->
+  <!-- main content area – all panes (including new marketingPane) -->
   <div class="main-content" id="mainContent">
     <!-- DASHBOARD PANE (original) -->
     <div class="tab-pane active" id="dashboardPane">
@@ -1378,7 +1378,7 @@
       </div>
     </div>
 
-    <!-- ========== NEW STOCK SALE PROGRAM PANE ========== -->
+    <!-- STOCK SALE PANE (original) -->
     <div class="tab-pane" id="stockSalePane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1435,6 +1435,77 @@
         </div>
       </div>
     </div>
+
+    <!-- ========== NEW MARKETING PLAYBOOK PANE ========== -->
+    <div class="tab-pane" id="marketingPane">
+      <!-- Overview & KPIs -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> marketing playbook · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active campaigns</span><div class="stat-value" id="activeCampaigns">4</div></div>
+          <div class="stat"><span class="stat-label">monthly budget</span><div class="stat-value" id="marketingBudget">R 15,000</div></div>
+          <div class="stat"><span class="stat-label">leads generated</span><div class="stat-value" id="leadsGenerated">38</div><span class="stat-sub">this month</span></div>
+          <div class="stat"><span class="stat-label">conversion rate</span><div class="stat-value" id="conversionRate">21%</div><span class="stat-sub">+3% vs last</span></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 cost per lead</span> <span class="gold-text" id="costPerLead">R 395</span></div>
+        <div class="cost-item"><span>🎯 ROI (marketing)</span> <span class="green-text" id="marketingROI">184%</span></div>
+      </div>
+
+      <!-- Campaign list with admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bullhorn gold-text"></i> current campaigns · <span class="btn-small" id="addCampaignBtn"><i class="fas fa-plus"></i> new</span></div>
+        <div id="campaignsListContainer">
+          <!-- dynamic rows injected via JS -->
+        </div>
+      </div>
+
+      <!-- Budget allocation & content calendar -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> content calendar (next 7d)</div>
+        <div class="cards-scroll" id="calendarCards">
+          <div class="reward-card"><small>Mon 24</small><br><strong>Social: customer story</strong><br>🐔 Spier Wines feature</div>
+          <div class="reward-card"><small>Wed 26</small><br><strong>Email newsletter</strong><br>🎉 Easter special</div>
+          <div class="reward-card"><small>Fri 28</small><br><strong>Farm tour video</strong><br>📹 Behind the scenes</div>
+        </div>
+        <div class="cost-input" style="margin-top:12px;"><label>📅 add calendar item</label> <input type="text" placeholder="title, date..." id="calendarInput"></div>
+        <button class="btn-small" id="addCalendarBtn">add</button>
+      </div>
+
+      <!-- Marketing channels & performance -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> channel performance</div>
+        <div class="batch-row"><span><i class="fab fa-facebook"></i> Facebook Ads</span> <span>R 3,200 spent · 12 leads</span> <span class="badge">ROI 210%</span></div>
+        <div class="batch-row"><span><i class="fab fa-instagram"></i> Instagram</span> <span>R 2,100 spent · 8 leads</span> <span class="badge">ROI 175%</span></div>
+        <div class="batch-row"><span><i class="far fa-envelope"></i> Email</span> <span>R 600 spent · 6 leads</span> <span class="badge">ROI 340%</span></div>
+        <div class="batch-row"><span><i class="fas fa-store"></i> Local events</span> <span>R 1,500 spent · 10 leads</span> <span class="badge">ROI 220%</span></div>
+      </div>
+
+      <!-- Customer segments & targeting -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> target segments</div>
+        <div class="flex-row">
+          <span class="badge">wholesale (18)</span>
+          <span class="badge">restaurant (12)</span>
+          <span class="badge">retail (42)</span>
+          <span class="badge">subscriber (24)</span>
+        </div>
+        <div class="cost-item"><span>📈 reachable audience</span> <span>2,450 followers</span></div>
+        <div class="cost-item"><span>📧 email subscribers</span> <span>156</span></div>
+      </div>
+
+      <!-- Quick actions & playbook templates -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="createEmailBtn"><i class="fas fa-envelope"></i> email blast</div>
+          <div class="quick-action-btn" id="schedulePostBtn"><i class="fab fa-facebook"></i> schedule post</div>
+          <div class="quick-action-btn" id="generateReportBtn"><i class="fas fa-file-alt"></i> report</div>
+          <div class="quick-action-btn" id="syncSubsMarketingBtn"><i class="fas fa-sync-alt"></i> sync subscribers</div>
+        </div>
+        <p class="helper-text" style="margin-top:8px;">📘 playbook templates: Easter, New Batch, Referral</p>
+      </div>
+    </div>
   </div>
 
   <!-- bottom navigation (unchanged) -->
@@ -1465,11 +1536,28 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal for adding campaign (marketing) -->
+  <div class="modal-overlay" id="campaignModal">
+    <div class="modal-card">
+      <h3 id="campaignModalTitle">➕ new campaign</h3>
+      <div class="cost-input"><label>campaign name</label> <input type="text" id="campaignName" placeholder="e.g. Easter Special"></div>
+      <div class="cost-input"><label>channel</label> <select id="campaignChannel"><option>Facebook</option><option>Instagram</option><option>Email</option><option>Event</option></select></div>
+      <div class="cost-input"><label>budget (R)</label> <input type="number" id="campaignBudget" value="2000" step="100"></div>
+      <div class="cost-input"><label>start date</label> <input type="date" id="campaignStart" value="2025-04-01"></div>
+      <div class="cost-input"><label>end date</label> <input type="date" id="campaignEnd" value="2025-04-30"></div>
+      <div class="cost-input"><label>target segment</label> <select id="campaignSegment"><option>wholesale</option><option>retail</option><option>restaurant</option><option>subscriber</option></select></div>
+      <div class="flex-row" style="justify-content:flex-end;">
+        <button class="btn-small" id="campaignModalCancel">cancel</button>
+        <button class="btn-gold" id="campaignModalSave">save campaign</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS + NEW STOCK SALE MODULE -->
+<!-- ALL ORIGINAL SCRIPTS + NEW MARKETING MODULE -->
 <script>
-  // ----- tab switching (updated with 'stockSale') -----
+  // ----- tab switching (updated with 'marketing') -----
   (function() {
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
@@ -1486,7 +1574,8 @@
       subscription: document.getElementById('subscriptionPane'),
       assurance: document.getElementById('assurancePane'),
       villageExpansion: document.getElementById('villageExpansionPane'),
-      stockSale: document.getElementById('stockSalePane')   // NEW
+      stockSale: document.getElementById('stockSalePane'),
+      marketing: document.getElementById('marketingPane')   // NEW
     };
 
     function setActiveTab(tabId) {
@@ -1527,7 +1616,7 @@
     });
   })();
 
-  // ========== ORIGINAL DASHBOARD SCRIPT (condensed but fully functional) ==========
+  // ========== ORIGINAL DASHBOARD SCRIPT (full version) ==========
   (function() {
     // rewards data & settings (identical to original)
     let rewardsData = [
@@ -1686,12 +1775,50 @@
       if(document.getElementById('todayRevenueCalc')) document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
       if(document.getElementById('totalExpenses')) document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
       if(document.getElementById('costPerChicken')) document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
+      if(document.getElementById('plChickens')) document.getElementById('plChickens').innerText = 'R ' + chicks.toLocaleString();
+      if(document.getElementById('plFeed')) document.getElementById('plFeed').innerText = 'R ' + feed.toLocaleString();
+      if(document.getElementById('plLogistics')) document.getElementById('plLogistics').innerText = 'R ' + transport.toLocaleString();
+      if(document.getElementById('plLabor')) document.getElementById('plLabor').innerText = 'R ' + labor.toLocaleString();
+      if(document.getElementById('plRevenue')) document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('plMargin')) document.getElementById('plMargin').innerText = ((netProfit / (monthlyRevenue + byproductRev) * 100) || 0).toFixed(1) + '% (R ' + netProfit.toFixed(0) + ')';
+      if(document.getElementById('revLive')) document.getElementById('revLive').innerText = 'R ' + (MONTHLY_SOLD * 100).toLocaleString();
+      if(document.getElementById('revPrep')) document.getElementById('revPrep').innerText = 'R ' + (MONTHLY_SOLD * 20).toLocaleString(); // mock
+      if(document.getElementById('revBulk')) document.getElementById('revBulk').innerText = 'R ' + (MONTHLY_SOLD * 30).toLocaleString(); // mock
+      if(document.getElementById('revByproduct')) document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('revManure')) document.getElementById('revManure').innerText = 'R 3,000'; // mock
+      if(document.getElementById('totalBirdsDisplay')) document.getElementById('totalBirdsDisplay').innerText = TOTAL_BIRDS;
+      if(document.getElementById('soldTodayDisplay')) document.getElementById('soldTodayDisplay').innerText = SOLD_TODAY;
+      if(document.getElementById('lostTodayDisplay')) document.getElementById('lostTodayDisplay').innerText = '12';
+      if(document.getElementById('remainingStockDisplay')) document.getElementById('remainingStockDisplay').innerText = TOTAL_BIRDS - SOLD_TODAY;
+      if(document.getElementById('netProfitMonthDisplay')) document.getElementById('netProfitMonthDisplay').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('kpiActiveBirds')) document.getElementById('kpiActiveBirds').innerText = TOTAL_BIRDS - SOLD_TODAY;
+      if(document.getElementById('kpiMortality')) document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      if(document.getElementById('kpiAvgPrice')) document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      if(document.getElementById('kpiCostPerBird')) document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
+      if(document.getElementById('kpiSubPct')) document.getElementById('kpiSubPct').innerText = '18%';
+      if(document.getElementById('kpiByproduct')) document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('projectedProfit')) document.getElementById('projectedProfit').innerText = 'R ' + (netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('profitTrend')) document.getElementById('profitTrend').innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
+      if(document.getElementById('wholesaleVal')) document.getElementById('wholesaleVal').innerText = wholesalePct?.value || 68;
+      if(document.getElementById('retailVal')) document.getElementById('retailVal').innerText = retailPct?.value || 22;
+      if(document.getElementById('restaurantVal')) document.getElementById('restaurantVal').innerText = restaurantPct?.value || 10;
+      if(document.getElementById('totalFeedKg')) document.getElementById('totalFeedKg').innerText = '11,025 kg';
+      if(document.getElementById('feedBags')) document.getElementById('feedBags').innerText = '221 bags';
+      if(document.getElementById('feedCostEstimate')) document.getElementById('feedCostEstimate').innerText = 'R 85,085';
+      if(document.getElementById('triggerSuggestions')) document.getElementById('triggerSuggestions').innerHTML = '<p>🚀 next: vehicle at R40,000</p>';
+      if(document.getElementById('triggerProgress')) document.getElementById('triggerProgress').innerText = 'you are 216% toward vehicle trigger';
+      if(document.getElementById('currentProfitLevel')) document.getElementById('currentProfitLevel').innerText = 'R3 (86.4k)';
+      if(document.getElementById('nextTargetDisplay')) document.getElementById('nextTargetDisplay').innerText = 'R5 (150k)';
+      if(document.getElementById('profitGapFill')) document.getElementById('profitGapFill').style.width = '57%';
+      if(document.getElementById('gapText')) document.getElementById('gapText').innerText = 'gap to next level: R 63,600';
+      if(document.getElementById('deathRateDisplay')) document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      if(document.getElementById('laborPerBird')) document.getElementById('laborPerBird').innerText = 'R ' + (labor / MONTHLY_SOLD).toFixed(2);
+      if(document.getElementById('profitPerWorker')) document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-      // ... (remaining original updates skipped for brevity, but present in full code)
       updateRewardsUI();
     }
 
-    // attach listeners (simplified)
+    // attach listeners
     const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger].filter(el => el);
     costInputs.forEach(inp => inp.addEventListener('input', updateAll));
 
@@ -1736,7 +1863,7 @@
     });
   })();
 
-  // ========== INFRASTRUCTURE MODULE (original, condensed) ==========
+  // ========== INFRASTRUCTURE MODULE (original) ==========
   (function() {
     const currentCapacity = document.getElementById('currentCapacity');
     if (!currentCapacity) return;
@@ -2489,7 +2616,7 @@
     updateVillageUI();
   })();
 
-  // ========== NEW STOCK SALE MODULE ==========
+  // ========== STOCK SALE MODULE (original) ==========
   (function() {
     const pane = document.getElementById('stockSalePane');
     if (!pane) return;
@@ -2603,6 +2730,167 @@
     });
 
     updateStockUI();
+  })();
+
+  // ========== NEW MARKETING PLAYBOOK MODULE ==========
+  (function() {
+    const pane = document.getElementById('marketingPane');
+    if (!pane) return;
+
+    // Mock campaigns data
+    let campaigns = [
+      { id: 1, name: 'Easter Special', channel: 'Facebook', budget: 2000, spent: 1200, leads: 8, start: '2025-04-01', end: '2025-04-15', status: 'active', roi: 210 },
+      { id: 2, name: 'New Batch Launch', channel: 'Email', budget: 800, spent: 450, leads: 5, start: '2025-03-20', end: '2025-04-05', status: 'active', roi: 340 },
+      { id: 3, name: 'Farm Tour', channel: 'Event', budget: 1500, spent: 900, leads: 7, start: '2025-04-10', end: '2025-04-12', status: 'planned', roi: 0 },
+      { id: 4, name: 'Referral Program', channel: 'Instagram', budget: 1000, spent: 600, leads: 4, start: '2025-04-05', end: '2025-04-30', status: 'active', roi: 175 }
+    ];
+
+    function updateMarketingUI() {
+      const active = campaigns.filter(c => c.status === 'active').length;
+      const totalBudget = campaigns.reduce((acc, c) => acc + c.budget, 0);
+      const totalLeads = campaigns.reduce((acc, c) => acc + c.leads, 0);
+      const totalSpent = campaigns.reduce((acc, c) => acc + c.spent, 0);
+      const avgROI = campaigns.filter(c => c.roi > 0).reduce((acc, c) => acc + c.roi, 0) / (campaigns.filter(c => c.roi > 0).length || 1);
+      const conversion = 21; // mock
+      const costPerLead = totalLeads ? (totalSpent / totalLeads).toFixed(0) : 0;
+
+      document.getElementById('activeCampaigns').innerText = active;
+      document.getElementById('marketingBudget').innerText = 'R ' + totalBudget.toLocaleString();
+      document.getElementById('leadsGenerated').innerText = totalLeads;
+      document.getElementById('conversionRate').innerText = conversion + '%';
+      document.getElementById('costPerLead').innerText = 'R ' + costPerLead;
+      document.getElementById('marketingROI').innerText = avgROI.toFixed(0) + '%';
+
+      // campaigns list
+      let html = '';
+      campaigns.forEach(c => {
+        const spentPct = c.budget ? ((c.spent / c.budget) * 100).toFixed(0) : 0;
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${c.name} <span class="badge">${c.channel}</span></h4>
+            <p>💰 R ${c.spent}/${c.budget} · leads ${c.leads} · ROI ${c.roi}%</p>
+            <small>${c.start} – ${c.end}</small></div>
+          <div class="batch-numbers">
+            <span class="quantity">${c.status}</span><br>
+            <div class="capacity-bar" style="width:40px;"><div class="capacity-fill" style="width:${spentPct}%;"></div></div>
+          </div>
+          <div><button class="btn-small" data-campaign-id="${c.id}" data-campaign-action="edit">✎</button>
+          <button class="btn-small" data-campaign-id="${c.id}" data-campaign-action="pause">⏸️</button></div>
+        </div>`;
+      });
+      document.getElementById('campaignsListContainer').innerHTML = html;
+    }
+
+    // modal handling for new campaign
+    const modal = document.getElementById('campaignModal');
+    const openBtn = document.getElementById('addCampaignBtn');
+    const cancelBtn = document.getElementById('campaignModalCancel');
+    const saveBtn = document.getElementById('campaignModalSave');
+    const modalTitle = document.getElementById('campaignModalTitle');
+    const campaignName = document.getElementById('campaignName');
+    const campaignChannel = document.getElementById('campaignChannel');
+    const campaignBudget = document.getElementById('campaignBudget');
+    const campaignStart = document.getElementById('campaignStart');
+    const campaignEnd = document.getElementById('campaignEnd');
+    const campaignSegment = document.getElementById('campaignSegment');
+    let editingId = null;
+
+    function openCampaignModal(campaign = null) {
+      if (campaign) {
+        editingId = campaign.id;
+        modalTitle.innerText = '✎ edit campaign';
+        campaignName.value = campaign.name;
+        campaignChannel.value = campaign.channel;
+        campaignBudget.value = campaign.budget;
+        campaignStart.value = campaign.start;
+        campaignEnd.value = campaign.end;
+        campaignSegment.value = campaign.segment || 'retail';
+      } else {
+        editingId = null;
+        modalTitle.innerText = '➕ new campaign';
+        campaignName.value = '';
+        campaignChannel.value = 'Facebook';
+        campaignBudget.value = 2000;
+        const today = new Date().toISOString().split('T')[0];
+        campaignStart.value = today;
+        const nextMonth = new Date(); nextMonth.setMonth(nextMonth.getMonth()+1);
+        campaignEnd.value = nextMonth.toISOString().split('T')[0];
+        campaignSegment.value = 'retail';
+      }
+      modal.style.display = 'flex';
+    }
+
+    openBtn.addEventListener('click', () => openCampaignModal());
+    cancelBtn.addEventListener('click', () => { modal.style.display = 'none'; });
+    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
+
+    saveBtn.addEventListener('click', () => {
+      const newCampaign = {
+        id: editingId || (campaigns.length ? Math.max(...campaigns.map(c => c.id)) + 1 : 5),
+        name: campaignName.value,
+        channel: campaignChannel.value,
+        budget: parseFloat(campaignBudget.value) || 0,
+        spent: 0,
+        leads: 0,
+        start: campaignStart.value,
+        end: campaignEnd.value,
+        segment: campaignSegment.value,
+        status: 'planned',
+        roi: 0
+      };
+      if (editingId) {
+        const index = campaigns.findIndex(c => c.id === editingId);
+        if (index !== -1) campaigns[index] = { ...campaigns[index], ...newCampaign, spent: campaigns[index].spent, leads: campaigns[index].leads, roi: campaigns[index].roi };
+      } else {
+        campaigns.push(newCampaign);
+      }
+      updateMarketingUI();
+      modal.style.display = 'none';
+    });
+
+    // event delegation for campaign actions
+    document.addEventListener('click', (e) => {
+      if (!pane.contains(e.target)) return;
+      const target = e.target;
+      if (target.matches('[data-campaign-action="edit"]')) {
+        const id = parseInt(target.dataset.campaignId);
+        const campaign = campaigns.find(c => c.id === id);
+        if (campaign) openCampaignModal(campaign);
+      }
+      if (target.matches('[data-campaign-action="pause"]')) {
+        const id = parseInt(target.dataset.campaignId);
+        const campaign = campaigns.find(c => c.id === id);
+        if (campaign) {
+          campaign.status = campaign.status === 'active' ? 'paused' : 'active';
+          updateMarketingUI();
+        }
+      }
+    });
+
+    // quick actions
+    document.getElementById('createEmailBtn').addEventListener('click', () => {
+      alert('📧 Draft email blast to 156 subscribers (mock).');
+    });
+    document.getElementById('schedulePostBtn').addEventListener('click', () => {
+      alert('📱 Schedule a social media post (mock).');
+    });
+    document.getElementById('generateReportBtn').addEventListener('click', () => {
+      alert('📄 Generating marketing performance report...');
+    });
+    document.getElementById('syncSubsMarketingBtn').addEventListener('click', () => {
+      alert('🔄 Syncing subscriber list for email campaigns.');
+    });
+
+    // calendar add
+    document.getElementById('addCalendarBtn').addEventListener('click', () => {
+      const input = document.getElementById('calendarInput');
+      if (input.value.trim()) {
+        const cards = document.getElementById('calendarCards');
+        cards.innerHTML += `<div class="reward-card"><small>new</small><br><strong>${input.value}</strong><br>📌 manual entry</div>`;
+        input.value = '';
+      }
+    });
+
+    updateMarketingUI();
   })();
 </script>
 </body>
