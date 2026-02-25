@@ -566,57 +566,6 @@
     .platform-badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
     .chart-canvas { width: 100%; height: 80px; margin: 8px 0; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
-
-    /* ========== NEW COLLAPSIBLE STYLES ========== */
-    .collapsible-item {
-      margin-bottom: 8px;
-      border: 1px solid #2a2a2a;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #1a1a1a;
-    }
-    .collapsible-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 16px;
-      background: #1e1e1e;
-      cursor: pointer;
-      user-select: none;
-    }
-    .collapsible-header .summary {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      font-size: 0.9rem;
-    }
-    .collapsible-header .arrow {
-      transition: transform 0.2s;
-      font-size: 1.2rem;
-      color: #d4af37;
-    }
-    .collapsible-header .arrow.expanded {
-      transform: rotate(180deg);
-    }
-    .collapsible-content {
-      padding: 16px;
-      display: none;
-      background: #151515;
-      border-top: 1px solid #2a2a2a;
-    }
-    .collapsible-content.show {
-      display: block;
-    }
-    /* nested collapsible */
-    .collapsible-nested .collapsible-header {
-      background: #202020;
-      padding: 8px 12px;
-    }
-    .collapsible-nested .collapsible-content {
-      padding: 12px;
-      background: #1a1a1a;
-    }
   </style>
 </head>
 <body>
@@ -1198,11 +1147,11 @@
         <p class="badge" style="margin-top:12px;"><i class="fas fa-arrow-up"></i> expected fulfillment: 92% (2,150 chickens)</p>
       </div>
 
-      <!-- Village groups list with admin controls (now collapsible) -->
+      <!-- Village groups list with admin controls -->
       <div class="card">
         <div class="card-title"><i class="fas fa-list gold-text"></i> village groups · live slots</div>
         <div id="villageListContainer">
-          <!-- dynamically filled collapsible items -->
+          <!-- dynamic village rows will be inserted here -->
         </div>
         <button class="btn-gold" style="width:100%; margin-top:12px;" id="addVillageBtn"><i class="fas fa-plus"></i> add village group</button>
       </div>
@@ -1257,11 +1206,11 @@
         <div class="cost-item"><span>🥩 holiday allocation total</span> <span>430 chickens</span></div>
       </div>
 
-      <!-- Member list with admin actions (now collapsible) -->
+      <!-- Member list with admin actions -->
       <div class="card">
         <div class="card-title"><i class="fas fa-users gold-text"></i> members · <span class="filter-row" style="display:inline-flex; margin-left:8px;"><span class="filter-chip active" data-tier="all">all</span><span class="filter-chip" data-tier="steady">steady</span><span class="filter-chip" data-tier="celeb">celeb</span><span class="filter-chip" data-tier="sig">sig</span></span></div>
         <div id="subscriptionMembersList">
-          <!-- dynamic collapsible rows -->
+          <!-- dynamic rows -->
         </div>
         <button class="btn-gold" style="width:100%; margin-top:12px;" id="addTestMember"><i class="fas fa-user-plus"></i> add test member</button>
       </div>
@@ -1277,17 +1226,12 @@
         <button class="btn-small" id="applySubSettings">apply to all</button>
       </div>
 
-      <!-- Upcoming Events & Reservations (now collapsible) -->
-      <div class="card collapsible-item">
-        <div class="collapsible-header">
-          <div class="summary"><i class="fas fa-calendar-alt gold-text"></i> upcoming events & reservations <span class="badge">2 events</span></div>
-          <i class="fas fa-chevron-down arrow"></i>
-        </div>
-        <div class="collapsible-content">
-          <div class="batch-row"><span>Easter weekend</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
-          <div class="batch-row"><span>Farmers' market (May)</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
-          <div class="cost-item"><span>💰 outstanding balances</span> <span class="gold-text" id="outstandingBalance">R 8,925</span></div>
-        </div>
+      <!-- Event reservations & balances -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> upcoming events & reservations</div>
+        <div class="batch-row"><span>Easter weekend</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
+        <div class="batch-row"><span>Farmers' market (May)</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
+        <div class="cost-item"><span>💰 outstanding balances</span> <span class="gold-text" id="outstandingBalance">R 8,925</span></div>
       </div>
 
       <!-- VIP flags & lock override -->
@@ -1315,7 +1259,7 @@
         <div class="cost-item"><span>✅ total allocations (chickens)</span> <span id="assuranceAllocations">340</span></div>
       </div>
 
-      <!-- Members list with filters & admin actions (now collapsible) -->
+      <!-- Members list with filters & admin actions -->
       <div class="card">
         <div class="card-title"><i class="fas fa-users gold-text"></i> assurance members · 
           <span class="filter-row" style="display:inline-flex; margin-left:8px;">
@@ -1325,7 +1269,7 @@
           </span>
         </div>
         <div id="assuranceMembersList">
-          <!-- dynamic collapsible rows -->
+          <!-- dynamic rows injected via JS -->
         </div>
         <div class="flex-row" style="margin-top:12px;">
           <input type="text" placeholder="search member..." style="flex:1; background:#2a2a2a; border:1px solid #d4af3740; border-radius:30px; padding:8px 12px; color:white;">
@@ -1394,11 +1338,11 @@
         </div>
       </div>
 
-      <!-- Contracts list with admin actions (now collapsible) -->
+      <!-- Contracts list with admin actions -->
       <div class="card">
         <div class="card-title"><i class="fas fa-file-signature gold-text"></i> active contracts · <span class="btn-small" id="openAddContractModal"><i class="fas fa-plus"></i> new</span></div>
         <div id="contractsListContainer">
-          <!-- dynamic collapsible rows -->
+          <!-- dynamic contract rows injected by JS -->
         </div>
       </div>
 
@@ -1460,11 +1404,11 @@
         <div class="cost-item"><span>📈 projected ROI (6m)</span> <span class="green-text" id="projectedROI">15%</span></div>
       </div>
 
-      <!-- List of stock offerings with admin controls (now collapsible) -->
+      <!-- List of stock offerings with admin controls -->
       <div class="card">
         <div class="card-title"><i class="fas fa-list gold-text"></i> current offerings · <span class="btn-small" id="addOfferingBtn"><i class="fas fa-plus"></i> new</span></div>
         <div id="offeringsListContainer">
-          <!-- dynamic collapsible rows -->
+          <!-- dynamic rows injected -->
         </div>
       </div>
 
@@ -1517,42 +1461,30 @@
         </div>
       </div>
 
-      <!-- Platform Performance (now collapsible rows) -->
+      <!-- Platform Performance -->
       <div class="card">
         <div class="card-title"><i class="fab fa-tiktok gold-text"></i> platform performance</div>
-        <div class="platform-header" style="display:flex; justify-content:space-between; padding:8px 0; color:#d4af37; font-weight:500; font-size:0.75rem;">
-          <span style="width:20%">Platform</span>
-          <span style="width:15%">Revenue</span>
-          <span style="width:10%">Clicks</span>
-          <span style="width:10%">Conv.</span>
-          <span style="width:10%">CVR</span>
-          <span style="width:15%">Ad Spend</span>
-          <span style="width:10%">ROI</span>
+        <div style="overflow-x:auto;">
+          <table class="mini-table">
+            <thead><tr><th>Platform</th><th>Revenue</th><th>Clicks</th><th>Conv.</th><th>CVR</th><th>Ad Spend</th><th>ROI</th></tr></thead>
+            <tbody id="platformTableBody"></tbody>
+          </table>
         </div>
-        <div id="platformCollapsibleContainer">
-          <!-- dynamically filled collapsible items -->
-        </div>
+        <p class="helper-text">top account: @goldenfeather_za (IG) · top campaign: Easter Special (FB)</p>
       </div>
 
-      <!-- Influencer Tracking (now collapsible rows) -->
+      <!-- Influencer Tracking -->
       <div class="card">
         <div class="card-title"><i class="fas fa-star gold-text"></i> influencer tracking · <span class="btn-small" id="addInfluencerBtn"><i class="fas fa-plus"></i> add</span></div>
-        <div class="influencer-header" style="display:flex; justify-content:space-between; padding:8px 0; color:#d4af37; font-weight:500; font-size:0.75rem;">
-          <span style="width:20%">Name</span>
-          <span style="width:12%">Platform</span>
-          <span style="width:10%">Link</span>
-          <span style="width:12%">Revenue</span>
-          <span style="width:8%">Orders</span>
-          <span style="width:12%">Comm.</span>
-          <span style="width:12%">Payout</span>
-          <span style="width:8%">Rank</span>
-        </div>
-        <div id="influencerCollapsibleContainer">
-          <!-- dynamically filled collapsible items -->
+        <div style="overflow-x:auto;">
+          <table class="mini-table">
+            <thead><tr><th>Name</th><th>Platform</th><th>Link</th><th>Revenue</th><th>Orders</th><th>Commission</th><th>Payout</th><th>Rank</th></tr></thead>
+            <tbody id="influencerTableBody"></tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Campaign Tracking (now collapsible rows) -->
+      <!-- Campaign Tracking -->
       <div class="card">
         <div class="card-title"><i class="fas fa-bullhorn gold-text"></i> campaigns · top 5 / worst / active</div>
         <div class="filter-row" id="campaignFilterRow">
@@ -1562,7 +1494,7 @@
           <span class="filter-chip" data-campaign-view="completed">completed</span>
         </div>
         <div id="campaignViewContainer">
-          <!-- dynamically filled collapsible items -->
+          <!-- populated by JS -->
         </div>
       </div>
 
@@ -1663,24 +1595,6 @@
 
 <!-- ALL ORIGINAL SCRIPTS (unchanged) and NEW MARKETING JS (appended) with modification for blueprint link -->
 <script>
-  // ========== GLOBAL COLLAPSIBLE INITIALIZER ==========
-  function initCollapsible(container) {
-    if (!container) return;
-    const headers = container.querySelectorAll('.collapsible-header');
-    headers.forEach(header => {
-      header.removeEventListener('click', toggleCollapsible);
-      header.addEventListener('click', toggleCollapsible);
-    });
-  }
-  function toggleCollapsible(e) {
-    const header = e.currentTarget;
-    const content = header.nextElementSibling;
-    if (content && content.classList.contains('collapsible-content')) {
-      content.classList.toggle('show');
-      header.querySelector('.arrow')?.classList.toggle('expanded');
-    }
-  }
-  // auto-init on dynamic content (called after each update)
   // ----- tab switching (updated with 'marketing' and support for data-href) -----
   (function() {
     const navItems = document.querySelectorAll('.nav-item');
@@ -2181,7 +2095,7 @@
     });
   })();
 
-  // ========== FESTIVE PLAN MODULE (with collapsible) ==========
+  // ========== FESTIVE PLAN MODULE (original) ==========
   (function() {
     const festivePane = document.getElementById('festivePane');
     if (!festivePane) return;
@@ -2206,36 +2120,13 @@
       villages.forEach(v => {
         const fillPercent = Math.min(100, (v.participants / v.capacity) * 100);
         const lockIcon = v.locked ? '🔒' : '🔓';
-        const status = v.locked ? 'Locked' : (v.participants >= v.capacity ? 'Full' : 'Open');
-        const summary = `
-          <span><strong>${lockIcon} ${v.name}</strong></span>
-          <span>${fillPercent.toFixed(0)}% filled</span>
-          <span>📅 ${v.deadline}</span>
-          <span class="badge">${status}</span>
-        `;
-        const expanded = `
-          <div><strong>Participants:</strong> ${v.participants} (capacity ${v.capacity})</div>
-          <div><strong>Chickens required:</strong> ${v.chickensRequired}</div>
-          <div><strong>Contributions:</strong> R ${v.contributions}</div>
-          <div><strong>Deadline:</strong> ${v.deadline}</div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small" data-id="${v.id}" data-action="adj">Adjust Capacity</button>
-            <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked ? 'Unlock' : 'Lock'} Group</button>
-            <button class="btn-small" data-id="${v.id}" data-action="refund">Refund</button>
-            <button class="btn-small" data-id="${v.id}" data-action="editDeadline">Edit Deadline</button>
-          </div>
-          <div><small>Audit: last updated ...</small></div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${lockIcon} ${v.name}</h4><p>${v.participants} part · ${v.chickensRequired} chks</p></div>
+          <div class="batch-numbers"><span class="quantity">R ${v.contributions}</span><br><span class="badge">due ${v.deadline}</span></div>
+          <div class="village-status"><div class="capacity-bar"><div class="capacity-fill" style="width:${fillPercent}%"></div></div>
+          <button class="btn-small" data-id="${v.id}" data-action="adj">adj</button>
+          <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button></div>
+        </div>`;
       });
       const container = document.getElementById('villageListContainer');
       if(container) container.innerHTML = html;
@@ -2248,8 +2139,6 @@
       const pending = villages.filter(v => v.pendingAdjust).length;
       const pendingDiv = document.getElementById('pendingApprovals');
       if(pendingDiv) pendingDiv.innerHTML = pending ? `⚠️ ${pending} village(s) pending approval` : '✅ No pending adjustments';
-
-      initCollapsible(container);
     }
 
     document.addEventListener('click', (e) => {
@@ -2273,12 +2162,6 @@
           village.locked = !village.locked;
           updateFestiveUI();
         }
-      }
-      if (target.matches('[data-action="refund"]')) {
-        alert('Refund action (demo)');
-      }
-      if (target.matches('[data-action="editDeadline"]')) {
-        alert('Edit deadline (demo)');
       }
     });
 
@@ -2313,7 +2196,7 @@
     updateFestiveUI();
   })();
 
-  // ========== SUBSCRIPTION ADMIN MODULE (with collapsible) ==========
+  // ========== SUBSCRIPTION ADMIN MODULE (original) ==========
   (function() {
     const subPane = document.getElementById('subscriptionPane');
     if (!subPane) return;
@@ -2341,44 +2224,15 @@
 
       let html = '';
       members.forEach(m => {
-        const status = m.locked ? 'Paused' : 'Active';
-        const nextBilling = new Date(Date.now() + 30*86400000).toISOString().split('T')[0]; // mock
-        const summary = `
-          <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
-          <span>${m.tier}</span>
-          <span>🐔 ${m.monthlyQty}/mo</span>
-          <span class="badge">${status}</span>
-          <span>📅 ${nextBilling}</span>
-        `;
-        const expanded = `
-          <div><strong>Subscription history:</strong> started ...</div>
-          <div><strong>Upcoming deliveries:</strong> 2 scheduled</div>
-          <div><strong>Holiday reservations:</strong> ${m.holidayAlloc} chickens</div>
-          <div><strong>Deposit paid:</strong> R ${m.depositPaid}</div>
-          <div><strong>Assurance integration:</strong> active</div>
-          <div><strong>Loyalty credits:</strong> R 0</div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small" data-id="${m.id}" data-action="upgrade">Upgrade</button>
-            <button class="btn-small" data-id="${m.id}" data-action="downgrade">Downgrade</button>
-            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">Toggle VIP</button>
-            <button class="btn-small" data-id="${m.id}" data-action="pause">Pause</button>
-            <button class="btn-small" data-id="${m.id}" data-action="cancel">Cancel</button>
-            <button class="btn-small" data-id="${m.id}" data-action="override">Override</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${m.name} ${m.vip ? '⭐' : ''}</h4><p>${m.tier} · ${m.monthlyQty} chickens/m</p></div>
+          <div class="batch-numbers"><span class="quantity">R ${m.total}</span><br><span class="badge">deposit R ${m.depositPaid}</span></div>
+          <div><button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️</button>
+          <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️</button>
+          <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑</button></div>
+        </div>`;
       });
       document.getElementById('subscriptionMembersList').innerHTML = html;
-      initCollapsible(document.getElementById('subscriptionMembersList'));
     }
 
     document.addEventListener('click', (e) => {
@@ -2418,15 +2272,6 @@
           updateSubUI();
         }
       }
-      if (target.matches('[data-action="pause"]')) {
-        alert('Pause member (demo)');
-      }
-      if (target.matches('[data-action="cancel"]')) {
-        alert('Cancel member (demo)');
-      }
-      if (target.matches('[data-action="override"]')) {
-        alert('Override (demo)');
-      }
     });
 
     document.querySelectorAll('#subscriptionPane .filter-chip').forEach(chip => {
@@ -2440,44 +2285,15 @@
         }
         let html = '';
         filtered.forEach(m => {
-          const status = m.locked ? 'Paused' : 'Active';
-          const nextBilling = new Date(Date.now() + 30*86400000).toISOString().split('T')[0];
-          const summary = `
-            <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
-            <span>${m.tier}</span>
-            <span>🐔 ${m.monthlyQty}/mo</span>
-            <span class="badge">${status}</span>
-            <span>📅 ${nextBilling}</span>
-          `;
-          const expanded = `
-            <div><strong>Subscription history:</strong> started ...</div>
-            <div><strong>Upcoming deliveries:</strong> 2 scheduled</div>
-            <div><strong>Holiday reservations:</strong> ${m.holidayAlloc} chickens</div>
-            <div><strong>Deposit paid:</strong> R ${m.depositPaid}</div>
-            <div><strong>Assurance integration:</strong> active</div>
-            <div><strong>Loyalty credits:</strong> R 0</div>
-            <hr>
-            <div class="flex-row">
-              <button class="btn-small" data-id="${m.id}" data-action="upgrade">Upgrade</button>
-              <button class="btn-small" data-id="${m.id}" data-action="downgrade">Downgrade</button>
-              <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">Toggle VIP</button>
-              <button class="btn-small" data-id="${m.id}" data-action="pause">Pause</button>
-              <button class="btn-small" data-id="${m.id}" data-action="cancel">Cancel</button>
-              <button class="btn-small" data-id="${m.id}" data-action="override">Override</button>
-            </div>
-          `;
-          html += `
-            <div class="collapsible-item">
-              <div class="collapsible-header">
-                <div class="summary">${summary}</div>
-                <i class="fas fa-chevron-down arrow"></i>
-              </div>
-              <div class="collapsible-content">${expanded}</div>
-            </div>
-          `;
+          html += `<div class="batch-row">
+            <div class="batch-info"><h4>${m.name} ${m.vip ? '⭐' : ''}</h4><p>${m.tier} · ${m.monthlyQty} chickens/m</p></div>
+            <div class="batch-numbers"><span class="quantity">R ${m.total}</span><br><span class="badge">deposit R ${m.depositPaid}</span></div>
+            <div><button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️</button>
+            <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️</button>
+            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑</button></div>
+          </div>`;
         });
         document.getElementById('subscriptionMembersList').innerHTML = html;
-        initCollapsible(document.getElementById('subscriptionMembersList'));
       });
     });
 
@@ -2502,20 +2318,17 @@
       updateSubUI();
     });
 
-    // make upcoming events card collapsible (already in HTML)
-    initCollapsible(document.querySelector('#subscriptionPane .collapsible-item'));
-
     updateSubUI();
   })();
 
-  // ========== ASSURANCE MODULE (with collapsible) ==========
+  // ========== ASSURANCE MODULE (original) ==========
   (function() {
     const assurancePane = document.getElementById('assurancePane');
     if (!assurancePane) return;
 
     // Mock assurance members (linked to subscription members)
     let assuranceMembers = [
-      { id: 1, name: 'Spier Wines', active: true, monthlyContribution: 1200, totalAllocated: 30, pendingClaim: 1200, loyaltyCredits: 180, subscribed: true },
+      { id: 1, name: 'Spier Wines', active: true, monthlyContribution: 1200, totalAllocated: 30, pendingClaim: 0, loyaltyCredits: 180, subscribed: true },
       { id: 2, name: 'Kyle’s Grill', active: true, monthlyContribution: 860, totalAllocated: 22, pendingClaim: 860, loyaltyCredits: 95, subscribed: true },
       { id: 3, name: 'Mama’s Take', active: false, monthlyContribution: 500, totalAllocated: 8, pendingClaim: 500, loyaltyCredits: 40, subscribed: true },
       { id: 4, name: 'Thabo Fresh', active: true, monthlyContribution: 400, totalAllocated: 10, pendingClaim: 0, loyaltyCredits: 60, subscribed: false },
@@ -2536,42 +2349,17 @@
       const totalAlloc = assuranceMembers.reduce((acc, m) => acc + m.totalAllocated, 0);
       document.getElementById('assuranceAllocations').innerText = totalAlloc;
 
-      // member list collapsible
+      // member list
       let html = '';
       assuranceMembers.forEach(m => {
-        const claimStatus = m.pendingClaim ? `🔴 claim R ${m.pendingClaim}` : '✅ no claim';
-        const summary = `
-          <span><strong>${m.name}</strong></span>
-          <span>💰 R ${m.monthlyContribution}</span>
-          <span>📦 ${m.totalAllocated}</span>
-          <span class="badge">${claimStatus}</span>
-        `;
-        const expanded = `
-          <div><strong>Contribution history:</strong> monthly R ${m.monthlyContribution}</div>
-          <div><strong>Reserve balance:</strong> ${m.totalAllocated} chickens</div>
-          <div><strong>Pending claim:</strong> ${m.pendingClaim ? 'R '+m.pendingClaim : 'none'}</div>
-          <div><strong>Loyalty credits:</strong> R ${m.loyaltyCredits}</div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">${m.active ? 'Deactivate' : 'Activate'}</button>
-            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">Adjust Contribution</button>
-            ${m.pendingClaim ? `<button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">Approve Claim</button>` : ''}
-            ${m.pendingClaim ? `<button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">Reject Claim</button>` : ''}
-            <button class="btn-small" data-aid="${m.id}" data-aaction="payout">Trigger Payout</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${m.name} ${m.active ? '✅' : '❌'}</h4><p>monthly R ${m.monthlyContribution} · alloc ${m.totalAllocated}</p></div>
+          <div class="batch-numbers"><span class="quantity">loyalty R ${m.loyaltyCredits}</span><br><span class="badge">${m.pendingClaim ? 'claim R '+m.pendingClaim : 'no claim'}</span></div>
+          <div><button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle</button>
+          <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰</button></div>
+        </div>`;
       });
       document.getElementById('assuranceMembersList').innerHTML = html;
-      initCollapsible(document.getElementById('assuranceMembersList'));
     }
 
     // Event delegation for assurance actions
@@ -2591,39 +2379,16 @@
           if (newVal && !isNaN(newVal)) { member.monthlyContribution = parseInt(newVal); updateAssuranceUI(); }
         }
       }
-      if (target.matches('[data-aaction="approveClaim"]')) {
-        const id = parseInt(target.dataset.aid);
-        const member = assuranceMembers.find(m => m.id === id);
-        if (member && member.pendingClaim) {
-          member.loyaltyCredits += member.pendingClaim;
-          member.pendingClaim = 0;
-          pendingClaims--;
-          updateAssuranceUI();
-          alert('Claim approved, loyalty credits issued.');
-        }
-      }
-      if (target.matches('[data-aaction="rejectClaim"]')) {
-        const id = parseInt(target.dataset.aid);
-        const member = assuranceMembers.find(m => m.id === id);
-        if (member && member.pendingClaim) {
-          member.pendingClaim = 0;
-          pendingClaims--;
-          updateAssuranceUI();
-          alert('Claim rejected.');
-        }
-      }
-      if (target.matches('[data-aaction="payout"]')) {
-        alert('Payout triggered (demo)');
-      }
       if (target.matches('[data-action="approve-claim"]')) {
         const claimId = target.dataset.claimId;
-        alert(`Claim ${claimId} approved (from pending claims card)`);
+        // mock approve
+        alert(`Claim ${claimId} approved, loyalty credits issued.`);
         pendingClaims--;
         updateAssuranceUI();
       }
       if (target.matches('[data-action="reject-claim"]')) {
         const claimId = target.dataset.claimId;
-        alert(`Claim ${claimId} rejected (from pending claims card)`);
+        alert(`Claim ${claimId} rejected.`);
         pendingClaims--;
         updateAssuranceUI();
       }
@@ -2640,39 +2405,14 @@
         else if (filter === 'pending') filtered = assuranceMembers.filter(m => m.pendingClaim > 0);
         let html = '';
         filtered.forEach(m => {
-          const claimStatus = m.pendingClaim ? `🔴 claim R ${m.pendingClaim}` : '✅ no claim';
-          const summary = `
-            <span><strong>${m.name}</strong></span>
-            <span>💰 R ${m.monthlyContribution}</span>
-            <span>📦 ${m.totalAllocated}</span>
-            <span class="badge">${claimStatus}</span>
-          `;
-          const expanded = `
-            <div><strong>Contribution history:</strong> monthly R ${m.monthlyContribution}</div>
-            <div><strong>Reserve balance:</strong> ${m.totalAllocated} chickens</div>
-            <div><strong>Pending claim:</strong> ${m.pendingClaim ? 'R '+m.pendingClaim : 'none'}</div>
-            <div><strong>Loyalty credits:</strong> R ${m.loyaltyCredits}</div>
-            <hr>
-            <div class="flex-row">
-              <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">${m.active ? 'Deactivate' : 'Activate'}</button>
-              <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">Adjust Contribution</button>
-              ${m.pendingClaim ? `<button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">Approve Claim</button>` : ''}
-              ${m.pendingClaim ? `<button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">Reject Claim</button>` : ''}
-              <button class="btn-small" data-aid="${m.id}" data-aaction="payout">Trigger Payout</button>
-            </div>
-          `;
-          html += `
-            <div class="collapsible-item">
-              <div class="collapsible-header">
-                <div class="summary">${summary}</div>
-                <i class="fas fa-chevron-down arrow"></i>
-              </div>
-              <div class="collapsible-content">${expanded}</div>
-            </div>
-          `;
+          html += `<div class="batch-row">
+            <div class="batch-info"><h4>${m.name} ${m.active ? '✅' : '❌'}</h4><p>monthly R ${m.monthlyContribution} · alloc ${m.totalAllocated}</p></div>
+            <div class="batch-numbers"><span class="quantity">loyalty R ${m.loyaltyCredits}</span><br><span class="badge">${m.pendingClaim ? 'claim R '+m.pendingClaim : 'no claim'}</span></div>
+            <div><button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰</button></div>
+          </div>`;
         });
         document.getElementById('assuranceMembersList').innerHTML = html;
-        initCollapsible(document.getElementById('assuranceMembersList'));
       });
     });
 
@@ -2707,7 +2447,7 @@
     updateAssuranceUI();
   })();
 
-  // ========== VILLAGE EXPANSION MODULE (with collapsible) ==========
+  // ========== VILLAGE EXPANSION MODULE (original) ==========
   (function() {
     const pane = document.getElementById('villageExpansionPane');
     if (!pane) return;
@@ -2739,56 +2479,25 @@
       }).length;
       document.getElementById('expiringContracts').innerText = expiring;
 
-      // Build contracts list collapsible
+      // Build contracts list
       let html = '';
       contracts.forEach(c => {
         const status = c.signed ? '✅ signed' : '⏳ pending';
         const daysToEnd = Math.ceil((new Date(c.end) - new Date()) / (1000*60*60*24));
         const expiryBadge = daysToEnd < 30 ? `<span class="badge alert-badge">expires in ${daysToEnd}d</span>` : '';
-        const summary = `
-          <span><strong>${c.farm}</strong> <span class="badge">${c.village}</span></span>
-          <span>🐔 ${c.chickens}/mo</span>
-          <span>💰 ${c.margin}%</span>
-          <span>📅 ${c.start} – ${c.end}</span>
-          <span class="badge">${status}</span>
-          ${expiryBadge}
-        `;
-        const expanded = `
-          <div><strong>Farm:</strong> ${c.farm}</div>
-          <div><strong>Village:</strong> ${c.village}</div>
-          <div><strong>Chickens/month:</strong> ${c.chickens}</div>
-          <div><strong>Our margin:</strong> ${c.margin}%</div>
-          <div><strong>Start:</strong> ${c.start}</div>
-          <div><strong>End:</strong> ${c.end}</div>
-          <div><strong>Notes:</strong> ${c.notes}</div>
-          <div><strong>Signed:</strong> ${c.signed ? 'Yes' : 'No'}</div>
-          <div><strong>Revenue (est.):</strong> R ${c.revenue}</div>
-          <hr>
-          <div><strong>Digital signature record:</strong> ${c.signed ? 'signed on ...' : 'pending'}</div>
-          <div><strong>Supply allocation history:</strong> ...</div>
-          <div><strong>Performance metrics:</strong> ...</div>
-          <div><strong>Payment breakdown:</strong> ...</div>
-          <div><strong>Transport allocation:</strong> ...</div>
-          ${daysToEnd < 30 ? '<div class="badge alert-badge">⚠️ Renewal alert</div>' : ''}
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small" data-contract-id="${c.id}" data-action="sign">${c.signed ? 'Resend Link' : 'Sign'}</button>
-            <button class="btn-small" data-contract-id="${c.id}" data-action="edit">Edit</button>
-            <button class="btn-small" data-contract-id="${c.id}" data-action="terminate">Terminate</button>
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${c.farm} <span class="badge">${c.village}</span></h4>
+            <p>🐔 ${c.chickens}/month · margin ${c.margin}% · ${status} ${expiryBadge}</p>
+            <small>${c.notes}</small></div>
+          <div class="batch-numbers">
+            <span class="quantity">R ${(c.chickens * 100 * c.margin/100).toFixed(0)}</span><br>
+            <span class="badge">${c.start} – ${c.end}</span>
           </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
+          <div><button class="btn-small" data-contract-id="${c.id}" data-action="sign">🔗 sign</button>
+          <button class="btn-small" data-contract-id="${c.id}" data-action="edit">✎</button></div>
+        </div>`;
       });
       document.getElementById('contractsListContainer').innerHTML = html;
-      initCollapsible(document.getElementById('contractsListContainer'));
 
       // Update budget total
       const travel = parseFloat(budgetTravel?.value) || 0;
@@ -2831,7 +2540,7 @@
       document.getElementById('pendingDeliveries').innerText = Math.floor(Math.random() * 5) + 2;
     }
 
-    // modal handling (unchanged)
+    // modal handling
     const modal = document.getElementById('contractModal');
     const openBtn = document.getElementById('openAddContractModal');
     const cancelBtn = document.getElementById('modalCancel');
@@ -2912,7 +2621,7 @@
       modal.style.display = 'none';
     });
 
-    // Event delegation for sign/edit/terminate buttons
+    // Event delegation for sign/edit buttons
     document.addEventListener('click', (e) => {
       if (!pane.contains(e.target)) return;
       const target = e.target;
@@ -2925,20 +2634,13 @@
           contract.signed = true;
           updateVillageUI();
         } else if (contract && contract.signed) {
-          alert('Contract already signed. Resend link? (demo)');
+          alert('Contract already signed.');
         }
       }
       if (target.matches('[data-action="edit"]')) {
         const id = parseInt(target.dataset.contractId);
         const contract = contracts.find(c => c.id === id);
         if (contract) openModal(contract);
-      }
-      if (target.matches('[data-action="terminate"]')) {
-        if (confirm('Terminate this contract?')) {
-          const id = parseInt(target.dataset.contractId);
-          contracts = contracts.filter(c => c.id !== id);
-          updateVillageUI();
-        }
       }
     });
 
@@ -2960,7 +2662,7 @@
     updateVillageUI();
   })();
 
-  // ========== STOCK SALE MODULE (with collapsible) ==========
+  // ========== STOCK SALE MODULE (original) ==========
   (function() {
     const pane = document.getElementById('stockSalePane');
     if (!pane) return;
@@ -2986,48 +2688,18 @@
       document.getElementById('avgSharePrice').innerText = 'R ' + avgPrice;
       document.getElementById('projectedROI').innerText = ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%';
 
-      // offerings list collapsible
+      // offerings list
       let html = '';
       offerings.forEach(o => {
         const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
-        const summary = `
-          <span><strong>${o.name}</strong></span>
-          <span>📊 ${o.sharesTotal} shares</span>
-          <span>${progress}% sold</span>
-          <span>💰 ${((o.expectedDividend / o.raised) * 100 || 0).toFixed(1)}% div</span>
-          <span class="badge">${o.status}</span>
-        `;
-        const expanded = `
-          <div><strong>Shares total:</strong> ${o.sharesTotal}</div>
-          <div><strong>Shares sold:</strong> ${o.sharesSold}</div>
-          <div><strong>Share price:</strong> R ${o.sharePrice}</div>
-          <div><strong>Capital raised:</strong> R ${o.raised}</div>
-          <div><strong>Expected dividend:</strong> R ${o.expectedDividend}</div>
-          <hr>
-          <div><strong>Investor list:</strong> (demo data)</div>
-          <div><strong>Dividend payout schedule:</strong> quarterly</div>
-          <div><strong>Risk disclosure summary:</strong> ...</div>
-          <div><strong>Investor documents:</strong> <a href="#" style="color:#d4af37;">view</a></div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">Sell Shares</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">Close Offering</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="adjustDividend">Adjust Dividend</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="export">Export Register</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
+        html += `<div class="batch-row">
+          <div class="batch-info"><h4>${o.name}</h4><p>shares ${o.sharesSold}/${o.sharesTotal} · R ${o.sharePrice}/share</p></div>
+          <div class="batch-numbers"><span class="quantity">R ${o.raised}</span><br><span class="badge">${progress}% sold</span></div>
+          <div><button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell</button>
+          <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button></div>
+        </div>`;
       });
       document.getElementById('offeringsListContainer').innerHTML = html;
-      initCollapsible(document.getElementById('offeringsListContainer'));
     }
 
     // add new offering
@@ -3076,12 +2748,6 @@
           offer.status = 'closed';
           updateStockUI();
         }
-      }
-      if (target.matches('[data-offer-action="adjustDividend"]')) {
-        alert('Adjust dividend (demo)');
-      }
-      if (target.matches('[data-offer-action="export"]')) {
-        alert('Export register (demo)');
       }
     });
 
@@ -3143,99 +2809,23 @@
       { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
     ];
 
-    // ---------- Render Functions (collapsible) ----------
-    function renderPlatformsCollapsible() {
-      const container = document.getElementById('platformCollapsibleContainer');
-      if (!container) return;
-      let html = '';
-      platforms.forEach(p => {
-        const summary = `
-          <span style="width:20%"><strong>${p.name}</strong></span>
-          <span style="width:15%">R ${p.revenue}</span>
-          <span style="width:10%">${p.clicks}</span>
-          <span style="width:10%">${p.conversions}</span>
-          <span style="width:10%">${((p.conversions/p.clicks)*100).toFixed(1)}%</span>
-          <span style="width:15%">R ${p.adSpend}</span>
-          <span style="width:10%">${p.roi}%</span>
-        `;
-        // For expanded, show campaigns under this platform
-        const platformCampaigns = campaigns.filter(c => c.platform === p.name || (p.name === 'All' && c.platform === 'All'));
-        let campaignRows = '';
-        platformCampaigns.forEach(c => {
-          campaignRows += `
-            <div class="batch-row" style="font-size:0.7rem;">
-              <span>${c.name}</span>
-              <span>R ${c.revenue}</span>
-              <span>${c.clicks} clicks</span>
-              <span>${c.cvr}% CVR</span>
-              <span>ROI ${c.roi}%</span>
-            </div>
-          `;
-        });
-        const expanded = `
-          <div><strong>Campaigns on ${p.name}:</strong></div>
-          ${campaignRows || '<div>No campaigns</div>'}
-          <hr>
-          <div><strong>Top account:</strong> ${p.topAccount}</div>
-          <div><strong>Top campaign:</strong> ${p.topCampaign}</div>
-          <div class="flex-row" style="margin-top:8px;">
-            <button class="btn-small">Adjust Budget</button>
-            <button class="btn-small">View Attribution</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header" style="display:flex; justify-content:space-between;">
-              <div class="summary" style="display:flex; gap:8px; width:100%;">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      initCollapsible(container);
+    // ---------- Render Functions ----------
+    function renderPlatforms() {
+      const tbody = document.getElementById('platformTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = platforms.map(p => `<tr>
+        <td>${p.name}</td><td>R ${p.revenue}</td><td>${p.clicks}</td><td>${p.conversions}</td>
+        <td>${((p.conversions/p.clicks)*100).toFixed(1)}%</td><td>R ${p.adSpend}</td><td>${p.roi}%</td>
+      </tr>`).join('');
     }
 
-    function renderInfluencersCollapsible() {
-      const container = document.getElementById('influencerCollapsibleContainer');
-      if (!container) return;
-      let html = '';
-      influencers.forEach(i => {
-        const summary = `
-          <span style="width:20%"><strong>${i.name}</strong></span>
-          <span style="width:12%">${i.platform}</span>
-          <span style="width:10%"><a href="#" style="color:#d4af37;">link</a></span>
-          <span style="width:12%">R ${i.revenue}</span>
-          <span style="width:8%">${i.orders}</span>
-          <span style="width:12%">${i.commission}%</span>
-          <span style="width:12%">R ${i.payout}</span>
-          <span style="width:8%">${i.rank}</span>
-        `;
-        const expanded = `
-          <div><strong>Order list attributed:</strong> (demo orders)</div>
-          <div><strong>Conversion rate:</strong> ${((i.orders / (i.revenue/100)) || 0).toFixed(1)}%</div>
-          <div><strong>Commission breakdown:</strong> ${i.commission}% of R ${i.revenue} = R ${i.payout}</div>
-          <div><strong>Payment history:</strong> last paid ...</div>
-          <div><strong>Performance ranking:</strong> ${i.rank}</div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small">Disable</button>
-            <button class="btn-small">Adjust Commission</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header" style="display:flex; justify-content:space-between;">
-              <div class="summary" style="display:flex; gap:8px; width:100%;">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      initCollapsible(container);
+    function renderInfluencers() {
+      const tbody = document.getElementById('influencerTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = influencers.map(i => `<tr>
+        <td>${i.name}</td><td>${i.platform}</td><td><a href="#" style="color:#d4af37;">link</a></td>
+        <td>R ${i.revenue}</td><td>${i.orders}</td><td>${i.commission}%</td><td>R ${i.payout}</td><td>${i.rank}</td>
+      </tr>`).join('');
     }
 
     function renderCampaigns(view = 'top5') {
@@ -3247,52 +2837,17 @@
       else if (view === 'active') filtered = campaigns.filter(c => c.status === 'active');
       else if (view === 'completed') filtered = campaigns.filter(c => c.status === 'completed');
 
-      let html = '';
-      filtered.forEach(c => {
-        const summary = `
-          <span><strong>${c.name}</strong> <span class="badge">${c.platform}</span></span>
-          <span>💰 R ${c.budget}</span>
-          <span>📈 R ${c.revenue}</span>
-          <span>ROI ${c.roi}%</span>
-          <span class="badge">${c.status}</span>
-        `;
-        const expanded = `
-          <div><strong>Platform:</strong> ${c.platform}</div>
-          <div><strong>Influencer:</strong> ${c.influencer || 'none'}</div>
-          <div><strong>Start:</strong> ${c.start}</div>
-          <div><strong>End:</strong> ${c.end}</div>
-          <div><strong>Budget spent:</strong> R ${c.spent}</div>
-          <div><strong>Revenue:</strong> R ${c.revenue}</div>
-          <div><strong>Profit:</strong> R ${c.profit}</div>
-          <div><strong>ROI:</strong> ${c.roi}%</div>
-          <div><strong>Clicks:</strong> ${c.clicks}</div>
-          <div><strong>CVR:</strong> ${c.cvr}%</div>
-          <hr>
-          <div><strong>Platform distribution:</strong> ...</div>
-          <div><strong>Influencer allocation:</strong> ...</div>
-          <div><strong>Lead volume:</strong> ...</div>
-          <div><strong>Conversion funnel:</strong> ...</div>
-          <hr>
-          <div class="flex-row">
-            <button class="btn-small">Pause</button>
-            <button class="btn-small">Edit</button>
-          </div>
-        `;
-        html += `
-          <div class="collapsible-item">
-            <div class="collapsible-header">
-              <div class="summary">${summary}</div>
-              <i class="fas fa-chevron-down arrow"></i>
-            </div>
-            <div class="collapsible-content">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-      initCollapsible(container);
+      container.innerHTML = filtered.map(c => `
+        <div class="batch-row">
+          <div class="batch-info"><h4>${c.name} <span class="badge">${c.platform}</span></h4>
+            <p>influencer: ${c.influencer || 'none'} · ROI ${c.roi}%</p>
+            <small>${c.start} – ${c.end}</small></div>
+          <div class="batch-numbers"><span class="quantity">R ${c.revenue}</span><br><span class="badge">${c.status}</span></div>
+        </div>
+      `).join('');
     }
 
-    // ---------- Chart Drawing (unchanged) ----------
+    // ---------- Chart Drawing (simple canvas) ----------
     function drawPlatformChart() {
       const canvas = document.getElementById('platformChart');
       if (!canvas) return;
@@ -3420,8 +2975,8 @@
     }
 
     // initial render
-    renderPlatformsCollapsible();
-    renderInfluencersCollapsible();
+    renderPlatforms();
+    renderInfluencers();
     renderCampaigns('top5');
     updateOverview();
     drawPlatformChart();
@@ -3443,3 +2998,6 @@
 </script>
 </body>
 </html>
+
+
+
