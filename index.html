@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>The Golden Feather · luxury dashboard + CRM + FESTIVE + SUBSCRIPTION ADMIN + ASSURANCE + VILLAGE EXPANSION + STOCK SALE + MARKETING COMMAND CENTER + BUSINESS BLUEPRINT</title>
-  <!-- Fonts & Icons -->
+  <!-- Fonts & Icons (unchanged) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
@@ -519,14 +519,12 @@
       height: 6px;
       background: #d4af37;
     }
-    /* assurance specific */
     .assurance-toggle {
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    /* modal overlay (unchanged) */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -559,7 +557,6 @@
       margin: 8px 0;
     }
 
-    /* New minimal styles for marketing command center (only appended) */
     .mini-table { font-size: 0.75rem; width: 100%; }
     .mini-table td { padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
     .mini-table th { text-align: left; color: #d4af37; font-weight: 500; }
@@ -567,7 +564,6 @@
     .chart-canvas { width: 100%; height: 80px; margin: 8px 0; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
 
-    /* ---------- ACCORDION STYLES (new) ---------- */
     .accordion-item {
       margin-bottom: 8px;
       border: 1px solid rgba(212, 175, 55, 0.25);
@@ -604,7 +600,6 @@
     .accordion-body.expanded {
       display: block;
     }
-    /* summary metrics inside collapsed header */
     .accordion-summary {
       display: flex;
       flex-wrap: wrap;
@@ -625,7 +620,7 @@
 </head>
 <body>
 <div id="app">
-  <!-- header with three‑dots panel (now includes Marketing Command Center and Business Blueprint) -->
+  <!-- header with three‑dots panel (unchanged) -->
   <div class="header">
     <div class="header-left">
       <h1>
@@ -647,16 +642,14 @@
       <div class="more-item" data-tab="assurance"><i class="fas fa-shield-alt"></i> <span>Assurance</span></div>
       <div class="more-item" data-tab="villageExpansion"><i class="fas fa-handshake"></i> <span>Village Expansion</span></div>
       <div class="more-item" data-tab="stockSale"><i class="fas fa-chart-line"></i> <span>Stock Sale</span></div>
-      <!-- Marketing Command Center -->
       <div class="more-item" data-tab="marketing"><i class="fas fa-bullhorn"></i> <span>Marketing Command Center</span></div>
-      <!-- NEW: Business Blueprint (links to separate page) -->
       <div class="more-item" data-href="blueprint.html"><i class="fas fa-book"></i> <span>Business Blueprint</span></div>
     </div>
   </div>
 
-  <!-- main content area – all panes (including marketingPane) -->
+  <!-- main content area – all panes (unchanged) -->
   <div class="main-content" id="mainContent">
-    <!-- DASHBOARD PANE (original full content) -->
+    <!-- DASHBOARD PANE -->
     <div class="tab-pane active" id="dashboardPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
@@ -729,7 +722,7 @@
       </div>
     </div>
 
-    <!-- INVENTORY PANE (original full content) -->
+    <!-- INVENTORY PANE -->
     <div class="tab-pane" id="inventoryPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
@@ -774,7 +767,7 @@
       </div>
     </div>
 
-    <!-- SALES PANE (original full content) -->
+    <!-- SALES PANE -->
     <div class="tab-pane" id="salesPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
@@ -822,7 +815,7 @@
       </div>
     </div>
 
-    <!-- LOGISTICS PANE (original full content) -->
+    <!-- LOGISTICS PANE -->
     <div class="tab-pane" id="logisticsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-truck gold-text"></i> active deliveries</div>
@@ -851,7 +844,7 @@
       </div>
     </div>
 
-    <!-- BUDGET PANE (original full content) -->
+    <!-- BUDGET PANE -->
     <div class="tab-pane" id="budgetPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
@@ -901,7 +894,7 @@
       </div>
     </div>
 
-    <!-- SETTINGS PANE (original full content) -->
+    <!-- SETTINGS PANE -->
     <div class="tab-pane" id="settingsPane">
       <div class="card">
         <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
@@ -930,7 +923,7 @@
       </div>
     </div>
 
-    <!-- REWARDS PANE (original full content) -->
+    <!-- REWARDS PANE -->
     <div class="tab-pane" id="rewardsPane">
       <!-- KPI cards -->
       <div class="card">
@@ -976,7 +969,7 @@
       </div>
     </div>
 
-    <!-- INFRASTRUCTURE PANE (original full content) -->
+    <!-- INFRASTRUCTURE PANE -->
     <div class="tab-pane" id="infraPane">
       <!-- 1. Infrastructure status & growth trigger -->
       <div class="card">
@@ -1051,7 +1044,7 @@
       </div>
     </div>
 
-    <!-- CRM PANE (original full content) -->
+    <!-- CRM PANE -->
     <div class="tab-pane" id="crmPane">
       <!-- Customer Overview -->
       <div class="card">
@@ -1175,7 +1168,7 @@
       </div>
     </div>
 
-    <!-- ========== FESTIVE PANE (with accordion village groups) ========== -->
+    <!-- ========== FESTIVE PANE ========== -->
     <div class="tab-pane" id="festivePane">
       <!-- Village overview stats -->
       <div class="card">
@@ -1208,7 +1201,7 @@
       <div class="card">
         <div class="card-title"><i class="fas fa-list gold-text"></i> village groups · live slots</div>
         <div id="villageListContainer" class="accordion-container">
-          <!-- dynamically filled with accordion items -->
+          <!-- dynamically filled -->
         </div>
         <button class="btn-gold" style="width:100%; margin-top:12px;" id="addVillageBtn"><i class="fas fa-plus"></i> add village group</button>
       </div>
@@ -1230,7 +1223,7 @@
       </div>
     </div>
 
-    <!-- ========== SUBSCRIPTION PANE (with accordion members & events) ========== -->
+    <!-- ========== SUBSCRIPTION PANE ========== -->
     <div class="tab-pane" id="subscriptionPane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1322,7 +1315,7 @@
       </div>
     </div>
 
-    <!-- ========== ASSURANCE PANE (with accordion members) ========== -->
+    <!-- ========== ASSURANCE PANE ========== -->
     <div class="tab-pane" id="assurancePane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1404,7 +1397,7 @@
       </div>
     </div>
 
-    <!-- ========== VILLAGE EXPANSION PANE (with accordion contracts) ========== -->
+    <!-- ========== VILLAGE EXPANSION PANE ========== -->
     <div class="tab-pane" id="villageExpansionPane">
       <!-- Analytics & summary cards -->
       <div class="card">
@@ -1467,7 +1460,7 @@
       </div>
     </div>
 
-    <!-- ========== STOCK SALE PANE (with accordion offerings) ========== -->
+    <!-- ========== STOCK SALE PANE ========== -->
     <div class="tab-pane" id="stockSalePane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1525,7 +1518,7 @@
       </div>
     </div>
 
-    <!-- ========== ENHANCED MARKETING COMMAND CENTER (with accordion tables) ========== -->
+    <!-- ========== ENHANCED MARKETING COMMAND CENTER ========== -->
     <div class="tab-pane" id="marketingPane">
       <!-- Overview KPIs -->
       <div class="card">
@@ -1665,10 +1658,10 @@
   </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS (modified for interconnectivity) -->
+<!-- ========== CENTRALIZED JAVASCRIPT – SINGLE SOURCE OF TRUTH ========== -->
 <script>
-  // ----- tab switching (unchanged) -----
   (function() {
+    // ----- tab switching (unchanged) -----
     const navItems = document.querySelectorAll('.nav-item');
     const panes = {
       dashboard: document.getElementById('dashboardPane'),
@@ -1729,125 +1722,92 @@
         morePanel.classList.remove('show');
       }
     });
-  })();
 
-  // ========== GLOBAL STATE & CENTRAL UPDATE ==========
-  const AppState = {
-    farm: {
-      totalBirds: 2450,
-      soldToday: 128,
-      monthlySold: 3840,
-      mortalityRate: 0.009,
-    },
-    sales: {
-      wholesalePct: 68,
-      retailPct: 22,
-      restaurantPct: 10,
-      prices: { live:100, standard:100, premium:115, bulk:75 },
-      byproductPerBird: 85,
-    },
-    costs: {
-      chicks: 34300,
-      feed: 85085,
-      transport: 4300,
-      labor: 6500,
-      utilities: 2100,
-      equipment: 900,
-      losses: 600,
-      adjustablePerBird: 62,
-    },
-    subscriptions: {
-      members: [],
-      totalRevenue: 0,
-    },
-    assurance: {
-      members: [],
-      totalContributions: 0,
-      pendingClaims: 0,
-    },
-    marketing: {
-      platforms: [],
-      influencers: [],
-      campaigns: [],
-      totalAdSpend: 0,
-      attributedRevenue: 0,
-    },
-    computed: {
-      totalRevenue: 0,
-      totalCosts: 0,
-      netProfit: 0,
-      profitMargin: 0,
-      consistencyWarnings: [],
-    }
-  };
+    // ========== CENTRAL APP STATE (SINGLE SOURCE OF TRUTH) ==========
+    const AppState = {
+      farm: {
+        totalBirds: 2450,
+        soldToday: 128,
+        monthlySold: 3840,
+        mortalityRate: 0.009,
+      },
+      sales: {
+        wholesalePct: 68,
+        retailPct: 22,
+        restaurantPct: 10,
+        prices: { live:100, standard:100, premium:115, bulk:75 },
+        byproductPerBird: 85,
+        subDiscount: 6,
+        refDiscount: 10,
+      },
+      costs: {
+        chicks: 34300,
+        feed: 85085,
+        transport: 4300,
+        labor: 6500,
+        utilities: 2100,
+        equipment: 900,
+        losses: 600,
+        adjustablePerBird: 62,
+      },
+      subscriptions: {
+        members: [], // will be filled later
+        totalRevenue: 0,
+      },
+      assurance: {
+        members: [],
+        totalContributions: 0,
+        pendingClaims: 0,
+      },
+      marketing: {
+        platforms: [],
+        influencers: [],
+        campaigns: [],
+        totalAdSpend: 0,
+        attributedRevenue: 0,
+      },
+      festive: {
+        villages: [],
+      },
+      village: {
+        contracts: [],
+      },
+      stock: {
+        offerings: [],
+      },
+      infra: {
+        currentCapacity: 2500,
+        projectedDemand: 2800,
+        emergencyBalance: 15000,
+        emergencyMin: 20000,
+        catEquipment: 30,
+        catTooling: 20,
+        catLogistics: 25,
+        catPackaging: 25,
+        goalLand: 250000,
+        goalFacility: 180000,
+        goalMachinery: 95000,
+        goalTimeline: 12,
+      },
+      rewards: {
+        data: [],
+        settings: { enabled: true, chickensPerReward: 10, streakDays: 7, baseDiscount: 8, doubleByproduct: true, referralCredit: 50 }
+      },
+      computed: {
+        totalRevenue: 0,
+        totalCosts: 0,
+        netProfit: 0,
+        profitMargin: 0,
+        avgPrice: 0,
+        byproductRevenue: 0,
+        chickenRevenue: 0,
+        consistencyWarnings: [],
+      }
+    };
 
-  // Central update function – recalculates totals and refreshes dashboard
-  function refreshAll() {
-    // 1. Compute average price
-    const wp = AppState.sales.wholesalePct;
-    const rp = AppState.sales.retailPct;
-    const rest = AppState.sales.restaurantPct;
-    const avgPrice = (wp * AppState.sales.prices.bulk + rp * AppState.sales.prices.standard + rest * AppState.sales.prices.premium) / 100;
-    
-    // 2. Chicken revenue
-    const chickenRevenue = AppState.farm.monthlySold * avgPrice;
-    
-    // 3. Byproduct revenue (from wholesale + retail)
-    const byproductRevenue = (AppState.farm.monthlySold * (wp + rp) / 100) * AppState.sales.byproductPerBird;
-    
-    // 4. Subscription revenue (from subscription module)
-    const subRevenue = AppState.subscriptions.totalRevenue;
-    
-    // 5. Assurance contributions
-    const assuranceRevenue = AppState.assurance.totalContributions;
-    
-    // 6. Total revenue
-    const totalRevenue = chickenRevenue + byproductRevenue + subRevenue + assuranceRevenue;
-    
-    // 7. Total costs (from costs object)
-    const totalCosts = AppState.costs.chicks + AppState.costs.feed + AppState.costs.transport + AppState.costs.labor + AppState.costs.utilities + AppState.costs.equipment + AppState.costs.losses;
-    
-    const netProfit = totalRevenue - totalCosts;
-    const profitMargin = totalRevenue ? (netProfit / totalRevenue) * 100 : 0;
-    
-    // Update computed
-    AppState.computed.totalRevenue = totalRevenue;
-    AppState.computed.totalCosts = totalCosts;
-    AppState.computed.netProfit = netProfit;
-    AppState.computed.profitMargin = profitMargin;
-    
-    // Consistency check: sum of streams vs totalRevenue
-    const sumStreams = chickenRevenue + byproductRevenue + subRevenue + assuranceRevenue;
-    if (Math.abs(sumStreams - totalRevenue) > 0.01) {
-      AppState.computed.consistencyWarnings.push('Revenue mismatch');
-      document.getElementById('consistencyWarning').style.display = 'block';
-    } else {
-      document.getElementById('consistencyWarning').style.display = 'none';
-    }
-    
-    // Update dashboard elements
-    updateDashboardFromState();
-  }
-
-  function updateDashboardFromState() {
-    const d = AppState.computed;
-    const f = AppState.farm;
-    const s = AppState.sales;
-    
-    // Update all relevant dashboard fields
-    document.getElementById('totalRevenue').innerText = 'R ' + d.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + d.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    document.getElementById('netProfitMonthDisplay').innerText = 'R ' + d.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    document.getElementById('netMonthly').innerText = 'R ' + d.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    document.getElementById('plMargin').innerText = d.profitMargin.toFixed(1) + '% (R ' + d.netProfit.toFixed(0) + ')';
-    document.getElementById('kpiByproduct').innerText = 'R ' + (f.monthlySold * (s.wholesalePct + s.retailPct) / 100 * s.byproductPerBird).toFixed(0);
-    // ... more updates as needed (others remain from original updateAll)
-  }
-
-  // ========== ORIGINAL DASHBOARD SCRIPT (modified to use AppState) ==========
-  (function() {
-    // Rewards data moved to AppState later; we keep local but will sync
-    let rewardsData = [
+    // ========== INITIALIZE MODULE DATA ==========
+    // Rewards
+    AppState.rewards.data = [
       { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
       { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
       { customerId: 103, name: 'Thabo Fresh', type: 'referral', progress: 2, target: 3, status: 'active', expiry: '2025-04-10', discount: 10, byproductBoost: false, referralCredit: 50 },
@@ -1855,576 +1815,8 @@
       { customerId: 105, name: 'Mama’s Takeaways', type: 'streak', progress: 7, target: 7, status: 'upcoming', expiry: '2025-04-01', discount: 12, byproductBoost: false, referralCredit: 0 }
     ];
 
-    let rewardSettings = {
-      enabled: true,
-      chickensPerReward: 10,
-      streakDays: 7,
-      baseDiscount: 8,
-      doubleByproduct: true,
-      referralCredit: 50
-    };
-
-    AppState.rewards = { data: rewardsData, settings: rewardSettings };
-
-    const rewardsClaimedSpan = document.getElementById('rewardsClaimed');
-    const activeRewardsSpan = document.getElementById('activeRewards');
-    const upcomingRewardsSpan = document.getElementById('upcomingRewards');
-    const byproductBonusSpan = document.getElementById('byproductBonusUptake');
-    const referralCreditsSpan = document.getElementById('referralCredits');
-    const rewardCardsContainer = document.getElementById('rewardCardsContainer');
-    const rewardsTableBody = document.getElementById('rewardsTableBody');
-
-    const enableRewardsChk = document.getElementById('enableRewards');
-    const chickensPerRewardInp = document.getElementById('chickensPerReward');
-    const streakDaysInp = document.getElementById('streakDays');
-    const rewardDiscountInp = document.getElementById('rewardDiscount');
-    const doubleByproductChk = document.getElementById('doubleByproduct');
-    const referralCreditInp = document.getElementById('referralCreditValue');
-    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
-
-    function updateRewardsUI() {
-      const claimed = rewardsData.filter(r => r.status === 'claimed').length;
-      const active = rewardsData.filter(r => r.status === 'active').length;
-      const upcoming = rewardsData.filter(r => r.status === 'upcoming').length;
-      const byproductUptake = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
-      const totalReferral = rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
-      if(rewardsClaimedSpan) rewardsClaimedSpan.innerText = claimed;
-      if(activeRewardsSpan) activeRewardsSpan.innerText = active;
-      if(upcomingRewardsSpan) upcomingRewardsSpan.innerText = upcoming;
-      if(byproductBonusSpan) byproductBonusSpan.innerText = byproductUptake;
-      if(referralCreditsSpan) referralCreditsSpan.innerText = 'R ' + totalReferral.toLocaleString();
-
-      let cardsHtml = '';
-      rewardsData.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
-        cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
-      });
-      if(rewardCardsContainer) rewardCardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
-
-      let rows = '';
-      rewardsData.forEach(r => {
-        rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
-      });
-      if(rewardsTableBody) rewardsTableBody.innerHTML = rows;
-    }
-
-    function getActiveRewardDiscountRate() {
-      if (!rewardSettings.enabled) return 0;
-      const activeRewards = rewardsData.filter(r => r.status === 'active');
-      if (activeRewards.length === 0) return 0;
-      const totalDisc = activeRewards.reduce((acc, r) => acc + r.discount, 0);
-      return totalDisc / activeRewards.length / 100;
-    }
-
-    function getReferralCreditTotal() {
-      return rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
-    }
-
-    function getByproductBoostFactor() {
-      if (!rewardSettings.doubleByproduct) return 1;
-      const activeBoost = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
-      return 1 + (activeBoost * 0.1);
-    }
-
-    const TOTAL_BIRDS = 2450;
-    const SOLD_TODAY = 128;
-    const MONTHLY_SOLD = 3840;
-    const MORTALITY_RATE = 0.009;
-
-    const chicksInput = document.getElementById('chicksCost');
-    const feedInput = document.getElementById('feedCost');
-    const transportInput = document.getElementById('transportCost');
-    const laborInput = document.getElementById('laborCost');
-    const utilitiesInput = document.getElementById('utilitiesCost');
-    const equipmentInput = document.getElementById('equipmentCost');
-    const lossesInput = document.getElementById('lossesCost');
-    const adjustableCostPerBird = document.getElementById('adjustableCostPerBird');
-    const wholesalePct = document.getElementById('wholesalePct');
-    const retailPct = document.getElementById('retailPct');
-    const restaurantPct = document.getElementById('restaurantPct');
-    const subDiscount = document.getElementById('subDiscount');
-    const refDiscount = document.getElementById('refDiscount');
-    const byproductPerBirdInput = document.getElementById('byproductPerBird');
-    const vehicleTrigger = document.getElementById('vehicleTrigger');
-    const stockTrigger = document.getElementById('stockTrigger');
-    const farmTrigger = document.getElementById('farmTrigger');
-
-    const PRICE_LIVE = 100, PRICE_STANDARD = 100, PRICE_PREMIUM = 115, PRICE_BULK = 75;
-
-    function computeAvgPrice() {
-      let wp = parseFloat(wholesalePct?.value) || 68;
-      let rp = parseFloat(retailPct?.value) || 22;
-      let rest = parseFloat(restaurantPct?.value) || 10;
-      let total = wp + rp + rest;
-      if (total === 0) return 84.5;
-      return (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
-    }
-
-    function getByproductRevenue() {
-      let byPerBird = parseFloat(byproductPerBirdInput?.value) || 85;
-      let wp = parseFloat(wholesalePct?.value) || 68;
-      let rp = parseFloat(retailPct?.value) || 22;
-      let applicableBirds = MONTHLY_SOLD * (wp + rp) / 100;
-      return applicableBirds * byPerBird;
-    }
-
-    function updateAll() {
-      const chicks = parseFloat(chicksInput?.value) || 0;
-      const feed = parseFloat(feedInput?.value) || 0;
-      const transport = parseFloat(transportInput?.value) || 0;
-      const labor = parseFloat(laborInput?.value) || 0;
-      const utilities = parseFloat(utilitiesInput?.value) || 0;
-      const equipment = parseFloat(equipmentInput?.value) || 0;
-      const losses = parseFloat(lossesInput?.value) || 0;
-      const totalCost = chicks + feed + transport + labor + utilities + equipment + losses;
-
-      const adjCostPerBird = parseFloat(adjustableCostPerBird?.value) || 62;
-      const avgPrice = computeAvgPrice();
-      let byproductRev = getByproductRevenue();
-
-      const discountRate = getActiveRewardDiscountRate();
-      const referralTotal = getReferralCreditTotal();
-      const boostFactor = getByproductBoostFactor();
-      byproductRev = byproductRev * boostFactor;
-
-      const monthlyRevenueBase = MONTHLY_SOLD * avgPrice;
-      const discountAmount = monthlyRevenueBase * discountRate;
-      const monthlyRevenue = monthlyRevenueBase - discountAmount - referralTotal;
-      const revenueToday = SOLD_TODAY * avgPrice * (1 - discountRate);
-
-      const netProfit = monthlyRevenue + byproductRev - totalCost;
-
-      if(document.getElementById('totalRevenue')) document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenuePerChicken')) document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('monthlyRevenueDisplay')) document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenueTodayValue')) document.getElementById('revenueTodayValue').innerText = 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenueTodayDisplay')) document.getElementById('revenueTodayDisplay').innerText = 'R ' + revenueToday.toFixed(0);
-      if(document.getElementById('netMonthly')) document.getElementById('netMonthly').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('profitPerChicken')) document.getElementById('profitPerChicken').innerText = 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('weightedAvgPrice')) document.getElementById('weightedAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('todaySalesAvgPrice')) document.getElementById('todaySalesAvgPrice').innerHTML = `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`;
-      if(document.getElementById('todayRevenueCalc')) document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
-      if(document.getElementById('totalExpenses')) document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('costPerChicken')) document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('plChickens')) document.getElementById('plChickens').innerText = 'R ' + chicks.toLocaleString();
-      if(document.getElementById('plFeed')) document.getElementById('plFeed').innerText = 'R ' + feed.toLocaleString();
-      if(document.getElementById('plLogistics')) document.getElementById('plLogistics').innerText = 'R ' + transport.toLocaleString();
-      if(document.getElementById('plLabor')) document.getElementById('plLabor').innerText = 'R ' + labor.toLocaleString();
-      if(document.getElementById('plRevenue')) document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('plMargin')) document.getElementById('plMargin').innerText = ((netProfit / (monthlyRevenue + byproductRev) * 100) || 0).toFixed(1) + '% (R ' + netProfit.toFixed(0) + ')';
-      if(document.getElementById('revLive')) document.getElementById('revLive').innerText = 'R ' + (MONTHLY_SOLD * 100).toLocaleString();
-      if(document.getElementById('revPrep')) document.getElementById('revPrep').innerText = 'R ' + (MONTHLY_SOLD * 20).toLocaleString(); // mock
-      if(document.getElementById('revBulk')) document.getElementById('revBulk').innerText = 'R ' + (MONTHLY_SOLD * 30).toLocaleString(); // mock
-      if(document.getElementById('revByproduct')) document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revManure')) document.getElementById('revManure').innerText = 'R 3,000'; // mock
-      if(document.getElementById('totalBirdsDisplay')) document.getElementById('totalBirdsDisplay').innerText = TOTAL_BIRDS;
-      if(document.getElementById('soldTodayDisplay')) document.getElementById('soldTodayDisplay').innerText = SOLD_TODAY;
-      if(document.getElementById('lostTodayDisplay')) document.getElementById('lostTodayDisplay').innerText = '12';
-      if(document.getElementById('remainingStockDisplay')) document.getElementById('remainingStockDisplay').innerText = TOTAL_BIRDS - SOLD_TODAY;
-      if(document.getElementById('netProfitMonthDisplay')) document.getElementById('netProfitMonthDisplay').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('kpiActiveBirds')) document.getElementById('kpiActiveBirds').innerText = TOTAL_BIRDS - SOLD_TODAY;
-      if(document.getElementById('kpiMortality')) document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
-      if(document.getElementById('kpiAvgPrice')) document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('kpiCostPerBird')) document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
-      if(document.getElementById('kpiSubPct')) document.getElementById('kpiSubPct').innerText = '18%';
-      if(document.getElementById('kpiByproduct')) document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('projectedProfit')) document.getElementById('projectedProfit').innerText = 'R ' + (netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('profitTrend')) document.getElementById('profitTrend').innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
-      if(document.getElementById('wholesaleVal')) document.getElementById('wholesaleVal').innerText = wholesalePct?.value || 68;
-      if(document.getElementById('retailVal')) document.getElementById('retailVal').innerText = retailPct?.value || 22;
-      if(document.getElementById('restaurantVal')) document.getElementById('restaurantVal').innerText = restaurantPct?.value || 10;
-      if(document.getElementById('totalFeedKg')) document.getElementById('totalFeedKg').innerText = '11,025 kg';
-      if(document.getElementById('feedBags')) document.getElementById('feedBags').innerText = '221 bags';
-      if(document.getElementById('feedCostEstimate')) document.getElementById('feedCostEstimate').innerText = 'R 85,085';
-      if(document.getElementById('triggerSuggestions')) document.getElementById('triggerSuggestions').innerHTML = '<p>🚀 next: vehicle at R40,000</p>';
-      if(document.getElementById('triggerProgress')) document.getElementById('triggerProgress').innerText = 'you are 216% toward vehicle trigger';
-      if(document.getElementById('currentProfitLevel')) document.getElementById('currentProfitLevel').innerText = 'R3 (86.4k)';
-      if(document.getElementById('nextTargetDisplay')) document.getElementById('nextTargetDisplay').innerText = 'R5 (150k)';
-      if(document.getElementById('profitGapFill')) document.getElementById('profitGapFill').style.width = '57%';
-      if(document.getElementById('gapText')) document.getElementById('gapText').innerText = 'gap to next level: R 63,600';
-      if(document.getElementById('deathRateDisplay')) document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
-      if(document.getElementById('laborPerBird')) document.getElementById('laborPerBird').innerText = 'R ' + (labor / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('profitPerWorker')) document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-      updateRewardsUI();
-    }
-
-    // attach listeners
-    const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger].filter(el => el);
-    costInputs.forEach(inp => inp.addEventListener('input', function() {
-      // Update AppState
-      if (this.id === 'chicksCost') AppState.costs.chicks = parseFloat(this.value) || 0;
-      else if (this.id === 'feedCost') AppState.costs.feed = parseFloat(this.value) || 0;
-      else if (this.id === 'transportCost') AppState.costs.transport = parseFloat(this.value) || 0;
-      else if (this.id === 'laborCost') AppState.costs.labor = parseFloat(this.value) || 0;
-      else if (this.id === 'utilitiesCost') AppState.costs.utilities = parseFloat(this.value) || 0;
-      else if (this.id === 'equipmentCost') AppState.costs.equipment = parseFloat(this.value) || 0;
-      else if (this.id === 'lossesCost') AppState.costs.losses = parseFloat(this.value) || 0;
-      else if (this.id === 'adjustableCostPerBird') AppState.costs.adjustablePerBird = parseFloat(this.value) || 0;
-      else if (this.id === 'wholesalePct') AppState.sales.wholesalePct = parseFloat(this.value) || 0;
-      else if (this.id === 'retailPct') AppState.sales.retailPct = parseFloat(this.value) || 0;
-      else if (this.id === 'restaurantPct') AppState.sales.restaurantPct = parseFloat(this.value) || 0;
-      else if (this.id === 'byproductPerBird') AppState.sales.byproductPerBird = parseFloat(this.value) || 0;
-      refreshAll();
-    }));
-
-    [enableRewardsChk, chickensPerRewardInp, streakDaysInp, rewardDiscountInp, doubleByproductChk, referralCreditInp].forEach(inp => {
-      if(inp) inp.addEventListener('change', () => {
-        if(enableRewardsChk) rewardSettings.enabled = enableRewardsChk.checked;
-        if(chickensPerRewardInp) rewardSettings.chickensPerReward = parseInt(chickensPerRewardInp.value) || 10;
-        if(streakDaysInp) rewardSettings.streakDays = parseInt(streakDaysInp.value) || 7;
-        if(rewardDiscountInp) rewardSettings.baseDiscount = parseFloat(rewardDiscountInp.value) || 8;
-        if(doubleByproductChk) rewardSettings.doubleByproduct = doubleByproductChk.checked;
-        if(referralCreditInp) rewardSettings.referralCredit = parseFloat(referralCreditInp.value) || 50;
-        refreshAll();
-      });
-    });
-
-    if(simulatePurchaseBtn) simulatePurchaseBtn.addEventListener('click', () => {
-      const activeIdx = rewardsData.findIndex(r => r.status === 'active');
-      if (activeIdx >= 0) {
-        rewardsData[activeIdx].progress += 1;
-        if (rewardsData[activeIdx].progress >= rewardsData[activeIdx].target) {
-          rewardsData[activeIdx].status = 'claimed';
-        }
-      } else {
-        rewardsData.push({ customerId: 999, name: 'New Customer', type: 'welcome', progress: 1, target: 3, status: 'active', expiry: '2025-04-20', discount: 8, byproductBoost: true, referralCredit: 0 });
-      }
-      refreshAll();
-    });
-
-    refreshAll();
-
-    const growthBtns = document.querySelectorAll('[data-growth]');
-    growthBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const growth = parseInt(btn.dataset.growth) / 100;
-        const netProfit = parseFloat(document.getElementById('netMonthly')?.innerText.replace('R', '').replace(',', '')) || 86400;
-        const projected = netProfit * 3 * (1 + growth);
-        const projSpan = document.getElementById('projectedProfit');
-        if(projSpan) projSpan.innerText = 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        const hint = document.getElementById('growthHint');
-        if(hint) hint.innerText = `simulating +${btn.dataset.growth}% growth`;
-      });
-    });
-  })();
-
-  // ========== INFRASTRUCTURE MODULE (original) ==========
-  (function() {
-    const currentCapacity = document.getElementById('currentCapacity');
-    if (!currentCapacity) return;
-    const projectedDemand = document.getElementById('projectedDemand');
-    const emergencyBalance = document.getElementById('emergencyBalance');
-    const emergencyMin = document.getElementById('emergencyMin');
-    const catEquipment = document.getElementById('catEquipment');
-    const catTooling = document.getElementById('catTooling');
-    const catLogistics = document.getElementById('catLogistics');
-    const catPackaging = document.getElementById('catPackaging');
-    const goalLand = document.getElementById('goalLand');
-    const goalFacility = document.getElementById('goalFacility');
-    const goalMachinery = document.getElementById('goalMachinery');
-    const goalTimeline = document.getElementById('goalTimeline');
-    const capacityUtil = document.getElementById('capacityUtilization');
-    const infraSuggestion = document.getElementById('infraSuggestion');
-    const requiredInvestment = document.getElementById('requiredInvestment');
-    const upgradeDetails = document.getElementById('upgradeDetails');
-    const emergencyAlert = document.getElementById('emergencyAlert');
-    const catSum = document.getElementById('catSum');
-    const availProfitSpan = document.getElementById('availProfit');
-    const allocInfra = document.getElementById('allocInfra');
-    const allocEmergency = document.getElementById('allocEmergency');
-    const allocEquipment = document.getElementById('allocEquipment');
-    const allocTooling = document.getElementById('allocTooling');
-    const allocLogistics = document.getElementById('allocLogistics');
-    const allocPackaging = document.getElementById('allocPackaging');
-    const totalGoalsSpan = document.getElementById('totalGoals');
-    const monthlyGoalReqSpan = document.getElementById('monthlyGoalReq');
-    const profitAfterGoalsSpan = document.getElementById('profitAfterGoals');
-    const rolloverSummary = document.getElementById('rolloverSummary');
-    const yearEndAlert = document.getElementById('yearEndAlert');
-    const infraNotifications = document.getElementById('infraNotifications');
-
-    function getMonthlyNetProfit() {
-      const netElem = document.getElementById('netMonthly');
-      if (!netElem) return 86400;
-      const text = netElem.innerText.replace('R', '').replace(/,/g, '').trim();
-      return parseFloat(text) || 86400;
-    }
-
-    function validateCategorySum() {
-      let e = parseFloat(catEquipment?.value) || 0;
-      let t = parseFloat(catTooling?.value) || 0;
-      let l = parseFloat(catLogistics?.value) || 0;
-      let p = parseFloat(catPackaging?.value) || 0;
-      let sum = e + t + l + p;
-      if(catSum) catSum.innerText = `total ${sum}%`;
-      if(catSum) catSum.style.color = (sum !== 100) ? '#b85a3a' : '#d4af37';
-      return sum;
-    }
-
-    function updateInfraModule() {
-      const profit = getMonthlyNetProfit();
-      if(availProfitSpan) availProfitSpan.innerText = 'R ' + profit.toLocaleString();
-
-      const cap = parseFloat(currentCapacity?.value) || 0;
-      const demand = parseFloat(projectedDemand?.value) || 0;
-      const util = cap ? (demand / cap) * 100 : 0;
-      if(capacityUtil) capacityUtil.innerText = util.toFixed(0) + '%';
-
-      const needInfra = cap < demand;
-      let infraAlloc = 0;
-      if (needInfra) {
-        infraAlloc = profit * 0.4;
-        if(infraSuggestion) infraSuggestion.innerHTML = '⚙️ infrastructure upgrade active (40% of profit)';
-        if(infraSuggestion) infraSuggestion.className = 'badge';
-      } else {
-        if(infraSuggestion) infraSuggestion.innerHTML = '✅ capacity sufficient – no forced infra allocation';
-        if(infraSuggestion) infraSuggestion.className = 'badge green-text';
-      }
-
-      let remaining = profit - infraAlloc;
-      const emergBal = parseFloat(emergencyBalance?.value) || 0;
-      const emergMinVal = parseFloat(emergencyMin?.value) || 0;
-      const emergDeficit = Math.max(0, emergMinVal - emergBal);
-      const emergTopUp = Math.min(emergDeficit, remaining * 0.3);
-      remaining -= emergTopUp;
-
-      let ePct = parseFloat(catEquipment?.value) || 0;
-      let tPct = parseFloat(catTooling?.value) || 0;
-      let lPct = parseFloat(catLogistics?.value) || 0;
-      let pPct = parseFloat(catPackaging?.value) || 0;
-      let sum = ePct + tPct + lPct + pPct;
-      if (sum === 0) sum = 1;
-
-      const allocE = (remaining * ePct) / sum;
-      const allocT = (remaining * tPct) / sum;
-      const allocL = (remaining * lPct) / sum;
-      const allocP = (remaining * pPct) / sum;
-
-      if(allocInfra) allocInfra.innerText = 'R ' + infraAlloc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(allocEmergency) allocEmergency.innerText = 'R ' + emergTopUp.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(allocEquipment) allocEquipment.innerText = 'R ' + allocE.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(allocTooling) allocTooling.innerText = 'R ' + allocT.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(allocLogistics) allocLogistics.innerText = 'R ' + allocL.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(allocPackaging) allocPackaging.innerText = 'R ' + allocP.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-      if (needInfra) {
-        const shortfall = demand - cap;
-        const investPerBird = 150;
-        const invest = shortfall * investPerBird;
-        if(requiredInvestment) requiredInvestment.innerText = 'R ' + invest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        if(upgradeDetails) upgradeDetails.innerText = `🔧 add ${shortfall} units, feeders, water, climate, tech`;
-      } else {
-        if(requiredInvestment) requiredInvestment.innerText = 'R 0';
-        if(upgradeDetails) upgradeDetails.innerText = 'capacity meets demand';
-      }
-
-      if (emergBal < emergMinVal) {
-        if(emergencyAlert) emergencyAlert.innerHTML = '⚠️ below minimum!';
-        if(emergencyAlert) emergencyAlert.className = 'badge alert-badge';
-      } else {
-        if(emergencyAlert) emergencyAlert.innerHTML = '✅ above minimum';
-        if(emergencyAlert) emergencyAlert.className = 'badge';
-      }
-
-      const land = parseFloat(goalLand?.value) || 0;
-      const fac = parseFloat(goalFacility?.value) || 0;
-      const mach = parseFloat(goalMachinery?.value) || 0;
-      const totalGoals = land + fac + mach;
-      if(totalGoalsSpan) totalGoalsSpan.innerText = 'R ' + totalGoals.toLocaleString();
-      const months = parseFloat(goalTimeline?.value) || 1;
-      const monthlyReq = totalGoals / months;
-      if(monthlyGoalReqSpan) monthlyGoalReqSpan.innerText = 'R ' + monthlyReq.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      const profitAfter = profit - monthlyReq;
-      if(profitAfterGoalsSpan) profitAfterGoalsSpan.innerText = 'R ' + profitAfter.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-      let notifHtml = '';
-      if (util > 80) notifHtml += '<p class="badge alert-badge">⚠️ capacity nearing limit (consider upgrade)</p>';
-      if (emergBal < emergMinVal) notifHtml += '<p class="badge alert-badge">⚠️ emergency fund below minimum</p>';
-      if (needInfra) notifHtml += '<p class="badge">📈 infrastructure investment suggested</p>';
-      if(infraNotifications) infraNotifications.innerHTML = notifHtml || '<p class="badge">✅ all systems nominal</p>';
-    }
-
-    function simulateYearEnd() {
-      const emergBal = parseFloat(emergencyBalance?.value) || 0;
-      const emergMinVal = parseFloat(emergencyMin?.value) || 0;
-      const unused = Math.max(0, emergBal - emergMinVal);
-      if (unused > 0) {
-        const reinvest = unused * 0.4;
-        const rollover = unused * 0.6;
-        const newBalance = emergMinVal + rollover;
-        if(emergencyBalance) emergencyBalance.value = newBalance.toFixed(0);
-        if(rolloverSummary) rolloverSummary.innerHTML = `🔄 reinvested R ${reinvest.toFixed(0)} into infrastructure/equipment/tooling · R ${rollover.toFixed(0)} rolled over`;
-        if(yearEndAlert) yearEndAlert.innerHTML = '✅ year‑end rollover applied';
-      } else {
-        if(rolloverSummary) rolloverSummary.innerHTML = '⚠️ no unused emergency funds to roll over';
-        if(yearEndAlert) yearEndAlert.innerHTML = '';
-      }
-      updateInfraModule();
-    }
-
-    const infraInputs = [currentCapacity, projectedDemand, emergencyBalance, emergencyMin, catEquipment, catTooling, catLogistics, catPackaging, goalLand, goalFacility, goalMachinery, goalTimeline].filter(el => el);
-    infraInputs.forEach(el => el.addEventListener('input', () => { validateCategorySum(); updateInfraModule(); }));
-
-    const recalcBtn = document.getElementById('recalcAllocBtn');
-    if(recalcBtn) recalcBtn.addEventListener('click', updateInfraModule);
-    const yearEndBtn = document.getElementById('simulateYearEndBtn');
-    if(yearEndBtn) yearEndBtn.addEventListener('click', simulateYearEnd);
-
-    const profitObserver = new MutationObserver(updateInfraModule);
-    const netMonthlyEl = document.getElementById('netMonthly');
-    if (netMonthlyEl) profitObserver.observe(netMonthlyEl, { childList: true, characterData: true, subtree: true });
-
-    validateCategorySum();
-    updateInfraModule();
-  })();
-
-  // ========== CRM minor interactivity (original) ==========
-  (function() {
-    const crmPane = document.getElementById('crmPane');
-    if (!crmPane) return;
-    crmPane.querySelectorAll('.quick-action-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        alert(`🔧 ${btn.innerText} clicked (demo)`);
-      });
-    });
-    crmPane.querySelectorAll('.filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        chip.classList.toggle('active');
-      });
-    });
-  })();
-
-  // ========== FESTIVE PLAN MODULE (modified to generate accordion) ==========
-  (function() {
-    const festivePane = document.getElementById('festivePane');
-    if (!festivePane) return;
-    let villages = [
-      { id: 1, name: 'Mthatha Valley', participants: 42, chickensRequired: 560, contributions: 21000, capacity: 600, deadline: '2025-04-10', locked: false, pendingAdjust: false },
-      { id: 2, name: 'Lwandle Village', participants: 38, chickensRequired: 470, contributions: 16450, capacity: 500, deadline: '2025-04-12', locked: false, pendingAdjust: true },
-      { id: 3, name: 'KwaNobuhle', participants: 27, chickensRequired: 340, contributions: 10200, capacity: 400, deadline: '2025-04-08', locked: false, pendingAdjust: false },
-      { id: 4, name: 'Eden Farmstead', participants: 55, chickensRequired: 720, contributions: 28800, capacity: 700, deadline: '2025-04-15', locked: false, pendingAdjust: false },
-      { id: 5, name: 'Sundumbili Rural', participants: 25, chickensRequired: 250, contributions: 5000, capacity: 300, deadline: '2025-04-05', locked: true, pendingAdjust: false }
-    ];
-
-    function updateFestiveUI() {
-      if(document.getElementById('totalVillages')) document.getElementById('totalVillages').innerText = villages.length;
-      const totalParticipants = villages.reduce((acc, v) => acc + v.participants, 0);
-      const totalChickens = villages.reduce((acc, v) => acc + v.chickensRequired, 0);
-      const totalContributions = villages.reduce((acc, v) => acc + v.contributions, 0);
-      if(document.getElementById('totalParticipants')) document.getElementById('totalParticipants').innerText = totalParticipants;
-      if(document.getElementById('totalChickensReq')) document.getElementById('totalChickensReq').innerText = totalChickens.toLocaleString();
-      if(document.getElementById('totalContributions')) document.getElementById('totalContributions').innerText = 'R ' + totalContributions.toLocaleString();
-
-      // Generate accordion items
-      let accordionHtml = '';
-      villages.forEach(v => {
-        const fillPercent = Math.min(100, (v.participants / v.capacity) * 100);
-        const lockIcon = v.locked ? '🔒' : '🔓';
-        const summary = `
-          <span><strong>${lockIcon} ${v.name}</strong></span>
-          <span class="badge">${fillPercent.toFixed(0)}% filled</span>
-          <span>📅 ${v.deadline}</span>
-          <span class="badge ${v.locked ? 'alert-badge' : ''}">${v.locked ? 'Locked' : 'Open'}</span>
-        `;
-        const expandedContent = `
-          <div class="batch-row"><span>Participants:</span> <span>${v.participants}</span></div>
-          <div class="batch-row"><span>Chickens required:</span> <span>${v.chickensRequired}</span></div>
-          <div class="batch-row"><span>Contributions:</span> <span>R ${v.contributions}</span></div>
-          <div class="batch-row"><span>Capacity:</span> <span>${v.capacity}</span></div>
-          <div class="batch-row"><span>Deadline:</span> <span>${v.deadline}</span></div>
-          <div class="batch-row"><span>Payment tracking:</span> <span>78% collected</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-id="${v.id}" data-action="adj">adjust capacity</button>
-            <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button>
-            <button class="btn-small" data-id="${v.id}" data-action="approve">approve</button>
-            <button class="btn-small" data-id="${v.id}" data-action="refund">refund</button>
-          </div>
-          <p class="helper-text">Production allocation: 75% · Audit log: last edited 2d ago</p>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expandedContent}</div>
-          </div>
-        `;
-      });
-      const container = document.getElementById('villageListContainer');
-      if(container) container.innerHTML = accordionHtml;
-
-      let selectOpts = '<option>-- select village --</option>';
-      villages.forEach(v => selectOpts += `<option value="${v.id}">${v.name}</option>`);
-      const lockSelect = document.getElementById('lockGroupSelect');
-      if(lockSelect) lockSelect.innerHTML = selectOpts;
-
-      const pending = villages.filter(v => v.pendingAdjust).length;
-      const pendingDiv = document.getElementById('pendingApprovals');
-      if(pendingDiv) pendingDiv.innerHTML = pending ? `⚠️ ${pending} village(s) pending approval` : '✅ No pending adjustments';
-    }
-
-    document.addEventListener('click', (e) => {
-      const target = e.target;
-      if (target.matches('[data-action="adj"]')) {
-        const id = parseInt(target.dataset.id);
-        const village = villages.find(v => v.id === id);
-        if (village) {
-          const newCap = prompt(`Adjust capacity for ${village.name} (current: ${village.capacity})`, village.capacity);
-          if (newCap && !isNaN(newCap)) {
-            village.capacity = parseInt(newCap);
-            village.pendingAdjust = true;
-            updateFestiveUI();
-          }
-        }
-      }
-      if (target.matches('[data-action="lock"]')) {
-        const id = parseInt(target.dataset.id);
-        const village = villages.find(v => v.id === id);
-        if (village) {
-          village.locked = !village.locked;
-          updateFestiveUI();
-        }
-      }
-    });
-
-    const applyGlobal = document.getElementById('applyGlobalSettings');
-    if(applyGlobal) applyGlobal.addEventListener('click', () => {
-      const defCap = parseInt(document.getElementById('globalCapacity')?.value) || 500;
-      const defDeadline = document.getElementById('globalDeadline')?.value;
-      villages.forEach(v => { v.capacity = defCap; v.deadline = `2025-04-${Math.min(30, parseInt(defDeadline))}`; });
-      updateFestiveUI();
-    });
-
-    const lockBtn = document.getElementById('lockGroupBtn');
-    if(lockBtn) lockBtn.addEventListener('click', () => {
-      const select = document.getElementById('lockGroupSelect');
-      const id = parseInt(select?.value);
-      if (id) {
-        const village = villages.find(v => v.id === id);
-        if (village) {
-          village.locked = true;
-          updateFestiveUI();
-        }
-      }
-    });
-
-    const addBtn = document.getElementById('addVillageBtn');
-    if(addBtn) addBtn.addEventListener('click', () => {
-      const newId = Math.max(...villages.map(v => v.id)) + 1;
-      villages.push({ id: newId, name: 'New Village', participants: 0, chickensRequired: 0, contributions: 0, capacity: 500, deadline: '2025-04-30', locked: false, pendingAdjust: false });
-      updateFestiveUI();
-    });
-
-    updateFestiveUI();
-  })();
-
-  // ========== SUBSCRIPTION ADMIN MODULE (modified to update AppState) ==========
-  (function() {
-    const subPane = document.getElementById('subscriptionPane');
-    if (!subPane) return;
-
-    let members = [
+    // Subscriptions
+    AppState.subscriptions.members = [
       { id: 201, name: 'Spier Wines', tier: 'celeb', monthlyQty: 15, price: 115, total: 1725, holidayAlloc: 20, depositPaid: 500, vip: true, locked: false },
       { id: 202, name: 'Kyle’s Grill', tier: 'steady', monthlyQty: 8, price: 100, total: 800, holidayAlloc: 10, depositPaid: 240, vip: true, locked: false },
       { id: 203, name: 'Mama’s Take', tier: 'sig', monthlyQty: 6, price: 140, total: 840, holidayAlloc: 8, depositPaid: 0, vip: false, locked: false },
@@ -2432,181 +1824,8 @@
       { id: 205, name: 'Lynn’s Table', tier: 'celeb', monthlyQty: 10, price: 115, total: 1150, holidayAlloc: 15, depositPaid: 345, vip: false, locked: false }
     ];
 
-    // Store in AppState
-    AppState.subscriptions.members = members;
-
-    function updateSubUI() {
-      const monthlyRev = members.reduce((acc, m) => acc + m.total, 0);
-      AppState.subscriptions.totalRevenue = monthlyRev;
-      document.getElementById('subTotalMembers').innerText = members.length;
-      document.getElementById('subMonthlyRev').innerText = 'R ' + monthlyRev.toLocaleString();
-      const expectedDel = members.reduce((acc, m) => acc + m.monthlyQty, 0);
-      document.getElementById('subExpectedDel').innerText = expectedDel;
-      const priority = (members.filter(m => m.vip).length / members.length * 100).toFixed(0) + '%';
-      document.getElementById('subPriorityFulfill').innerText = priority;
-      document.getElementById('subForecast').innerText = 'R ' + (monthlyRev * 1.15).toFixed(0);
-
-      const outstanding = members.reduce((acc, m) => acc + (m.total - m.depositPaid), 0);
-      document.getElementById('outstandingBalance').innerText = 'R ' + outstanding.toLocaleString();
-
-      // Generate accordion for members
-      let accordionHtml = '';
-      members.forEach(m => {
-        const summary = `
-          <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
-          <span class="badge">${m.tier}</span>
-          <span>🐔 ${m.monthlyQty}/mo</span>
-          <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
-          <span>📅 next: 2025-04-15</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
-          <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
-          <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
-          <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
-          <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
-          <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
-            <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
-            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
-            <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
-            <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      document.getElementById('subscriptionMembersList').innerHTML = accordionHtml;
-
-      // After updating UI, refresh central totals
-      refreshAll();
-    }
-
-    document.addEventListener('click', (e) => {
-      if (!subPane.contains(e.target)) return;
-      const target = e.target;
-      if (target.matches('[data-action="upgrade"]')) {
-        const id = parseInt(target.dataset.id);
-        const member = members.find(m => m.id === id);
-        if (member) {
-          if (member.tier === 'steady') member.tier = 'celeb';
-          else if (member.tier === 'celeb') member.tier = 'sig';
-          if (member.tier === 'celeb') member.price = 115;
-          else if (member.tier === 'sig') member.price = 140;
-          else member.price = 100;
-          member.total = member.monthlyQty * member.price;
-          updateSubUI();
-        }
-      }
-      if (target.matches('[data-action="downgrade"]')) {
-        const id = parseInt(target.dataset.id);
-        const member = members.find(m => m.id === id);
-        if (member) {
-          if (member.tier === 'sig') member.tier = 'celeb';
-          else if (member.tier === 'celeb') member.tier = 'steady';
-          if (member.tier === 'celeb') member.price = 115;
-          else if (member.tier === 'sig') member.price = 140;
-          else member.price = 100;
-          member.total = member.monthlyQty * member.price;
-          updateSubUI();
-        }
-      }
-      if (target.matches('[data-action="toggleVIP"]')) {
-        const id = parseInt(target.dataset.id);
-        const member = members.find(m => m.id === id);
-        if (member) {
-          member.vip = !member.vip;
-          updateSubUI();
-        }
-      }
-    });
-
-    document.querySelectorAll('#subscriptionPane .filter-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('#subscriptionPane .filter-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const tier = chip.dataset.tier;
-        let filtered = members;
-        if (tier !== 'all') {
-          filtered = members.filter(m => m.tier === tier);
-        }
-        // Re-render accordion with filtered members
-        let accordionHtml = '';
-        filtered.forEach(m => {
-          const summary = `
-            <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
-            <span class="badge">${m.tier}</span>
-            <span>🐔 ${m.monthlyQty}/mo</span>
-            <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
-            <span>📅 next: 2025-04-15</span>
-          `;
-          const expanded = `
-            <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
-            <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
-            <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
-            <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
-            <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
-            <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
-            <div class="flex-row">
-              <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
-              <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
-              <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
-              <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
-              <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
-            </div>
-          `;
-          accordionHtml += `
-            <div class="accordion-item">
-              <div class="accordion-header">
-                <div class="accordion-summary">${summary}</div>
-                <i class="fas fa-chevron-right arrow"></i>
-              </div>
-              <div class="accordion-body">${expanded}</div>
-            </div>
-          `;
-        });
-        document.getElementById('subscriptionMembersList').innerHTML = accordionHtml;
-      });
-    });
-
-    document.getElementById('addTestMember').addEventListener('click', () => {
-      const newId = Math.max(...members.map(m => m.id)) + 1;
-      members.push({ id: newId, name: 'New Customer', tier: 'steady', monthlyQty: 4, price: 100, total: 400, holidayAlloc: 2, depositPaid: 0, vip: false, locked: false });
-      updateSubUI();
-    });
-
-    document.getElementById('applySubSettings').addEventListener('click', () => {
-      const minQty = parseInt(document.getElementById('subMinQty').value) || 5;
-      const depositPct = parseInt(document.getElementById('subDepositPct').value) || 30;
-      const priceSteady = parseInt(document.getElementById('priceSteady').value) || 100;
-      const priceCeleb = parseInt(document.getElementById('priceCeleb').value) || 115;
-      const priceSig = parseInt(document.getElementById('priceSig').value) || 140;
-      members.forEach(m => {
-        if (m.tier === 'steady') m.price = priceSteady;
-        else if (m.tier === 'celeb') m.price = priceCeleb;
-        else if (m.tier === 'sig') m.price = priceSig;
-        m.total = m.monthlyQty * m.price;
-      });
-      updateSubUI();
-    });
-
-    updateSubUI();
-  })();
-
-  // ========== ASSURANCE MODULE (modified to update AppState) ==========
-  (function() {
-    const assurancePane = document.getElementById('assurancePane');
-    if (!assurancePane) return;
-
-    let assuranceMembers = [
+    // Assurance
+    AppState.assurance.members = [
       { id: 1, name: 'Spier Wines', active: true, monthlyContribution: 1200, totalAllocated: 30, pendingClaim: 0, loyaltyCredits: 180, subscribed: true },
       { id: 2, name: 'Kyle’s Grill', active: true, monthlyContribution: 860, totalAllocated: 22, pendingClaim: 860, loyaltyCredits: 95, subscribed: true },
       { id: 3, name: 'Mama’s Take', active: false, monthlyContribution: 500, totalAllocated: 8, pendingClaim: 500, loyaltyCredits: 40, subscribed: true },
@@ -2614,171 +1833,17 @@
       { id: 5, name: 'Lynn’s Table', active: true, monthlyContribution: 950, totalAllocated: 18, pendingClaim: 0, loyaltyCredits: 140, subscribed: true }
     ];
 
-    AppState.assurance.members = assuranceMembers;
+    // Festive villages
+    AppState.festive.villages = [
+      { id: 1, name: 'Mthatha Valley', participants: 42, chickensRequired: 560, contributions: 21000, capacity: 600, deadline: '2025-04-10', locked: false, pendingAdjust: false },
+      { id: 2, name: 'Lwandle Village', participants: 38, chickensRequired: 470, contributions: 16450, capacity: 500, deadline: '2025-04-12', locked: false, pendingAdjust: true },
+      { id: 3, name: 'KwaNobuhle', participants: 27, chickensRequired: 340, contributions: 10200, capacity: 400, deadline: '2025-04-08', locked: false, pendingAdjust: false },
+      { id: 4, name: 'Eden Farmstead', participants: 55, chickensRequired: 720, contributions: 28800, capacity: 700, deadline: '2025-04-15', locked: false, pendingAdjust: false },
+      { id: 5, name: 'Sundumbili Rural', participants: 25, chickensRequired: 250, contributions: 5000, capacity: 300, deadline: '2025-04-05', locked: true, pendingAdjust: false }
+    ];
 
-    let pendingClaims = assuranceMembers.filter(m => m.pendingClaim > 0).length;
-
-    function updateAssuranceUI() {
-      const monthlyTotal = assuranceMembers.reduce((acc, m) => acc + (m.active ? m.monthlyContribution : 0), 0);
-      AppState.assurance.totalContributions = monthlyTotal;
-      AppState.assurance.pendingClaims = pendingClaims;
-      document.getElementById('assuranceMembers').innerText = assuranceMembers.length;
-      document.getElementById('assuranceMonthlyContrib').innerText = 'R ' + monthlyTotal.toLocaleString();
-      document.getElementById('assurancePendingClaims').innerText = pendingClaims;
-      const loyaltyTotal = assuranceMembers.reduce((acc, m) => acc + m.loyaltyCredits, 0);
-      document.getElementById('assuranceLoyaltyCredits').innerText = 'R ' + loyaltyTotal.toLocaleString();
-      const expectedClaims = monthlyTotal * 0.3; // mock
-      document.getElementById('assuranceExpectedClaims').innerText = 'R ' + expectedClaims.toFixed(0);
-      const totalAlloc = assuranceMembers.reduce((acc, m) => acc + m.totalAllocated, 0);
-      document.getElementById('assuranceAllocations').innerText = totalAlloc;
-
-      // Generate accordion for members
-      let accordionHtml = '';
-      assuranceMembers.forEach(m => {
-        const summary = `
-          <span><strong>${m.name}</strong></span>
-          <span>💰 R ${m.monthlyContribution}</span>
-          <span>🐔 ${m.totalAllocated}</span>
-          <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
-          <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
-          <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
-            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
-            <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
-            <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      document.getElementById('assuranceMembersList').innerHTML = accordionHtml;
-      refreshAll();
-    }
-
-    // Event delegation for assurance actions
-    document.addEventListener('click', (e) => {
-      if (!assurancePane.contains(e.target)) return;
-      const target = e.target;
-      if (target.matches('[data-aaction="toggleActive"]')) {
-        const id = parseInt(target.dataset.aid);
-        const member = assuranceMembers.find(m => m.id === id);
-        if (member) { member.active = !member.active; updateAssuranceUI(); }
-      }
-      if (target.matches('[data-aaction="adjustContribution"]')) {
-        const id = parseInt(target.dataset.aid);
-        const member = assuranceMembers.find(m => m.id === id);
-        if (member) {
-          const newVal = prompt('New monthly contribution (R):', member.monthlyContribution);
-          if (newVal && !isNaN(newVal)) { member.monthlyContribution = parseInt(newVal); updateAssuranceUI(); }
-        }
-      }
-      if (target.matches('[data-action="approve-claim"]')) {
-        const claimId = target.dataset.claimId;
-        // mock approve
-        alert(`Claim ${claimId} approved, loyalty credits issued.`);
-        pendingClaims--;
-        updateAssuranceUI();
-      }
-      if (target.matches('[data-action="reject-claim"]')) {
-        const claimId = target.dataset.claimId;
-        alert(`Claim ${claimId} rejected.`);
-        pendingClaims--;
-        updateAssuranceUI();
-      }
-    });
-
-    // filter chips
-    document.querySelectorAll('[data-assurance-filter]').forEach(chip => {
-      chip.addEventListener('click', () => {
-        document.querySelectorAll('[data-assurance-filter]').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        const filter = chip.dataset.assuranceFilter;
-        let filtered = assuranceMembers;
-        if (filter === 'active') filtered = assuranceMembers.filter(m => m.active);
-        else if (filter === 'pending') filtered = assuranceMembers.filter(m => m.pendingClaim > 0);
-        // Re-render accordion
-        let accordionHtml = '';
-        filtered.forEach(m => {
-          const summary = `
-            <span><strong>${m.name}</strong></span>
-            <span>💰 R ${m.monthlyContribution}</span>
-            <span>🐔 ${m.totalAllocated}</span>
-            <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
-          `;
-          const expanded = `
-            <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
-            <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
-            <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
-            <div class="flex-row">
-              <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
-              <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
-              <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
-              <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
-            </div>
-          `;
-          accordionHtml += `
-            <div class="accordion-item">
-              <div class="accordion-header">
-                <div class="accordion-summary">${summary}</div>
-                <i class="fas fa-chevron-right arrow"></i>
-              </div>
-              <div class="accordion-body">${expanded}</div>
-            </div>
-          `;
-        });
-        document.getElementById('assuranceMembersList').innerHTML = accordionHtml;
-      });
-    });
-
-    // apply settings
-    document.getElementById('applyAssuranceSettings').addEventListener('click', () => {
-      const price = parseInt(document.getElementById('assurancePricePerChicken').value) || 25;
-      const returnPct = parseFloat(document.getElementById('assuranceReturnPct').value) || 8;
-      const maxAlloc = parseInt(document.getElementById('assuranceMaxAlloc').value) || 50;
-      alert(`Settings applied (price: R${price}, return: ${returnPct}%, max: ${maxAlloc}) – in real app would update members.`);
-    });
-
-    // quick actions
-    document.getElementById('syncSubsBtn').addEventListener('click', () => {
-      alert('Syncing with subscription members... (mock)');
-    });
-    document.getElementById('issueAllLoyaltyBtn').addEventListener('click', () => {
-      assuranceMembers.forEach(m => { if (m.pendingClaim) { m.loyaltyCredits += m.pendingClaim; m.pendingClaim = 0; } });
-      pendingClaims = 0;
-      updateAssuranceUI();
-      alert('All pending claims issued as loyalty credits.');
-    });
-    document.getElementById('resetClaimsBtn').addEventListener('click', () => {
-      assuranceMembers.forEach(m => m.pendingClaim = 0);
-      pendingClaims = 0;
-      updateAssuranceUI();
-      alert('All claims reset.');
-    });
-    document.getElementById('assuranceReportBtn').addEventListener('click', () => {
-      alert('Generating assurance report... (mock)');
-    });
-
-    updateAssuranceUI();
-  })();
-
-  // ========== VILLAGE EXPANSION MODULE (modified to update AppState) ==========
-  (function() {
-    const pane = document.getElementById('villageExpansionPane');
-    if (!pane) return;
-
-    // Mock contract data
-    let contracts = [
+    // Village contracts
+    AppState.village.contracts = [
       { id: 1, farm: 'Mvula Poultry', village: 'Lwandle', chickens: 800, margin: 12, start: '2025-01-01', end: '2025-06-30', notes: 'family owned, needs transport support', signed: true, revenue: 9600 },
       { id: 2, farm: 'Sundumbili Coop', village: 'Sundumbili', chickens: 1200, margin: 10, start: '2025-02-15', end: '2025-08-15', notes: 'bulk supplier', signed: true, revenue: 12000 },
       { id: 3, farm: 'Eden Valley', village: 'Mthatha', chickens: 650, margin: 15, start: '2025-03-10', end: '2025-09-10', notes: 'organic certification pending', signed: false, revenue: 9750 },
@@ -2786,298 +1851,603 @@
       { id: 5, farm: 'Lwandle Rise', village: 'Lwandle', chickens: 500, margin: 14, start: '2025-04-01', end: '2025-10-01', notes: 'new entrant', signed: true, revenue: 7000 }
     ];
 
-    // Budget inputs
-    const budgetTravel = document.getElementById('budgetTravel');
-    const budgetMgmt = document.getElementById('budgetMgmt');
-    const budgetSupply = document.getElementById('budgetSupply');
-
-    function updateVillageUI() {
-      // Update stats
-      document.getElementById('villageCount').innerText = contracts.length;
-      const totalChickens = contracts.reduce((acc, c) => acc + c.chickens, 0);
-      document.getElementById('totalChickensVillage').innerText = totalChickens.toLocaleString();
-      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0); // assume avg price R100
-      document.getElementById('expectedProfitVillage').innerText = 'R ' + totalProfit.toLocaleString();
-      const expiring = contracts.filter(c => {
-        const days = (new Date(c.end) - new Date()) / (1000*60*60*24);
-        return days <= 30 && days > 0;
-      }).length;
-      document.getElementById('expiringContracts').innerText = expiring;
-
-      // Build contracts list as accordion
-      let accordionHtml = '';
-      contracts.forEach(c => {
-        const status = c.signed ? '✅ signed' : '⏳ pending';
-        const daysToEnd = Math.ceil((new Date(c.end) - new Date()) / (1000*60*60*24));
-        const expiryBadge = daysToEnd < 30 ? `<span class="badge alert-badge">expires in ${daysToEnd}d</span>` : '';
-        const summary = `
-          <span><strong>${c.farm}</strong></span>
-          <span>🐔 ${c.chickens}/mo</span>
-          <span>💰 ${c.margin}%</span>
-          <span>📅 ${c.start} – ${c.end}</span>
-          <span class="badge">${status}</span>
-          ${expiryBadge}
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Full contract terms:</span> <span>${c.notes}</span></div>
-          <div class="batch-row"><span>Digital signature record:</span> <span>${c.signed ? 'Signed on ' + c.start : 'Not signed'}</span></div>
-          <div class="batch-row"><span>Supply allocation history:</span> <span>${c.chickens} chickens/month</span></div>
-          <div class="batch-row"><span>Performance metrics:</span> <span>98% fulfillment</span></div>
-          <div class="batch-row"><span>Payment breakdown:</span> <span>R ${c.revenue} expected</span></div>
-          <div class="batch-row"><span>Transport allocation:</span> <span>R 1,200/month</span></div>
-          <div class="batch-row"><span>Renewal alerts:</span> <span>${daysToEnd < 30 ? 'Renew soon' : 'OK'}</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-contract-id="${c.id}" data-action="sign">🔗 sign</button>
-            <button class="btn-small" data-contract-id="${c.id}" data-action="edit">✎ edit</button>
-            <button class="btn-small" data-contract-id="${c.id}" data-action="terminate">⛔ terminate</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      document.getElementById('contractsListContainer').innerHTML = accordionHtml;
-
-      // Update budget total
-      const travel = parseFloat(budgetTravel?.value) || 0;
-      const mgmt = parseFloat(budgetMgmt?.value) || 0;
-      const supply = parseFloat(budgetSupply?.value) || 0;
-      const totalBudget = travel + mgmt + supply;
-      document.getElementById('totalBudget').innerText = 'R ' + totalBudget.toLocaleString();
-      document.getElementById('projectedSupply').innerText = totalChickens + ' chickens';
-      const costPer = totalChickens ? (totalBudget / totalChickens).toFixed(2) : 0;
-      document.getElementById('costPerChickenVillage').innerText = 'R ' + costPer;
-      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100); // arbitrary scale
-      document.getElementById('budgetBar').style.width = budgetPercent + '%';
-
-      // transport fees mock
-      document.getElementById('transportFees').innerText = 'R ' + (totalChickens * 0.7).toFixed(0);
-
-      // expiring alerts
-      if (expiring > 0) {
-        document.getElementById('expiringAlerts').innerHTML = `⚠️ ${expiring} contract(s) expire within 30 days`;
-      } else {
-        document.getElementById('expiringAlerts').innerHTML = '✅ no expiring contracts';
-      }
-
-      // chart: chickens per village
-      const villageMap = {};
-      contracts.forEach(c => { villageMap[c.village] = (villageMap[c.village] || 0) + c.chickens; });
-      const villages = Object.keys(villageMap);
-      const chartDiv = document.getElementById('villageChart');
-      const labelsDiv = document.getElementById('villageLabels');
-      chartDiv.innerHTML = '';
-      labelsDiv.innerHTML = '';
-      const maxVal = Math.max(...Object.values(villageMap));
-      villages.forEach(v => {
-        const h = (villageMap[v] / maxVal) * 70;
-        chartDiv.innerHTML += `<div style="flex:1; background:#d4af37; height:${h}px; border-radius:8px 8px 0 0;"></div>`;
-        labelsDiv.innerHTML += `<span style="flex:1; text-align:center; font-size:0.6rem;">${v.slice(0,3)}</span>`;
-      });
-
-      // pending deliveries (mock integration with subscription)
-      document.getElementById('pendingDeliveries').innerText = Math.floor(Math.random() * 5) + 2;
-    }
-
-    // modal handling
-    const modal = document.getElementById('contractModal');
-    const openBtn = document.getElementById('openAddContractModal');
-    const cancelBtn = document.getElementById('modalCancel');
-    const saveBtn = document.getElementById('modalSave');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalFarm = document.getElementById('modalFarmName');
-    const modalVillage = document.getElementById('modalVillage');
-    const modalChickens = document.getElementById('modalChickens');
-    const modalMargin = document.getElementById('modalMargin');
-    const modalStart = document.getElementById('modalStart');
-    const modalEnd = document.getElementById('modalEnd');
-    const modalNotes = document.getElementById('modalNotes');
-    const modalGenerateLink = document.getElementById('modalGenerateLink');
-    const modalSignaturePreview = document.getElementById('modalSignaturePreview');
-    let editingId = null;
-
-    function openModal(contract = null) {
-      if (contract) {
-        editingId = contract.id;
-        modalTitle.innerText = '✎ edit contract';
-        modalFarm.value = contract.farm;
-        modalVillage.value = contract.village;
-        modalChickens.value = contract.chickens;
-        modalMargin.value = contract.margin;
-        modalStart.value = contract.start;
-        modalEnd.value = contract.end;
-        modalNotes.value = contract.notes;
-      } else {
-        editingId = null;
-        modalTitle.innerText = '➕ new village contract';
-        modalFarm.value = '';
-        modalVillage.value = '';
-        modalChickens.value = 500;
-        modalMargin.value = 12;
-        const today = new Date().toISOString().split('T')[0];
-        modalStart.value = today;
-        const nextYear = new Date(); nextYear.setFullYear(nextYear.getFullYear()+1);
-        modalEnd.value = nextYear.toISOString().split('T')[0];
-        modalNotes.value = '';
-      }
-      modalGenerateLink.checked = true;
-      modalSignaturePreview.style.display = 'none';
-      modal.style.display = 'flex';
-    }
-
-    openBtn.addEventListener('click', () => openModal());
-    cancelBtn.addEventListener('click', () => { modal.style.display = 'none'; });
-    window.addEventListener('click', (e) => { if (e.target === modal) modal.style.display = 'none'; });
-
-    saveBtn.addEventListener('click', () => {
-      const newContract = {
-        id: editingId || (Math.max(...contracts.map(c => c.id), 0) + 1),
-        farm: modalFarm.value,
-        village: modalVillage.value,
-        chickens: parseInt(modalChickens.value) || 0,
-        margin: parseFloat(modalMargin.value) || 0,
-        start: modalStart.value,
-        end: modalEnd.value,
-        notes: modalNotes.value,
-        signed: false,
-        revenue: (parseInt(modalChickens.value) * 100 * (parseFloat(modalMargin.value)/100)) || 0
-      };
-      if (editingId) {
-        const index = contracts.findIndex(c => c.id === editingId);
-        if (index !== -1) contracts[index] = newContract;
-      } else {
-        contracts.push(newContract);
-      }
-      if (modalGenerateLink.checked) {
-        const fakeLink = `https://farm.goldenfeather.com/sign/${newContract.id}_${Date.now()}`;
-        modalSignaturePreview.innerText = fakeLink;
-        modalSignaturePreview.style.display = 'block';
-        newContract.signLink = fakeLink;
-      } else {
-        modalSignaturePreview.style.display = 'none';
-      }
-      updateVillageUI();
-      modal.style.display = 'none';
-    });
-
-    // Event delegation for sign/edit buttons
-    document.addEventListener('click', (e) => {
-      if (!pane.contains(e.target)) return;
-      const target = e.target;
-      if (target.matches('[data-action="sign"]')) {
-        const id = parseInt(target.dataset.contractId);
-        const contract = contracts.find(c => c.id === id);
-        if (contract && !contract.signed) {
-          const link = `https://farm.goldenfeather.com/sign/${id}_mock`;
-          alert(`🔗 digital signature link generated:\n${link}\n(Send this to the farm)`);
-          contract.signed = true;
-          updateVillageUI();
-        } else if (contract && contract.signed) {
-          alert('Contract already signed.');
-        }
-      }
-      if (target.matches('[data-action="edit"]')) {
-        const id = parseInt(target.dataset.contractId);
-        const contract = contracts.find(c => c.id === id);
-        if (contract) openModal(contract);
-      }
-    });
-
-    // Budget listeners
-    [budgetTravel, budgetMgmt, budgetSupply].forEach(inp => inp.addEventListener('input', updateVillageUI));
-
-    // Sync with subscriptions (mock)
-    document.getElementById('syncDeliveriesBtn').addEventListener('click', () => {
-      alert('Syncing with subscription demand: 187 chickens assigned to villages.');
-      document.getElementById('pendingDeliveries').innerText = '0';
-    });
-
-    document.getElementById('generateFarmLinkBtn').addEventListener('click', () => {
-      const linkDiv = document.getElementById('tempFarmLink');
-      linkDiv.style.display = 'block';
-      linkDiv.innerText = 'https://farm.goldenfeather.com/portal?code=' + Math.random().toString(36).substring(7);
-    });
-
-    updateVillageUI();
-  })();
-
-  // ========== STOCK SALE MODULE (modified to generate accordion) ==========
-  (function() {
-    const pane = document.getElementById('stockSalePane');
-    if (!pane) return;
-
-    // Mock offerings data
-    let offerings = [
+    // Stock offerings
+    AppState.stock.offerings = [
       { id: 1, name: 'Batch B2401 · Cornish', sharesTotal: 1000, sharesSold: 680, sharePrice: 70, raised: 47600, expectedDividend: 7140, status: 'active' },
       { id: 2, name: 'Batch B2402 · Ross', sharesTotal: 1500, sharesSold: 420, sharePrice: 68, raised: 28560, expectedDividend: 4284, status: 'active' },
       { id: 3, name: 'New Free-range (B2403)', sharesTotal: 800, sharesSold: 150, sharePrice: 75, raised: 11250, expectedDividend: 1688, status: 'active' },
     ];
 
-    function updateStockUI() {
-      const active = offerings.filter(o => o.status === 'active').length;
-      const totalShares = offerings.reduce((acc, o) => acc + o.sharesSold, 0);
-      const totalRaised = offerings.reduce((acc, o) => acc + o.raised, 0);
-      const totalDividend = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
-      const avgPrice = totalShares ? (totalRaised / totalShares).toFixed(2) : 70;
+    // Marketing data
+    AppState.marketing.platforms = [
+      { name: 'TikTok', revenue: 8200, clicks: 2100, conversions: 42, adSpend: 2800, roi: 193, topAccount: '@goldenfeather_', topCampaign: 'Behind the Scenes' },
+      { name: 'Instagram', revenue: 12400, clicks: 3400, conversions: 68, adSpend: 3900, roi: 218, topAccount: '@goldenfeather_za', topCampaign: 'Sunday Braai' },
+      { name: 'Facebook', revenue: 9800, clicks: 2700, conversions: 51, adSpend: 3100, roi: 216, topAccount: 'Golden Feather Poultry', topCampaign: 'Easter Special' },
+      { name: 'WhatsApp', revenue: 2600, clicks: 800, conversions: 13, adSpend: 500, roi: 420, topAccount: 'Broadcast List', topCampaign: 'Flash Sale' },
+      { name: 'YouTube', revenue: 3200, clicks: 950, conversions: 19, adSpend: 1200, roi: 167, topAccount: '@goldenfeatherTV', topCampaign: 'Farm Tour' }
+    ];
+    AppState.marketing.influencers = [
+      { name: 'Thembi Khumalo', platform: 'Instagram', link: 'instagr.am/thembi_food', revenue: 2800, orders: 22, commission: 10, payout: 280, rank: 'A' },
+      { name: 'Sipho Dlamini', platform: 'TikTok', link: 'tiktok.com/@siphogrills', revenue: 3400, orders: 28, commission: 12, payout: 408, rank: 'A+' },
+      { name: 'Lerato Mokoena', platform: 'Facebook', link: 'fb.com/lerato.eats', revenue: 1900, orders: 15, commission: 8, payout: 152, rank: 'B' },
+      { name: 'Nomsa Buthelezi', platform: 'YouTube', link: 'youtube.com/@nomsacooks', revenue: 1100, orders: 9, commission: 10, payout: 110, rank: 'B-' },
+      { name: 'Kagiso Rantao', platform: 'TikTok', link: 'tiktok.com/@chef_k', revenue: 4200, orders: 33, commission: 15, payout: 630, rank: 'S' }
+    ];
+    AppState.marketing.campaigns = [
+      { name: 'Easter Special', platform: 'Facebook', influencer: 'Lerato Mokoena', start: '2025-04-01', end: '2025-04-15', budget: 2000, spent: 1200, revenue: 3800, profit: 2600, roi: 217, clicks: 540, cvr: 4.2, status: 'active' },
+      { name: 'Sunday Braai', platform: 'Instagram', influencer: 'Thembi Khumalo', start: '2025-04-05', end: '2025-04-20', budget: 1800, spent: 1300, revenue: 4200, profit: 2900, roi: 223, clicks: 620, cvr: 4.8, status: 'active' },
+      { name: 'Flash Sale', platform: 'WhatsApp', influencer: null, start: '2025-04-10', end: '2025-04-12', budget: 500, spent: 450, revenue: 1100, profit: 650, roi: 144, clicks: 180, cvr: 7.2, status: 'completed' },
+      { name: 'Farm Tour', platform: 'YouTube', influencer: 'Nomsa Buthelezi', start: '2025-04-15', end: '2025-04-30', budget: 1500, spent: 600, revenue: 2100, profit: 1500, roi: 250, clicks: 320, cvr: 5.9, status: 'active' },
+      { name: 'Referral Program', platform: 'All', influencer: null, start: '2025-04-01', end: '2025-05-01', budget: 1000, spent: 800, revenue: 2400, profit: 1600, roi: 200, clicks: 410, cvr: 3.4, status: 'active' },
+      { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
+    ];
 
-      document.getElementById('activeOfferings').innerText = active;
-      document.getElementById('sharesSold').innerText = totalShares.toLocaleString();
-      document.getElementById('capitalRaised').innerText = 'R ' + totalRaised.toLocaleString();
-      document.getElementById('expectedDividend').innerText = 'R ' + totalDividend.toLocaleString();
-      document.getElementById('avgSharePrice').innerText = 'R ' + avgPrice;
-      document.getElementById('projectedROI').innerText = ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%';
+    // ========== DERIVED COMPUTATIONS (SINGLE SOURCE OF TRUTH) ==========
+    function computeDerived() {
+      const f = AppState.farm;
+      const s = AppState.sales;
+      const c = AppState.costs;
+      const sub = AppState.subscriptions;
+      const ass = AppState.assurance;
 
-      // offerings list as accordion
-      let accordionHtml = '';
-      offerings.forEach(o => {
-        const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
-        const summary = `
-          <span><strong>${o.name}</strong></span>
-          <span>📊 ${o.sharesSold}/${o.sharesTotal}</span>
-          <span>💰 R ${o.sharePrice}</span>
-          <span>💵 ${o.expectedDividend}</span>
-          <span class="badge">${o.status}</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Investor list:</span> <span>Spier Wines, Kyle's Grill, ...</span></div>
-          <div class="batch-row"><span>Capital raised:</span> <span>R ${o.raised}</span></div>
-          <div class="batch-row"><span>Dividend payout schedule:</span> <span>quarterly, next Jun 30</span></div>
-          <div class="batch-row"><span>Risk disclosure summary:</span> <span>Standard terms apply</span></div>
-          <div class="batch-row"><span>Investor documents:</span> <span><a href="#" style="color:#d4af37;">prospectus.pdf</a></span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell shares</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="adjust">📈 adjust dividend</button>
-            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="export">📤 export register</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      document.getElementById('offeringsListContainer').innerHTML = accordionHtml;
+      // Weighted average price
+      const totalPct = s.wholesalePct + s.retailPct + s.restaurantPct;
+      const avgPrice = (s.wholesalePct * s.prices.bulk + s.retailPct * s.prices.standard + s.restaurantPct * s.prices.premium) / (totalPct || 1);
+
+      // Chicken revenue
+      const chickenRevenue = f.monthlySold * avgPrice;
+
+      // Byproduct revenue (from wholesale + retail only)
+      const byproductBirds = f.monthlySold * (s.wholesalePct + s.retailPct) / 100;
+      const byproductRevenue = byproductBirds * s.byproductPerBird;
+
+      // Subscription revenue
+      sub.totalRevenue = sub.members.reduce((acc, m) => acc + m.total, 0);
+
+      // Assurance contributions
+      ass.totalContributions = ass.members.reduce((acc, m) => acc + (m.active ? m.monthlyContribution : 0), 0);
+      ass.pendingClaims = ass.members.filter(m => m.pendingClaim > 0).length;
+
+      // Marketing totals
+      const mkt = AppState.marketing;
+      mkt.totalAdSpend = mkt.platforms.reduce((acc, p) => acc + p.adSpend, 0);
+      mkt.attributedRevenue = mkt.platforms.reduce((acc, p) => acc + p.revenue, 0);
+
+      // Total costs
+      const totalCosts = c.chicks + c.feed + c.transport + c.labor + c.utilities + c.equipment + c.losses;
+
+      // Total revenue (sum of all streams)
+      const totalRevenue = chickenRevenue + byproductRevenue + sub.totalRevenue + ass.totalContributions;
+
+      const netProfit = totalRevenue - totalCosts;
+      const profitMargin = totalRevenue ? (netProfit / totalRevenue) * 100 : 0;
+
+      // Store computed values
+      AppState.computed = {
+        totalRevenue,
+        totalCosts,
+        netProfit,
+        profitMargin,
+        avgPrice,
+        byproductRevenue,
+        chickenRevenue,
+        consistencyWarnings: []
+      };
+
+      // Consistency check
+      const sumStreams = chickenRevenue + byproductRevenue + sub.totalRevenue + ass.totalContributions;
+      if (Math.abs(sumStreams - totalRevenue) > 0.01) {
+        AppState.computed.consistencyWarnings.push('Revenue mismatch');
+      }
     }
 
-    // add new offering
-    document.getElementById('addOfferingBtn').addEventListener('click', () => {
-      const newId = offerings.length ? Math.max(...offerings.map(o => o.id)) + 1 : 4;
-      const name = prompt('Offering name (e.g., Batch B2404):', 'Batch B2404 · Free-range');
+    // ========== UI UPDATE – ALL PAGES ==========
+    function updateAllUI() {
+      computeDerived(); // ensure latest computed values
+
+      const d = AppState.computed;
+      const f = AppState.farm;
+      const s = AppState.sales;
+      const c = AppState.costs;
+      const sub = AppState.subscriptions;
+      const ass = AppState.assurance;
+      const mkt = AppState.marketing;
+
+      // ---- DASHBOARD ----
+      setText('totalRevenue', 'R ' + d.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('monthlyRevenueDisplay', 'R ' + d.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('netProfitMonthDisplay', 'R ' + d.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('netMonthly', 'R ' + d.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('plMargin', d.profitMargin.toFixed(1) + '% (R ' + d.netProfit.toFixed(0) + ')');
+      setText('kpiByproduct', 'R ' + d.byproductRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('totalBirdsDisplay', f.totalBirds);
+      setText('soldTodayDisplay', f.soldToday);
+      setText('remainingStockDisplay', f.totalBirds - f.soldToday);
+      setText('kpiActiveBirds', f.totalBirds - f.soldToday);
+      setText('kpiMortality', (f.mortalityRate * 100).toFixed(1) + '%');
+      setText('kpiAvgPrice', 'R ' + d.avgPrice.toFixed(2));
+      setText('kpiCostPerBird', 'R ' + c.adjustablePerBird.toFixed(2));
+      setText('kpiSubPct', ((sub.totalRevenue / d.totalRevenue) * 100 || 0).toFixed(0) + '%');
+
+      // Revenue today (approx)
+      const revenueToday = f.soldToday * d.avgPrice;
+      setText('revenueTodayValue', 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revenueTodayDisplay', 'R ' + revenueToday.toFixed(0));
+      setText('todayRevenueCalc', 'R ' + revenueToday.toFixed(0));
+
+      // Profit per chicken
+      setText('profitPerChicken', 'R ' + (d.netProfit / f.monthlySold).toFixed(2));
+
+      // Projection
+      setText('projectedProfit', 'R ' + (d.netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+      // Consistency warning
+      const warnDiv = document.getElementById('consistencyWarning');
+      if (warnDiv) {
+        if (AppState.computed.consistencyWarnings.length) {
+          warnDiv.style.display = 'block';
+          warnDiv.innerText = '⚠️ ' + AppState.computed.consistencyWarnings[0];
+        } else {
+          warnDiv.style.display = 'none';
+        }
+      }
+
+      // ---- SALES PANE ----
+      setText('weightedAvgPrice', 'R ' + d.avgPrice.toFixed(2));
+      setText('todaySalesAvgPrice', `avg price R ${d.avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`);
+      setText('monthlySold', f.monthlySold);
+      setText('wholesaleVal', s.wholesalePct);
+      setText('retailVal', s.retailPct);
+      setText('restaurantVal', s.restaurantPct);
+      setText('revLive', 'R ' + (f.monthlySold * s.prices.live).toLocaleString());
+      setText('revPrep', 'R ' + (f.monthlySold * 20).toLocaleString()); // mock
+      setText('revBulk', 'R ' + (f.monthlySold * 30).toLocaleString()); // mock
+      setText('revByproduct', 'R ' + d.byproductRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revManure', 'R 3,000');
+      setText('revenuePerChicken', 'R ' + d.avgPrice.toFixed(2));
+
+      // ---- BUDGET PANE ----
+      setText('plChickens', 'R ' + c.chicks.toLocaleString());
+      setText('plFeed', 'R ' + c.feed.toLocaleString());
+      setText('plLogistics', 'R ' + c.transport.toLocaleString());
+      setText('plLabor', 'R ' + c.labor.toLocaleString());
+      setText('plRevenue', 'R ' + d.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('totalExpenses', 'R ' + d.totalCosts.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('costPerChicken', 'R ' + (d.totalCosts / f.monthlySold).toFixed(2));
+      setText('deathRateDisplay', (f.mortalityRate * 100).toFixed(1) + '%');
+      setText('laborPerBird', 'R ' + (c.labor / f.monthlySold).toFixed(2));
+      setText('profitPerWorker', 'R ' + (d.netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+      // ---- REWARDS PANE ----
+      const r = AppState.rewards;
+      setText('rewardsClaimed', r.data.filter(rw => rw.status === 'claimed').length);
+      setText('activeRewards', r.data.filter(rw => rw.status === 'active').length);
+      setText('upcomingRewards', r.data.filter(rw => rw.status === 'upcoming').length);
+      setText('byproductBonusUptake', r.data.filter(rw => rw.byproductBoost && rw.status === 'active').length);
+      setText('referralCredits', 'R ' + r.data.reduce((acc, rw) => acc + (rw.referralCredit || 0), 0).toLocaleString());
+
+      // Rewards cards
+      const cardsContainer = document.getElementById('rewardCardsContainer');
+      if (cardsContainer) {
+        let cardsHtml = '';
+        r.data.filter(rw => rw.status === 'active' || rw.status === 'upcoming').forEach(rw => {
+          cardsHtml += `<div class="reward-card"><small>${rw.name}</small><br><strong>${rw.type}</strong><br>📊 ${rw.progress}/${rw.target}<br>${rw.status} · ${rw.expiry}<br>💰 ${rw.discount}% disc</div>`;
+        });
+        cardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
+      }
+
+      // Rewards table
+      const tableBody = document.getElementById('rewardsTableBody');
+      if (tableBody) {
+        let rows = '';
+        r.data.forEach(rw => {
+          rows += `<tr><td>${rw.name}</td><td>${rw.type}</td><td>${rw.progress}/${rw.target}</td><td>${rw.status}</td><td>${rw.expiry}</td><td>${rw.discount}%</td></tr>`;
+        });
+        tableBody.innerHTML = rows;
+      }
+
+      // ---- INFRASTRUCTURE PANE ----
+      const infra = AppState.infra;
+      setText('capacityUtilization', ((infra.projectedDemand / infra.currentCapacity) * 100).toFixed(0) + '%');
+      setText('availProfit', 'R ' + d.netProfit.toLocaleString());
+      // Infrastructure allocation (if needed)
+      const needInfra = infra.currentCapacity < infra.projectedDemand;
+      const infraAlloc = needInfra ? d.netProfit * 0.4 : 0;
+      let remaining = d.netProfit - infraAlloc;
+      const emergDeficit = Math.max(0, infra.emergencyMin - infra.emergencyBalance);
+      const emergTopUp = Math.min(emergDeficit, remaining * 0.3);
+      remaining -= emergTopUp;
+
+      const ePct = infra.catEquipment, tPct = infra.catTooling, lPct = infra.catLogistics, pPct = infra.catPackaging;
+      const sumPct = ePct + tPct + lPct + pPct || 1;
+      setText('allocInfra', 'R ' + infraAlloc.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('allocEmergency', 'R ' + emergTopUp.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('allocEquipment', 'R ' + (remaining * ePct / sumPct).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('allocTooling', 'R ' + (remaining * tPct / sumPct).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('allocLogistics', 'R ' + (remaining * lPct / sumPct).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('allocPackaging', 'R ' + (remaining * pPct / sumPct).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+      // Emergency alert
+      const emergAlert = document.getElementById('emergencyAlert');
+      if (emergAlert) {
+        if (infra.emergencyBalance < infra.emergencyMin) {
+          emergAlert.innerHTML = '⚠️ below minimum!';
+          emergAlert.className = 'badge alert-badge';
+        } else {
+          emergAlert.innerHTML = '✅ above minimum';
+          emergAlert.className = 'badge';
+        }
+      }
+
+      // Long-term goals
+      const totalGoals = infra.goalLand + infra.goalFacility + infra.goalMachinery;
+      setText('totalGoals', 'R ' + totalGoals.toLocaleString());
+      const monthlyReq = totalGoals / (infra.goalTimeline || 1);
+      setText('monthlyGoalReq', 'R ' + monthlyReq.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('profitAfterGoals', 'R ' + (d.netProfit - monthlyReq).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+      // ---- SUBSCRIPTION PANE ----
+      setText('subTotalMembers', sub.members.length);
+      setText('subMonthlyRev', 'R ' + sub.totalRevenue.toLocaleString());
+      const expectedDel = sub.members.reduce((acc, m) => acc + m.monthlyQty, 0);
+      setText('subExpectedDel', expectedDel);
+      setText('subPriorityFulfill', (sub.members.filter(m => m.vip).length / sub.members.length * 100 || 0).toFixed(0) + '%');
+      setText('subForecast', 'R ' + (sub.totalRevenue * 1.15).toFixed(0));
+      const outstanding = sub.members.reduce((acc, m) => acc + (m.total - m.depositPaid), 0);
+      setText('outstandingBalance', 'R ' + outstanding.toLocaleString());
+
+      // Subscription members accordion
+      const subList = document.getElementById('subscriptionMembersList');
+      if (subList) {
+        let html = '';
+        sub.members.forEach(m => {
+          html += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">
+                  <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
+                  <span class="badge">${m.tier}</span>
+                  <span>🐔 ${m.monthlyQty}/mo</span>
+                  <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
+                  <span>📅 next: 2025-04-15</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">
+                <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
+                <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
+                <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
+                <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
+                <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
+                <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
+                <div class="flex-row">
+                  <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        subList.innerHTML = html;
+      }
+
+      // ---- ASSURANCE PANE ----
+      setText('assuranceMembers', ass.members.length);
+      setText('assuranceMonthlyContrib', 'R ' + ass.totalContributions.toLocaleString());
+      setText('assurancePendingClaims', ass.pendingClaims);
+      const loyaltyTotal = ass.members.reduce((acc, m) => acc + m.loyaltyCredits, 0);
+      setText('assuranceLoyaltyCredits', 'R ' + loyaltyTotal.toLocaleString());
+      setText('assuranceExpectedClaims', 'R ' + (ass.totalContributions * 0.3).toFixed(0));
+      const totalAlloc = ass.members.reduce((acc, m) => acc + m.totalAllocated, 0);
+      setText('assuranceAllocations', totalAlloc);
+
+      // Assurance members accordion
+      const assList = document.getElementById('assuranceMembersList');
+      if (assList) {
+        let html = '';
+        ass.members.forEach(m => {
+          html += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">
+                  <span><strong>${m.name}</strong></span>
+                  <span>💰 R ${m.monthlyContribution}</span>
+                  <span>🐔 ${m.totalAllocated}</span>
+                  <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">
+                <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
+                <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
+                <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
+                <div class="flex-row">
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        assList.innerHTML = html;
+      }
+
+      // ---- MARKETING PANE ----
+      setText('mktActiveCampaigns', mkt.campaigns.filter(c => c.status === 'active').length);
+      setText('mktTotalInfluencers', mkt.influencers.length);
+      setText('mktAdSpend', 'R ' + mkt.totalAdSpend);
+      setText('mktAttributedRev', 'R ' + mkt.attributedRevenue);
+      const roi = mkt.totalAdSpend ? ((mkt.attributedRevenue - mkt.totalAdSpend) / mkt.totalAdSpend * 100).toFixed(0) : 0;
+      setText('mktROI', roi + '%');
+      const conversions = mkt.platforms.reduce((a, p) => a + p.conversions, 0);
+      const cpa = conversions ? (mkt.totalAdSpend / conversions).toFixed(0) : 0;
+      setText('mktCPA', 'R ' + cpa);
+    }
+
+    // Helper to set text content safely
+    function setText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = value;
+    }
+
+    // ========== EVENT LISTENERS: UPDATE APPSTATE AND TRIGGER UI REFRESH ==========
+    // Bind input fields to AppState
+    function bindInput(id, statePath, parser = parseFloat) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener('input', () => {
+        const parts = statePath.split('.');
+        let obj = AppState;
+        for (let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+        obj[parts[parts.length-1]] = parser(el.value);
+        updateAllUI();
+      });
+      // initial sync from AppState to input (if needed)
+      const parts = statePath.split('.');
+      let obj = AppState;
+      for (let i = 0; i < parts.length - 1; i++) obj = obj[parts[i]];
+      el.value = obj[parts[parts.length-1]];
+    }
+
+    // Bind all input fields
+    bindInput('wholesalePct', 'sales.wholesalePct', parseFloat);
+    bindInput('retailPct', 'sales.retailPct', parseFloat);
+    bindInput('restaurantPct', 'sales.restaurantPct', parseFloat);
+    bindInput('subDiscount', 'sales.subDiscount', parseFloat);
+    bindInput('refDiscount', 'sales.refDiscount', parseFloat);
+    bindInput('byproductPerBird', 'sales.byproductPerBird', parseFloat);
+    bindInput('chicksCost', 'costs.chicks', parseFloat);
+    bindInput('feedCost', 'costs.feed', parseFloat);
+    bindInput('transportCost', 'costs.transport', parseFloat);
+    bindInput('laborCost', 'costs.labor', parseFloat);
+    bindInput('utilitiesCost', 'costs.utilities', parseFloat);
+    bindInput('equipmentCost', 'costs.equipment', parseFloat);
+    bindInput('lossesCost', 'costs.losses', parseFloat);
+    bindInput('adjustableCostPerBird', 'costs.adjustablePerBird', parseFloat);
+    bindInput('currentCapacity', 'infra.currentCapacity', parseFloat);
+    bindInput('projectedDemand', 'infra.projectedDemand', parseFloat);
+    bindInput('emergencyBalance', 'infra.emergencyBalance', parseFloat);
+    bindInput('emergencyMin', 'infra.emergencyMin', parseFloat);
+    bindInput('catEquipment', 'infra.catEquipment', parseFloat);
+    bindInput('catTooling', 'infra.catTooling', parseFloat);
+    bindInput('catLogistics', 'infra.catLogistics', parseFloat);
+    bindInput('catPackaging', 'infra.catPackaging', parseFloat);
+    bindInput('goalLand', 'infra.goalLand', parseFloat);
+    bindInput('goalFacility', 'infra.goalFacility', parseFloat);
+    bindInput('goalMachinery', 'infra.goalMachinery', parseFloat);
+    bindInput('goalTimeline', 'infra.goalTimeline', parseFloat);
+    // Reward settings
+    const enableRewards = document.getElementById('enableRewards');
+    if (enableRewards) enableRewards.addEventListener('change', () => { AppState.rewards.settings.enabled = enableRewards.checked; updateAllUI(); });
+    const chickensPerReward = document.getElementById('chickensPerReward');
+    if (chickensPerReward) chickensPerReward.addEventListener('input', () => { AppState.rewards.settings.chickensPerReward = parseInt(chickensPerReward.value) || 10; updateAllUI(); });
+    const streakDays = document.getElementById('streakDays');
+    if (streakDays) streakDays.addEventListener('input', () => { AppState.rewards.settings.streakDays = parseInt(streakDays.value) || 7; updateAllUI(); });
+    const rewardDiscount = document.getElementById('rewardDiscount');
+    if (rewardDiscount) rewardDiscount.addEventListener('input', () => { AppState.rewards.settings.baseDiscount = parseFloat(rewardDiscount.value) || 8; updateAllUI(); });
+    const doubleByproduct = document.getElementById('doubleByproduct');
+    if (doubleByproduct) doubleByproduct.addEventListener('change', () => { AppState.rewards.settings.doubleByproduct = doubleByproduct.checked; updateAllUI(); });
+    const referralCredit = document.getElementById('referralCreditValue');
+    if (referralCredit) referralCredit.addEventListener('input', () => { AppState.rewards.settings.referralCredit = parseFloat(referralCredit.value) || 50; updateAllUI(); });
+
+    // Simulate purchase button (adds to rewards)
+    const simBtn = document.getElementById('simulatePurchaseBtn');
+    if (simBtn) simBtn.addEventListener('click', () => {
+      const activeIdx = AppState.rewards.data.findIndex(r => r.status === 'active');
+      if (activeIdx >= 0) {
+        AppState.rewards.data[activeIdx].progress += 1;
+        if (AppState.rewards.data[activeIdx].progress >= AppState.rewards.data[activeIdx].target) {
+          AppState.rewards.data[activeIdx].status = 'claimed';
+        }
+      } else {
+        AppState.rewards.data.push({ customerId: 999, name: 'New Customer', type: 'welcome', progress: 1, target: 3, status: 'active', expiry: '2025-04-20', discount: 8, byproductBoost: true, referralCredit: 0 });
+      }
+      updateAllUI();
+    });
+
+    // Growth simulation buttons
+    document.querySelectorAll('[data-growth]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const growth = parseInt(btn.dataset.growth) / 100;
+        const projected = AppState.computed.netProfit * 3 * (1 + growth);
+        setText('projectedProfit', 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        setText('growthHint', `simulating +${btn.dataset.growth}% growth`);
+      });
+    });
+
+    // Infrastructure recalc button
+    const recalcBtn = document.getElementById('recalcAllocBtn');
+    if (recalcBtn) recalcBtn.addEventListener('click', updateAllUI);
+
+    // Year-end rollover (mock)
+    const yearEndBtn = document.getElementById('simulateYearEndBtn');
+    if (yearEndBtn) yearEndBtn.addEventListener('click', () => {
+      const infra = AppState.infra;
+      const emergBal = infra.emergencyBalance;
+      const emergMin = infra.emergencyMin;
+      const unused = Math.max(0, emergBal - emergMin);
+      if (unused > 0) {
+        const reinvest = unused * 0.4;
+        const rollover = unused * 0.6;
+        infra.emergencyBalance = emergMin + rollover;
+        setText('rolloverSummary', `🔄 reinvested R ${reinvest.toFixed(0)} into infrastructure · R ${rollover.toFixed(0)} rolled over`);
+        setText('yearEndAlert', '✅ year‑end rollover applied');
+      } else {
+        setText('rolloverSummary', '⚠️ no unused emergency funds to roll over');
+        setText('yearEndAlert', '');
+      }
+      updateAllUI();
+    });
+
+    // Add village (festive)
+    const addVillageBtn = document.getElementById('addVillageBtn');
+    if (addVillageBtn) addVillageBtn.addEventListener('click', () => {
+      const newId = Math.max(...AppState.festive.villages.map(v => v.id)) + 1;
+      AppState.festive.villages.push({ id: newId, name: 'New Village', participants: 0, chickensRequired: 0, contributions: 0, capacity: 500, deadline: '2025-04-30', locked: false, pendingAdjust: false });
+      updateAllUI();
+    });
+
+    // Subscription tier filter (handled by existing click, but we need to re-render filtered list)
+    document.querySelectorAll('#subscriptionPane .filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('#subscriptionPane .filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const tier = chip.dataset.tier;
+        let filtered = AppState.subscriptions.members;
+        if (tier !== 'all') filtered = filtered.filter(m => m.tier === tier);
+        // rebuild accordion with filtered
+        const subList = document.getElementById('subscriptionMembersList');
+        let html = '';
+        filtered.forEach(m => {
+          html += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">
+                  <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
+                  <span class="badge">${m.tier}</span>
+                  <span>🐔 ${m.monthlyQty}/mo</span>
+                  <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
+                  <span>📅 next: 2025-04-15</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">
+                <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
+                <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
+                <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
+                <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
+                <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
+                <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
+                <div class="flex-row">
+                  <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
+                  <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        subList.innerHTML = html;
+      });
+    });
+
+    // Add test member
+    const addTestBtn = document.getElementById('addTestMember');
+    if (addTestBtn) addTestBtn.addEventListener('click', () => {
+      const newId = Math.max(...AppState.subscriptions.members.map(m => m.id)) + 1;
+      AppState.subscriptions.members.push({ id: newId, name: 'New Customer', tier: 'steady', monthlyQty: 4, price: 100, total: 400, holidayAlloc: 2, depositPaid: 0, vip: false, locked: false });
+      updateAllUI();
+    });
+
+    // Apply subscription settings
+    const applySub = document.getElementById('applySubSettings');
+    if (applySub) applySub.addEventListener('click', () => {
+      const priceSteady = parseFloat(document.getElementById('priceSteady').value) || 100;
+      const priceCeleb = parseFloat(document.getElementById('priceCeleb').value) || 115;
+      const priceSig = parseFloat(document.getElementById('priceSig').value) || 140;
+      AppState.subscriptions.members.forEach(m => {
+        if (m.tier === 'steady') m.price = priceSteady;
+        else if (m.tier === 'celeb') m.price = priceCeleb;
+        else if (m.tier === 'sig') m.price = priceSig;
+        m.total = m.monthlyQty * m.price;
+      });
+      updateAllUI();
+    });
+
+    // Assurance filter
+    document.querySelectorAll('[data-assurance-filter]').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('[data-assurance-filter]').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const filter = chip.dataset.assuranceFilter;
+        let filtered = AppState.assurance.members;
+        if (filter === 'active') filtered = filtered.filter(m => m.active);
+        else if (filter === 'pending') filtered = filtered.filter(m => m.pendingClaim > 0);
+        // rebuild accordion
+        const assList = document.getElementById('assuranceMembersList');
+        let html = '';
+        filtered.forEach(m => {
+          html += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">
+                  <span><strong>${m.name}</strong></span>
+                  <span>💰 R ${m.monthlyContribution}</span>
+                  <span>🐔 ${m.totalAllocated}</span>
+                  <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
+                </div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">
+                <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
+                <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
+                <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
+                <div class="flex-row">
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
+                  <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+        assList.innerHTML = html;
+      });
+    });
+
+    // Issue all loyalty (quick action)
+    const issueAllBtn = document.getElementById('issueAllLoyaltyBtn');
+    if (issueAllBtn) issueAllBtn.addEventListener('click', () => {
+      AppState.assurance.members.forEach(m => { if (m.pendingClaim) { m.loyaltyCredits += m.pendingClaim; m.pendingClaim = 0; } });
+      updateAllUI();
+      alert('All pending claims issued as loyalty credits.');
+    });
+
+    // Reset claims
+    const resetClaims = document.getElementById('resetClaimsBtn');
+    if (resetClaims) resetClaims.addEventListener('click', () => {
+      AppState.assurance.members.forEach(m => m.pendingClaim = 0);
+      updateAllUI();
+      alert('All claims reset.');
+    });
+
+    // Add offering (stock)
+    const addOffering = document.getElementById('addOfferingBtn');
+    if (addOffering) addOffering.addEventListener('click', () => {
+      const newId = AppState.stock.offerings.length ? Math.max(...AppState.stock.offerings.map(o => o.id)) + 1 : 4;
+      const name = prompt('Offering name:', 'Batch B2404 · Free-range');
       if (!name) return;
       const total = parseInt(prompt('Total shares:', '1000')) || 1000;
       const price = parseInt(prompt('Share price (R):', '70')) || 70;
-      offerings.push({
+      AppState.stock.offerings.push({
         id: newId,
         name: name,
         sharesTotal: total,
@@ -3087,383 +2457,39 @@
         expectedDividend: 0,
         status: 'active'
       });
-      updateStockUI();
+      updateAllUI();
     });
 
-    // actions on offerings
-    document.addEventListener('click', (e) => {
-      if (!pane.contains(e.target)) return;
-      const target = e.target;
-      if (target.matches('[data-offer-action="sell"]')) {
-        const id = parseInt(target.dataset.offerId);
-        const offer = offerings.find(o => o.id === id);
-        if (offer) {
-          const qty = parseInt(prompt('Number of shares to sell:', '10')) || 0;
-          if (qty > 0 && offer.sharesSold + qty <= offer.sharesTotal) {
-            offer.sharesSold += qty;
-            offer.raised += qty * offer.sharePrice;
-            offer.expectedDividend += qty * offer.sharePrice * 0.15; // 15% mock dividend
-            updateStockUI();
-          } else {
-            alert('Not enough shares available.');
-          }
-        }
+    // Apply stock settings
+    const applyStock = document.getElementById('applyStockSettings');
+    if (applyStock) applyStock.addEventListener('click', () => {
+      alert('Stock settings applied (mock)');
+    });
+
+    // Simulate payout
+    const simPayout = document.getElementById('simulatePayoutBtn');
+    if (simPayout) simPayout.addEventListener('click', () => {
+      const totalDiv = AppState.stock.offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
+      alert(`💸 Simulated dividend payout: R ${totalDiv.toLocaleString()}`);
+    });
+
+    // ========== INITIAL RENDER ==========
+    updateAllUI();
+
+    // Accordion toggle (global)
+    document.addEventListener('click', function(e) {
+      const header = e.target.closest('.accordion-header');
+      if (!header) return;
+      e.preventDefault();
+      const item = header.closest('.accordion-item');
+      const body = item.querySelector('.accordion-body');
+      const arrow = header.querySelector('.arrow');
+      if (body) {
+        body.classList.toggle('expanded');
+        header.classList.toggle('expanded');
       }
-      if (target.matches('[data-offer-action="close"]')) {
-        const id = parseInt(target.dataset.offerId);
-        const offer = offerings.find(o => o.id === id);
-        if (offer) {
-          offer.status = 'closed';
-          updateStockUI();
-        }
-      }
     });
-
-    // settings
-    document.getElementById('applyStockSettings').addEventListener('click', () => {
-      const basePrice = parseFloat(document.getElementById('baseSharePrice').value) || 70;
-      const divPct = parseFloat(document.getElementById('dividendPercent').value) || 15;
-      const freq = document.getElementById('dividendFreq').value;
-      const lockup = parseInt(document.getElementById('lockupDays').value) || 90;
-      alert(`Stock settings updated: base price R${basePrice}, dividend ${divPct}%, ${freq}, lockup ${lockup} days.`);
-    });
-
-    // quick actions
-    document.getElementById('simulatePayoutBtn').addEventListener('click', () => {
-      const totalDiv = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
-      alert(`💸 Simulated dividend payout: R ${totalDiv.toLocaleString()} to all shareholders.`);
-    });
-    document.getElementById('syncFromSubsBtn').addEventListener('click', () => {
-      alert('Syncing subscribers as potential investors... (mock)');
-    });
-    document.getElementById('generateProspectusBtn').addEventListener('click', () => {
-      alert('📄 Generating prospectus PDF... (mock)');
-    });
-    document.getElementById('closeOfferingBtn').addEventListener('click', () => {
-      alert('Closing selected offering (mock)');
-    });
-
-    updateStockUI();
   })();
-
-  // ========== NEW ENHANCED MARKETING COMMAND CENTER (with accordion) ==========
-  (function() {
-    const pane = document.getElementById('marketingPane');
-    if (!pane) return;
-
-    // Mock Data
-    const platforms = [
-      { name: 'TikTok', revenue: 8200, clicks: 2100, conversions: 42, adSpend: 2800, roi: 193, topAccount: '@goldenfeather_', topCampaign: 'Behind the Scenes' },
-      { name: 'Instagram', revenue: 12400, clicks: 3400, conversions: 68, adSpend: 3900, roi: 218, topAccount: '@goldenfeather_za', topCampaign: 'Sunday Braai' },
-      { name: 'Facebook', revenue: 9800, clicks: 2700, conversions: 51, adSpend: 3100, roi: 216, topAccount: 'Golden Feather Poultry', topCampaign: 'Easter Special' },
-      { name: 'WhatsApp', revenue: 2600, clicks: 800, conversions: 13, adSpend: 500, roi: 420, topAccount: 'Broadcast List', topCampaign: 'Flash Sale' },
-      { name: 'YouTube', revenue: 3200, clicks: 950, conversions: 19, adSpend: 1200, roi: 167, topAccount: '@goldenfeatherTV', topCampaign: 'Farm Tour' }
-    ];
-
-    const influencers = [
-      { name: 'Thembi Khumalo', platform: 'Instagram', link: 'instagr.am/thembi_food', revenue: 2800, orders: 22, commission: 10, payout: 280, rank: 'A' },
-      { name: 'Sipho Dlamini', platform: 'TikTok', link: 'tiktok.com/@siphogrills', revenue: 3400, orders: 28, commission: 12, payout: 408, rank: 'A+' },
-      { name: 'Lerato Mokoena', platform: 'Facebook', link: 'fb.com/lerato.eats', revenue: 1900, orders: 15, commission: 8, payout: 152, rank: 'B' },
-      { name: 'Nomsa Buthelezi', platform: 'YouTube', link: 'youtube.com/@nomsacooks', revenue: 1100, orders: 9, commission: 10, payout: 110, rank: 'B-' },
-      { name: 'Kagiso Rantao', platform: 'TikTok', link: 'tiktok.com/@chef_k', revenue: 4200, orders: 33, commission: 15, payout: 630, rank: 'S' }
-    ];
-
-    const campaigns = [
-      { name: 'Easter Special', platform: 'Facebook', influencer: 'Lerato Mokoena', start: '2025-04-01', end: '2025-04-15', budget: 2000, spent: 1200, revenue: 3800, profit: 2600, roi: 217, clicks: 540, cvr: 4.2, status: 'active' },
-      { name: 'Sunday Braai', platform: 'Instagram', influencer: 'Thembi Khumalo', start: '2025-04-05', end: '2025-04-20', budget: 1800, spent: 1300, revenue: 4200, profit: 2900, roi: 223, clicks: 620, cvr: 4.8, status: 'active' },
-      { name: 'Flash Sale', platform: 'WhatsApp', influencer: null, start: '2025-04-10', end: '2025-04-12', budget: 500, spent: 450, revenue: 1100, profit: 650, roi: 144, clicks: 180, cvr: 7.2, status: 'completed' },
-      { name: 'Farm Tour', platform: 'YouTube', influencer: 'Nomsa Buthelezi', start: '2025-04-15', end: '2025-04-30', budget: 1500, spent: 600, revenue: 2100, profit: 1500, roi: 250, clicks: 320, cvr: 5.9, status: 'active' },
-      { name: 'Referral Program', platform: 'All', influencer: null, start: '2025-04-01', end: '2025-05-01', budget: 1000, spent: 800, revenue: 2400, profit: 1600, roi: 200, clicks: 410, cvr: 3.4, status: 'active' },
-      { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
-    ];
-
-    // Store in AppState
-    AppState.marketing.platforms = platforms;
-    AppState.marketing.influencers = influencers;
-    AppState.marketing.campaigns = campaigns;
-
-    // Render Functions (accordion)
-    function renderPlatforms() {
-      const container = document.getElementById('platformAccordionContainer');
-      if (!container) return;
-      let accordionHtml = '';
-      platforms.forEach(p => {
-        const summary = `
-          <span><strong>${p.name}</strong></span>
-          <span>💰 R ${p.revenue}</span>
-          <span>📊 R ${p.adSpend}</span>
-          <span>📈 ${p.roi}%</span>
-          <span>🎯 R ${(p.adSpend/p.conversions).toFixed(0)}</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Campaign breakdown:</span> <span>${p.topCampaign} (${p.revenue})</span></div>
-          <div class="batch-row"><span>Conversion data:</span> <span>${p.conversions} conversions, ${((p.conversions/p.clicks)*100).toFixed(1)}% CVR</span></div>
-          <div class="batch-row"><span>Click-through metrics:</span> <span>${p.clicks} clicks</span></div>
-          <div class="batch-row"><span>Subscription attribution:</span> <span>12 new subs</span></div>
-          <div class="batch-row"><span>Stock sale attribution:</span> <span>R ${(p.revenue*0.2).toFixed(0)}</span></div>
-          <div class="chart-bar" style="height:40px; background:linear-gradient(90deg, #d4af37 0% ${p.roi/3}%, #333 ${p.roi/3}%"></div>
-          <div class="flex-row">
-            <button class="btn-small" data-platform="${p.name}">adjust budget</button>
-            <button class="btn-small" data-platform="${p.name}">view details</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = accordionHtml;
-    }
-
-    function renderInfluencers() {
-      const container = document.getElementById('influencerAccordionContainer');
-      if (!container) return;
-      let accordionHtml = '';
-      influencers.forEach(i => {
-        const summary = `
-          <span><strong>${i.name}</strong></span>
-          <span>📱 ${i.platform}</span>
-          <span>💰 R ${i.revenue}</span>
-          <span>💸 R ${i.payout}</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Order list attributed:</span> <span>${i.orders} orders</span></div>
-          <div class="batch-row"><span>Conversion rate:</span> <span>${((i.orders/100)*100).toFixed(1)}%</span></div>
-          <div class="batch-row"><span>Commission breakdown:</span> <span>${i.commission}% of revenue</span></div>
-          <div class="batch-row"><span>Payment history:</span> <span>Last payout R ${i.payout} on Apr 1</span></div>
-          <div class="batch-row"><span>Performance ranking:</span> <span>${i.rank}</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-influencer="${i.name}">adjust commission</button>
-            <button class="btn-small" data-influencer="${i.name}">disable</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = accordionHtml;
-    }
-
-    function renderCampaigns(view = 'top5') {
-      const container = document.getElementById('campaignAccordionContainer');
-      if (!container) return;
-      let filtered = [...campaigns];
-      if (view === 'top5') filtered = campaigns.sort((a,b) => b.roi - a.roi).slice(0,5);
-      else if (view === 'worst') filtered = campaigns.sort((a,b) => a.roi - b.roi).slice(0,5);
-      else if (view === 'active') filtered = campaigns.filter(c => c.status === 'active');
-      else if (view === 'completed') filtered = campaigns.filter(c => c.status === 'completed');
-
-      let accordionHtml = '';
-      filtered.forEach(c => {
-        const summary = `
-          <span><strong>${c.name}</strong></span>
-          <span>💰 R ${c.budget}</span>
-          <span>📈 R ${c.revenue}</span>
-          <span>📊 ${c.roi}%</span>
-          <span class="badge">${c.status}</span>
-        `;
-        const expanded = `
-          <div class="batch-row"><span>Platform distribution:</span> <span>${c.platform}</span></div>
-          <div class="batch-row"><span>Influencer allocation:</span> <span>${c.influencer || 'none'}</span></div>
-          <div class="batch-row"><span>Lead volume:</span> <span>${c.clicks} clicks</span></div>
-          <div class="batch-row"><span>Conversion funnel:</span> <span>${c.cvr}% CVR</span></div>
-          <div class="batch-row"><span>Profit calculation:</span> <span>R ${c.profit}</span></div>
-          <div class="flex-row">
-            <button class="btn-small" data-campaign="${c.name}" data-action="pause">⏸️ pause</button>
-            <button class="btn-small" data-campaign="${c.name}" data-action="edit">✎ edit</button>
-          </div>
-        `;
-        accordionHtml += `
-          <div class="accordion-item">
-            <div class="accordion-header">
-              <div class="accordion-summary">${summary}</div>
-              <i class="fas fa-chevron-right arrow"></i>
-            </div>
-            <div class="accordion-body">${expanded}</div>
-          </div>
-        `;
-      });
-      container.innerHTML = accordionHtml;
-    }
-
-    // Chart Drawing (simple canvas)
-    function drawPlatformChart() {
-      const canvas = document.getElementById('platformChart');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      const w = canvas.width, h = canvas.height;
-      const barWidth = w / platforms.length - 4;
-      const maxRev = Math.max(...platforms.map(p => p.revenue));
-      platforms.forEach((p,i) => {
-        const barH = (p.revenue / maxRev) * (h-20);
-        ctx.fillStyle = '#d4af37';
-        ctx.fillRect(i*(barWidth+4) + 4, h-barH-2, barWidth, barH);
-        ctx.fillStyle = '#aaa';
-        ctx.font = '8px Inter';
-        ctx.fillText(p.name.slice(0,3), i*(barWidth+4)+6, h-4);
-      });
-    }
-
-    function drawInfluencerChart() {
-      const canvas = document.getElementById('influencerChart');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      const w = canvas.width, h = canvas.height;
-      const barWidth = w / influencers.length - 4;
-      const maxRev = Math.max(...influencers.map(i => i.revenue));
-      influencers.forEach((i, idx) => {
-        const barH = (i.revenue / maxRev) * (h-20);
-        ctx.fillStyle = '#6b8e4c';
-        ctx.fillRect(idx*(barWidth+4) + 4, h-barH-2, barWidth, barH);
-        ctx.fillStyle = '#aaa';
-        ctx.font = '8px Inter';
-        ctx.fillText(i.name.split(' ')[0][0]+'.', idx*(barWidth+4)+8, h-4);
-      });
-    }
-
-    function drawTrendChart() {
-      const canvas = document.getElementById('trendChart');
-      if (!canvas) return;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      // mock ad spend vs revenue trend over last 6 weeks
-      const weeks = 6;
-      const spend = [800, 950, 1100, 1300, 1200, 1400];
-      const revenue = [2100, 2600, 3100, 3800, 3500, 4200];
-      const w = canvas.width, h = canvas.height;
-      const step = w / (weeks-1);
-      ctx.beginPath();
-      ctx.strokeStyle = '#d4af37';
-      ctx.lineWidth = 2;
-      spend.forEach((val,i) => {
-        const x = i * step;
-        const y = h - (val / 2000) * (h-20) - 10;
-        if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      });
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.strokeStyle = '#6b8e4c';
-      revenue.forEach((val,i) => {
-        const x = i * step;
-        const y = h - (val / 5000) * (h-20) - 10;
-        if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-      });
-      ctx.stroke();
-    }
-
-    // UI Updates
-    function updateMarketingOverview() {
-      const totalRevenue = platforms.reduce((a,p) => a + p.revenue, 0);
-      const totalSpend = platforms.reduce((a,p) => a + p.adSpend, 0);
-      const roi = totalSpend ? ((totalRevenue - totalSpend) / totalSpend * 100).toFixed(0) : 0;
-      document.getElementById('mktActiveCampaigns').innerText = campaigns.filter(c => c.status === 'active').length;
-      document.getElementById('mktTotalInfluencers').innerText = influencers.length;
-      document.getElementById('mktAdSpend').innerText = 'R ' + totalSpend;
-      document.getElementById('mktAttributedRev').innerText = 'R ' + totalRevenue;
-      document.getElementById('mktROI').innerText = roi + '%';
-      const conversions = platforms.reduce((a,p) => a + p.conversions, 0);
-      const clicks = platforms.reduce((a,p) => a + p.clicks, 0);
-      const cpa = conversions ? (totalSpend / conversions).toFixed(0) : 0;
-      document.getElementById('mktCPA').innerText = 'R ' + cpa;
-
-      // Update AppState
-      AppState.marketing.totalAdSpend = totalSpend;
-      AppState.marketing.attributedRevenue = totalRevenue;
-      refreshAll();
-    }
-
-    // Event Listeners
-    document.querySelectorAll('[data-campaign-view]').forEach(chip => {
-      chip.addEventListener('click', (e) => {
-        document.querySelectorAll('[data-campaign-view]').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        renderCampaigns(chip.dataset.campaignView);
-      });
-    });
-
-    document.getElementById('addInfluencerBtn')?.addEventListener('click', () => {
-      alert('Add influencer form (mock) – would open modal.');
-    });
-
-    document.getElementById('addLoopIdea')?.addEventListener('click', () => {
-      const input = document.getElementById('loopIdeaInput');
-      if (input.value.trim()) {
-        alert(`Idea "${input.value}" added to playbook.`);
-        input.value = '';
-      }
-    });
-
-    document.getElementById('applyAttribution')?.addEventListener('click', () => {
-      const platform = document.getElementById('attributionPlatform').value;
-      const start = document.getElementById('attributionStart').value;
-      const end = document.getElementById('attributionEnd').value;
-      // mock filter
-      let filteredRev = platforms.reduce((a,p) => a + p.revenue, 0);
-      if (platform !== 'all') {
-        const p = platforms.find(p => p.name.toLowerCase() === platform);
-        filteredRev = p ? p.revenue : 0;
-      }
-      document.getElementById('filteredRevenue').innerText = 'R ' + filteredRev;
-    });
-
-    // populate influencer dropdown
-    const infSelect = document.getElementById('attributionInfluencer');
-    if (infSelect) {
-      infSelect.innerHTML = '<option value="all">all influencers</option>' + influencers.map(i => `<option value="${i.name}">${i.name}</option>`).join('');
-    }
-    const campSelect = document.getElementById('attributionCampaign');
-    if (campSelect) {
-      campSelect.innerHTML = '<option value="all">all campaigns</option>' + campaigns.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-    }
-
-    // initial render
-    renderPlatforms();
-    renderInfluencers();
-    renderCampaigns('top5');
-    updateMarketingOverview();
-    drawPlatformChart();
-    drawInfluencerChart();
-    drawTrendChart();
-
-    // redraw charts on tab show (simple)
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((m) => {
-        if (m.target.classList.contains('active') && m.target.id === 'marketingPane') {
-          drawPlatformChart();
-          drawInfluencerChart();
-          drawTrendChart();
-        }
-      });
-    });
-    observer.observe(pane, { attributes: true, attributeFilter: ['class'] });
-  })();
-
-  // ========== GLOBAL ACCORDION TOGGLE ==========
-  document.addEventListener('click', function(e) {
-    const header = e.target.closest('.accordion-header');
-    if (!header) return;
-    e.preventDefault();
-    const item = header.closest('.accordion-item');
-    const body = item.querySelector('.accordion-body');
-    const arrow = header.querySelector('.arrow');
-    if (body) {
-      body.classList.toggle('expanded');
-      header.classList.toggle('expanded');
-    }
-  });
 </script>
 </body>
 </html>
