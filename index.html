@@ -566,6 +566,12 @@
     .platform-badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
     .chart-canvas { width: 100%; height: 80px; margin: 8px 0; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+
+    /* Consistency warning on dashboard */
+    #consistencyWarning {
+      margin-top: 8px;
+      font-size: 0.75rem;
+    }
   </style>
 </head>
 <body>
@@ -618,6 +624,8 @@
           <div style="display: flex; justify-content: space-between;"><span>📦 upcoming batch</span> <strong>650 (in 4d)</strong></div>
           <hr>
           <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 net profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
+          <!-- NEW: consistency warning -->
+          <div id="consistencyWarning" class="badge" style="display:none;">⚠️ Revenue mismatch</div>
         </div>
       </div>
 
@@ -1593,8 +1601,113 @@
   </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS (unchanged) and NEW MARKETING JS (appended) with modification for blueprint link -->
+<!-- ALL ORIGINAL SCRIPTS (modified to integrate with central state) and NEW MARKETING JS -->
 <script>
+  // ==================== CENTRAL STATE ====================
+  window.GFState = {
+    // Birds
+    totalBirds: 2450,
+    birdsSoldToday: 128,
+    birdsLostToday: 12,
+    // Revenue streams (monthly)
+    revenue: {
+      liveSales: 163200,
+      prepared: 41200,
+      bulk: 97920,
+      byproduct: 12750,
+      manure: 3000,
+      subscriptions: 18240,
+      assuranceContributions: 8450,
+      marketingAttributed: 34200,
+      villageContracts: 82500,
+      stockSaleCapital: 87500,
+    },
+    // Costs (monthly)
+    costs: {
+      chicks: 34300,
+      feed: 85085,
+      transport: 4300,
+      labor: 6500,
+      utilities: 2100,
+      equipment: 900,
+      losses: 600,
+      marketingAdSpend: 12400,
+    },
+    // Computed (filled by recalculateAll)
+    computed: {
+      totalRevenue: 0,
+      totalCosts: 0,
+      netProfit: 0,
+      profitMargin: 0,
+      avgSellingPrice: 84.5,
+    },
+    consistencyWarning: false,
+  };
+
+  function recalculateAll() {
+    const s = GFState;
+    // Sum all operating revenue streams (exclude stockSaleCapital)
+    const revenueStreams = [
+      s.revenue.liveSales,
+      s.revenue.prepared,
+      s.revenue.bulk,
+      s.revenue.byproduct,
+      s.revenue.manure,
+      s.revenue.subscriptions,
+      s.revenue.assuranceContributions,
+      s.revenue.marketingAttributed,
+      s.revenue.villageContracts,
+    ];
+    s.computed.totalRevenue = revenueStreams.reduce((a, b) => a + b, 0);
+
+    const costStreams = Object.values(s.costs);
+    s.computed.totalCosts = costStreams.reduce((a, b) => a + b, 0);
+
+    s.computed.netProfit = s.computed.totalRevenue - s.computed.totalCosts;
+    s.computed.profitMargin = s.computed.totalRevenue ? (s.computed.netProfit / s.computed.totalRevenue) * 100 : 0;
+
+    // Simple consistency check: sum of revenue streams should equal totalRevenue (already true)
+    // We'll also check if any stream seems off (placeholder)
+    s.consistencyWarning = false; // can be set by external checks
+  }
+
+  function refreshDashboard() {
+    const s = GFState;
+    setText('totalBirdsDisplay', s.totalBirds.toLocaleString());
+    setText('soldTodayDisplay', s.birdsSoldToday);
+    setText('lostTodayDisplay', s.birdsLostToday);
+    const todayRevenue = s.birdsSoldToday * s.computed.avgSellingPrice;
+    setText('revenueTodayValue', 'R ' + todayRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('revenueTodayDisplay', 'R ' + todayRevenue.toFixed(0));
+    setText('monthlyRevenueDisplay', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('remainingStockDisplay', (s.totalBirds - s.birdsSoldToday).toLocaleString());
+    setText('netProfitMonthDisplay', 'R ' + s.computed.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('netMonthly', 'R ' + s.computed.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('profitPerChicken', 'R ' + (s.computed.netProfit / (s.totalBirds || 1)).toFixed(2));
+    setText('projectedProfit', 'R ' + (s.computed.netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('kpiActiveBirds', (s.totalBirds - s.birdsSoldToday).toLocaleString());
+    setText('kpiMortality', ((s.birdsLostToday / s.totalBirds) * 100).toFixed(1) + '%');
+    setText('kpiAvgPrice', 'R ' + s.computed.avgSellingPrice.toFixed(2));
+    setText('kpiByproduct', 'R ' + s.revenue.byproduct.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('totalRevenue', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('plRevenue', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('totalExpenses', 'R ' + s.computed.totalCosts.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+    setText('plMargin', s.computed.profitMargin.toFixed(1) + '% (R ' + s.computed.netProfit.toFixed(0) + ')');
+
+    const warnEl = document.getElementById('consistencyWarning');
+    if (s.consistencyWarning) {
+      warnEl.style.display = 'block';
+      warnEl.innerText = '⚠️ Revenue streams do not sum correctly';
+    } else {
+      warnEl.style.display = 'none';
+    }
+  }
+
+  function setText(id, val) {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val;
+  }
+
   // ----- tab switching (updated with 'marketing' and support for data-href) -----
   (function() {
     const navItems = document.querySelectorAll('.nav-item');
@@ -1640,16 +1753,13 @@
       morePanel.classList.toggle('show');
     });
 
-    // Modified more-item click handler to support data-href navigation
     document.querySelectorAll('.more-item').forEach(item => {
       item.addEventListener('click', (e) => {
-        // If the item has a data-href attribute, navigate to that URL
         const href = item.dataset.href;
         if (href) {
           window.location.href = href;
-          return; // Stop further handling
+          return;
         }
-        // Otherwise, treat it as a tab switch
         const tabId = item.dataset.tab;
         setActiveTab(tabId);
       });
@@ -1662,9 +1772,8 @@
     });
   })();
 
-  // ========== ORIGINAL DASHBOARD SCRIPT (full version) ==========
+  // ========== ORIGINAL DASHBOARD SCRIPT (modified to use GFState) ==========
   (function() {
-    // rewards data & settings (identical to original)
     let rewardsData = [
       { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
       { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
@@ -1682,44 +1791,30 @@
       referralCredit: 50
     };
 
-    const rewardsClaimedSpan = document.getElementById('rewardsClaimed');
-    const activeRewardsSpan = document.getElementById('activeRewards');
-    const upcomingRewardsSpan = document.getElementById('upcomingRewards');
-    const byproductBonusSpan = document.getElementById('byproductBonusUptake');
-    const referralCreditsSpan = document.getElementById('referralCredits');
-    const rewardCardsContainer = document.getElementById('rewardCardsContainer');
-    const rewardsTableBody = document.getElementById('rewardsTableBody');
-
-    const enableRewardsChk = document.getElementById('enableRewards');
-    const chickensPerRewardInp = document.getElementById('chickensPerReward');
-    const streakDaysInp = document.getElementById('streakDays');
-    const rewardDiscountInp = document.getElementById('rewardDiscount');
-    const doubleByproductChk = document.getElementById('doubleByproduct');
-    const referralCreditInp = document.getElementById('referralCreditValue');
-    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
-
     function updateRewardsUI() {
       const claimed = rewardsData.filter(r => r.status === 'claimed').length;
       const active = rewardsData.filter(r => r.status === 'active').length;
       const upcoming = rewardsData.filter(r => r.status === 'upcoming').length;
       const byproductUptake = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
       const totalReferral = rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
-      if(rewardsClaimedSpan) rewardsClaimedSpan.innerText = claimed;
-      if(activeRewardsSpan) activeRewardsSpan.innerText = active;
-      if(upcomingRewardsSpan) upcomingRewardsSpan.innerText = upcoming;
-      if(byproductBonusSpan) byproductBonusSpan.innerText = byproductUptake;
-      if(referralCreditsSpan) referralCreditsSpan.innerText = 'R ' + totalReferral.toLocaleString();
+      setText('rewardsClaimed', claimed);
+      setText('activeRewards', active);
+      setText('upcomingRewards', upcoming);
+      setText('byproductBonusUptake', byproductUptake);
+      setText('referralCredits', 'R ' + totalReferral.toLocaleString());
 
       let cardsHtml = '';
       rewardsData.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
         cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
       });
+      const rewardCardsContainer = document.getElementById('rewardCardsContainer');
       if(rewardCardsContainer) rewardCardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
 
       let rows = '';
       rewardsData.forEach(r => {
         rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
       });
+      const rewardsTableBody = document.getElementById('rewardsTableBody');
       if(rewardsTableBody) rewardsTableBody.innerHTML = rows;
     }
 
@@ -1809,64 +1904,71 @@
 
       const netProfit = monthlyRevenue + byproductRev - totalCost;
 
-      if(document.getElementById('totalRevenue')) document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenuePerChicken')) document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('monthlyRevenueDisplay')) document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenueTodayValue')) document.getElementById('revenueTodayValue').innerText = 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revenueTodayDisplay')) document.getElementById('revenueTodayDisplay').innerText = 'R ' + revenueToday.toFixed(0);
-      if(document.getElementById('netMonthly')) document.getElementById('netMonthly').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('profitPerChicken')) document.getElementById('profitPerChicken').innerText = 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('weightedAvgPrice')) document.getElementById('weightedAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('todaySalesAvgPrice')) document.getElementById('todaySalesAvgPrice').innerHTML = `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`;
-      if(document.getElementById('todayRevenueCalc')) document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
-      if(document.getElementById('totalExpenses')) document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('costPerChicken')) document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('plChickens')) document.getElementById('plChickens').innerText = 'R ' + chicks.toLocaleString();
-      if(document.getElementById('plFeed')) document.getElementById('plFeed').innerText = 'R ' + feed.toLocaleString();
-      if(document.getElementById('plLogistics')) document.getElementById('plLogistics').innerText = 'R ' + transport.toLocaleString();
-      if(document.getElementById('plLabor')) document.getElementById('plLabor').innerText = 'R ' + labor.toLocaleString();
-      if(document.getElementById('plRevenue')) document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('plMargin')) document.getElementById('plMargin').innerText = ((netProfit / (monthlyRevenue + byproductRev) * 100) || 0).toFixed(1) + '% (R ' + netProfit.toFixed(0) + ')';
-      if(document.getElementById('revLive')) document.getElementById('revLive').innerText = 'R ' + (MONTHLY_SOLD * 100).toLocaleString();
-      if(document.getElementById('revPrep')) document.getElementById('revPrep').innerText = 'R ' + (MONTHLY_SOLD * 20).toLocaleString(); // mock
-      if(document.getElementById('revBulk')) document.getElementById('revBulk').innerText = 'R ' + (MONTHLY_SOLD * 30).toLocaleString(); // mock
-      if(document.getElementById('revByproduct')) document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('revManure')) document.getElementById('revManure').innerText = 'R 3,000'; // mock
-      if(document.getElementById('totalBirdsDisplay')) document.getElementById('totalBirdsDisplay').innerText = TOTAL_BIRDS;
-      if(document.getElementById('soldTodayDisplay')) document.getElementById('soldTodayDisplay').innerText = SOLD_TODAY;
-      if(document.getElementById('lostTodayDisplay')) document.getElementById('lostTodayDisplay').innerText = '12';
-      if(document.getElementById('remainingStockDisplay')) document.getElementById('remainingStockDisplay').innerText = TOTAL_BIRDS - SOLD_TODAY;
-      if(document.getElementById('netProfitMonthDisplay')) document.getElementById('netProfitMonthDisplay').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('kpiActiveBirds')) document.getElementById('kpiActiveBirds').innerText = TOTAL_BIRDS - SOLD_TODAY;
-      if(document.getElementById('kpiMortality')) document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
-      if(document.getElementById('kpiAvgPrice')) document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
-      if(document.getElementById('kpiCostPerBird')) document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
-      if(document.getElementById('kpiSubPct')) document.getElementById('kpiSubPct').innerText = '18%';
-      if(document.getElementById('kpiByproduct')) document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('projectedProfit')) document.getElementById('projectedProfit').innerText = 'R ' + (netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      if(document.getElementById('profitTrend')) document.getElementById('profitTrend').innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
-      if(document.getElementById('wholesaleVal')) document.getElementById('wholesaleVal').innerText = wholesalePct?.value || 68;
-      if(document.getElementById('retailVal')) document.getElementById('retailVal').innerText = retailPct?.value || 22;
-      if(document.getElementById('restaurantVal')) document.getElementById('restaurantVal').innerText = restaurantPct?.value || 10;
-      if(document.getElementById('totalFeedKg')) document.getElementById('totalFeedKg').innerText = '11,025 kg';
-      if(document.getElementById('feedBags')) document.getElementById('feedBags').innerText = '221 bags';
-      if(document.getElementById('feedCostEstimate')) document.getElementById('feedCostEstimate').innerText = 'R 85,085';
-      if(document.getElementById('triggerSuggestions')) document.getElementById('triggerSuggestions').innerHTML = '<p>🚀 next: vehicle at R40,000</p>';
-      if(document.getElementById('triggerProgress')) document.getElementById('triggerProgress').innerText = 'you are 216% toward vehicle trigger';
-      if(document.getElementById('currentProfitLevel')) document.getElementById('currentProfitLevel').innerText = 'R3 (86.4k)';
-      if(document.getElementById('nextTargetDisplay')) document.getElementById('nextTargetDisplay').innerText = 'R5 (150k)';
-      if(document.getElementById('profitGapFill')) document.getElementById('profitGapFill').style.width = '57%';
-      if(document.getElementById('gapText')) document.getElementById('gapText').innerText = 'gap to next level: R 63,600';
-      if(document.getElementById('deathRateDisplay')) document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
-      if(document.getElementById('laborPerBird')) document.getElementById('laborPerBird').innerText = 'R ' + (labor / MONTHLY_SOLD).toFixed(2);
-      if(document.getElementById('profitPerWorker')) document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      // Update GFState
+      GFState.totalBirds = TOTAL_BIRDS;
+      GFState.birdsSoldToday = SOLD_TODAY;
+      GFState.birdsLostToday = 12;
+      GFState.revenue.liveSales = MONTHLY_SOLD * 100;
+      GFState.revenue.prepared = MONTHLY_SOLD * 20;
+      GFState.revenue.bulk = MONTHLY_SOLD * 30;
+      GFState.revenue.byproduct = byproductRev;
+      GFState.revenue.manure = 3000;
+      GFState.costs.chicks = chicks;
+      GFState.costs.feed = feed;
+      GFState.costs.transport = transport;
+      GFState.costs.labor = labor;
+      GFState.costs.utilities = utilities;
+      GFState.costs.equipment = equipment;
+      GFState.costs.losses = losses;
+      GFState.computed.avgSellingPrice = avgPrice;
+
+      recalculateAll();
+      refreshDashboard();
+
+      // Also update other UI elements that are not in dashboard but are in this module
+      setText('weightedAvgPrice', 'R ' + avgPrice.toFixed(2));
+      setText('todaySalesAvgPrice', `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`);
+      const todayRevenueCalc = document.getElementById('todayRevenueCalc');
+      if(todayRevenueCalc) todayRevenueCalc.innerText = 'R ' + revenueToday.toFixed(0);
+      setText('costPerChicken', 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2));
+      setText('plChickens', 'R ' + chicks.toLocaleString());
+      setText('plFeed', 'R ' + feed.toLocaleString());
+      setText('plLogistics', 'R ' + transport.toLocaleString());
+      setText('plLabor', 'R ' + labor.toLocaleString());
+      setText('revLive', 'R ' + GFState.revenue.liveSales.toLocaleString());
+      setText('revPrep', 'R ' + GFState.revenue.prepared.toLocaleString());
+      setText('revBulk', 'R ' + GFState.revenue.bulk.toLocaleString());
+      setText('revByproduct', 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revManure', 'R 3,000');
+      setText('kpiCostPerBird', 'R ' + adjCostPerBird.toFixed(2));
+      setText('wholesaleVal', wholesalePct?.value || 68);
+      setText('retailVal', retailPct?.value || 22);
+      setText('restaurantVal', restaurantPct?.value || 10);
+      setText('totalFeedKg', '11,025 kg');
+      setText('feedBags', '221 bags');
+      setText('feedCostEstimate', 'R 85,085');
+      setText('triggerSuggestions', '<p>🚀 next: vehicle at R40,000</p>');
+      setText('triggerProgress', 'you are 216% toward vehicle trigger');
+      setText('currentProfitLevel', 'R3 (86.4k)');
+      setText('nextTargetDisplay', 'R5 (150k)');
+      document.getElementById('profitGapFill') && (document.getElementById('profitGapFill').style.width = '57%');
+      setText('gapText', 'gap to next level: R 63,600');
+      setText('deathRateDisplay', (MORTALITY_RATE * 100).toFixed(1) + '%');
+      setText('laborPerBird', 'R ' + (labor / MONTHLY_SOLD).toFixed(2));
+      setText('profitPerWorker', 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
 
       updateRewardsUI();
     }
 
-    // attach listeners
     const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger].filter(el => el);
     costInputs.forEach(inp => inp.addEventListener('input', updateAll));
+
+    const enableRewardsChk = document.getElementById('enableRewards');
+    const chickensPerRewardInp = document.getElementById('chickensPerReward');
+    const streakDaysInp = document.getElementById('streakDays');
+    const rewardDiscountInp = document.getElementById('rewardDiscount');
+    const doubleByproductChk = document.getElementById('doubleByproduct');
+    const referralCreditInp = document.getElementById('referralCreditValue');
 
     [enableRewardsChk, chickensPerRewardInp, streakDaysInp, rewardDiscountInp, doubleByproductChk, referralCreditInp].forEach(inp => {
       if(inp) inp.addEventListener('change', () => {
@@ -1880,6 +1982,7 @@
       });
     });
 
+    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
     if(simulatePurchaseBtn) simulatePurchaseBtn.addEventListener('click', () => {
       const activeIdx = rewardsData.findIndex(r => r.status === 'active');
       if (activeIdx >= 0) {
@@ -1899,17 +2002,15 @@
     growthBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const growth = parseInt(btn.dataset.growth) / 100;
-        const netProfit = parseFloat(document.getElementById('netMonthly')?.innerText.replace('R', '').replace(',', '')) || 86400;
+        const netProfit = GFState.computed.netProfit || 86400;
         const projected = netProfit * 3 * (1 + growth);
-        const projSpan = document.getElementById('projectedProfit');
-        if(projSpan) projSpan.innerText = 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        const hint = document.getElementById('growthHint');
-        if(hint) hint.innerText = `simulating +${btn.dataset.growth}% growth`;
+        setText('projectedProfit', 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        setText('growthHint', `simulating +${btn.dataset.growth}% growth`);
       });
     });
   })();
 
-  // ========== INFRASTRUCTURE MODULE (original) ==========
+  // ========== INFRASTRUCTURE MODULE (modified to use GFState) ==========
   (function() {
     const currentCapacity = document.getElementById('currentCapacity');
     if (!currentCapacity) return;
@@ -1945,10 +2046,7 @@
     const infraNotifications = document.getElementById('infraNotifications');
 
     function getMonthlyNetProfit() {
-      const netElem = document.getElementById('netMonthly');
-      if (!netElem) return 86400;
-      const text = netElem.innerText.replace('R', '').replace(/,/g, '').trim();
-      return parseFloat(text) || 86400;
+      return GFState.computed.netProfit || 86400;
     }
 
     function validateCategorySum() {
@@ -2079,7 +2177,7 @@
     updateInfraModule();
   })();
 
-  // ========== CRM minor interactivity (original) ==========
+  // ========== CRM minor interactivity (unchanged) ==========
   (function() {
     const crmPane = document.getElementById('crmPane');
     if (!crmPane) return;
@@ -2095,7 +2193,7 @@
     });
   })();
 
-  // ========== FESTIVE PLAN MODULE (original) ==========
+  // ========== FESTIVE PLAN MODULE (modified to update GFState) ==========
   (function() {
     const festivePane = document.getElementById('festivePane');
     if (!festivePane) return;
@@ -2108,13 +2206,18 @@
     ];
 
     function updateFestiveUI() {
-      if(document.getElementById('totalVillages')) document.getElementById('totalVillages').innerText = villages.length;
+      setText('totalVillages', villages.length);
       const totalParticipants = villages.reduce((acc, v) => acc + v.participants, 0);
       const totalChickens = villages.reduce((acc, v) => acc + v.chickensRequired, 0);
       const totalContributions = villages.reduce((acc, v) => acc + v.contributions, 0);
-      if(document.getElementById('totalParticipants')) document.getElementById('totalParticipants').innerText = totalParticipants;
-      if(document.getElementById('totalChickensReq')) document.getElementById('totalChickensReq').innerText = totalChickens.toLocaleString();
-      if(document.getElementById('totalContributions')) document.getElementById('totalContributions').innerText = 'R ' + totalContributions.toLocaleString();
+      setText('totalParticipants', totalParticipants);
+      setText('totalChickensReq', totalChickens.toLocaleString());
+      setText('totalContributions', 'R ' + totalContributions.toLocaleString());
+
+      // Update GFState (village contracts revenue is a separate stream, we'll set it to totalContributions as profit? Actually contributions may not be pure profit. For simplicity, we'll set villageContracts to totalContributions as expected profit.)
+      GFState.revenue.villageContracts = totalContributions;
+      recalculateAll();
+      refreshDashboard();
 
       let html = '';
       villages.forEach(v => {
@@ -2196,7 +2299,7 @@
     updateFestiveUI();
   })();
 
-  // ========== SUBSCRIPTION ADMIN MODULE (original) ==========
+  // ========== SUBSCRIPTION ADMIN MODULE (modified to update GFState) ==========
   (function() {
     const subPane = document.getElementById('subscriptionPane');
     if (!subPane) return;
@@ -2210,17 +2313,22 @@
     ];
 
     function updateSubUI() {
-      document.getElementById('subTotalMembers').innerText = members.length;
+      setText('subTotalMembers', members.length);
       const monthlyRev = members.reduce((acc, m) => acc + m.total, 0);
-      document.getElementById('subMonthlyRev').innerText = 'R ' + monthlyRev.toLocaleString();
+      setText('subMonthlyRev', 'R ' + monthlyRev.toLocaleString());
       const expectedDel = members.reduce((acc, m) => acc + m.monthlyQty, 0);
-      document.getElementById('subExpectedDel').innerText = expectedDel;
+      setText('subExpectedDel', expectedDel);
       const priority = (members.filter(m => m.vip).length / members.length * 100).toFixed(0) + '%';
-      document.getElementById('subPriorityFulfill').innerText = priority;
-      document.getElementById('subForecast').innerText = 'R ' + (monthlyRev * 1.15).toFixed(0);
+      setText('subPriorityFulfill', priority);
+      setText('subForecast', 'R ' + (monthlyRev * 1.15).toFixed(0));
 
       const outstanding = members.reduce((acc, m) => acc + (m.total - m.depositPaid), 0);
-      document.getElementById('outstandingBalance').innerText = 'R ' + outstanding.toLocaleString();
+      setText('outstandingBalance', 'R ' + outstanding.toLocaleString());
+
+      // Update GFState
+      GFState.revenue.subscriptions = monthlyRev;
+      recalculateAll();
+      refreshDashboard();
 
       let html = '';
       members.forEach(m => {
@@ -2321,12 +2429,11 @@
     updateSubUI();
   })();
 
-  // ========== ASSURANCE MODULE (original) ==========
+  // ========== ASSURANCE MODULE (modified to update GFState) ==========
   (function() {
     const assurancePane = document.getElementById('assurancePane');
     if (!assurancePane) return;
 
-    // Mock assurance members (linked to subscription members)
     let assuranceMembers = [
       { id: 1, name: 'Spier Wines', active: true, monthlyContribution: 1200, totalAllocated: 30, pendingClaim: 0, loyaltyCredits: 180, subscribed: true },
       { id: 2, name: 'Kyle’s Grill', active: true, monthlyContribution: 860, totalAllocated: 22, pendingClaim: 860, loyaltyCredits: 95, subscribed: true },
@@ -2338,18 +2445,22 @@
     let pendingClaims = assuranceMembers.filter(m => m.pendingClaim > 0).length;
 
     function updateAssuranceUI() {
-      document.getElementById('assuranceMembers').innerText = assuranceMembers.length;
+      setText('assuranceMembers', assuranceMembers.length);
       const monthlyTotal = assuranceMembers.reduce((acc, m) => acc + (m.active ? m.monthlyContribution : 0), 0);
-      document.getElementById('assuranceMonthlyContrib').innerText = 'R ' + monthlyTotal.toLocaleString();
-      document.getElementById('assurancePendingClaims').innerText = pendingClaims;
+      setText('assuranceMonthlyContrib', 'R ' + monthlyTotal.toLocaleString());
+      setText('assurancePendingClaims', pendingClaims);
       const loyaltyTotal = assuranceMembers.reduce((acc, m) => acc + m.loyaltyCredits, 0);
-      document.getElementById('assuranceLoyaltyCredits').innerText = 'R ' + loyaltyTotal.toLocaleString();
-      const expectedClaims = monthlyTotal * 0.3; // mock
-      document.getElementById('assuranceExpectedClaims').innerText = 'R ' + expectedClaims.toFixed(0);
+      setText('assuranceLoyaltyCredits', 'R ' + loyaltyTotal.toLocaleString());
+      const expectedClaims = monthlyTotal * 0.3;
+      setText('assuranceExpectedClaims', 'R ' + expectedClaims.toFixed(0));
       const totalAlloc = assuranceMembers.reduce((acc, m) => acc + m.totalAllocated, 0);
-      document.getElementById('assuranceAllocations').innerText = totalAlloc;
+      setText('assuranceAllocations', totalAlloc);
 
-      // member list
+      // Update GFState
+      GFState.revenue.assuranceContributions = monthlyTotal;
+      recalculateAll();
+      refreshDashboard();
+
       let html = '';
       assuranceMembers.forEach(m => {
         html += `<div class="batch-row">
@@ -2362,7 +2473,6 @@
       document.getElementById('assuranceMembersList').innerHTML = html;
     }
 
-    // Event delegation for assurance actions
     document.addEventListener('click', (e) => {
       if (!assurancePane.contains(e.target)) return;
       const target = e.target;
@@ -2381,7 +2491,6 @@
       }
       if (target.matches('[data-action="approve-claim"]')) {
         const claimId = target.dataset.claimId;
-        // mock approve
         alert(`Claim ${claimId} approved, loyalty credits issued.`);
         pendingClaims--;
         updateAssuranceUI();
@@ -2394,7 +2503,6 @@
       }
     });
 
-    // filter chips
     document.querySelectorAll('[data-assurance-filter]').forEach(chip => {
       chip.addEventListener('click', () => {
         document.querySelectorAll('[data-assurance-filter]').forEach(c => c.classList.remove('active'));
@@ -2416,7 +2524,6 @@
       });
     });
 
-    // apply settings
     document.getElementById('applyAssuranceSettings').addEventListener('click', () => {
       const price = parseInt(document.getElementById('assurancePricePerChicken').value) || 25;
       const returnPct = parseFloat(document.getElementById('assuranceReturnPct').value) || 8;
@@ -2424,7 +2531,6 @@
       alert(`Settings applied (price: R${price}, return: ${returnPct}%, max: ${maxAlloc}) – in real app would update members.`);
     });
 
-    // quick actions
     document.getElementById('syncSubsBtn').addEventListener('click', () => {
       alert('Syncing with subscription members... (mock)');
     });
@@ -2447,12 +2553,11 @@
     updateAssuranceUI();
   })();
 
-  // ========== VILLAGE EXPANSION MODULE (original) ==========
+  // ========== VILLAGE EXPANSION MODULE (modified to update GFState) ==========
   (function() {
     const pane = document.getElementById('villageExpansionPane');
     if (!pane) return;
 
-    // Mock contract data
     let contracts = [
       { id: 1, farm: 'Mvula Poultry', village: 'Lwandle', chickens: 800, margin: 12, start: '2025-01-01', end: '2025-06-30', notes: 'family owned, needs transport support', signed: true, revenue: 9600 },
       { id: 2, farm: 'Sundumbili Coop', village: 'Sundumbili', chickens: 1200, margin: 10, start: '2025-02-15', end: '2025-08-15', notes: 'bulk supplier', signed: true, revenue: 12000 },
@@ -2461,25 +2566,27 @@
       { id: 5, farm: 'Lwandle Rise', village: 'Lwandle', chickens: 500, margin: 14, start: '2025-04-01', end: '2025-10-01', notes: 'new entrant', signed: true, revenue: 7000 }
     ];
 
-    // Budget inputs
     const budgetTravel = document.getElementById('budgetTravel');
     const budgetMgmt = document.getElementById('budgetMgmt');
     const budgetSupply = document.getElementById('budgetSupply');
 
     function updateVillageUI() {
-      // Update stats
-      document.getElementById('villageCount').innerText = contracts.length;
+      setText('villageCount', contracts.length);
       const totalChickens = contracts.reduce((acc, c) => acc + c.chickens, 0);
-      document.getElementById('totalChickensVillage').innerText = totalChickens.toLocaleString();
-      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0); // assume avg price R100
-      document.getElementById('expectedProfitVillage').innerText = 'R ' + totalProfit.toLocaleString();
+      setText('totalChickensVillage', totalChickens.toLocaleString());
+      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0);
+      setText('expectedProfitVillage', 'R ' + totalProfit.toLocaleString());
       const expiring = contracts.filter(c => {
         const days = (new Date(c.end) - new Date()) / (1000*60*60*24);
         return days <= 30 && days > 0;
       }).length;
-      document.getElementById('expiringContracts').innerText = expiring;
+      setText('expiringContracts', expiring);
 
-      // Build contracts list
+      // Update GFState
+      GFState.revenue.villageContracts = totalProfit;
+      recalculateAll();
+      refreshDashboard();
+
       let html = '';
       contracts.forEach(c => {
         const status = c.signed ? '✅ signed' : '⏳ pending';
@@ -2499,29 +2606,25 @@
       });
       document.getElementById('contractsListContainer').innerHTML = html;
 
-      // Update budget total
       const travel = parseFloat(budgetTravel?.value) || 0;
       const mgmt = parseFloat(budgetMgmt?.value) || 0;
       const supply = parseFloat(budgetSupply?.value) || 0;
       const totalBudget = travel + mgmt + supply;
-      document.getElementById('totalBudget').innerText = 'R ' + totalBudget.toLocaleString();
-      document.getElementById('projectedSupply').innerText = totalChickens + ' chickens';
+      setText('totalBudget', 'R ' + totalBudget.toLocaleString());
+      setText('projectedSupply', totalChickens + ' chickens');
       const costPer = totalChickens ? (totalBudget / totalChickens).toFixed(2) : 0;
-      document.getElementById('costPerChickenVillage').innerText = 'R ' + costPer;
-      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100); // arbitrary scale
+      setText('costPerChickenVillage', 'R ' + costPer);
+      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100);
       document.getElementById('budgetBar').style.width = budgetPercent + '%';
 
-      // transport fees mock
-      document.getElementById('transportFees').innerText = 'R ' + (totalChickens * 0.7).toFixed(0);
+      setText('transportFees', 'R ' + (totalChickens * 0.7).toFixed(0));
 
-      // expiring alerts
       if (expiring > 0) {
-        document.getElementById('expiringAlerts').innerHTML = `⚠️ ${expiring} contract(s) expire within 30 days`;
+        setText('expiringAlerts', `⚠️ ${expiring} contract(s) expire within 30 days`);
       } else {
-        document.getElementById('expiringAlerts').innerHTML = '✅ no expiring contracts';
+        setText('expiringAlerts', '✅ no expiring contracts');
       }
 
-      // chart: chickens per village
       const villageMap = {};
       contracts.forEach(c => { villageMap[c.village] = (villageMap[c.village] || 0) + c.chickens; });
       const villages = Object.keys(villageMap);
@@ -2536,11 +2639,9 @@
         labelsDiv.innerHTML += `<span style="flex:1; text-align:center; font-size:0.6rem;">${v.slice(0,3)}</span>`;
       });
 
-      // pending deliveries (mock integration with subscription)
-      document.getElementById('pendingDeliveries').innerText = Math.floor(Math.random() * 5) + 2;
+      setText('pendingDeliveries', Math.floor(Math.random() * 5) + 2);
     }
 
-    // modal handling
     const modal = document.getElementById('contractModal');
     const openBtn = document.getElementById('openAddContractModal');
     const cancelBtn = document.getElementById('modalCancel');
@@ -2621,7 +2722,6 @@
       modal.style.display = 'none';
     });
 
-    // Event delegation for sign/edit buttons
     document.addEventListener('click', (e) => {
       if (!pane.contains(e.target)) return;
       const target = e.target;
@@ -2644,13 +2744,11 @@
       }
     });
 
-    // Budget listeners
     [budgetTravel, budgetMgmt, budgetSupply].forEach(inp => inp.addEventListener('input', updateVillageUI));
 
-    // Sync with subscriptions (mock)
     document.getElementById('syncDeliveriesBtn').addEventListener('click', () => {
       alert('Syncing with subscription demand: 187 chickens assigned to villages.');
-      document.getElementById('pendingDeliveries').innerText = '0';
+      setText('pendingDeliveries', '0');
     });
 
     document.getElementById('generateFarmLinkBtn').addEventListener('click', () => {
@@ -2662,12 +2760,11 @@
     updateVillageUI();
   })();
 
-  // ========== STOCK SALE MODULE (original) ==========
+  // ========== STOCK SALE MODULE (modified to update GFState) ==========
   (function() {
     const pane = document.getElementById('stockSalePane');
     if (!pane) return;
 
-    // Mock offerings data
     let offerings = [
       { id: 1, name: 'Batch B2401 · Cornish', sharesTotal: 1000, sharesSold: 680, sharePrice: 70, raised: 47600, expectedDividend: 7140, status: 'active' },
       { id: 2, name: 'Batch B2402 · Ross', sharesTotal: 1500, sharesSold: 420, sharePrice: 68, raised: 28560, expectedDividend: 4284, status: 'active' },
@@ -2681,14 +2778,18 @@
       const totalDividend = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
       const avgPrice = totalShares ? (totalRaised / totalShares).toFixed(2) : 70;
 
-      document.getElementById('activeOfferings').innerText = active;
-      document.getElementById('sharesSold').innerText = totalShares.toLocaleString();
-      document.getElementById('capitalRaised').innerText = 'R ' + totalRaised.toLocaleString();
-      document.getElementById('expectedDividend').innerText = 'R ' + totalDividend.toLocaleString();
-      document.getElementById('avgSharePrice').innerText = 'R ' + avgPrice;
-      document.getElementById('projectedROI').innerText = ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%';
+      setText('activeOfferings', active);
+      setText('sharesSold', totalShares.toLocaleString());
+      setText('capitalRaised', 'R ' + totalRaised.toLocaleString());
+      setText('expectedDividend', 'R ' + totalDividend.toLocaleString());
+      setText('avgSharePrice', 'R ' + avgPrice);
+      setText('projectedROI', ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%');
 
-      // offerings list
+      // Update GFState (stockSaleCapital)
+      GFState.revenue.stockSaleCapital = totalRaised;
+      recalculateAll();
+      refreshDashboard();
+
       let html = '';
       offerings.forEach(o => {
         const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
@@ -2702,7 +2803,6 @@
       document.getElementById('offeringsListContainer').innerHTML = html;
     }
 
-    // add new offering
     document.getElementById('addOfferingBtn').addEventListener('click', () => {
       const newId = offerings.length ? Math.max(...offerings.map(o => o.id)) + 1 : 4;
       const name = prompt('Offering name (e.g., Batch B2404):', 'Batch B2404 · Free-range');
@@ -2722,7 +2822,6 @@
       updateStockUI();
     });
 
-    // actions on offerings
     document.addEventListener('click', (e) => {
       if (!pane.contains(e.target)) return;
       const target = e.target;
@@ -2734,7 +2833,7 @@
           if (qty > 0 && offer.sharesSold + qty <= offer.sharesTotal) {
             offer.sharesSold += qty;
             offer.raised += qty * offer.sharePrice;
-            offer.expectedDividend += qty * offer.sharePrice * 0.15; // 15% mock dividend
+            offer.expectedDividend += qty * offer.sharePrice * 0.15;
             updateStockUI();
           } else {
             alert('Not enough shares available.');
@@ -2751,7 +2850,6 @@
       }
     });
 
-    // settings
     document.getElementById('applyStockSettings').addEventListener('click', () => {
       const basePrice = parseFloat(document.getElementById('baseSharePrice').value) || 70;
       const divPct = parseFloat(document.getElementById('dividendPercent').value) || 15;
@@ -2760,7 +2858,6 @@
       alert(`Stock settings updated: base price R${basePrice}, dividend ${divPct}%, ${freq}, lockup ${lockup} days.`);
     });
 
-    // quick actions
     document.getElementById('simulatePayoutBtn').addEventListener('click', () => {
       const totalDiv = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
       alert(`💸 Simulated dividend payout: R ${totalDiv.toLocaleString()} to all shareholders.`);
@@ -2778,12 +2875,11 @@
     updateStockUI();
   })();
 
-  // ========== NEW ENHANCED MARKETING COMMAND CENTER ==========
+  // ========== ENHANCED MARKETING COMMAND CENTER (modified to update GFState) ==========
   (function() {
     const pane = document.getElementById('marketingPane');
     if (!pane) return;
 
-    // ---------- Mock Data ----------
     const platforms = [
       { name: 'TikTok', revenue: 8200, clicks: 2100, conversions: 42, adSpend: 2800, roi: 193, topAccount: '@goldenfeather_', topCampaign: 'Behind the Scenes' },
       { name: 'Instagram', revenue: 12400, clicks: 3400, conversions: 68, adSpend: 3900, roi: 218, topAccount: '@goldenfeather_za', topCampaign: 'Sunday Braai' },
@@ -2809,7 +2905,6 @@
       { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
     ];
 
-    // ---------- Render Functions ----------
     function renderPlatforms() {
       const tbody = document.getElementById('platformTableBody');
       if (!tbody) return;
@@ -2847,7 +2942,6 @@
       `).join('');
     }
 
-    // ---------- Chart Drawing (simple canvas) ----------
     function drawPlatformChart() {
       const canvas = document.getElementById('platformChart');
       if (!canvas) return;
@@ -2889,7 +2983,6 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0,0,canvas.width,canvas.height);
-      // mock ad spend vs revenue trend over last 6 weeks
       const weeks = 6;
       const spend = [800, 950, 1100, 1300, 1200, 1400];
       const revenue = [2100, 2600, 3100, 3800, 3500, 4200];
@@ -2914,23 +3007,27 @@
       ctx.stroke();
     }
 
-    // ---------- UI Updates ----------
     function updateOverview() {
       const totalRevenue = platforms.reduce((a,p) => a + p.revenue, 0);
       const totalSpend = platforms.reduce((a,p) => a + p.adSpend, 0);
       const roi = totalSpend ? ((totalRevenue - totalSpend) / totalSpend * 100).toFixed(0) : 0;
-      document.getElementById('mktActiveCampaigns').innerText = campaigns.filter(c => c.status === 'active').length;
-      document.getElementById('mktTotalInfluencers').innerText = influencers.length;
-      document.getElementById('mktAdSpend').innerText = 'R ' + totalSpend;
-      document.getElementById('mktAttributedRev').innerText = 'R ' + totalRevenue;
-      document.getElementById('mktROI').innerText = roi + '%';
+      setText('mktActiveCampaigns', campaigns.filter(c => c.status === 'active').length);
+      setText('mktTotalInfluencers', influencers.length);
+      setText('mktAdSpend', 'R ' + totalSpend);
+      setText('mktAttributedRev', 'R ' + totalRevenue);
+      setText('mktROI', roi + '%');
       const conversions = platforms.reduce((a,p) => a + p.conversions, 0);
       const clicks = platforms.reduce((a,p) => a + p.clicks, 0);
       const cpa = conversions ? (totalSpend / conversions).toFixed(0) : 0;
-      document.getElementById('mktCPA').innerText = 'R ' + cpa;
+      setText('mktCPA', 'R ' + cpa);
+
+      // Update GFState
+      GFState.revenue.marketingAttributed = totalRevenue;
+      GFState.costs.marketingAdSpend = totalSpend;
+      recalculateAll();
+      refreshDashboard();
     }
 
-    // ---------- Event Listeners ----------
     document.querySelectorAll('[data-campaign-view]').forEach(chip => {
       chip.addEventListener('click', (e) => {
         document.querySelectorAll('[data-campaign-view]').forEach(c => c.classList.remove('active'));
@@ -2955,16 +3052,14 @@
       const platform = document.getElementById('attributionPlatform').value;
       const start = document.getElementById('attributionStart').value;
       const end = document.getElementById('attributionEnd').value;
-      // mock filter
       let filteredRev = platforms.reduce((a,p) => a + p.revenue, 0);
       if (platform !== 'all') {
         const p = platforms.find(p => p.name.toLowerCase() === platform);
         filteredRev = p ? p.revenue : 0;
       }
-      document.getElementById('filteredRevenue').innerText = 'R ' + filteredRev;
+      setText('filteredRevenue', 'R ' + filteredRev);
     });
 
-    // populate influencer dropdown
     const infSelect = document.getElementById('attributionInfluencer');
     if (infSelect) {
       infSelect.innerHTML = '<option value="all">all influencers</option>' + influencers.map(i => `<option value="${i.name}">${i.name}</option>`).join('');
@@ -2974,7 +3069,6 @@
       campSelect.innerHTML = '<option value="all">all campaigns</option>' + campaigns.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
     }
 
-    // initial render
     renderPlatforms();
     renderInfluencers();
     renderCampaigns('top5');
@@ -2983,7 +3077,6 @@
     drawInfluencerChart();
     drawTrendChart();
 
-    // redraw charts on tab show (simple)
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((m) => {
         if (m.target.classList.contains('active') && m.target.id === 'marketingPane') {
@@ -2995,6 +3088,10 @@
     });
     observer.observe(pane, { attributes: true, attributeFilter: ['class'] });
   })();
+
+  // Initial recalc
+  recalculateAll();
+  refreshDashboard();
 </script>
 </body>
 </html>
