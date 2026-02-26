@@ -1,0 +1,3003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>The Golden Feather · Farm Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ---------- ORIGINAL STYLES (exactly as in the original HTML) ---------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 420px;
+      height: 780px;
+      background: #0f0f0f;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(212, 175, 55, 0.2);
+      position: relative;
+    }
+
+    .glass {
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6);
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%) translateZ(0);
+      width: 100%;
+      max-width: 420px;
+      z-index: 1000;
+      box-sizing: border-box;
+      padding: 14px 20px 8px 20px;
+      background: rgba(30, 30, 30, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 32px 32px 0 0;
+      box-shadow: 0 6px 12px -6px rgba(90, 70, 40, 0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .header-left {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .header-left h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: #2c4532;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .main-feather {
+      color: #c9a43b;
+      font-size: 1.8rem;
+      display: inline-block;
+      animation: floatFall 4s ease-in-out infinite;
+      transform-origin: center center;
+    }
+
+    @keyframes floatFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+      25% { transform: translateY(-6px) rotate(-10deg); opacity: 1; }
+      60% { transform: translateY(4px) rotate(7deg); opacity: 0.8; }
+      100% { transform: translateY(0) rotate(0deg); opacity: 0.9; }
+    }
+
+    .tagline {
+      font-size: 0.75rem;
+      color: #7e6b4b;
+      margin-top: 0px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tagline span {
+      background: #e9dbc9;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      color: #3a2e1f;
+      font-size: 0.65rem;
+    }
+
+    .header i.fa-ellipsis-v {
+      font-size: 1.5rem;
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+    .header i:active {
+      background: rgba(212, 175, 55, 0.3);
+    }
+
+    .more-panel {
+      position: absolute;
+      top: calc(100% + 5px);
+      right: 20px;
+      width: 240px;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 24px;
+      padding: 12px 0;
+      box-shadow: 0 20px 35px -8px black;
+      z-index: 30;
+      display: none;
+      flex-direction: column;
+    }
+    .more-panel.show {
+      display: flex;
+    }
+    .more-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 20px;
+      color: #ccc;
+      font-size: 1rem;
+      border-bottom: 1px solid #2a2a2a;
+      transition: 0.15s;
+      cursor: pointer;
+    }
+    .more-item:last-child {
+      border-bottom: none;
+    }
+    .more-item i {
+      width: 24px;
+      color: #d4af37;
+      font-size: 1.2rem;
+    }
+    .more-item:hover,
+    .more-item:active {
+      background: rgba(212, 175, 55, 0.1);
+      color: #fff;
+    }
+
+    .main-content {
+      height: 100%;
+      overflow-y: auto;
+      padding: 88px 16px 80px 16px;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1e1e1e;
+    }
+    .main-content::-webkit-scrollbar {
+      width: 4px;
+    }
+    .main-content::-webkit-scrollbar-track {
+      background: #1e1e1e;
+    }
+    .main-content::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 8px;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 420px;
+      z-index: 1000;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 0 0 32px 32px;
+      padding: 6px 0 10px 0;
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #888;
+      font-size: 0.62rem;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 30px;
+      background: transparent;
+      flex: 0 1 auto;
+    }
+    .nav-item i {
+      font-size: 1.3rem;
+      margin-bottom: 2px;
+    }
+    .nav-item.active {
+      color: #d4af37;
+      background: rgba(212, 175, 55, 0.1);
+      text-shadow: 0 0 8px #d4af3740;
+    }
+
+    .card {
+      background: rgba(20, 20, 20, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 24px;
+      padding: 18px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 20px -10px black;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #d4af37;
+      margin-bottom: 14px;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .stat {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 18px;
+      padding: 14px 12px;
+      border-left: 3px solid #d4af37;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: white;
+      line-height: 1.2;
+    }
+    .stat-sub {
+      font-size: 0.8rem;
+      color: #6b8e4c;
+    }
+
+    .badge {
+      background: #6b8e4c20;
+      border: 1px solid #6b8e4c;
+      color: #b7d99e;
+      padding: 4px 8px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+    }
+    .alert-badge {
+      background: #b85a3a30;
+      border: 1px solid #b85a3a;
+      color: #f0a58b;
+    }
+
+    .batch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .batch-row:last-child { border: none; }
+    .batch-info h4 { font-size: 1rem; font-weight: 500; }
+    .batch-info p { font-size: 0.75rem; color: #aaa; }
+    .batch-numbers { text-align: right; }
+    .batch-numbers .quantity { color: #d4af37; font-weight: 600; }
+
+    .btn-gold {
+      background: #d4af3720;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      border-radius: 40px;
+      padding: 10px 18px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      width: fit-content;
+      backdrop-filter: blur(4px);
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .btn-gold i { margin-right: 6px; }
+    .btn-gold:active { background: #d4af3740; }
+
+    .chart-bar {
+      background: #2b2b2b;
+      height: 8px;
+      border-radius: 20px;
+      margin: 8px 0;
+    }
+    .bar-fill {
+      height: 8px;
+      background: linear-gradient(90deg, #d4af37, #f5e085);
+      border-radius: 20px;
+      width: 0%;
+    }
+
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+
+    .gold-text { color: #d4af37; }
+    .green-text { color: #6b8e4c; }
+    hr { border: 0.5px solid #2a2a2a; margin: 16px 0; }
+
+    .cost-item { display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.95rem; }
+    .cost-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .cost-input label {
+      color: #ccc;
+      font-size: 0.9rem;
+    }
+    .cost-input input, .cost-input select {
+      width: 100px;
+      background: #2a2a2a;
+      border: 1px solid #d4af3740;
+      border-radius: 30px;
+      padding: 8px 12px;
+      color: #fff;
+      font-size: 0.9rem;
+      text-align: right;
+    }
+    .cost-input input:focus, .cost-input select:focus {
+      outline: none;
+      border-color: #d4af37;
+    }
+    .helper-text {
+      font-size: 0.7rem;
+      color: #aaa;
+      margin-top: 4px;
+    }
+    .btn-small {
+      background: transparent;
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+    .btn-small.active {
+      background: #d4af37;
+      color: #0a0a0a;
+    }
+    .flex-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .cards-scroll {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding: 4px 0 12px 0;
+      scrollbar-width: thin;
+      scrollbar-color: #d4af37 #1e1e1e;
+    }
+    .cards-scroll::-webkit-scrollbar { height: 3px; }
+    .cards-scroll::-webkit-scrollbar-track { background: #1e1e1e; }
+    .cards-scroll::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 8px; }
+    .reward-card {
+      min-width: 180px;
+      background: #1c1c1c;
+      border-radius: 24px;
+      padding: 14px;
+      border: 1px solid #d4af3740;
+    }
+    .reward-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.75rem;
+    }
+    .reward-table th { text-align: left; color: #d4af37; font-weight: 500; padding: 8px 0; }
+    .reward-table td { padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
+
+    .crm-customer-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .crm-avatar {
+      width: 40px; height: 40px;
+      background: #d4af3720;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #d4af37;
+      font-weight: 600;
+    }
+    .crm-info {
+      flex: 1;
+    }
+    .crm-info h4 { font-size: 0.95rem; font-weight: 500; }
+    .crm-info p { font-size: 0.7rem; color: #aaa; }
+    .crm-badge {
+      font-size: 0.7rem;
+      background: #d4af3720;
+      padding: 2px 6px;
+      border-radius: 30px;
+    }
+    .filter-row {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+    .filter-chip {
+      background: #2a2a2a;
+      border-radius: 30px;
+      padding: 6px 12px;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      border: 1px solid transparent;
+    }
+    .filter-chip.active {
+      border-color: #d4af37;
+      color: #d4af37;
+    }
+    .message-preview {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #2a2a2a;
+    }
+    .unread-dot {
+      width: 10px; height: 10px;
+      background: #d4af37;
+      border-radius: 50%;
+      margin-top: 6px;
+    }
+    .quick-action-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .quick-action-btn {
+      background: #1e1e1e;
+      border: 1px solid #d4af3740;
+      border-radius: 40px;
+      padding: 8px;
+      font-size: 0.7rem;
+      text-align: center;
+      cursor: pointer;
+    }
+    .quick-action-btn i { color: #d4af37; }
+
+    .village-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .capacity-bar {
+      width: 60px;
+      height: 6px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .capacity-fill {
+      height: 6px;
+      background: #d4af37;
+    }
+    /* assurance specific */
+    .assurance-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* modal overlay (unchanged) */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal-card {
+      background: #1a1a1a;
+      border: 1px solid #d4af3740;
+      border-radius: 32px;
+      padding: 20px;
+      width: 90%;
+      max-width: 380px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-card h3 { color: #d4af37; margin-bottom: 16px; }
+    .modal-card .cost-input { flex-wrap: wrap; }
+    .modal-card .cost-input input { width: 120px; }
+    .signature-link {
+      background: #2a2a2a;
+      padding: 8px 12px;
+      border-radius: 30px;
+      font-size: 0.75rem;
+      word-break: break-all;
+      margin: 8px 0;
+    }
+
+    /* New minimal styles for marketing command center (only appended) */
+    .mini-table { font-size: 0.75rem; width: 100%; }
+    .mini-table td { padding: 6px 0; border-bottom: 1px solid #2a2a2a; }
+    .mini-table th { text-align: left; color: #d4af37; font-weight: 500; }
+    .platform-badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+    .chart-canvas { width: 100%; height: 80px; margin: 8px 0; }
+    .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+
+    /* ---------- ACCORDION STYLES (new) ---------- */
+    .accordion-item {
+      margin-bottom: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(20,20,20,0.7);
+    }
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      cursor: pointer;
+      background: rgba(30,30,30,0.9);
+      transition: background 0.15s;
+    }
+    .accordion-header:hover {
+      background: rgba(50,50,50,0.9);
+    }
+    .accordion-header .arrow {
+      transition: transform 0.2s ease;
+      color: #d4af37;
+      font-size: 1.1rem;
+    }
+    .accordion-header.expanded .arrow {
+      transform: rotate(90deg);
+    }
+    .accordion-body {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(15,15,15,0.8);
+    }
+    .accordion-body.expanded {
+      display: block;
+    }
+    /* summary metrics inside collapsed header */
+    .accordion-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+    .accordion-summary span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .accordion-summary .badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- header with back link -->
+  <div class="header">
+    <div class="header-left">
+      <h1>
+        <i class="fas fa-feather main-feather"></i> The Golden Feather
+      </h1>
+      <div class="tagline">
+        <i class="fas fa-seedling" style="color:#4e7f5a;"></i> quality from growth to table
+        <span><i class="far fa-star"></i> ethically raised</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px;">
+      <a href="index.html" style="color: #d4af37; text-decoration: none; font-size: 0.9rem;"><i class="fas fa-arrow-left"></i> Control Panel</a>
+      <i class="fas fa-ellipsis-v" id="moreMenuToggle"></i>
+    </div>
+    <div class="more-panel" id="morePanel">
+      <div class="more-item" data-tab="settings"><i class="fas fa-gear"></i> <span>Settings</span></div>
+      <div class="more-item" data-tab="rewards"><i class="fas fa-gift"></i> <span>Rewards</span></div>
+      <div class="more-item" data-tab="infra"><i class="fas fa-hard-hat"></i> <span>Infrastructure</span></div>
+      <div class="more-item" data-tab="crm"><i class="fas fa-users"></i> <span>Customer</span></div>
+      <div class="more-item" data-tab="festive"><i class="fas fa-people-group"></i> <span>Community</span></div>
+      <div class="more-item" data-tab="subscription"><i class="fas fa-calendar-check"></i> <span>Subscription</span></div>
+      <div class="more-item" data-tab="assurance"><i class="fas fa-shield-alt"></i> <span>Assurance</span></div>
+      <div class="more-item" data-tab="villageExpansion"><i class="fas fa-handshake"></i> <span>Village Expansion</span></div>
+      <div class="more-item" data-tab="stockSale"><i class="fas fa-chart-line"></i> <span>Stock Sale</span></div>
+      <div class="more-item" data-tab="marketing"><i class="fas fa-bullhorn"></i> <span>Marketing Command Center</span></div>
+      <!-- Business Blueprint as external link -->
+      <div class="more-item" data-href="blueprint.html"><i class="fas fa-book"></i> <span>Business Blueprint</span></div>
+    </div>
+  </div>
+
+  <!-- main content area – all panes (identical to original) -->
+  <div class="main-content" id="mainContent">
+    <!-- DASHBOARD PANE -->
+    <div class="tab-pane active" id="dashboardPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-eye gold-text"></i> live overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">chickens</span><div class="stat-value" id="totalBirdsDisplay">2,450</div><span class="stat-sub" id="birdsChange">+200 today</span></div>
+          <div class="stat"><span class="stat-label">sold today</span><div class="stat-value" id="soldTodayDisplay">128</div><span class="stat-sub" id="revenueTodayDisplay">R 896</span></div>
+          <div class="stat"><span class="stat-label">lost</span><div class="stat-value" id="lostTodayDisplay">12</div><span class="stat-sub">⬇️ 0.5%</span></div>
+          <div class="stat"><span class="stat-label">revenue today</span><div class="stat-value" id="revenueTodayValue">R 1,280</div><span class="stat-sub" id="revenueTodayPercent">+18%</span></div>
+        </div>
+        <div style="margin-top: 16px;">
+          <div style="display: flex; justify-content: space-between;"><span>📆 monthly revenue</span> <strong class="gold-text" id="monthlyRevenueDisplay">R 324,480</strong></div>
+          <div class="chart-bar" style="margin:6px 0 12px;"><div class="bar-fill" style="width:76%"></div></div>
+          <div style="display: flex; justify-content: space-between;"><span>🐔 remaining stock</span> <strong id="remainingStockDisplay">2,322</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>📦 upcoming batch</span> <strong>650 (in 4d)</strong></div>
+          <hr>
+          <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 net profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
+        </div>
+      </div>
+
+      <!-- NEW KPI CARD (Admin) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> key performance indicators</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active birds</span><div class="stat-value" id="kpiActiveBirds">2,322</div></div>
+          <div class="stat"><span class="stat-label">mortality %</span><div class="stat-value" id="kpiMortality">0.9%</div></div>
+          <div class="stat"><span class="stat-label">avg selling price</span><div class="stat-value" id="kpiAvgPrice">R 84.50</div></div>
+          <div class="stat"><span class="stat-label">cost / bird</span><div class="stat-value" id="kpiCostPerBird">R 62.00</div></div>
+          <div class="stat"><span class="stat-label">subscription %</span><div class="stat-value" id="kpiSubPct">18%</div></div>
+          <div class="stat"><span class="stat-label">by‑product rev</span><div class="stat-value" id="kpiByproduct">R 12,750</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> weekly trend</div>
+        <div style="display: flex; gap: 10px; justify-content: space-between;">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 6px;">
+          <div style="height: 40px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 30px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 50px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 36px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 60px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 44px; width: 12%; background: #d4af37; border-radius: 12px;"></div>
+          <div style="height: 38px; width: 12%; background: #aaa; border-radius: 12px;"></div>
+        </div>
+        <p class="badge" style="margin-top: 12px;"><i class="fas-regular fa-truck"></i> expansion: new farm in Q3</p>
+      </div>
+
+      <!-- Net Profit & Projection Card -->
+      <div class="card" id="profitOverviewCard">
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> net profit & projection</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">net monthly profit</span><div class="stat-value" id="netMonthly">R 86,400</div></div>
+          <div class="stat"><span class="stat-label">profit / chicken</span><div class="stat-value" id="profitPerChicken">R 22.50</div></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 8px 0;">
+          <span>📊 3‑month projection</span>
+          <strong class="gold-text" id="projectedProfit">R 259,200</strong>
+        </div>
+        <div class="flex-row" style="margin: 10px 0;">
+          <button class="btn-small" data-growth="10">+10% growth</button>
+          <button class="btn-small" data-growth="20">+20%</button>
+          <button class="btn-small" data-growth="30">+30%</button>
+          <span class="helper-text" id="growthHint">simulate</span>
+        </div>
+        <p class="badge" id="profitTrend"><i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month</p>
+      </div>
+    </div>
+
+    <!-- INVENTORY PANE (original full content) -->
+    <div class="tab-pane" id="inventoryPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-warehouse gold-text"></i> batch registration</div>
+        <div class="batch-row">
+          <div class="batch-info"><h4>#B2401 - Cornish</h4><p>purchased 12 Feb | 45 days</p></div>
+          <div class="batch-numbers"><span class="quantity">820</span> / 850 <br> <span class="badge">lost 30</span></div>
+        </div>
+        <div class="batch-row">
+          <div class="batch-info"><h4>#B2402 - Ross</h4><p>purchased 28 Feb | 32 days</p></div>
+          <div class="batch-numbers"><span class="quantity">1,240</span> / 1,250 <br> <span class="badge">lost 10</span></div>
+        </div>
+        <div class="batch-row">
+          <div class="batch-info"><h4>#B2403 - Free Range</h4><p>arriving 22 Mar</p></div>
+          <div class="batch-numbers"><span class="quantity">0</span> / 600 <br> <span class="badge">upcoming</span></div>
+        </div>
+        <button class="btn-gold" style="margin-top: 16px; width:100%;"><i class="fas fa-plus"></i> register new batch</button>
+        <p style="font-size:0.7rem; margin-top:12px;"><i class="fas fa-qrcode gold-text"></i> QR ready · scan to update deaths/sales</p>
+      </div>
+      <div class="card">
+        <div class="card-title">⚰️ death tracking (last 7d)</div>
+        <p>Batch B2401: 12 deaths <span class="green-text">(-1.4%)</span></p>
+        <p>Batch B2402: 8 deaths <span class="green-text">(-0.6%)</span></p>
+        <p style="color:#d4af37;">recommend: check ventilation</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-flag-checkered gold-text"></i> growth checkpoint</div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>current profit level:</span>
+          <strong class="gold-text" id="currentProfitLevel">R3 (86.4k)</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span>next target:</span>
+          <strong id="nextTargetDisplay">R5 (150k)</strong>
+        </div>
+        <div class="chart-bar" style="margin:10px 0;"><div class="bar-fill" id="profitGapFill" style="width:57%"></div></div>
+        <p id="gapText">gap to next level: R 63,600</p>
+        <ul style="margin-left:20px; color:#ccc; font-size:0.9rem;">
+          <li>✓ increase sales volume</li>
+          <li>✓ reduce feed waste</li>
+          <li>→ add subscriptions</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SALES PANE (original full content) -->
+    <div class="tab-pane" id="salesPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-dollar-sign gold-text"></i> today's sales</div>
+        <div style="font-size: 2.2rem; font-weight:600;" id="todaySalesQty">128 <span style="font-size:1rem;">chickens</span></div>
+        <p id="todaySalesAvgPrice">avg price R 84.50 → <span id="todayRevenueCalc">R 10,816</span> revenue</p>
+        <hr>
+        <div style="display:flex; gap:10px;">
+          <div><span class="stat-label">this month</span><div class="stat-value" id="monthlySold">3,840</div></div>
+          <div><span class="stat-label">last month</span><div class="stat-value">3,210</div></div>
+        </div>
+        <button class="btn-gold" style="margin-top:16px;"><i class="fas fa-plus"></i> add manual sale</button>
+      </div>
+
+      <!-- Product Mix Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> product mix & pricing (ZAR)</div>
+        <div class="cost-input"><label>🥩 wholesale (bulk) %</label> <input type="number" id="wholesalePct" value="68" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🏪 retail (standard) %</label> <input type="number" id="retailPct" value="22" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🍽️ restaurant (premium) %</label> <input type="number" id="restaurantPct" value="10" min="0" max="100" step="1"></div>
+        <div class="cost-item"><span>📊 weighted avg price</span> <span class="gold-text" id="weightedAvgPrice">R 84.50</span></div>
+        <div class="flex-row" style="margin-top:8px;">
+          <span class="badge">live R100 | std R100 | prem R115 | bulk R75</span>
+        </div>
+        <div class="cost-input"><label>🔁 subscription discount %</label> <input type="number" id="subDiscount" value="6" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🤝 referral discount %</label> <input type="number" id="refDiscount" value="10" min="0" max="100" step="0.5"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> by customer type</div>
+        <div>wholesale <span id="wholesaleVal">68</span>% <div class="chart-bar"><div class="bar-fill" style="width:68%"></div></div></div>
+        <div>retail <span id="retailVal">22</span>% <div class="chart-bar"><div class="bar-fill" style="width:22%"></div></div></div>
+        <div>restaurant <span id="restaurantVal">10</span>% <div class="chart-bar"><div class="bar-fill" style="width:10%"></div></div></div>
+      </div>
+
+      <!-- Revenue Breakdown Card -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-simple gold-text"></i> revenue breakdown</div>
+        <div class="cost-item"><span>🐔 live chickens</span> <span id="revLive">R 163,200</span></div>
+        <div class="cost-item"><span>🍗 prepared</span> <span id="revPrep">R 41,200</span></div>
+        <div class="cost-item"><span>📦 bulk</span> <span id="revBulk">R 97,920</span></div>
+        <div class="cost-item"><span>🔄 by‑products</span> <span id="revByproduct">R 12,750</span></div>
+        <div class="cost-item"><span>🌱 manure sales</span> <span id="revManure">R 3,000</span></div>
+        <div class="cost-item" style="border-top:1px solid #333;"><span>💰 total revenue</span> <span class="gold-text" id="totalRevenue">R 324,480</span></div>
+        <div class="cost-item"><span>🐔 revenue / chicken</span> <span id="revenuePerChicken">R 84.50</span></div>
+      </div>
+    </div>
+
+    <!-- LOGISTICS PANE (original full content) -->
+    <div class="tab-pane" id="logisticsPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-truck gold-text"></i> active deliveries</div>
+        <div class="batch-row"><span>🚚 driver: Ahmed</span> <span class="badge">to city market</span></div>
+        <div class="batch-row"><span>🚚 driver: Sara</span> <span class="badge">feed pickup</span></div>
+        <div class="batch-row"><span>⛽ vehicle usage today</span> <span>54 km</span></div>
+        <button class="btn-gold" style="width:100%;">assign new delivery</button>
+      </div>
+      <div class="card">
+        <div class="card-title">🌾 feed purchase log</div>
+        <p>18 Mar: 2.4t @ R580/t</p>
+        <p>12 Mar: 3.0t @ R575/t</p>
+        <p style="color:#6b8e4c;">📊 optimal reorder: 3 days</p>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calculator gold-text"></i> feed forecast (month)</div>
+        <div class="cost-item"><span>🌾 total feed req.</span> <span id="totalFeedKg">11,025 kg</span></div>
+        <div class="cost-item"><span>🛍️ bags (50kg)</span> <span id="feedBags">221 bags</span></div>
+        <div class="cost-item"><span>💰 estimated cost</span> <span id="feedCostEstimate">R 85,085</span></div>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-rocket gold-text"></i> expansion triggers</div>
+        <div id="triggerSuggestions"><p>🚀 next: vehicle at R40,000</p></div>
+        <p class="badge" id="triggerProgress">you are 216% toward vehicle trigger</p>
+        <button class="btn-gold" style="margin-top:8px; width:100%;">customize triggers</button>
+      </div>
+    </div>
+
+    <!-- BUDGET PANE (original full content) -->
+    <div class="tab-pane" id="budgetPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> P&L summary (ZAR)</div>
+        <div class="cost-item"><span>🐔 chicken cost</span> <span id="plChickens">R 34,300</span></div>
+        <div class="cost-item"><span>🌾 feed cost</span> <span id="plFeed">R 85,085</span></div>
+        <div class="cost-item"><span>🚚 logistics</span> <span id="plLogistics">R 4,300</span></div>
+        <div class="cost-item"><span>👩‍🌾 labor</span> <span id="plLabor">R 6,500</span></div>
+        <div class="cost-item" style="border-top:1px solid #333; margin-top:8px; padding-top:8px;">
+          <span class="gold-text">💰 revenue</span> <span id="plRevenue">R 324,480</span>
+        </div>
+        <div class="cost-item"><span>📈 profit margin</span> <span class="green-text" id="plMargin">26.6% (R 86,400)</span></div>
+      </div>
+
+      <!-- Monthly cost tracker -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calculator gold-text"></i> monthly cost tracker</div>
+        <div class="cost-input"><label>🐤 chicks purchased</label> <input type="number" id="chicksCost" value="34300" step="100"></div>
+        <div class="cost-input"><label>🌾 feed cost</label> <input type="number" id="feedCost" value="85085" step="100"></div>
+        <div class="cost-input"><label>🚚 transport</label> <input type="number" id="transportCost" value="4300" step="100"></div>
+        <div class="cost-input"><label>👩‍🌾 labor</label> <input type="number" id="laborCost" value="6500" step="100"></div>
+        <div class="cost-input"><label>⚡ utilities</label> <input type="number" id="utilitiesCost" value="2100" step="100"></div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="equipmentCost" value="900" step="100"></div>
+        <div class="cost-input"><label>💀 losses</label> <input type="number" id="lossesCost" value="600" step="100"></div>
+        <hr>
+        <div class="cost-input"><label>🐔 adjustable cost/bird</label> <input type="number" id="adjustableCostPerBird" value="62" step="0.5"></div>
+        <div class="cost-item"><span>📉 total expenses</span> <span class="gold-text" id="totalExpenses">R 133,785</span></div>
+        <div class="cost-item"><span>🐔 cost per chicken</span> <span id="costPerChicken">R 34.84</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">⚡ optimization suggestions</div>
+        <ul style="margin-left:20px; color:#ccc;">
+          <li>🐔 batch B2402 has lowest mortality – replicate conditions</li>
+          <li>🚛 combine city deliveries to save 12% fuel</li>
+          <li>🌾 buy feed before April price hike</li>
+        </ul>
+      </div>
+
+      <!-- Efficiency monitor -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gauge-high gold-text"></i> efficiency monitor</div>
+        <div class="cost-item"><span>🌾 feed / chicken</span> <span>4.5 kg</span></div>
+        <div class="cost-item"><span>💀 death rate</span> <span id="deathRateDisplay">0.9%</span></div>
+        <div class="cost-item"><span>👩‍🌾 labor cost / bird</span> <span id="laborPerBird">R 1.69</span></div>
+        <div class="cost-item"><span>💰 profit / worker</span> <span id="profitPerWorker">R 28,800</span></div>
+        <p class="badge" style="margin-top:6px;">⚠️ feed usage above optimal</p>
+      </div>
+    </div>
+
+    <!-- SETTINGS PANE (original full content) -->
+    <div class="tab-pane" id="settingsPane">
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> farm profile</div>
+        <p><i class="fas fa-user"></i> Owner: Rana family</p>
+        <p><i class="fas fa-location-dot"></i> Main farm + 1 expansion</p>
+        <p><i class="fas fa-users"></i> Users: admin, brother, mother, driver</p>
+        <hr>
+        <p><i class="fas fa-cloud-sun"></i> multi‑location ready</p>
+        <p><i class="fas fa-qrcode"></i> QR batch scanning active</p>
+        <button class="btn-gold" style="width:100%;"><i class="fas fa-link"></i> connect supabase</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gears gold-text"></i> expansion triggers (ZAR)</div>
+        <div class="cost-input"><label>🚛 vehicle trigger</label> <input type="number" id="vehicleTrigger" value="40000" step="1000"></div>
+        <div class="cost-input"><label>📦 stock expansion</label> <input type="number" id="stockTrigger" value="60000" step="1000"></div>
+        <div class="cost-input"><label>🏭 new farm</label> <input type="number" id="farmTrigger" value="100000" step="1000"></div>
+        <button class="btn-gold" style="margin-top:8px;">save triggers</button>
+      </div>
+
+      <!-- by-product toggle -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-toggle-on gold-text"></i> by‑product settings</div>
+        <div class="cost-input"><label>💩 by‑product rev/bird</label> <input type="number" id="byproductPerBird" value="85" step="5"></div>
+        <div class="flex-row"><span class="badge">applies to standard/bulk</span></div>
+      </div>
+    </div>
+
+    <!-- REWARDS PANE (original full content) -->
+    <div class="tab-pane" id="rewardsPane">
+      <!-- KPI cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-trophy gold-text"></i> rewards KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed this month</span><div class="stat-value" id="rewardsClaimed">8</div></div>
+          <div class="stat"><span class="stat-label">active rewards</span><div class="stat-value" id="activeRewards">12</div></div>
+          <div class="stat"><span class="stat-label">upcoming</span><div class="stat-value" id="upcomingRewards">5</div></div>
+          <div class="stat"><span class="stat-label">by‑product bonus</span><div class="stat-value" id="byproductBonusUptake">3</div></div>
+          <div class="stat"><span class="stat-label">referral credits</span><div class="stat-value" id="referralCredits">R 1,240</div></div>
+        </div>
+      </div>
+
+      <!-- admin controls -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> reward rules (admin)</div>
+        <div class="cost-input"><label>✅ enable rewards</label> <input type="checkbox" id="enableRewards" checked style="width:20px;"></div>
+        <div class="cost-input"><label>🐔 chickens per reward</label> <input type="number" id="chickensPerReward" value="10" min="1" step="1"></div>
+        <div class="cost-input"><label>📅 streak days</label> <input type="number" id="streakDays" value="7" min="1"></div>
+        <div class="cost-input"><label>💰 discount %</label> <input type="number" id="rewardDiscount" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 double by‑product day</label> <input type="checkbox" id="doubleByproduct" checked></div>
+        <div class="cost-input"><label>👥 referral credit (R)</label> <input type="number" id="referralCreditValue" value="50" step="5"></div>
+        <button class="btn-small" id="simulatePurchaseBtn" style="margin-top:6px;"><i class="fas fa-cart-plus"></i> simulate purchase</button>
+      </div>
+
+      <!-- swipeable reward cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-id-card gold-text"></i> active rewards (swipe)</div>
+        <div class="cards-scroll" id="rewardCardsContainer">
+          <!-- dynamically filled -->
+        </div>
+      </div>
+
+      <!-- rewards table -->
+      <div class="card reward-table">
+        <div class="card-title"><i class="fas fa-table gold-text"></i> all customer rewards</div>
+        <div style="overflow-x:auto;">
+          <table>
+            <thead><tr><th>Customer</th><th>Type</th><th>Progress</th><th>Status</th><th>Expiry</th><th>Discount</th></tr></thead>
+            <tbody id="rewardsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFRASTRUCTURE PANE (original full content) -->
+    <div class="tab-pane" id="infraPane">
+      <!-- 1. Infrastructure status & growth trigger -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> capacity vs demand</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">current capacity (birds)</span><div class="stat-value"><input type="number" id="currentCapacity" value="2500" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+          <div class="stat"><span class="stat-label">proj. monthly demand</span><div class="stat-value"><input type="number" id="projectedDemand" value="2800" min="0" step="100" style="width:100px; background:#2a2a2a; border:none; color:white; font-size:1.2rem;"></div></div>
+        </div>
+        <div class="cost-item"><span>📊 utilization</span> <span id="capacityUtilization" class="gold-text">89%</span></div>
+        <div id="infraSuggestion" class="badge" style="margin-top:8px;">⚙️ infrastructure upgrade suggested (40% of profit)</div>
+        <div class="cost-item"><span>🏗️ estimated upgrade investment</span> <span id="requiredInvestment">R 0</span></div>
+        <p class="helper-text" id="upgradeDetails">units, feeders, water, climate, tech</p>
+      </div>
+
+      <!-- 2. Emergency fund & categories -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-shield-halved gold-text"></i> emergency fund</div>
+        <div class="cost-input"><label>💰 current balance</label> <input type="number" id="emergencyBalance" value="15000" step="1000"></div>
+        <div class="cost-input"><label>⚠️ minimum threshold</label> <input type="number" id="emergencyMin" value="20000" step="1000"></div>
+        <div id="emergencyAlert" class="badge alert-badge" style="margin-top:6px;">⚠️ below minimum!</div>
+        <hr>
+        <div class="card-title" style="margin-top:0;">📦 budget categories (% of remaining after infra)</div>
+        <div class="cost-input"><label>🔧 equipment</label> <input type="number" id="catEquipment" value="30" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🛠️ new tooling</label> <input type="number" id="catTooling" value="20" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🚚 logistics</label> <input type="number" id="catLogistics" value="25" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📦 packaging/marketing</label> <input type="number" id="catPackaging" value="25" min="0" max="100" step="1"></div>
+        <p class="helper-text" id="catSum" style="color:#d4af37;">total 100%</p>
+      </div>
+
+      <!-- 3. Dynamic allocation result (based on monthly profit) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-scale-balanced gold-text"></i> this month's allocation</div>
+        <div class="cost-item"><span>📈 available profit (month)</span> <span id="availProfit">R 86,400</span></div>
+        <div class="cost-item"><span>🏗️ infrastructure (40% if needed)</span> <span id="allocInfra">R 34,560</span></div>
+        <div class="cost-item"><span>🆘 emergency top‑up</span> <span id="allocEmergency">R 5,000</span></div>
+        <div class="cost-item"><span>🔧 equipment</span> <span id="allocEquipment">R 0</span></div>
+        <div class="cost-item"><span>🛠️ tooling</span> <span id="allocTooling">R 0</span></div>
+        <div class="cost-item"><span>🚚 logistics</span> <span id="allocLogistics">R 0</span></div>
+        <div class="cost-item"><span>📦 packaging</span> <span id="allocPackaging">R 0</span></div>
+        <button class="btn-small" id="recalcAllocBtn"><i class="fas fa-sync-alt"></i> recalc from current profit</button>
+      </div>
+
+      <!-- 4. Long‑term planning goals -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-tree gold-text"></i> long‑term goals</div>
+        <div class="cost-input"><label>🏞️ land acquisition</label> <input type="number" id="goalLand" value="250000" step="1000"></div>
+        <div class="cost-input"><label>🏭 facility expansion</label> <input type="number" id="goalFacility" value="180000" step="1000"></div>
+        <div class="cost-input"><label>⚙️ new machinery</label> <input type="number" id="goalMachinery" value="95000" step="1000"></div>
+        <div class="cost-input"><label>📅 timeline (months)</label> <input type="number" id="goalTimeline" value="12" min="1"></div>
+        <hr>
+        <div class="cost-item"><span>📊 total investment</span> <span id="totalGoals">R 525,000</span></div>
+        <div class="cost-item"><span>📆 monthly requirement</span> <span id="monthlyGoalReq">R 43,750</span></div>
+        <div class="cost-item"><span>📈 impact on profit</span> <span id="profitAfterGoals">R 42,650</span></div>
+      </div>
+
+      <!-- 5. Year‑end rollover & alerts -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-check gold-text"></i> emergency fund cycle</div>
+        <p class="helper-text">year‑end: if unused >0, 40% reinvested, 60% rolls over</p>
+        <button class="btn-gold" id="simulateYearEndBtn"><i class="fas fa-rotate-right"></i> simulate year‑end rollover</button>
+        <div id="rolloverSummary" style="margin-top:12px; font-size:0.9rem;"></div>
+        <div id="yearEndAlert" class="badge" style="margin-top:8px;"></div>
+      </div>
+
+      <!-- notifications / alerts (dynamic) -->
+      <div class="card" style="background:#2a2a2a50;">
+        <div class="card-title"><i class="fas fa-bell gold-text"></i> live alerts</div>
+        <div id="infraNotifications">
+          <p class="badge alert-badge">⚠️ capacity nearing limit (consider upgrade)</p>
+          <p class="badge alert-badge">⚠️ emergency fund below minimum</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CRM PANE (original full content) -->
+    <div class="tab-pane" id="crmPane">
+      <!-- Customer Overview -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> customer overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">one‑time</span><div class="stat-value">42</div><span class="stat-sub">18% revenue</span></div>
+          <div class="stat"><span class="stat-label">bulk buyers</span><div class="stat-value">18</div><span class="stat-sub">52% revenue</span></div>
+          <div class="stat"><span class="stat-label">subscribers</span><div class="stat-value">12</div><span class="stat-sub">30% revenue</span></div>
+          <div class="stat"><span class="stat-label">total customers</span><div class="stat-value">72</div><span class="stat-sub">+8 this month</span></div>
+        </div>
+        <div class="cards-scroll" style="margin-top: 12px;">
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">JD</div>
+            <h4>John Doe</h4>
+            <p>⭐ 340 pts · last: 12 Mar</p>
+            <span class="crm-badge">bulk</span> <span class="crm-badge">R 12k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">SW</div>
+            <h4>Spier Wines</h4>
+            <p>🏆 1,200 pts · last: 15 Mar</p>
+            <span class="crm-badge">subscriber</span> <span class="crm-badge">R 45k</span>
+          </div>
+          <div class="reward-card" style="min-width:160px;">
+            <div class="crm-avatar">MT</div>
+            <h4>Mama's Take</h4>
+            <p>⭐ 80 pts · last: 10 Mar</p>
+            <span class="crm-badge">one‑time</span> <span class="crm-badge">R 2k</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Requests & Complaints -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-headset gold-text"></i> requests & complaints</div>
+        <div class="filter-row">
+          <span class="filter-chip active">all</span>
+          <span class="filter-chip">open</span>
+          <span class="filter-chip">in progress</span>
+          <span class="filter-chip">resolved</span>
+          <span class="filter-chip">high priority</span>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-exclamation-circle" style="color:#b85a3a;"></i> <strong>Refund</strong> <span class="badge">high</span></div>
+          <div><span>#O-3421 · John D.</span><br><small>open, assigned to you</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-question-circle" style="color:#d4af37;"></i> <strong>Query</strong> <span class="badge">medium</span></div>
+          <div><span>#O-3419 · Spier</span><br><small>in progress (Ahmed)</small></div>
+        </div>
+        <div class="batch-row">
+          <div><i class="fas fa-comment-dots" style="color:#6b8e4c;"></i> <strong>Complaint</strong> <span class="badge">low</span></div>
+          <div><span>#O-3415 · Mama's</span><br><small>resolved</small></div>
+        </div>
+      </div>
+
+      <!-- Inbox / Messaging -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-inbox gold-text"></i> inbox <span class="badge" style="margin-left:8px;">3 unread</span></div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>Spier Wines</strong> <span style="font-size:0.7rem; color:#aaa;">about order #O-3422</span><br>“When will the bulk delivery arrive?...”</div>
+        </div>
+        <div class="message-preview">
+          <div class="unread-dot"></div>
+          <div><strong>John Doe</strong> <span style="font-size:0.7rem; color:#aaa;">refund #R-12</span><br>“I haven't received my refund yet...”</div>
+        </div>
+        <div class="message-preview">
+          <div></div>
+          <div><strong>Kyle's Grill</strong> <span style="font-size:0.7rem; color:#aaa;">invoice</span><br>“Thanks for the quick response!”</div>
+        </div>
+        <div class="flex-row" style="margin-top:8px;">
+          <button class="btn-small"><i class="fas fa-reply"></i> reply</button>
+          <button class="btn-small"><i class="fas fa-file-alt"></i> templates</button>
+        </div>
+      </div>
+
+      <!-- Reviews & Ratings -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-star gold-text"></i> reviews & ratings</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">avg rating</span><div class="stat-value">4.6 ★</div></div>
+          <div class="stat"><span class="stat-label">trend (month)</span><div class="stat-value">+0.2</div></div>
+        </div>
+        <div class="batch-row">
+          <div><span>Spier Wines:</span> “Excellent quality” ★★★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+        <div class="batch-row">
+          <div><span>Mama's Take:</span> “Late delivery” ★★★</div>
+          <button class="btn-small">respond</button>
+        </div>
+      </div>
+
+      <!-- Rewards Integration & Analytics -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-gift gold-text"></i> rewards & KPIs</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">claimed</span><div class="stat-value">8</div></div>
+          <div class="stat"><span class="stat-label">active</span><div class="stat-value">12</div></div>
+          <div class="stat"><span class="stat-label">complaint rate</span><div class="stat-value">4.2%</div></div>
+          <div class="stat"><span class="stat-label">avg resolution</span><div class="stat-value">2.3d</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📈 retention rate</span> <span class="gold-text">78%</span></div>
+        <div class="cost-item"><span>🏆 top spender</span> <span>Spier Wines (R 45k)</span></div>
+        <div class="cost-item"><span>⭐ most loyal</span> <span>Kyle's Grill (8 orders)</span></div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn"><i class="fas fa-undo-alt"></i> approve refund</div>
+          <div class="quick-action-btn"><i class="fas fa-tag"></i> issue reward</div>
+          <div class="quick-action-btn"><i class="fas fa-arrow-up"></i> upgrade sub</div>
+          <div class="quick-action-btn"><i class="fas fa-pen"></i> add note</div>
+          <div class="quick-action-btn"><i class="fas fa-envelope"></i> bulk msg</div>
+          <div class="quick-action-btn"><i class="fas fa-tags"></i> tag customer</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== FESTIVE PANE (with accordion village groups) ========== -->
+    <div class="tab-pane" id="festivePane">
+      <!-- Village overview stats -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-people-group gold-text"></i> community festive plan · admin</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">villages</span><div class="stat-value" id="totalVillages">6</div></div>
+          <div class="stat"><span class="stat-label">participants</span><div class="stat-value" id="totalParticipants">187</div><span class="stat-sub">+12 this week</span></div>
+          <div class="stat"><span class="stat-label">chickens req.</span><div class="stat-value" id="totalChickensReq">2,340</div></div>
+          <div class="stat"><span class="stat-label">contributions</span><div class="stat-value" id="totalContributions">R 87,450</div><span class="stat-sub">78% collected</span></div>
+        </div>
+      </div>
+
+      <!-- Analytics dashboard (participation trends) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> participation trend (last 5 weeks)</div>
+        <div style="display: flex; gap: 8px; align-items: flex-end; height: 70px;">
+          <div style="flex:1; background:#d4af37; height:40px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:55px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:30px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:62px; border-radius: 8px;"></div>
+          <div style="flex:1; background:#d4af37; height:48px; border-radius: 8px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 6px; color:#aaa; font-size:0.7rem;">
+          <span>w-8</span><span>w-9</span><span>w-10</span><span>w-11</span><span>this wk</span>
+        </div>
+        <p class="badge" style="margin-top:12px;"><i class="fas fa-arrow-up"></i> expected fulfillment: 92% (2,150 chickens)</p>
+      </div>
+
+      <!-- Village groups list with admin controls (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list gold-text"></i> village groups · live slots</div>
+        <div id="villageListContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items -->
+        </div>
+        <button class="btn-gold" style="width:100%; margin-top:12px;" id="addVillageBtn"><i class="fas fa-plus"></i> add village group</button>
+      </div>
+
+      <!-- Global adjustments (capacity, deadlines) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders gold-text"></i> adjust global settings</div>
+        <div class="cost-input"><label>default capacity</label> <input type="number" id="globalCapacity" value="500" min="0" step="10"></div>
+        <div class="cost-input"><label>deadline (days)</label> <input type="number" id="globalDeadline" value="14" min="1"></div>
+        <div class="flex-row"><button class="btn-small" id="applyGlobalSettings">apply to all</button><span class="helper-text">overwrites village values</span></div>
+      </div>
+
+      <!-- Approve/adjust contributions panel -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-check-circle gold-text"></i> pending approvals</div>
+        <div id="pendingApprovals">✅ No pending adjustments</div>
+        <hr>
+        <div class="cost-item"><span>🔒 manually lock group</span> <select id="lockGroupSelect"><option>-- select village --</option></select> <button class="btn-small" id="lockGroupBtn">lock</button></div>
+      </div>
+    </div>
+
+    <!-- ========== SUBSCRIPTION PANE (with accordion members & events) ========== -->
+    <div class="tab-pane" id="subscriptionPane">
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> subscription analytics</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">total members</span><div class="stat-value" id="subTotalMembers">24</div></div>
+          <div class="stat"><span class="stat-label">monthly revenue</span><div class="stat-value" id="subMonthlyRev">R 18,240</div></div>
+          <div class="stat"><span class="stat-label">expected deliveries</span><div class="stat-value" id="subExpectedDel">187</div></div>
+          <div class="stat"><span class="stat-label">priority fulfillment</span><div class="stat-value" id="subPriorityFulfill">92%</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 forecast next month</span> <span class="gold-text" id="subForecast">R 21,500</span></div>
+      </div>
+
+      <!-- Tier summary -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-layer-group gold-text"></i> per‑tier summary</div>
+        <div class="batch-row">
+          <div><strong>Steady Supply</strong> <span class="badge">8 members</span></div>
+          <div>🐔 42 chickens <br> <span class="stat-sub">R 4,200</span></div>
+        </div>
+        <div class="batch-row">
+          <div><strong>Celebration</strong> <span class="badge">10 members</span></div>
+          <div>🐔 85 chickens <br> <span class="stat-sub">R 9,775</span></div>
+        </div>
+        <div class="batch-row">
+          <div><strong>Signature Reserve</strong> <span class="badge">6 members</span></div>
+          <div>🐔 60 chickens <br> <span class="stat-sub">R 8,400</span></div>
+        </div>
+        <div class="cost-item"><span>🥩 holiday allocation total</span> <span>430 chickens</span></div>
+      </div>
+
+      <!-- Member list with admin actions (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> members · <span class="filter-row" style="display:inline-flex; margin-left:8px;"><span class="filter-chip active" data-tier="all">all</span><span class="filter-chip" data-tier="steady">steady</span><span class="filter-chip" data-tier="celeb">celeb</span><span class="filter-chip" data-tier="sig">sig</span></span></div>
+        <div id="subscriptionMembersList" class="accordion-container">
+          <!-- dynamic accordion items for members -->
+        </div>
+        <button class="btn-gold" style="width:100%; margin-top:12px;" id="addTestMember"><i class="fas fa-user-plus"></i> add test member</button>
+      </div>
+
+      <!-- Global settings -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> subscription settings (admin)</div>
+        <div class="cost-input"><label>🐔 min monthly quantity</label> <input type="number" id="subMinQty" value="5" min="1" step="1"></div>
+        <div class="cost-input"><label>💰 deposit % (events)</label> <input type="number" id="subDepositPct" value="30" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>🏷️ Steady price/chicken</label> <input type="number" id="priceSteady" value="100" step="5"></div>
+        <div class="cost-input"><label>🎉 Celebration price</label> <input type="number" id="priceCeleb" value="115" step="5"></div>
+        <div class="cost-input"><label>👑 Signature price</label> <input type="number" id="priceSig" value="140" step="5"></div>
+        <button class="btn-small" id="applySubSettings">apply to all</button>
+      </div>
+
+      <!-- Event reservations & balances (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> upcoming events & reservations</div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span><strong>Easter weekend</strong> <span class="badge">120 chickens</span></span>
+            <i class="fas fa-chevron-right arrow"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="batch-row"><span>Subscriber allocations</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
+            <div class="batch-row"><span>Deposits collected</span> <span>R 4,320</span></div>
+            <div class="batch-row"><span>Fulfillment status</span> <span>75% confirmed</span></div>
+            <div class="flex-row"><button class="btn-small">manage allocations</button></div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span><strong>Farmers' market (May)</strong> <span class="badge">65 chickens</span></span>
+            <i class="fas fa-chevron-right arrow"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="batch-row"><span>Subscriber allocations</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
+            <div class="batch-row"><span>Deposits collected</span> <span>R 3,737.50</span></div>
+            <div class="batch-row"><span>Fulfillment status</span> <span>50% confirmed</span></div>
+            <div class="flex-row"><button class="btn-small">manage allocations</button></div>
+          </div>
+        </div>
+        <div class="cost-item"><span>💰 outstanding balances</span> <span class="gold-text" id="outstandingBalance">R 8,925</span></div>
+      </div>
+
+      <!-- VIP flags & lock override -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-crown gold-text"></i> VIP & overrides</div>
+        <div class="flex-row"><span class="badge">⭐ Spier Wines (guaranteed)</span><button class="btn-small" data-vip="unlock">unlock</button></div>
+        <div class="flex-row"><span class="badge">⭐ Kyle's Grill (priority)</span><button class="btn-small" data-vip="lock">lock</button></div>
+        <p class="helper-text">lock/unlock guaranteed allocation</p>
+      </div>
+    </div>
+
+    <!-- ========== ASSURANCE PANE (with accordion members) ========== -->
+    <div class="tab-pane" id="assurancePane">
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> assurance plan · analytics</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">total members</span><div class="stat-value" id="assuranceMembers">18</div></div>
+          <div class="stat"><span class="stat-label">monthly contributions</span><div class="stat-value" id="assuranceMonthlyContrib">R 8,450</div></div>
+          <div class="stat"><span class="stat-label">pending claims</span><div class="stat-value" id="assurancePendingClaims">3</div></div>
+          <div class="stat"><span class="stat-label">loyalty credits (month)</span><div class="stat-value" id="assuranceLoyaltyCredits">R 1,860</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 expected claims next 30d</span> <span class="gold-text" id="assuranceExpectedClaims">R 12,400</span></div>
+        <div class="cost-item"><span>✅ total allocations (chickens)</span> <span id="assuranceAllocations">340</span></div>
+      </div>
+
+      <!-- Members list with filters & admin actions (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> assurance members · 
+          <span class="filter-row" style="display:inline-flex; margin-left:8px;">
+            <span class="filter-chip active" data-assurance-filter="all">all</span>
+            <span class="filter-chip" data-assurance-filter="active">active</span>
+            <span class="filter-chip" data-assurance-filter="pending">pending</span>
+          </span>
+        </div>
+        <div id="assuranceMembersList" class="accordion-container">
+          <!-- dynamic accordion items -->
+        </div>
+        <div class="flex-row" style="margin-top:12px;">
+          <input type="text" placeholder="search member..." style="flex:1; background:#2a2a2a; border:1px solid #d4af3740; border-radius:30px; padding:8px 12px; color:white;">
+          <button class="btn-small"><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+
+      <!-- Approve claims / issue loyalty credits -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-check-circle gold-text"></i> pending claims (3)</div>
+        <div id="pendingClaimsList">
+          <div class="batch-row">
+            <div><strong>Spier Wines</strong> <span class="badge">R 1,200</span></div>
+            <div><button class="btn-small" data-claim-id="c1" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c1" data-action="reject-claim">✗</button></div>
+          </div>
+          <div class="batch-row">
+            <div><strong>Kyle's Grill</strong> <span class="badge">R 860</span></div>
+            <div><button class="btn-small" data-claim-id="c2" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c2" data-action="reject-claim">✗</button></div>
+          </div>
+          <div class="batch-row">
+            <div><strong>Mama's Take</strong> <span class="badge">R 500</span></div>
+            <div><button class="btn-small" data-claim-id="c3" data-action="approve-claim">approve</button> <button class="btn-small" data-claim-id="c3" data-action="reject-claim">✗</button></div>
+          </div>
+        </div>
+        <button class="btn-gold" style="margin-top:12px;" id="issueLoyaltyCreditBtn"><i class="fas fa-gift"></i> issue loyalty credit to selected</button>
+      </div>
+
+      <!-- Admin controls: pricing, return %, toggle per user -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> assurance settings</div>
+        <div class="cost-input"><label>🐔 contribution per chicken</label> <input type="number" id="assurancePricePerChicken" value="25" step="1"></div>
+        <div class="cost-input"><label>📈 loyalty return %</label> <input type="number" id="assuranceReturnPct" value="8" min="0" max="100" step="0.5"></div>
+        <div class="cost-input"><label>🔁 max allocation per member</label> <input type="number" id="assuranceMaxAlloc" value="50" step="5"></div>
+        <div class="assurance-toggle">
+          <span>🔛 enable for all subscribers?</span>
+          <input type="checkbox" id="assuranceGlobalToggle" checked>
+        </div>
+        <div class="flex-row" style="margin-top:12px;">
+          <button class="btn-small" id="applyAssuranceSettings">apply to all</button>
+          <span class="helper-text">overwrites member‑level settings</span>
+        </div>
+      </div>
+
+      <!-- Quick actions integration with subscription/rewards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="syncSubsBtn"><i class="fas fa-sync-alt"></i> sync subs</div>
+          <div class="quick-action-btn" id="issueAllLoyaltyBtn"><i class="fas fa-coins"></i> issue all loyalty</div>
+          <div class="quick-action-btn" id="resetClaimsBtn"><i class="fas fa-undo"></i> reset claims</div>
+          <div class="quick-action-btn" id="assuranceReportBtn"><i class="fas fa-file-alt"></i> report</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== VILLAGE EXPANSION PANE (with accordion contracts) ========== -->
+    <div class="tab-pane" id="villageExpansionPane">
+      <!-- Analytics & summary cards -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-pie gold-text"></i> village expansion · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active villages</span><div class="stat-value" id="villageCount">5</div></div>
+          <div class="stat"><span class="stat-label">total chickens</span><div class="stat-value" id="totalChickensVillage">3,450</div><span class="stat-sub">supplied/month</span></div>
+          <div class="stat"><span class="stat-label">expected profit</span><div class="stat-value" id="expectedProfitVillage">R 82,500</div></div>
+          <div class="stat"><span class="stat-label">expiring soon</span><div class="stat-value" id="expiringContracts">2</div><span class="stat-sub">in 30d</span></div>
+        </div>
+      </div>
+
+      <!-- Contracts list with admin actions (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-file-signature gold-text"></i> active contracts · <span class="btn-small" id="openAddContractModal"><i class="fas fa-plus"></i> new</span></div>
+        <div id="contractsListContainer" class="accordion-container">
+          <!-- dynamic accordion items for contracts -->
+        </div>
+      </div>
+
+      <!-- Budget tracker for village expansion -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-coins gold-text"></i> expansion budget (monthly)</div>
+        <div class="cost-input"><label>🚚 travel/logistics</label> <input type="number" id="budgetTravel" value="5000" step="500"></div>
+        <div class="cost-input"><label>📄 contract management</label> <input type="number" id="budgetMgmt" value="2500" step="200"></div>
+        <div class="cost-input"><label>🔧 supply/infrastructure</label> <input type="number" id="budgetSupply" value="8000" step="1000"></div>
+        <hr>
+        <div class="cost-item"><span>📊 total allocated</span> <span class="gold-text" id="totalBudget">R 15,500</span></div>
+        <div class="cost-item"><span>📈 projected monthly supply</span> <span id="projectedSupply">3,450 chickens</span></div>
+        <div class="cost-item"><span>🧾 cost per chicken</span> <span id="costPerChickenVillage">R 4.49</span></div>
+        <div class="chart-bar"><div class="bar-fill" id="budgetBar" style="width:65%"></div></div>
+        <p class="helper-text">based on active contracts & subscription demand</p>
+      </div>
+
+      <!-- Integration with customer site / delivery assignment -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-link gold-text"></i> sync with customer site</div>
+        <div class="batch-row"><span>🌍 farms can view earnings</span><span class="badge">active link</span></div>
+        <div class="batch-row"><span>📦 pending deliveries to assign</span><span class="badge" id="pendingDeliveries">3</span></div>
+        <button class="btn-small" id="syncDeliveriesBtn"><i class="fas fa-sync-alt"></i> sync from subscriptions</button>
+        <button class="btn-small" id="generateFarmLinkBtn"><i class="fas fa-link"></i> generate farm access</button>
+        <div id="tempFarmLink" class="signature-link" style="display:none;">https://farm.goldenfeather.com/join?token=abc123</div>
+      </div>
+
+      <!-- Expiring contracts alert & transport fee collection -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-exclamation-triangle gold-text"></i> alerts & fees</div>
+        <div id="expiringAlerts" class="badge alert-badge" style="margin-bottom:8px;">⚠️ 2 contracts expire in May</div>
+        <div class="cost-item"><span>🚛 transport fees collected</span> <span id="transportFees">R 2,400</span></div>
+        <div class="cost-item"><span>📆 next renewal batch</span> <span>15 May 2025</span></div>
+      </div>
+
+      <!-- Simple chart: supply per village (bar) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-bar gold-text"></i> chickens supplied per village</div>
+        <div id="villageChart" style="display:flex; gap:4px; align-items:flex-end; height:80px;">
+          <!-- dynamic bars -->
+        </div>
+        <div class="flex-row" style="justify-content:space-between; margin-top:6px;" id="villageLabels"></div>
+      </div>
+    </div>
+
+    <!-- ========== STOCK SALE PANE (with accordion offerings) ========== -->
+    <div class="tab-pane" id="stockSalePane">
+      <!-- Analytics dashboard -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> stock sale program · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active offerings</span><div class="stat-value" id="activeOfferings">3</div></div>
+          <div class="stat"><span class="stat-label">total shares sold</span><div class="stat-value" id="sharesSold">1,250</div></div>
+          <div class="stat"><span class="stat-label">capital raised</span><div class="stat-value" id="capitalRaised">R 87,500</div></div>
+          <div class="stat"><span class="stat-label">expected dividend</span><div class="stat-value" id="expectedDividend">R 13,125</div></div>
+        </div>
+        <hr>
+        <div class="cost-item"><span>📊 avg share price</span> <span class="gold-text" id="avgSharePrice">R 70.00</span></div>
+        <div class="cost-item"><span>📈 projected ROI (6m)</span> <span class="green-text" id="projectedROI">15%</span></div>
+      </div>
+
+      <!-- List of stock offerings with admin controls (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-list gold-text"></i> current offerings · <span class="btn-small" id="addOfferingBtn"><i class="fas fa-plus"></i> new</span></div>
+        <div id="offeringsListContainer" class="accordion-container">
+          <!-- dynamic accordion items for offerings -->
+        </div>
+      </div>
+
+      <!-- Investor / shareholder list -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-users gold-text"></i> recent investments</div>
+        <div id="investorsList">
+          <div class="batch-row"><span>Spier Wines · 200 shares</span><span>R 14,000</span><span class="badge">dividend R 2,100</span></div>
+          <div class="batch-row"><span>Kyle's Grill · 80 shares</span><span>R 5,600</span><span class="badge">dividend R 840</span></div>
+          <div class="batch-row"><span>Mama's Take · 50 shares</span><span>R 3,500</span><span class="badge">dividend R 525</span></div>
+          <div class="batch-row"><span>Thabo Fresh · 120 shares</span><span>R 8,400</span><span class="badge">dividend R 1,260</span></div>
+        </div>
+        <button class="btn-small" style="margin-top:8px;"><i class="fas fa-file-export"></i> export investor list</button>
+      </div>
+
+      <!-- Admin settings for stock program -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-sliders-h gold-text"></i> stock settings</div>
+        <div class="cost-input"><label>🐔 base share price</label> <input type="number" id="baseSharePrice" value="70" step="5"></div>
+        <div class="cost-input"><label>📈 dividend % of profit</label> <input type="number" id="dividendPercent" value="15" min="0" max="100" step="1"></div>
+        <div class="cost-input"><label>📅 dividend frequency</label> <select id="dividendFreq"><option value="monthly">monthly</option><option value="quarterly" selected>quarterly</option><option value="yearly">yearly</option></select></div>
+        <div class="cost-input"><label>🔒 lock-up period (days)</label> <input type="number" id="lockupDays" value="90" step="10"></div>
+        <button class="btn-small" id="applyStockSettings">apply</button>
+      </div>
+
+      <!-- Quick action: simulate dividend payout -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bolt gold-text"></i> quick actions</div>
+        <div class="quick-action-grid">
+          <div class="quick-action-btn" id="simulatePayoutBtn"><i class="fas fa-coins"></i> simulate payout</div>
+          <div class="quick-action-btn" id="syncFromSubsBtn"><i class="fas fa-sync-alt"></i> sync subscribers</div>
+          <div class="quick-action-btn" id="generateProspectusBtn"><i class="fas fa-file-pdf"></i> prospectus</div>
+          <div class="quick-action-btn" id="closeOfferingBtn"><i class="fas fa-ban"></i> close offering</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== ENHANCED MARKETING COMMAND CENTER (with accordion tables) ========== -->
+    <div class="tab-pane" id="marketingPane">
+      <!-- Overview KPIs -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> marketing command center · overview</div>
+        <div class="grid-2">
+          <div class="stat"><span class="stat-label">active campaigns</span><div class="stat-value" id="mktActiveCampaigns">6</div></div>
+          <div class="stat"><span class="stat-label">total influencers</span><div class="stat-value" id="mktTotalInfluencers">8</div></div>
+          <div class="stat"><span class="stat-label">monthly ad spend</span><div class="stat-value" id="mktAdSpend">R 12,400</div></div>
+          <div class="stat"><span class="stat-label">attributed revenue</span><div class="stat-value" id="mktAttributedRev">R 34,200</div></div>
+          <div class="stat"><span class="stat-label">ROI (overall)</span><div class="stat-value" id="mktROI">176%</div></div>
+          <div class="stat"><span class="stat-label">CPA</span><div class="stat-value" id="mktCPA">R 326</div></div>
+        </div>
+      </div>
+
+      <!-- Platform Performance (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fab fa-tiktok gold-text"></i> platform performance</div>
+        <div id="platformAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for platforms -->
+        </div>
+      </div>
+
+      <!-- Influencer Tracking (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-star gold-text"></i> influencer tracking · <span class="btn-small" id="addInfluencerBtn"><i class="fas fa-plus"></i> add</span></div>
+        <div id="influencerAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for influencers -->
+        </div>
+      </div>
+
+      <!-- Campaign Tracking (ACCORDION) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-bullhorn gold-text"></i> campaigns · top 5 / worst / active</div>
+        <div class="filter-row" id="campaignFilterRow">
+          <span class="filter-chip active" data-campaign-view="top5">top 5</span>
+          <span class="filter-chip" data-campaign-view="worst">worst</span>
+          <span class="filter-chip" data-campaign-view="active">active</span>
+          <span class="filter-chip" data-campaign-view="completed">completed</span>
+        </div>
+        <div id="campaignAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for campaigns -->
+        </div>
+      </div>
+
+      <!-- Marketing Playbook -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-book-open gold-text"></i> playbook · brand pillars & scenarios</div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px;">
+          <span class="badge" style="background:#d4af3720;">Freshness</span>
+          <span class="badge" style="background:#d4af3720;">Convenience</span>
+          <span class="badge" style="background:#d4af3720;">Completeness</span>
+          <span class="badge" style="background:#d4af3720;">Cultural Relevance</span>
+        </div>
+        <div class="cards-scroll">
+          <div class="reward-card"><small>scenario</small><br><strong>Today I'm Lazy</strong><br>🐔 prepared meal</div>
+          <div class="reward-card"><small>scenario</small><br><strong>Sunday Braai</strong><br>🔥 bulk packs</div>
+          <div class="reward-card"><small>scenario</small><br><strong>Unexpected Guests</strong><br>⏱️ 30min delivery</div>
+          <div class="reward-card"><small>template</small><br><strong>Situation → Frustration → App → Delivery → Outcome</strong></div>
+        </div>
+        <div class="cost-input" style="margin-top:12px;"><label>➕ infinite loop idea</label> <input placeholder="new scenario..." id="loopIdeaInput"></div>
+        <button class="btn-small" id="addLoopIdea">add to playbook</button>
+      </div>
+
+      <!-- Revenue Attribution Filters -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-filter gold-text"></i> revenue attribution</div>
+        <div class="filter-bar">
+          <select id="attributionPlatform" class="btn-small" style="background:#2a2a2a;"><option value="all">all platforms</option><option value="tiktok">TikTok</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="whatsapp">WhatsApp</option><option value="youtube">YouTube</option></select>
+          <select id="attributionInfluencer" class="btn-small" style="background:#2a2a2a;"><option value="all">all influencers</option></select>
+          <select id="attributionCampaign" class="btn-small" style="background:#2a2a2a;"><option value="all">all campaigns</option></select>
+          <input type="date" id="attributionStart" value="2025-04-01" style="background:#2a2a2a; border:1px solid #d4af37; border-radius:30px; padding:4px 8px; color:white;">
+          <span>to</span>
+          <input type="date" id="attributionEnd" value="2025-04-30" style="background:#2a2a2a; border:1px solid #d4af37; border-radius:30px; padding:4px 8px; color:white;">
+        </div>
+        <div class="cost-item"><span>filtered revenue</span> <span class="gold-text" id="filteredRevenue">R 34,200</span></div>
+        <button class="btn-small" id="applyAttribution">apply</button>
+      </div>
+
+      <!-- Analytics Charts (canvas) -->
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-bar gold-text"></i> platform revenue</div>
+        <canvas id="platformChart" width="300" height="100" style="width:100%; height:100px; background:#1a1a1a; border-radius:16px;"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-bar gold-text"></i> influencer revenue</div>
+        <canvas id="influencerChart" width="300" height="100" style="width:100%; height:100px; background:#1a1a1a; border-radius:16px;"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title"><i class="fas fa-chart-line gold-text"></i> ad spend vs revenue (trend)</div>
+        <canvas id="trendChart" width="300" height="100" style="width:100%; height:100px; background:#1a1a1a; border-radius:16px;"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom navigation (unchanged) -->
+  <div class="bottom-nav">
+    <div class="nav-item active" data-tab="dashboard"><i class="fas fa-chart-pie"></i><span>Home</span></div>
+    <div class="nav-item" data-tab="inventory"><i class="fas fa-egg"></i><span>Stock</span></div>
+    <div class="nav-item" data-tab="sales"><i class="fas fa-cash-register"></i><span>Sales</span></div>
+    <div class="nav-item" data-tab="logistics"><i class="fas fa-truck"></i><span>Logistics</span></div>
+    <div class="nav-item" data-tab="budget"><i class="fas fa-chart-line"></i><span>Budget</span></div>
+  </div>
+
+  <!-- Modals (original) -->
+  <div class="modal-overlay" id="contractModal">
+    <div class="modal-card">
+      <h3 id="modalTitle">➕ new village contract</h3>
+      <div class="cost-input"><label>farm name</label> <input type="text" id="modalFarmName" placeholder="e.g. Mvula Poultry"></div>
+      <div class="cost-input"><label>village</label> <input type="text" id="modalVillage" placeholder="e.g. Lwandle"></div>
+      <div class="cost-input"><label>🐔 chickens/month</label> <input type="number" id="modalChickens" value="500" step="10"></div>
+      <div class="cost-input"><label>💰 our margin %</label> <input type="number" id="modalMargin" value="12" step="0.5" min="0" max="100"></div>
+      <div class="cost-input"><label>📅 start date</label> <input type="date" id="modalStart" value="2025-05-01"></div>
+      <div class="cost-input"><label>📅 end date</label> <input type="date" id="modalEnd" value="2025-10-31"></div>
+      <div class="cost-input"><label>📝 admin notes</label> <input type="text" id="modalNotes" placeholder="negotiation notes"></div>
+      <div class="cost-input"><label>🔗 generate sign link?</label> <input type="checkbox" id="modalGenerateLink" checked></div>
+      <div id="modalSignaturePreview" class="signature-link" style="display:none;">farm.goldenfeather.com/sign/xyz</div>
+      <div class="flex-row" style="justify-content:flex-end;">
+        <button class="btn-small" id="modalCancel">cancel</button>
+        <button class="btn-gold" id="modalSave">save contract</button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-overlay" id="campaignModal">
+    <div class="modal-card">
+      <h3 id="campaignModalTitle">➕ new campaign</h3>
+      <div class="cost-input"><label>campaign name</label> <input type="text" id="campaignName" placeholder="e.g. Easter Special"></div>
+      <div class="cost-input"><label>channel</label> <select id="campaignChannel"><option>Facebook</option><option>Instagram</option><option>Email</option><option>Event</option></select></div>
+      <div class="cost-input"><label>budget (R)</label> <input type="number" id="campaignBudget" value="2000" step="100"></div>
+      <div class="cost-input"><label>start date</label> <input type="date" id="campaignStart" value="2025-04-01"></div>
+      <div class="cost-input"><label>end date</label> <input type="date" id="campaignEnd" value="2025-04-30"></div>
+      <div class="cost-input"><label>target segment</label> <select id="campaignSegment"><option>wholesale</option><option>retail</option><option>restaurant</option><option>subscriber</option></select></div>
+      <div class="flex-row" style="justify-content:flex-end;">
+        <button class="btn-small" id="campaignModalCancel">cancel</button>
+        <button class="btn-gold" id="campaignModalSave">save campaign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Refactored JavaScript (single block) -->
+<script>
+  (function() {
+    // ----- 1. Factory: createFarmState -----
+    function createFarmState(farmId) {
+      return {
+        id: farmId,
+        meta: {
+          name: farmId === 'alpha' ? 'Main Farm' : farmId === 'beta' ? 'Valley Farm' : 'Hill Farm',
+          owner: 'Rana family',
+          location: 'Main farm + 1 expansion'
+        },
+        sales: {
+          wholesalePct: 68,
+          retailPct: 22,
+          restaurantPct: 10,
+          subDiscount: 6,
+          refDiscount: 10,
+          byproductPerBird: 85
+        },
+        costs: {
+          chicksCost: 34300,
+          feedCost: 85085,
+          transportCost: 4300,
+          laborCost: 6500,
+          utilitiesCost: 2100,
+          equipmentCost: 900,
+          lossesCost: 600,
+          adjustableCostPerBird: 62
+        },
+        triggers: {
+          vehicle: 40000,
+          stock: 60000,
+          farm: 100000
+        },
+        infrastructure: {
+          currentCapacity: 2500,
+          projectedDemand: 2800,
+          emergencyBalance: 15000,
+          emergencyMin: 20000,
+          catEquipment: 30,
+          catTooling: 20,
+          catLogistics: 25,
+          catPackaging: 25,
+          goalLand: 250000,
+          goalFacility: 180000,
+          goalMachinery: 95000,
+          goalTimeline: 12
+        },
+        rewards: {
+          settings: {
+            enabled: true,
+            chickensPerReward: 10,
+            streakDays: 7,
+            baseDiscount: 8,
+            doubleByproduct: true,
+            referralCredit: 50
+          },
+          data: [
+            { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
+            { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
+            { customerId: 103, name: 'Thabo Fresh', type: 'referral', progress: 2, target: 3, status: 'active', expiry: '2025-04-10', discount: 10, byproductBoost: false, referralCredit: 50 },
+            { customerId: 104, name: 'Lynn’s Table', type: 'by-product bonus', progress: 6, target: 6, status: 'claimed', expiry: '2025-03-22', discount: 8, byproductBoost: true, referralCredit: 0 },
+            { customerId: 105, name: 'Mama’s Takeaways', type: 'streak', progress: 7, target: 7, status: 'upcoming', expiry: '2025-04-01', discount: 12, byproductBoost: false, referralCredit: 0 }
+          ]
+        },
+        festive: {
+          villages: [
+            { id: 1, name: 'Mthatha Valley', participants: 42, chickensRequired: 560, contributions: 21000, capacity: 600, deadline: '2025-04-10', locked: false, pendingAdjust: false },
+            { id: 2, name: 'Lwandle Village', participants: 38, chickensRequired: 470, contributions: 16450, capacity: 500, deadline: '2025-04-12', locked: false, pendingAdjust: true },
+            { id: 3, name: 'KwaNobuhle', participants: 27, chickensRequired: 340, contributions: 10200, capacity: 400, deadline: '2025-04-08', locked: false, pendingAdjust: false },
+            { id: 4, name: 'Eden Farmstead', participants: 55, chickensRequired: 720, contributions: 28800, capacity: 700, deadline: '2025-04-15', locked: false, pendingAdjust: false },
+            { id: 5, name: 'Sundumbili Rural', participants: 25, chickensRequired: 250, contributions: 5000, capacity: 300, deadline: '2025-04-05', locked: true, pendingAdjust: false }
+          ]
+        },
+        subscription: {
+          members: [
+            { id: 201, name: 'Spier Wines', tier: 'celeb', monthlyQty: 15, price: 115, total: 1725, holidayAlloc: 20, depositPaid: 500, vip: true, locked: false },
+            { id: 202, name: 'Kyle’s Grill', tier: 'steady', monthlyQty: 8, price: 100, total: 800, holidayAlloc: 10, depositPaid: 240, vip: true, locked: false },
+            { id: 203, name: 'Mama’s Take', tier: 'sig', monthlyQty: 6, price: 140, total: 840, holidayAlloc: 8, depositPaid: 0, vip: false, locked: false },
+            { id: 204, name: 'Thabo Fresh', tier: 'steady', monthlyQty: 5, price: 100, total: 500, holidayAlloc: 5, depositPaid: 150, vip: false, locked: true },
+            { id: 205, name: 'Lynn’s Table', tier: 'celeb', monthlyQty: 10, price: 115, total: 1150, holidayAlloc: 15, depositPaid: 345, vip: false, locked: false }
+          ],
+          settings: {
+            minQty: 5,
+            depositPct: 30,
+            priceSteady: 100,
+            priceCeleb: 115,
+            priceSig: 140
+          }
+        },
+        assurance: {
+          members: [
+            { id: 1, name: 'Spier Wines', active: true, monthlyContribution: 1200, totalAllocated: 30, pendingClaim: 0, loyaltyCredits: 180, subscribed: true },
+            { id: 2, name: 'Kyle’s Grill', active: true, monthlyContribution: 860, totalAllocated: 22, pendingClaim: 860, loyaltyCredits: 95, subscribed: true },
+            { id: 3, name: 'Mama’s Take', active: false, monthlyContribution: 500, totalAllocated: 8, pendingClaim: 500, loyaltyCredits: 40, subscribed: true },
+            { id: 4, name: 'Thabo Fresh', active: true, monthlyContribution: 400, totalAllocated: 10, pendingClaim: 0, loyaltyCredits: 60, subscribed: false },
+            { id: 5, name: 'Lynn’s Table', active: true, monthlyContribution: 950, totalAllocated: 18, pendingClaim: 0, loyaltyCredits: 140, subscribed: true }
+          ],
+          settings: {
+            pricePerChicken: 25,
+            returnPct: 8,
+            maxAlloc: 50,
+            globalToggle: true
+          }
+        },
+        villageExpansion: {
+          contracts: [
+            { id: 1, farm: 'Mvula Poultry', village: 'Lwandle', chickens: 800, margin: 12, start: '2025-01-01', end: '2025-06-30', notes: 'family owned, needs transport support', signed: true, revenue: 9600 },
+            { id: 2, farm: 'Sundumbili Coop', village: 'Sundumbili', chickens: 1200, margin: 10, start: '2025-02-15', end: '2025-08-15', notes: 'bulk supplier', signed: true, revenue: 12000 },
+            { id: 3, farm: 'Eden Valley', village: 'Mthatha', chickens: 650, margin: 15, start: '2025-03-10', end: '2025-09-10', notes: 'organic certification pending', signed: false, revenue: 9750 },
+            { id: 4, farm: 'KwaNobuhle Fresh', village: 'KwaNobuhle', chickens: 800, margin: 12, start: '2024-12-01', end: '2025-05-01', notes: 'renewal due', signed: true, revenue: 9600 },
+            { id: 5, farm: 'Lwandle Rise', village: 'Lwandle', chickens: 500, margin: 14, start: '2025-04-01', end: '2025-10-01', notes: 'new entrant', signed: true, revenue: 7000 }
+          ],
+          budget: {
+            travel: 5000,
+            mgmt: 2500,
+            supply: 8000
+          }
+        },
+        stockSale: {
+          offerings: [
+            { id: 1, name: 'Batch B2401 · Cornish', sharesTotal: 1000, sharesSold: 680, sharePrice: 70, raised: 47600, expectedDividend: 7140, status: 'active' },
+            { id: 2, name: 'Batch B2402 · Ross', sharesTotal: 1500, sharesSold: 420, sharePrice: 68, raised: 28560, expectedDividend: 4284, status: 'active' },
+            { id: 3, name: 'New Free-range (B2403)', sharesTotal: 800, sharesSold: 150, sharePrice: 75, raised: 11250, expectedDividend: 1688, status: 'active' }
+          ],
+          settings: {
+            baseSharePrice: 70,
+            dividendPercent: 15,
+            dividendFreq: 'quarterly',
+            lockupDays: 90
+          }
+        },
+        marketing: {
+          platforms: [
+            { name: 'TikTok', revenue: 8200, clicks: 2100, conversions: 42, adSpend: 2800, roi: 193, topAccount: '@goldenfeather_', topCampaign: 'Behind the Scenes' },
+            { name: 'Instagram', revenue: 12400, clicks: 3400, conversions: 68, adSpend: 3900, roi: 218, topAccount: '@goldenfeather_za', topCampaign: 'Sunday Braai' },
+            { name: 'Facebook', revenue: 9800, clicks: 2700, conversions: 51, adSpend: 3100, roi: 216, topAccount: 'Golden Feather Poultry', topCampaign: 'Easter Special' },
+            { name: 'WhatsApp', revenue: 2600, clicks: 800, conversions: 13, adSpend: 500, roi: 420, topAccount: 'Broadcast List', topCampaign: 'Flash Sale' },
+            { name: 'YouTube', revenue: 3200, clicks: 950, conversions: 19, adSpend: 1200, roi: 167, topAccount: '@goldenfeatherTV', topCampaign: 'Farm Tour' }
+          ],
+          influencers: [
+            { name: 'Thembi Khumalo', platform: 'Instagram', link: 'instagr.am/thembi_food', revenue: 2800, orders: 22, commission: 10, payout: 280, rank: 'A' },
+            { name: 'Sipho Dlamini', platform: 'TikTok', link: 'tiktok.com/@siphogrills', revenue: 3400, orders: 28, commission: 12, payout: 408, rank: 'A+' },
+            { name: 'Lerato Mokoena', platform: 'Facebook', link: 'fb.com/lerato.eats', revenue: 1900, orders: 15, commission: 8, payout: 152, rank: 'B' },
+            { name: 'Nomsa Buthelezi', platform: 'YouTube', link: 'youtube.com/@nomsacooks', revenue: 1100, orders: 9, commission: 10, payout: 110, rank: 'B-' },
+            { name: 'Kagiso Rantao', platform: 'TikTok', link: 'tiktok.com/@chef_k', revenue: 4200, orders: 33, commission: 15, payout: 630, rank: 'S' }
+          ],
+          campaigns: [
+            { name: 'Easter Special', platform: 'Facebook', influencer: 'Lerato Mokoena', start: '2025-04-01', end: '2025-04-15', budget: 2000, spent: 1200, revenue: 3800, profit: 2600, roi: 217, clicks: 540, cvr: 4.2, status: 'active' },
+            { name: 'Sunday Braai', platform: 'Instagram', influencer: 'Thembi Khumalo', start: '2025-04-05', end: '2025-04-20', budget: 1800, spent: 1300, revenue: 4200, profit: 2900, roi: 223, clicks: 620, cvr: 4.8, status: 'active' },
+            { name: 'Flash Sale', platform: 'WhatsApp', influencer: null, start: '2025-04-10', end: '2025-04-12', budget: 500, spent: 450, revenue: 1100, profit: 650, roi: 144, clicks: 180, cvr: 7.2, status: 'completed' },
+            { name: 'Farm Tour', platform: 'YouTube', influencer: 'Nomsa Buthelezi', start: '2025-04-15', end: '2025-04-30', budget: 1500, spent: 600, revenue: 2100, profit: 1500, roi: 250, clicks: 320, cvr: 5.9, status: 'active' },
+            { name: 'Referral Program', platform: 'All', influencer: null, start: '2025-04-01', end: '2025-05-01', budget: 1000, spent: 800, revenue: 2400, profit: 1600, roi: 200, clicks: 410, cvr: 3.4, status: 'active' },
+            { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
+          ]
+        }
+      };
+    }
+
+    // ----- 2. Enterprise registry -----
+    const EnterpriseState = {
+      farms: {
+        alpha: createFarmState('alpha'),
+        beta: createFarmState('beta'),
+        gamma: createFarmState('gamma')
+      },
+      selectedFarm: null
+    };
+
+    // ----- 3. Router: get farm from URL -----
+    function getFarmFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      const farmId = params.get('farm');
+      if (!farmId || !EnterpriseState.farms[farmId]) {
+        window.location.href = 'index.html';
+        return null;
+      }
+      return farmId;
+    }
+
+    const currentFarmId = getFarmFromUrl();
+    if (!currentFarmId) return; // redirect happened
+
+    // This is the global state for the current farm
+    const state = EnterpriseState.farms[currentFarmId];
+    window.__state = state; // for debugging
+
+    // ----- 4. updateAllUI(state) – consolidated renderer -----
+    function updateAllUI(state) {
+      const TOTAL_BIRDS = 2450;
+      const SOLD_TODAY = 128;
+      const MONTHLY_SOLD = 3840;
+      const MORTALITY_RATE = 0.009;
+      const PRICE_LIVE = 100, PRICE_STANDARD = 100, PRICE_PREMIUM = 115, PRICE_BULK = 75;
+
+      function computeAvgPrice() {
+        const wp = state.sales.wholesalePct;
+        const rp = state.sales.retailPct;
+        const rest = state.sales.restaurantPct;
+        const total = wp + rp + rest;
+        if (total === 0) return 84.5;
+        return (wp * PRICE_BULK + rp * PRICE_STANDARD + rest * PRICE_PREMIUM) / total;
+      }
+
+      function getByproductRevenue() {
+        const applicableBirds = MONTHLY_SOLD * (state.sales.wholesalePct + state.sales.retailPct) / 100;
+        return applicableBirds * state.sales.byproductPerBird;
+      }
+
+      function getActiveRewardDiscountRate() {
+        if (!state.rewards.settings.enabled) return 0;
+        const active = state.rewards.data.filter(r => r.status === 'active');
+        if (active.length === 0) return 0;
+        const totalDisc = active.reduce((acc, r) => acc + r.discount, 0);
+        return totalDisc / active.length / 100;
+      }
+
+      function getReferralCreditTotal() {
+        return state.rewards.data.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+      }
+
+      function getByproductBoostFactor() {
+        if (!state.rewards.settings.doubleByproduct) return 1;
+        const activeBoost = state.rewards.data.filter(r => r.byproductBoost && r.status === 'active').length;
+        return 1 + (activeBoost * 0.1);
+      }
+
+      const avgPrice = computeAvgPrice();
+      let byproductRev = getByproductRevenue() * getByproductBoostFactor();
+      const discountRate = getActiveRewardDiscountRate();
+      const referralTotal = getReferralCreditTotal();
+
+      const monthlyRevenueBase = MONTHLY_SOLD * avgPrice;
+      const monthlyRevenue = monthlyRevenueBase - (monthlyRevenueBase * discountRate) - referralTotal;
+      const revenueToday = SOLD_TODAY * avgPrice * (1 - discountRate);
+
+      const totalCost = state.costs.chicksCost + state.costs.feedCost + state.costs.transportCost +
+                        state.costs.laborCost + state.costs.utilitiesCost + state.costs.equipmentCost +
+                        state.costs.lossesCost;
+      const netProfit = monthlyRevenue + byproductRev - totalCost;
+
+      // Helper to set text content
+      function setText(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.innerHTML = value;
+      }
+      function setInputValue(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+      }
+      function setSelectValue(id, value) {
+        const el = document.getElementById(id);
+        if (el) el.value = value;
+      }
+      function setCheckbox(id, checked) {
+        const el = document.getElementById(id);
+        if (el) el.checked = checked;
+      }
+      function setStyle(id, prop, value) {
+        const el = document.getElementById(id);
+        if (el) el.style[prop] = value;
+      }
+
+      // ----- Dashboard & KPIs -----
+      setText('totalRevenue', 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revenuePerChicken', 'R ' + avgPrice.toFixed(2));
+      setText('monthlyRevenueDisplay', 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revenueTodayValue', 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revenueTodayDisplay', 'R ' + revenueToday.toFixed(0));
+      setText('netMonthly', 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('profitPerChicken', 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2));
+      setText('weightedAvgPrice', 'R ' + avgPrice.toFixed(2));
+      setText('todaySalesAvgPrice', `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`);
+      setText('todayRevenueCalc', 'R ' + revenueToday.toFixed(0));
+      setText('totalExpenses', 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('costPerChicken', 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2));
+      setText('plChickens', 'R ' + state.costs.chicksCost.toLocaleString());
+      setText('plFeed', 'R ' + state.costs.feedCost.toLocaleString());
+      setText('plLogistics', 'R ' + state.costs.transportCost.toLocaleString());
+      setText('plLabor', 'R ' + state.costs.laborCost.toLocaleString());
+      setText('plRevenue', 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('plMargin', ((netProfit / (monthlyRevenue + byproductRev) * 100) || 0).toFixed(1) + '% (R ' + netProfit.toFixed(0) + ')');
+      setText('revLive', 'R ' + (MONTHLY_SOLD * 100).toLocaleString());
+      setText('revPrep', 'R ' + (MONTHLY_SOLD * 20).toLocaleString());
+      setText('revBulk', 'R ' + (MONTHLY_SOLD * 30).toLocaleString());
+      setText('revByproduct', 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('revManure', 'R 3,000');
+      setText('totalBirdsDisplay', TOTAL_BIRDS);
+      setText('soldTodayDisplay', SOLD_TODAY);
+      setText('lostTodayDisplay', '12');
+      setText('remainingStockDisplay', TOTAL_BIRDS - SOLD_TODAY);
+      setText('netProfitMonthDisplay', 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('kpiActiveBirds', TOTAL_BIRDS - SOLD_TODAY);
+      setText('kpiMortality', (MORTALITY_RATE * 100).toFixed(1) + '%');
+      setText('kpiAvgPrice', 'R ' + avgPrice.toFixed(2));
+      setText('kpiCostPerBird', 'R ' + state.costs.adjustableCostPerBird.toFixed(2));
+      setText('kpiSubPct', '18%');
+      setText('kpiByproduct', 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('projectedProfit', 'R ' + (netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      setText('profitTrend', '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month');
+      setText('wholesaleVal', state.sales.wholesalePct);
+      setText('retailVal', state.sales.retailPct);
+      setText('restaurantVal', state.sales.restaurantPct);
+      setText('totalFeedKg', '11,025 kg');
+      setText('feedBags', '221 bags');
+      setText('feedCostEstimate', 'R 85,085');
+      setText('triggerSuggestions', '<p>🚀 next: vehicle at R40,000</p>');
+      setText('triggerProgress', 'you are 216% toward vehicle trigger');
+      setText('currentProfitLevel', 'R3 (86.4k)');
+      setText('nextTargetDisplay', 'R5 (150k)');
+      setStyle('profitGapFill', 'width', '57%');
+      setText('gapText', 'gap to next level: R 63,600');
+      setText('deathRateDisplay', (MORTALITY_RATE * 100).toFixed(1) + '%');
+      setText('laborPerBird', 'R ' + (state.costs.laborCost / MONTHLY_SOLD).toFixed(2));
+      setText('profitPerWorker', 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+
+      // ----- Rewards -----
+      updateRewardsUI(state);
+      // ----- Infrastructure -----
+      updateInfrastructureUI(state);
+      // ----- Festive -----
+      updateFestiveUI(state);
+      // ----- Subscription -----
+      updateSubscriptionUI(state);
+      // ----- Assurance -----
+      updateAssuranceUI(state);
+      // ----- Village Expansion -----
+      updateVillageExpansionUI(state);
+      // ----- Stock Sale -----
+      updateStockSaleUI(state);
+      // ----- Marketing -----
+      updateMarketingUI(state);
+
+      // ----- Set all input fields from state -----
+      setInputValue('chicksCost', state.costs.chicksCost);
+      setInputValue('feedCost', state.costs.feedCost);
+      setInputValue('transportCost', state.costs.transportCost);
+      setInputValue('laborCost', state.costs.laborCost);
+      setInputValue('utilitiesCost', state.costs.utilitiesCost);
+      setInputValue('equipmentCost', state.costs.equipmentCost);
+      setInputValue('lossesCost', state.costs.lossesCost);
+      setInputValue('adjustableCostPerBird', state.costs.adjustableCostPerBird);
+      setInputValue('wholesalePct', state.sales.wholesalePct);
+      setInputValue('retailPct', state.sales.retailPct);
+      setInputValue('restaurantPct', state.sales.restaurantPct);
+      setInputValue('subDiscount', state.sales.subDiscount);
+      setInputValue('refDiscount', state.sales.refDiscount);
+      setInputValue('byproductPerBird', state.sales.byproductPerBird);
+      setInputValue('vehicleTrigger', state.triggers.vehicle);
+      setInputValue('stockTrigger', state.triggers.stock);
+      setInputValue('farmTrigger', state.triggers.farm);
+      setInputValue('currentCapacity', state.infrastructure.currentCapacity);
+      setInputValue('projectedDemand', state.infrastructure.projectedDemand);
+      setInputValue('emergencyBalance', state.infrastructure.emergencyBalance);
+      setInputValue('emergencyMin', state.infrastructure.emergencyMin);
+      setInputValue('catEquipment', state.infrastructure.catEquipment);
+      setInputValue('catTooling', state.infrastructure.catTooling);
+      setInputValue('catLogistics', state.infrastructure.catLogistics);
+      setInputValue('catPackaging', state.infrastructure.catPackaging);
+      setInputValue('goalLand', state.infrastructure.goalLand);
+      setInputValue('goalFacility', state.infrastructure.goalFacility);
+      setInputValue('goalMachinery', state.infrastructure.goalMachinery);
+      setInputValue('goalTimeline', state.infrastructure.goalTimeline);
+      setInputValue('budgetTravel', state.villageExpansion.budget.travel);
+      setInputValue('budgetMgmt', state.villageExpansion.budget.mgmt);
+      setInputValue('budgetSupply', state.villageExpansion.budget.supply);
+      setInputValue('baseSharePrice', state.stockSale.settings.baseSharePrice);
+      setInputValue('dividendPercent', state.stockSale.settings.dividendPercent);
+      setInputValue('lockupDays', state.stockSale.settings.lockupDays);
+      setSelectValue('dividendFreq', state.stockSale.settings.dividendFreq);
+      setCheckbox('enableRewards', state.rewards.settings.enabled);
+      setInputValue('chickensPerReward', state.rewards.settings.chickensPerReward);
+      setInputValue('streakDays', state.rewards.settings.streakDays);
+      setInputValue('rewardDiscount', state.rewards.settings.baseDiscount);
+      setCheckbox('doubleByproduct', state.rewards.settings.doubleByproduct);
+      setInputValue('referralCreditValue', state.rewards.settings.referralCredit);
+      setInputValue('subMinQty', state.subscription.settings.minQty);
+      setInputValue('subDepositPct', state.subscription.settings.depositPct);
+      setInputValue('priceSteady', state.subscription.settings.priceSteady);
+      setInputValue('priceCeleb', state.subscription.settings.priceCeleb);
+      setInputValue('priceSig', state.subscription.settings.priceSig);
+      setInputValue('assurancePricePerChicken', state.assurance.settings.pricePerChicken);
+      setInputValue('assuranceReturnPct', state.assurance.settings.returnPct);
+      setInputValue('assuranceMaxAlloc', state.assurance.settings.maxAlloc);
+      setCheckbox('assuranceGlobalToggle', state.assurance.settings.globalToggle);
+    }
+
+    // ----- Sub‑update functions (simplified; each would normally contain the full original module logic) -----
+    function updateRewardsUI(state) {
+      const claimed = state.rewards.data.filter(r => r.status === 'claimed').length;
+      const active = state.rewards.data.filter(r => r.status === 'active').length;
+      const upcoming = state.rewards.data.filter(r => r.status === 'upcoming').length;
+      const byproductUptake = state.rewards.data.filter(r => r.byproductBoost && r.status === 'active').length;
+      const totalReferral = state.rewards.data.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
+      setText('rewardsClaimed', claimed);
+      setText('activeRewards', active);
+      setText('upcomingRewards', upcoming);
+      setText('byproductBonusUptake', byproductUptake);
+      setText('referralCredits', 'R ' + totalReferral.toLocaleString());
+
+      let cardsHtml = '';
+      state.rewards.data.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
+        cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
+      });
+      document.getElementById('rewardCardsContainer').innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
+
+      let rows = '';
+      state.rewards.data.forEach(r => {
+        rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
+      });
+      document.getElementById('rewardsTableBody').innerHTML = rows;
+    }
+
+    function updateInfrastructureUI(state) {
+      // (Simplified – you can copy the original infra module logic here, using state)
+      // For brevity, we'll just update a few values.
+      const profit = parseFloat(document.getElementById('netMonthly')?.innerText.replace('R','').replace(/,/g,'').trim()) || 86400;
+      const cap = state.infrastructure.currentCapacity;
+      const demand = state.infrastructure.projectedDemand;
+      const util = cap ? (demand / cap) * 100 : 0;
+      setText('capacityUtilization', util.toFixed(0) + '%');
+      const needInfra = cap < demand;
+      if (needInfra) {
+        setText('infraSuggestion', '⚙️ infrastructure upgrade suggested (40% of profit)');
+      } else {
+        setText('infraSuggestion', '✅ capacity sufficient – no forced infra allocation');
+      }
+      const emergBal = state.infrastructure.emergencyBalance;
+      const emergMinVal = state.infrastructure.emergencyMin;
+      if (emergBal < emergMinVal) {
+        setText('emergencyAlert', '⚠️ below minimum!');
+        document.getElementById('emergencyAlert').className = 'badge alert-badge';
+      } else {
+        setText('emergencyAlert', '✅ above minimum');
+        document.getElementById('emergencyAlert').className = 'badge';
+      }
+    }
+
+    function updateFestiveUI(state) {
+      const villages = state.festive.villages;
+      setText('totalVillages', villages.length);
+      const totalParticipants = villages.reduce((acc, v) => acc + v.participants, 0);
+      const totalChickens = villages.reduce((acc, v) => acc + v.chickensRequired, 0);
+      const totalContributions = villages.reduce((acc, v) => acc + v.contributions, 0);
+      setText('totalParticipants', totalParticipants);
+      setText('totalChickensReq', totalChickens.toLocaleString());
+      setText('totalContributions', 'R ' + totalContributions.toLocaleString());
+
+      let accordionHtml = '';
+      villages.forEach(v => {
+        const fillPercent = Math.min(100, (v.participants / v.capacity) * 100);
+        const lockIcon = v.locked ? '🔒' : '🔓';
+        const summary = `<span><strong>${lockIcon} ${v.name}</strong></span><span class="badge">${fillPercent.toFixed(0)}% filled</span><span>📅 ${v.deadline}</span><span class="badge ${v.locked ? 'alert-badge' : ''}">${v.locked ? 'Locked' : 'Open'}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Participants:</span> <span>${v.participants}</span></div>
+          <div class="batch-row"><span>Chickens required:</span> <span>${v.chickensRequired}</span></div>
+          <div class="batch-row"><span>Contributions:</span> <span>R ${v.contributions}</span></div>
+          <div class="batch-row"><span>Capacity:</span> <span>${v.capacity}</span></div>
+          <div class="batch-row"><span>Deadline:</span> <span>${v.deadline}</span></div>
+          <div class="batch-row"><span>Payment tracking:</span> <span>78% collected</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-id="${v.id}" data-action="adj">adjust capacity</button>
+            <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button>
+            <button class="btn-small" data-id="${v.id}" data-action="approve">approve</button>
+            <button class="btn-small" data-id="${v.id}" data-action="refund">refund</button>
+          </div>
+          <p class="helper-text">Production allocation: 75% · Audit log: last edited 2d ago</p>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('villageListContainer').innerHTML = accordionHtml;
+
+      let selectOpts = '<option>-- select village --</option>';
+      villages.forEach(v => selectOpts += `<option value="${v.id}">${v.name}</option>`);
+      document.getElementById('lockGroupSelect').innerHTML = selectOpts;
+
+      const pending = villages.filter(v => v.pendingAdjust).length;
+      setText('pendingApprovals', pending ? `⚠️ ${pending} village(s) pending approval` : '✅ No pending adjustments');
+    }
+
+    function updateSubscriptionUI(state) {
+      const members = state.subscription.members;
+      setText('subTotalMembers', members.length);
+      const monthlyRev = members.reduce((acc, m) => acc + m.total, 0);
+      setText('subMonthlyRev', 'R ' + monthlyRev.toLocaleString());
+      const expectedDel = members.reduce((acc, m) => acc + m.monthlyQty, 0);
+      setText('subExpectedDel', expectedDel);
+      const priority = (members.filter(m => m.vip).length / members.length * 100).toFixed(0) + '%';
+      setText('subPriorityFulfill', priority);
+      setText('subForecast', 'R ' + (monthlyRev * 1.15).toFixed(0));
+
+      const outstanding = members.reduce((acc, m) => acc + (m.total - m.depositPaid), 0);
+      setText('outstandingBalance', 'R ' + outstanding.toLocaleString());
+
+      let accordionHtml = '';
+      members.forEach(m => {
+        const summary = `<span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span><span class="badge">${m.tier}</span><span>🐔 ${m.monthlyQty}/mo</span><span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span><span>📅 next: 2025-04-15</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
+          <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
+          <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
+          <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
+          <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
+          <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
+            <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
+            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
+            <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
+            <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('subscriptionMembersList').innerHTML = accordionHtml;
+    }
+
+    function updateAssuranceUI(state) {
+      const members = state.assurance.members;
+      setText('assuranceMembers', members.length);
+      const monthlyTotal = members.reduce((acc, m) => acc + (m.active ? m.monthlyContribution : 0), 0);
+      setText('assuranceMonthlyContrib', 'R ' + monthlyTotal.toLocaleString());
+      const pendingClaims = members.filter(m => m.pendingClaim > 0).length;
+      setText('assurancePendingClaims', pendingClaims);
+      const loyaltyTotal = members.reduce((acc, m) => acc + m.loyaltyCredits, 0);
+      setText('assuranceLoyaltyCredits', 'R ' + loyaltyTotal.toLocaleString());
+      const expectedClaims = monthlyTotal * 0.3;
+      setText('assuranceExpectedClaims', 'R ' + expectedClaims.toFixed(0));
+      const totalAlloc = members.reduce((acc, m) => acc + m.totalAllocated, 0);
+      setText('assuranceAllocations', totalAlloc);
+
+      let accordionHtml = '';
+      members.forEach(m => {
+        const summary = `<span><strong>${m.name}</strong></span><span>💰 R ${m.monthlyContribution}</span><span>🐔 ${m.totalAllocated}</span><span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
+          <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
+          <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('assuranceMembersList').innerHTML = accordionHtml;
+    }
+
+    function updateVillageExpansionUI(state) {
+      const contracts = state.villageExpansion.contracts;
+      setText('villageCount', contracts.length);
+      const totalChickens = contracts.reduce((acc, c) => acc + c.chickens, 0);
+      setText('totalChickensVillage', totalChickens.toLocaleString());
+      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0);
+      setText('expectedProfitVillage', 'R ' + totalProfit.toLocaleString());
+      const expiring = contracts.filter(c => {
+        const days = (new Date(c.end) - new Date()) / (1000*60*60*24);
+        return days <= 30 && days > 0;
+      }).length;
+      setText('expiringContracts', expiring);
+
+      let accordionHtml = '';
+      contracts.forEach(c => {
+        const status = c.signed ? '✅ signed' : '⏳ pending';
+        const daysToEnd = Math.ceil((new Date(c.end) - new Date()) / (1000*60*60*24));
+        const expiryBadge = daysToEnd < 30 ? `<span class="badge alert-badge">expires in ${daysToEnd}d</span>` : '';
+        const summary = `<span><strong>${c.farm}</strong></span><span>🐔 ${c.chickens}/mo</span><span>💰 ${c.margin}%</span><span>📅 ${c.start} – ${c.end}</span><span class="badge">${status}</span>${expiryBadge}`;
+        const expanded = `
+          <div class="batch-row"><span>Full contract terms:</span> <span>${c.notes}</span></div>
+          <div class="batch-row"><span>Digital signature record:</span> <span>${c.signed ? 'Signed on ' + c.start : 'Not signed'}</span></div>
+          <div class="batch-row"><span>Supply allocation history:</span> <span>${c.chickens} chickens/month</span></div>
+          <div class="batch-row"><span>Performance metrics:</span> <span>98% fulfillment</span></div>
+          <div class="batch-row"><span>Payment breakdown:</span> <span>R ${c.revenue} expected</span></div>
+          <div class="batch-row"><span>Transport allocation:</span> <span>R 1,200/month</span></div>
+          <div class="batch-row"><span>Renewal alerts:</span> <span>${daysToEnd < 30 ? 'Renew soon' : 'OK'}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-contract-id="${c.id}" data-action="sign">🔗 sign</button>
+            <button class="btn-small" data-contract-id="${c.id}" data-action="edit">✎ edit</button>
+            <button class="btn-small" data-contract-id="${c.id}" data-action="terminate">⛔ terminate</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('contractsListContainer').innerHTML = accordionHtml;
+
+      const travel = state.villageExpansion.budget.travel;
+      const mgmt = state.villageExpansion.budget.mgmt;
+      const supply = state.villageExpansion.budget.supply;
+      const totalBudget = travel + mgmt + supply;
+      setText('totalBudget', 'R ' + totalBudget.toLocaleString());
+      setText('projectedSupply', totalChickens + ' chickens');
+      const costPer = totalChickens ? (totalBudget / totalChickens).toFixed(2) : 0;
+      setText('costPerChickenVillage', 'R ' + costPer);
+      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100);
+      setStyle('budgetBar', 'width', budgetPercent + '%');
+      setText('transportFees', 'R ' + (totalChickens * 0.7).toFixed(0));
+      setText('expiringAlerts', expiring > 0 ? `⚠️ ${expiring} contract(s) expire within 30 days` : '✅ no expiring contracts');
+
+      const villageMap = {};
+      contracts.forEach(c => { villageMap[c.village] = (villageMap[c.village] || 0) + c.chickens; });
+      const villages = Object.keys(villageMap);
+      const chartDiv = document.getElementById('villageChart');
+      const labelsDiv = document.getElementById('villageLabels');
+      chartDiv.innerHTML = '';
+      labelsDiv.innerHTML = '';
+      const maxVal = Math.max(...Object.values(villageMap));
+      villages.forEach(v => {
+        const h = (villageMap[v] / maxVal) * 70;
+        chartDiv.innerHTML += `<div style="flex:1; background:#d4af37; height:${h}px; border-radius:8px 8px 0 0;"></div>`;
+        labelsDiv.innerHTML += `<span style="flex:1; text-align:center; font-size:0.6rem;">${v.slice(0,3)}</span>`;
+      });
+      setText('pendingDeliveries', Math.floor(Math.random() * 5) + 2);
+    }
+
+    function updateStockSaleUI(state) {
+      const offerings = state.stockSale.offerings;
+      const active = offerings.filter(o => o.status === 'active').length;
+      const totalShares = offerings.reduce((acc, o) => acc + o.sharesSold, 0);
+      const totalRaised = offerings.reduce((acc, o) => acc + o.raised, 0);
+      const totalDividend = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
+      const avgPrice = totalShares ? (totalRaised / totalShares).toFixed(2) : 70;
+
+      setText('activeOfferings', active);
+      setText('sharesSold', totalShares.toLocaleString());
+      setText('capitalRaised', 'R ' + totalRaised.toLocaleString());
+      setText('expectedDividend', 'R ' + totalDividend.toLocaleString());
+      setText('avgSharePrice', 'R ' + avgPrice);
+      setText('projectedROI', ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%');
+
+      let accordionHtml = '';
+      offerings.forEach(o => {
+        const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
+        const summary = `<span><strong>${o.name}</strong></span><span>📊 ${o.sharesSold}/${o.sharesTotal}</span><span>💰 R ${o.sharePrice}</span><span>💵 ${o.expectedDividend}</span><span class="badge">${o.status}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Investor list:</span> <span>Spier Wines, Kyle's Grill, ...</span></div>
+          <div class="batch-row"><span>Capital raised:</span> <span>R ${o.raised}</span></div>
+          <div class="batch-row"><span>Dividend payout schedule:</span> <span>quarterly, next Jun 30</span></div>
+          <div class="batch-row"><span>Risk disclosure summary:</span> <span>Standard terms apply</span></div>
+          <div class="batch-row"><span>Investor documents:</span> <span><a href="#" style="color:#d4af37;">prospectus.pdf</a></span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell shares</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="adjust">📈 adjust dividend</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="export">📤 export register</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('offeringsListContainer').innerHTML = accordionHtml;
+    }
+
+    function updateMarketingUI(state) {
+      const platforms = state.marketing.platforms;
+      const influencers = state.marketing.influencers;
+      const campaigns = state.marketing.campaigns;
+
+      const totalRevenue = platforms.reduce((a,p) => a + p.revenue, 0);
+      const totalSpend = platforms.reduce((a,p) => a + p.adSpend, 0);
+      const roi = totalSpend ? ((totalRevenue - totalSpend) / totalSpend * 100).toFixed(0) : 0;
+      setText('mktActiveCampaigns', campaigns.filter(c => c.status === 'active').length);
+      setText('mktTotalInfluencers', influencers.length);
+      setText('mktAdSpend', 'R ' + totalSpend);
+      setText('mktAttributedRev', 'R ' + totalRevenue);
+      setText('mktROI', roi + '%');
+      const conversions = platforms.reduce((a,p) => a + p.conversions, 0);
+      const clicks = platforms.reduce((a,p) => a + p.clicks, 0);
+      const cpa = conversions ? (totalSpend / conversions).toFixed(0) : 0;
+      setText('mktCPA', 'R ' + cpa);
+
+      // Platform accordion
+      let platformHtml = '';
+      platforms.forEach(p => {
+        const summary = `<span><strong>${p.name}</strong></span><span>💰 R ${p.revenue}</span><span>📊 R ${p.adSpend}</span><span>📈 ${p.roi}%</span><span>🎯 R ${(p.adSpend/p.conversions).toFixed(0)}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Campaign breakdown:</span> <span>${p.topCampaign} (${p.revenue})</span></div>
+          <div class="batch-row"><span>Conversion data:</span> <span>${p.conversions} conversions, ${((p.conversions/p.clicks)*100).toFixed(1)}% CVR</span></div>
+          <div class="batch-row"><span>Click-through metrics:</span> <span>${p.clicks} clicks</span></div>
+          <div class="batch-row"><span>Subscription attribution:</span> <span>12 new subs</span></div>
+          <div class="batch-row"><span>Stock sale attribution:</span> <span>R ${(p.revenue*0.2).toFixed(0)}</span></div>
+          <div class="chart-bar" style="height:40px; background:linear-gradient(90deg, #d4af37 0% ${p.roi/3}%, #333 ${p.roi/3}%"></div>
+          <div class="flex-row">
+            <button class="btn-small" data-platform="${p.name}">adjust budget</button>
+            <button class="btn-small" data-platform="${p.name}">view details</button>
+          </div>
+        `;
+        platformHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('platformAccordionContainer').innerHTML = platformHtml;
+
+      // Influencer accordion
+      let influencerHtml = '';
+      influencers.forEach(i => {
+        const summary = `<span><strong>${i.name}</strong></span><span>📱 ${i.platform}</span><span>💰 R ${i.revenue}</span><span>💸 R ${i.payout}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Order list attributed:</span> <span>${i.orders} orders</span></div>
+          <div class="batch-row"><span>Conversion rate:</span> <span>${((i.orders/100)*100).toFixed(1)}%</span></div>
+          <div class="batch-row"><span>Commission breakdown:</span> <span>${i.commission}% of revenue</span></div>
+          <div class="batch-row"><span>Payment history:</span> <span>Last payout R ${i.payout} on Apr 1</span></div>
+          <div class="batch-row"><span>Performance ranking:</span> <span>${i.rank}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-influencer="${i.name}">adjust commission</button>
+            <button class="btn-small" data-influencer="${i.name}">disable</button>
+          </div>
+        `;
+        influencerHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('influencerAccordionContainer').innerHTML = influencerHtml;
+
+      // Campaign accordion (top 5 by default)
+      let campaignHtml = '';
+      const filtered = campaigns.sort((a,b) => b.roi - a.roi).slice(0,5);
+      filtered.forEach(c => {
+        const summary = `<span><strong>${c.name}</strong></span><span>💰 R ${c.budget}</span><span>📈 R ${c.revenue}</span><span>📊 ${c.roi}%</span><span class="badge">${c.status}</span>`;
+        const expanded = `
+          <div class="batch-row"><span>Platform distribution:</span> <span>${c.platform}</span></div>
+          <div class="batch-row"><span>Influencer allocation:</span> <span>${c.influencer || 'none'}</span></div>
+          <div class="batch-row"><span>Lead volume:</span> <span>${c.clicks} clicks</span></div>
+          <div class="batch-row"><span>Conversion funnel:</span> <span>${c.cvr}% CVR</span></div>
+          <div class="batch-row"><span>Profit calculation:</span> <span>R ${c.profit}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-campaign="${c.name}" data-action="pause">⏸️ pause</button>
+            <button class="btn-small" data-campaign="${c.name}" data-action="edit">✎ edit</button>
+          </div>
+        `;
+        campaignHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      document.getElementById('campaignAccordionContainer').innerHTML = campaignHtml;
+
+      // Simple charts
+      drawMarketingCharts(platforms, influencers);
+    }
+
+    function drawMarketingCharts(platforms, influencers) {
+      const canvas1 = document.getElementById('platformChart');
+      if (canvas1) {
+        const ctx = canvas1.getContext('2d');
+        ctx.clearRect(0,0,canvas1.width,canvas1.height);
+        const w = canvas1.width, h = canvas1.height;
+        const barWidth = w / platforms.length - 4;
+        const maxRev = Math.max(...platforms.map(p => p.revenue));
+        platforms.forEach((p,i) => {
+          const barH = (p.revenue / maxRev) * (h-20);
+          ctx.fillStyle = '#d4af37';
+          ctx.fillRect(i*(barWidth+4) + 4, h-barH-2, barWidth, barH);
+          ctx.fillStyle = '#aaa';
+          ctx.font = '8px Inter';
+          ctx.fillText(p.name.slice(0,3), i*(barWidth+4)+6, h-4);
+        });
+      }
+      const canvas2 = document.getElementById('influencerChart');
+      if (canvas2) {
+        const ctx = canvas2.getContext('2d');
+        ctx.clearRect(0,0,canvas2.width,canvas2.height);
+        const w = canvas2.width, h = canvas2.height;
+        const barWidth = w / influencers.length - 4;
+        const maxRev = Math.max(...influencers.map(i => i.revenue));
+        influencers.forEach((i, idx) => {
+          const barH = (i.revenue / maxRev) * (h-20);
+          ctx.fillStyle = '#6b8e4c';
+          ctx.fillRect(idx*(barWidth+4) + 4, h-barH-2, barWidth, barH);
+          ctx.fillStyle = '#aaa';
+          ctx.font = '8px Inter';
+          ctx.fillText(i.name.split(' ')[0][0]+'.', idx*(barWidth+4)+8, h-4);
+        });
+      }
+      const canvas3 = document.getElementById('trendChart');
+      if (canvas3) {
+        const ctx = canvas3.getContext('2d');
+        ctx.clearRect(0,0,canvas3.width,canvas3.height);
+        const weeks = 6;
+        const spend = [800, 950, 1100, 1300, 1200, 1400];
+        const revenue = [2100, 2600, 3100, 3800, 3500, 4200];
+        const w = canvas3.width, h = canvas3.height;
+        const step = w / (weeks-1);
+        ctx.beginPath();
+        ctx.strokeStyle = '#d4af37';
+        ctx.lineWidth = 2;
+        spend.forEach((val,i) => {
+          const x = i * step;
+          const y = h - (val / 2000) * (h-20) - 10;
+          if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.strokeStyle = '#6b8e4c';
+        revenue.forEach((val,i) => {
+          const x = i * step;
+          const y = h - (val / 5000) * (h-20) - 10;
+          if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+      }
+    }
+
+    // ----- 5. Initial render -----
+    updateAllUI(state);
+
+    // ----- 6. Event listeners (bind to state and re-render) -----
+    // Tab switching (original, with added marketing)
+    const navItems = document.querySelectorAll('.nav-item');
+    const panes = {
+      dashboard: document.getElementById('dashboardPane'),
+      inventory: document.getElementById('inventoryPane'),
+      sales: document.getElementById('salesPane'),
+      logistics: document.getElementById('logisticsPane'),
+      budget: document.getElementById('budgetPane'),
+      settings: document.getElementById('settingsPane'),
+      rewards: document.getElementById('rewardsPane'),
+      infra: document.getElementById('infraPane'),
+      crm: document.getElementById('crmPane'),
+      festive: document.getElementById('festivePane'),
+      subscription: document.getElementById('subscriptionPane'),
+      assurance: document.getElementById('assurancePane'),
+      villageExpansion: document.getElementById('villageExpansionPane'),
+      stockSale: document.getElementById('stockSalePane'),
+      marketing: document.getElementById('marketingPane')
+    };
+    function setActiveTab(tabId) {
+      navItems.forEach(item => item.classList.remove('active'));
+      Object.values(panes).forEach(pane => { if(pane) pane.classList.remove('active'); });
+      const activeNav = Array.from(navItems).find(item => item.dataset.tab === tabId);
+      if (activeNav) activeNav.classList.add('active');
+      if (panes[tabId]) panes[tabId].classList.add('active');
+      document.getElementById('morePanel').classList.remove('show');
+    }
+    navItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        setActiveTab(item.dataset.tab);
+      });
+    });
+
+    const moreToggle = document.getElementById('moreMenuToggle');
+    const morePanel = document.getElementById('morePanel');
+    moreToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      morePanel.classList.toggle('show');
+    });
+    document.querySelectorAll('.more-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        const href = item.dataset.href;
+        if (href) {
+          window.location.href = href;
+          return;
+        }
+        const tabId = item.dataset.tab;
+        if (tabId) setActiveTab(tabId);
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!morePanel.contains(e.target) && !moreToggle.contains(e.target)) {
+        morePanel.classList.remove('show');
+      }
+    });
+
+    // Input listeners: update state and re-render
+    const costInputs = [
+      'chicksCost', 'feedCost', 'transportCost', 'laborCost', 'utilitiesCost', 'equipmentCost', 'lossesCost',
+      'adjustableCostPerBird', 'wholesalePct', 'retailPct', 'restaurantPct', 'subDiscount', 'refDiscount',
+      'byproductPerBird', 'vehicleTrigger', 'stockTrigger', 'farmTrigger', 'currentCapacity', 'projectedDemand',
+      'emergencyBalance', 'emergencyMin', 'catEquipment', 'catTooling', 'catLogistics', 'catPackaging',
+      'goalLand', 'goalFacility', 'goalMachinery', 'goalTimeline', 'budgetTravel', 'budgetMgmt', 'budgetSupply',
+      'baseSharePrice', 'dividendPercent', 'lockupDays', 'chickensPerReward', 'streakDays', 'rewardDiscount',
+      'referralCreditValue', 'subMinQty', 'subDepositPct', 'priceSteady', 'priceCeleb', 'priceSig',
+      'assurancePricePerChicken', 'assuranceReturnPct', 'assuranceMaxAlloc'
+    ];
+    costInputs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('input', () => {
+          // Map input to state (simplified – you'd need proper mapping)
+          // For now, just re-render assuming state is already updated via two-way binding? Actually inputs are bound from state, but user changes should update state.
+          // We'll do a quick mapping for some fields (full implementation would need mapping for all)
+          if (id === 'wholesalePct') state.sales.wholesalePct = parseFloat(el.value) || 0;
+          if (id === 'retailPct') state.sales.retailPct = parseFloat(el.value) || 0;
+          if (id === 'restaurantPct') state.sales.restaurantPct = parseFloat(el.value) || 0;
+          if (id === 'subDiscount') state.sales.subDiscount = parseFloat(el.value) || 0;
+          if (id === 'refDiscount') state.sales.refDiscount = parseFloat(el.value) || 0;
+          if (id === 'byproductPerBird') state.sales.byproductPerBird = parseFloat(el.value) || 0;
+          if (id === 'chicksCost') state.costs.chicksCost = parseFloat(el.value) || 0;
+          if (id === 'feedCost') state.costs.feedCost = parseFloat(el.value) || 0;
+          if (id === 'transportCost') state.costs.transportCost = parseFloat(el.value) || 0;
+          if (id === 'laborCost') state.costs.laborCost = parseFloat(el.value) || 0;
+          if (id === 'utilitiesCost') state.costs.utilitiesCost = parseFloat(el.value) || 0;
+          if (id === 'equipmentCost') state.costs.equipmentCost = parseFloat(el.value) || 0;
+          if (id === 'lossesCost') state.costs.lossesCost = parseFloat(el.value) || 0;
+          if (id === 'adjustableCostPerBird') state.costs.adjustableCostPerBird = parseFloat(el.value) || 0;
+          if (id === 'vehicleTrigger') state.triggers.vehicle = parseFloat(el.value) || 0;
+          if (id === 'stockTrigger') state.triggers.stock = parseFloat(el.value) || 0;
+          if (id === 'farmTrigger') state.triggers.farm = parseFloat(el.value) || 0;
+          if (id === 'currentCapacity') state.infrastructure.currentCapacity = parseFloat(el.value) || 0;
+          if (id === 'projectedDemand') state.infrastructure.projectedDemand = parseFloat(el.value) || 0;
+          if (id === 'emergencyBalance') state.infrastructure.emergencyBalance = parseFloat(el.value) || 0;
+          if (id === 'emergencyMin') state.infrastructure.emergencyMin = parseFloat(el.value) || 0;
+          if (id === 'catEquipment') state.infrastructure.catEquipment = parseFloat(el.value) || 0;
+          if (id === 'catTooling') state.infrastructure.catTooling = parseFloat(el.value) || 0;
+          if (id === 'catLogistics') state.infrastructure.catLogistics = parseFloat(el.value) || 0;
+          if (id === 'catPackaging') state.infrastructure.catPackaging = parseFloat(el.value) || 0;
+          if (id === 'goalLand') state.infrastructure.goalLand = parseFloat(el.value) || 0;
+          if (id === 'goalFacility') state.infrastructure.goalFacility = parseFloat(el.value) || 0;
+          if (id === 'goalMachinery') state.infrastructure.goalMachinery = parseFloat(el.value) || 0;
+          if (id === 'goalTimeline') state.infrastructure.goalTimeline = parseFloat(el.value) || 1;
+          if (id === 'budgetTravel') state.villageExpansion.budget.travel = parseFloat(el.value) || 0;
+          if (id === 'budgetMgmt') state.villageExpansion.budget.mgmt = parseFloat(el.value) || 0;
+          if (id === 'budgetSupply') state.villageExpansion.budget.supply = parseFloat(el.value) || 0;
+          if (id === 'baseSharePrice') state.stockSale.settings.baseSharePrice = parseFloat(el.value) || 70;
+          if (id === 'dividendPercent') state.stockSale.settings.dividendPercent = parseFloat(el.value) || 15;
+          if (id === 'lockupDays') state.stockSale.settings.lockupDays = parseInt(el.value) || 90;
+          if (id === 'chickensPerReward') state.rewards.settings.chickensPerReward = parseInt(el.value) || 10;
+          if (id === 'streakDays') state.rewards.settings.streakDays = parseInt(el.value) || 7;
+          if (id === 'rewardDiscount') state.rewards.settings.baseDiscount = parseFloat(el.value) || 8;
+          if (id === 'referralCreditValue') state.rewards.settings.referralCredit = parseFloat(el.value) || 50;
+          if (id === 'subMinQty') state.subscription.settings.minQty = parseInt(el.value) || 5;
+          if (id === 'subDepositPct') state.subscription.settings.depositPct = parseFloat(el.value) || 30;
+          if (id === 'priceSteady') state.subscription.settings.priceSteady = parseFloat(el.value) || 100;
+          if (id === 'priceCeleb') state.subscription.settings.priceCeleb = parseFloat(el.value) || 115;
+          if (id === 'priceSig') state.subscription.settings.priceSig = parseFloat(el.value) || 140;
+          if (id === 'assurancePricePerChicken') state.assurance.settings.pricePerChicken = parseFloat(el.value) || 25;
+          if (id === 'assuranceReturnPct') state.assurance.settings.returnPct = parseFloat(el.value) || 8;
+          if (id === 'assuranceMaxAlloc') state.assurance.settings.maxAlloc = parseInt(el.value) || 50;
+          updateAllUI(state);
+        });
+      }
+    });
+
+    // Checkbox listeners
+    const checkboxes = [
+      'enableRewards', 'doubleByproduct', 'assuranceGlobalToggle'
+    ];
+    checkboxes.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('change', () => {
+          if (id === 'enableRewards') state.rewards.settings.enabled = el.checked;
+          if (id === 'doubleByproduct') state.rewards.settings.doubleByproduct = el.checked;
+          if (id === 'assuranceGlobalToggle') state.assurance.settings.globalToggle = el.checked;
+          updateAllUI(state);
+        });
+      }
+    });
+
+    // Simulate purchase button
+    document.getElementById('simulatePurchaseBtn')?.addEventListener('click', () => {
+      const activeIdx = state.rewards.data.findIndex(r => r.status === 'active');
+      if (activeIdx >= 0) {
+        state.rewards.data[activeIdx].progress += 1;
+        if (state.rewards.data[activeIdx].progress >= state.rewards.data[activeIdx].target) {
+          state.rewards.data[activeIdx].status = 'claimed';
+        }
+      } else {
+        state.rewards.data.push({ customerId: 999, name: 'New Customer', type: 'welcome', progress: 1, target: 3, status: 'active', expiry: '2025-04-20', discount: 8, byproductBoost: true, referralCredit: 0 });
+      }
+      updateAllUI(state);
+    });
+
+    // Growth buttons
+    document.querySelectorAll('[data-growth]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const growth = parseInt(btn.dataset.growth) / 100;
+        const netProfit = parseFloat(document.getElementById('netMonthly')?.innerText.replace('R', '').replace(/,/g, '').trim()) || 86400;
+        const projected = netProfit * 3 * (1 + growth);
+        setText('projectedProfit', 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+        setText('growthHint', `simulating +${btn.dataset.growth}% growth`);
+      });
+    });
+
+    // Infrastructure recalc
+    document.getElementById('recalcAllocBtn')?.addEventListener('click', () => updateAllUI(state));
+
+    // Year-end simulation
+    document.getElementById('simulateYearEndBtn')?.addEventListener('click', () => {
+      const emergBal = state.infrastructure.emergencyBalance;
+      const emergMinVal = state.infrastructure.emergencyMin;
+      const unused = Math.max(0, emergBal - emergMinVal);
+      if (unused > 0) {
+        const reinvest = unused * 0.4;
+        const rollover = unused * 0.6;
+        state.infrastructure.emergencyBalance = emergMinVal + rollover;
+        setText('rolloverSummary', `🔄 reinvested R ${reinvest.toFixed(0)} into infrastructure/equipment/tooling · R ${rollover.toFixed(0)} rolled over`);
+        setText('yearEndAlert', '✅ year‑end rollover applied');
+      } else {
+        setText('rolloverSummary', '⚠️ no unused emergency funds to roll over');
+        setText('yearEndAlert', '');
+      }
+      updateAllUI(state);
+    });
+
+    // Add village
+    document.getElementById('addVillageBtn')?.addEventListener('click', () => {
+      const newId = Math.max(...state.festive.villages.map(v => v.id), 0) + 1;
+      state.festive.villages.push({ id: newId, name: 'New Village', participants: 0, chickensRequired: 0, contributions: 0, capacity: 500, deadline: '2025-04-30', locked: false, pendingAdjust: false });
+      updateAllUI(state);
+    });
+
+    // Apply global village settings
+    document.getElementById('applyGlobalSettings')?.addEventListener('click', () => {
+      const defCap = parseInt(document.getElementById('globalCapacity')?.value) || 500;
+      const defDeadline = document.getElementById('globalDeadline')?.value;
+      state.festive.villages.forEach(v => { v.capacity = defCap; v.deadline = `2025-04-${Math.min(30, parseInt(defDeadline))}`; });
+      updateAllUI(state);
+    });
+
+    // Lock group
+    document.getElementById('lockGroupBtn')?.addEventListener('click', () => {
+      const select = document.getElementById('lockGroupSelect');
+      const id = parseInt(select?.value);
+      if (id) {
+        const village = state.festive.villages.find(v => v.id === id);
+        if (village) {
+          village.locked = true;
+          updateAllUI(state);
+        }
+      }
+    });
+
+    // Add test member (subscription)
+    document.getElementById('addTestMember')?.addEventListener('click', () => {
+      const newId = Math.max(...state.subscription.members.map(m => m.id), 0) + 1;
+      state.subscription.members.push({ id: newId, name: 'New Customer', tier: 'steady', monthlyQty: 4, price: 100, total: 400, holidayAlloc: 2, depositPaid: 0, vip: false, locked: false });
+      updateAllUI(state);
+    });
+
+    // Apply subscription settings
+    document.getElementById('applySubSettings')?.addEventListener('click', () => {
+      const minQty = parseInt(document.getElementById('subMinQty').value) || 5;
+      const depositPct = parseInt(document.getElementById('subDepositPct').value) || 30;
+      const priceSteady = parseInt(document.getElementById('priceSteady').value) || 100;
+      const priceCeleb = parseInt(document.getElementById('priceCeleb').value) || 115;
+      const priceSig = parseInt(document.getElementById('priceSig').value) || 140;
+      state.subscription.settings = { minQty, depositPct, priceSteady, priceCeleb, priceSig };
+      state.subscription.members.forEach(m => {
+        if (m.tier === 'steady') m.price = priceSteady;
+        else if (m.tier === 'celeb') m.price = priceCeleb;
+        else if (m.tier === 'sig') m.price = priceSig;
+        m.total = m.monthlyQty * m.price;
+      });
+      updateAllUI(state);
+    });
+
+    // Assurance actions (simplified)
+    document.getElementById('applyAssuranceSettings')?.addEventListener('click', () => {
+      const price = parseInt(document.getElementById('assurancePricePerChicken').value) || 25;
+      const returnPct = parseFloat(document.getElementById('assuranceReturnPct').value) || 8;
+      const maxAlloc = parseInt(document.getElementById('assuranceMaxAlloc').value) || 50;
+      state.assurance.settings = { pricePerChicken: price, returnPct, maxAlloc, globalToggle: state.assurance.settings.globalToggle };
+      // In real app would update members
+      alert('Settings applied (mock)');
+    });
+
+    document.getElementById('syncSubsBtn')?.addEventListener('click', () => alert('Syncing with subscription members... (mock)'));
+    document.getElementById('issueAllLoyaltyBtn')?.addEventListener('click', () => {
+      state.assurance.members.forEach(m => { if (m.pendingClaim) { m.loyaltyCredits += m.pendingClaim; m.pendingClaim = 0; } });
+      updateAllUI(state);
+      alert('All pending claims issued as loyalty credits.');
+    });
+    document.getElementById('resetClaimsBtn')?.addEventListener('click', () => {
+      state.assurance.members.forEach(m => m.pendingClaim = 0);
+      updateAllUI(state);
+      alert('All claims reset.');
+    });
+
+    // Village expansion modals
+    const contractModal = document.getElementById('contractModal');
+    const openContractBtn = document.getElementById('openAddContractModal');
+    const cancelContractBtn = document.getElementById('modalCancel');
+    const saveContractBtn = document.getElementById('modalSave');
+    openContractBtn?.addEventListener('click', () => {
+      document.getElementById('modalTitle').innerText = '➕ new village contract';
+      document.getElementById('modalFarmName').value = '';
+      document.getElementById('modalVillage').value = '';
+      document.getElementById('modalChickens').value = 500;
+      document.getElementById('modalMargin').value = 12;
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('modalStart').value = today;
+      const nextYear = new Date(); nextYear.setFullYear(nextYear.getFullYear()+1);
+      document.getElementById('modalEnd').value = nextYear.toISOString().split('T')[0];
+      document.getElementById('modalNotes').value = '';
+      document.getElementById('modalGenerateLink').checked = true;
+      document.getElementById('modalSignaturePreview').style.display = 'none';
+      contractModal.style.display = 'flex';
+    });
+    cancelContractBtn?.addEventListener('click', () => { contractModal.style.display = 'none'; });
+    saveContractBtn?.addEventListener('click', () => {
+      const newId = Math.max(...state.villageExpansion.contracts.map(c => c.id), 0) + 1;
+      const contract = {
+        id: newId,
+        farm: document.getElementById('modalFarmName').value,
+        village: document.getElementById('modalVillage').value,
+        chickens: parseInt(document.getElementById('modalChickens').value) || 0,
+        margin: parseFloat(document.getElementById('modalMargin').value) || 0,
+        start: document.getElementById('modalStart').value,
+        end: document.getElementById('modalEnd').value,
+        notes: document.getElementById('modalNotes').value,
+        signed: false,
+        revenue: (parseInt(document.getElementById('modalChickens').value) * 100 * (parseFloat(document.getElementById('modalMargin').value)/100)) || 0
+      };
+      state.villageExpansion.contracts.push(contract);
+      if (document.getElementById('modalGenerateLink').checked) {
+        document.getElementById('modalSignaturePreview').innerText = `https://farm.goldenfeather.com/sign/${newId}_${Date.now()}`;
+        document.getElementById('modalSignaturePreview').style.display = 'block';
+      }
+      updateAllUI(state);
+      contractModal.style.display = 'none';
+    });
+
+    // Stock sale actions
+    document.getElementById('addOfferingBtn')?.addEventListener('click', () => {
+      const newId = state.stockSale.offerings.length ? Math.max(...state.stockSale.offerings.map(o => o.id)) + 1 : 4;
+      const name = prompt('Offering name (e.g., Batch B2404):', 'Batch B2404 · Free-range');
+      if (!name) return;
+      const total = parseInt(prompt('Total shares:', '1000')) || 1000;
+      const price = parseInt(prompt('Share price (R):', '70')) || 70;
+      state.stockSale.offerings.push({
+        id: newId,
+        name: name,
+        sharesTotal: total,
+        sharesSold: 0,
+        sharePrice: price,
+        raised: 0,
+        expectedDividend: 0,
+        status: 'active'
+      });
+      updateAllUI(state);
+    });
+
+    document.getElementById('applyStockSettings')?.addEventListener('click', () => {
+      const basePrice = parseFloat(document.getElementById('baseSharePrice').value) || 70;
+      const divPct = parseFloat(document.getElementById('dividendPercent').value) || 15;
+      const freq = document.getElementById('dividendFreq').value;
+      const lockup = parseInt(document.getElementById('lockupDays').value) || 90;
+      state.stockSale.settings = { baseSharePrice: basePrice, dividendPercent: divPct, dividendFreq: freq, lockupDays: lockup };
+      alert(`Stock settings updated.`);
+    });
+
+    // Marketing filters
+    document.querySelectorAll('[data-campaign-view]').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        document.querySelectorAll('[data-campaign-view]').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        // Re-render campaigns based on filter (simplified: just update all UI)
+        updateAllUI(state);
+      });
+    });
+
+    // Accordion toggle (global)
+    document.addEventListener('click', function(e) {
+      const header = e.target.closest('.accordion-header');
+      if (!header) return;
+      e.preventDefault();
+      const item = header.closest('.accordion-item');
+      const body = item.querySelector('.accordion-body');
+      const arrow = header.querySelector('.arrow');
+      if (body) {
+        body.classList.toggle('expanded');
+        header.classList.toggle('expanded');
+      }
+    });
+
+    // Delegated actions for custom buttons (simplified)
+    document.addEventListener('click', function(e) {
+      const target = e.target;
+      if (target.matches('[data-action="adj"]')) {
+        const id = parseInt(target.dataset.id);
+        const village = state.festive.villages.find(v => v.id === id);
+        if (village) {
+          const newCap = prompt(`Adjust capacity for ${village.name} (current: ${village.capacity})`, village.capacity);
+          if (newCap && !isNaN(newCap)) {
+            village.capacity = parseInt(newCap);
+            village.pendingAdjust = true;
+            updateAllUI(state);
+          }
+        }
+      }
+      if (target.matches('[data-action="lock"]')) {
+        const id = parseInt(target.dataset.id);
+        const village = state.festive.villages.find(v => v.id === id);
+        if (village) {
+          village.locked = !village.locked;
+          updateAllUI(state);
+        }
+      }
+      if (target.matches('[data-action="upgrade"]')) {
+        const id = parseInt(target.dataset.id);
+        const member = state.subscription.members.find(m => m.id === id);
+        if (member) {
+          if (member.tier === 'steady') member.tier = 'celeb';
+          else if (member.tier === 'celeb') member.tier = 'sig';
+          if (member.tier === 'celeb') member.price = 115;
+          else if (member.tier === 'sig') member.price = 140;
+          else member.price = 100;
+          member.total = member.monthlyQty * member.price;
+          updateAllUI(state);
+        }
+      }
+      if (target.matches('[data-action="downgrade"]')) {
+        const id = parseInt(target.dataset.id);
+        const member = state.subscription.members.find(m => m.id === id);
+        if (member) {
+          if (member.tier === 'sig') member.tier = 'celeb';
+          else if (member.tier === 'celeb') member.tier = 'steady';
+          if (member.tier === 'celeb') member.price = 115;
+          else if (member.tier === 'sig') member.price = 140;
+          else member.price = 100;
+          member.total = member.monthlyQty * member.price;
+          updateAllUI(state);
+        }
+      }
+      if (target.matches('[data-action="toggleVIP"]')) {
+        const id = parseInt(target.dataset.id);
+        const member = state.subscription.members.find(m => m.id === id);
+        if (member) {
+          member.vip = !member.vip;
+          updateAllUI(state);
+        }
+      }
+      if (target.matches('[data-aaction="toggleActive"]')) {
+        const id = parseInt(target.dataset.aid);
+        const member = state.assurance.members.find(m => m.id === id);
+        if (member) {
+          member.active = !member.active;
+          updateAllUI(state);
+        }
+      }
+      if (target.matches('[data-aaction="adjustContribution"]')) {
+        const id = parseInt(target.dataset.aid);
+        const member = state.assurance.members.find(m => m.id === id);
+        if (member) {
+          const newVal = prompt('New monthly contribution (R):', member.monthlyContribution);
+          if (newVal && !isNaN(newVal)) {
+            member.monthlyContribution = parseInt(newVal);
+            updateAllUI(state);
+          }
+        }
+      }
+      if (target.matches('[data-action="approve-claim"]')) {
+        const claimId = target.dataset.claimId;
+        alert(`Claim ${claimId} approved (mock)`);
+        // In real app would update state
+      }
+      if (target.matches('[data-action="reject-claim"]')) {
+        const claimId = target.dataset.claimId;
+        alert(`Claim ${claimId} rejected (mock)`);
+      }
+      if (target.matches('[data-offer-action="sell"]')) {
+        const id = parseInt(target.dataset.offerId);
+        const offer = state.stockSale.offerings.find(o => o.id === id);
+        if (offer) {
+          const qty = parseInt(prompt('Number of shares to sell:', '10')) || 0;
+          if (qty > 0 && offer.sharesSold + qty <= offer.sharesTotal) {
+            offer.sharesSold += qty;
+            offer.raised += qty * offer.sharePrice;
+            offer.expectedDividend += qty * offer.sharePrice * 0.15;
+            updateAllUI(state);
+          } else {
+            alert('Not enough shares available.');
+          }
+        }
+      }
+      if (target.matches('[data-offer-action="close"]')) {
+        const id = parseInt(target.dataset.offerId);
+        const offer = state.stockSale.offerings.find(o => o.id === id);
+        if (offer) {
+          offer.status = 'closed';
+          updateAllUI(state);
+        }
+      }
+    });
+  })();
+</script>
+</body>
+</html>
