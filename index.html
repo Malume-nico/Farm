@@ -567,10 +567,59 @@
     .chart-canvas { width: 100%; height: 80px; margin: 8px 0; }
     .filter-bar { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
 
-    /* Consistency warning on dashboard */
-    #consistencyWarning {
-      margin-top: 8px;
-      font-size: 0.75rem;
+    /* ---------- ACCORDION STYLES (new) ---------- */
+    .accordion-item {
+      margin-bottom: 8px;
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(20,20,20,0.7);
+    }
+    .accordion-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      cursor: pointer;
+      background: rgba(30,30,30,0.9);
+      transition: background 0.15s;
+    }
+    .accordion-header:hover {
+      background: rgba(50,50,50,0.9);
+    }
+    .accordion-header .arrow {
+      transition: transform 0.2s ease;
+      color: #d4af37;
+      font-size: 1.1rem;
+    }
+    .accordion-header.expanded .arrow {
+      transform: rotate(90deg);
+    }
+    .accordion-body {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(15,15,15,0.8);
+    }
+    .accordion-body.expanded {
+      display: block;
+    }
+    /* summary metrics inside collapsed header */
+    .accordion-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      font-size: 0.8rem;
+      color: #ccc;
+    }
+    .accordion-summary span {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .accordion-summary .badge {
+      font-size: 0.65rem;
+      padding: 2px 6px;
     }
   </style>
 </head>
@@ -624,8 +673,6 @@
           <div style="display: flex; justify-content: space-between;"><span>📦 upcoming batch</span> <strong>650 (in 4d)</strong></div>
           <hr>
           <div style="display: flex; justify-content: space-between; font-size: 1.1rem;"><span>📈 net profit (month)</span> <strong class="green-text" id="netProfitMonthDisplay">R 86,400</strong></div>
-          <!-- NEW: consistency warning -->
-          <div id="consistencyWarning" class="badge" style="display:none;">⚠️ Revenue mismatch</div>
         </div>
       </div>
 
@@ -1126,7 +1173,7 @@
       </div>
     </div>
 
-    <!-- FESTIVE PANE (original full content) -->
+    <!-- ========== FESTIVE PANE (with accordion village groups) ========== -->
     <div class="tab-pane" id="festivePane">
       <!-- Village overview stats -->
       <div class="card">
@@ -1155,11 +1202,11 @@
         <p class="badge" style="margin-top:12px;"><i class="fas fa-arrow-up"></i> expected fulfillment: 92% (2,150 chickens)</p>
       </div>
 
-      <!-- Village groups list with admin controls -->
+      <!-- Village groups list with admin controls (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-list gold-text"></i> village groups · live slots</div>
-        <div id="villageListContainer">
-          <!-- dynamic village rows will be inserted here -->
+        <div id="villageListContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items -->
         </div>
         <button class="btn-gold" style="width:100%; margin-top:12px;" id="addVillageBtn"><i class="fas fa-plus"></i> add village group</button>
       </div>
@@ -1181,7 +1228,7 @@
       </div>
     </div>
 
-    <!-- SUBSCRIPTION PANE (original full content) -->
+    <!-- ========== SUBSCRIPTION PANE (with accordion members & events) ========== -->
     <div class="tab-pane" id="subscriptionPane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1214,11 +1261,11 @@
         <div class="cost-item"><span>🥩 holiday allocation total</span> <span>430 chickens</span></div>
       </div>
 
-      <!-- Member list with admin actions -->
+      <!-- Member list with admin actions (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-users gold-text"></i> members · <span class="filter-row" style="display:inline-flex; margin-left:8px;"><span class="filter-chip active" data-tier="all">all</span><span class="filter-chip" data-tier="steady">steady</span><span class="filter-chip" data-tier="celeb">celeb</span><span class="filter-chip" data-tier="sig">sig</span></span></div>
-        <div id="subscriptionMembersList">
-          <!-- dynamic rows -->
+        <div id="subscriptionMembersList" class="accordion-container">
+          <!-- dynamic accordion items for members -->
         </div>
         <button class="btn-gold" style="width:100%; margin-top:12px;" id="addTestMember"><i class="fas fa-user-plus"></i> add test member</button>
       </div>
@@ -1234,11 +1281,33 @@
         <button class="btn-small" id="applySubSettings">apply to all</button>
       </div>
 
-      <!-- Event reservations & balances -->
+      <!-- Event reservations & balances (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-calendar-alt gold-text"></i> upcoming events & reservations</div>
-        <div class="batch-row"><span>Easter weekend</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
-        <div class="batch-row"><span>Farmers' market (May)</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span><strong>Easter weekend</strong> <span class="badge">120 chickens</span></span>
+            <i class="fas fa-chevron-right arrow"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="batch-row"><span>Subscriber allocations</span> <span>🐔 120 chickens · R 14,400</span> <span class="badge">deposit 30%</span></div>
+            <div class="batch-row"><span>Deposits collected</span> <span>R 4,320</span></div>
+            <div class="batch-row"><span>Fulfillment status</span> <span>75% confirmed</span></div>
+            <div class="flex-row"><button class="btn-small">manage allocations</button></div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <div class="accordion-header">
+            <span><strong>Farmers' market (May)</strong> <span class="badge">65 chickens</span></span>
+            <i class="fas fa-chevron-right arrow"></i>
+          </div>
+          <div class="accordion-body">
+            <div class="batch-row"><span>Subscriber allocations</span> <span>🐔 65 chickens · R 7,475</span> <span class="badge">paid 50%</span></div>
+            <div class="batch-row"><span>Deposits collected</span> <span>R 3,737.50</span></div>
+            <div class="batch-row"><span>Fulfillment status</span> <span>50% confirmed</span></div>
+            <div class="flex-row"><button class="btn-small">manage allocations</button></div>
+          </div>
+        </div>
         <div class="cost-item"><span>💰 outstanding balances</span> <span class="gold-text" id="outstandingBalance">R 8,925</span></div>
       </div>
 
@@ -1251,7 +1320,7 @@
       </div>
     </div>
 
-    <!-- ASSURANCE PANE (original full content) -->
+    <!-- ========== ASSURANCE PANE (with accordion members) ========== -->
     <div class="tab-pane" id="assurancePane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1267,7 +1336,7 @@
         <div class="cost-item"><span>✅ total allocations (chickens)</span> <span id="assuranceAllocations">340</span></div>
       </div>
 
-      <!-- Members list with filters & admin actions -->
+      <!-- Members list with filters & admin actions (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-users gold-text"></i> assurance members · 
           <span class="filter-row" style="display:inline-flex; margin-left:8px;">
@@ -1276,8 +1345,8 @@
             <span class="filter-chip" data-assurance-filter="pending">pending</span>
           </span>
         </div>
-        <div id="assuranceMembersList">
-          <!-- dynamic rows injected via JS -->
+        <div id="assuranceMembersList" class="accordion-container">
+          <!-- dynamic accordion items -->
         </div>
         <div class="flex-row" style="margin-top:12px;">
           <input type="text" placeholder="search member..." style="flex:1; background:#2a2a2a; border:1px solid #d4af3740; border-radius:30px; padding:8px 12px; color:white;">
@@ -1333,7 +1402,7 @@
       </div>
     </div>
 
-    <!-- VILLAGE EXPANSION PANE (original full content) -->
+    <!-- ========== VILLAGE EXPANSION PANE (with accordion contracts) ========== -->
     <div class="tab-pane" id="villageExpansionPane">
       <!-- Analytics & summary cards -->
       <div class="card">
@@ -1346,11 +1415,11 @@
         </div>
       </div>
 
-      <!-- Contracts list with admin actions -->
+      <!-- Contracts list with admin actions (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-file-signature gold-text"></i> active contracts · <span class="btn-small" id="openAddContractModal"><i class="fas fa-plus"></i> new</span></div>
-        <div id="contractsListContainer">
-          <!-- dynamic contract rows injected by JS -->
+        <div id="contractsListContainer" class="accordion-container">
+          <!-- dynamic accordion items for contracts -->
         </div>
       </div>
 
@@ -1396,7 +1465,7 @@
       </div>
     </div>
 
-    <!-- STOCK SALE PANE (original full content) -->
+    <!-- ========== STOCK SALE PANE (with accordion offerings) ========== -->
     <div class="tab-pane" id="stockSalePane">
       <!-- Analytics dashboard -->
       <div class="card">
@@ -1412,11 +1481,11 @@
         <div class="cost-item"><span>📈 projected ROI (6m)</span> <span class="green-text" id="projectedROI">15%</span></div>
       </div>
 
-      <!-- List of stock offerings with admin controls -->
+      <!-- List of stock offerings with admin controls (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-list gold-text"></i> current offerings · <span class="btn-small" id="addOfferingBtn"><i class="fas fa-plus"></i> new</span></div>
-        <div id="offeringsListContainer">
-          <!-- dynamic rows injected -->
+        <div id="offeringsListContainer" class="accordion-container">
+          <!-- dynamic accordion items for offerings -->
         </div>
       </div>
 
@@ -1454,7 +1523,7 @@
       </div>
     </div>
 
-    <!-- ========== ENHANCED MARKETING COMMAND CENTER ========== -->
+    <!-- ========== ENHANCED MARKETING COMMAND CENTER (with accordion tables) ========== -->
     <div class="tab-pane" id="marketingPane">
       <!-- Overview KPIs -->
       <div class="card">
@@ -1469,30 +1538,23 @@
         </div>
       </div>
 
-      <!-- Platform Performance -->
+      <!-- Platform Performance (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fab fa-tiktok gold-text"></i> platform performance</div>
-        <div style="overflow-x:auto;">
-          <table class="mini-table">
-            <thead><tr><th>Platform</th><th>Revenue</th><th>Clicks</th><th>Conv.</th><th>CVR</th><th>Ad Spend</th><th>ROI</th></tr></thead>
-            <tbody id="platformTableBody"></tbody>
-          </table>
+        <div id="platformAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for platforms -->
         </div>
-        <p class="helper-text">top account: @goldenfeather_za (IG) · top campaign: Easter Special (FB)</p>
       </div>
 
-      <!-- Influencer Tracking -->
+      <!-- Influencer Tracking (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-star gold-text"></i> influencer tracking · <span class="btn-small" id="addInfluencerBtn"><i class="fas fa-plus"></i> add</span></div>
-        <div style="overflow-x:auto;">
-          <table class="mini-table">
-            <thead><tr><th>Name</th><th>Platform</th><th>Link</th><th>Revenue</th><th>Orders</th><th>Commission</th><th>Payout</th><th>Rank</th></tr></thead>
-            <tbody id="influencerTableBody"></tbody>
-          </table>
+        <div id="influencerAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for influencers -->
         </div>
       </div>
 
-      <!-- Campaign Tracking -->
+      <!-- Campaign Tracking (ACCORDION) -->
       <div class="card">
         <div class="card-title"><i class="fas fa-bullhorn gold-text"></i> campaigns · top 5 / worst / active</div>
         <div class="filter-row" id="campaignFilterRow">
@@ -1501,8 +1563,8 @@
           <span class="filter-chip" data-campaign-view="active">active</span>
           <span class="filter-chip" data-campaign-view="completed">completed</span>
         </div>
-        <div id="campaignViewContainer">
-          <!-- populated by JS -->
+        <div id="campaignAccordionContainer" class="accordion-container">
+          <!-- dynamically filled with accordion items for campaigns -->
         </div>
       </div>
 
@@ -1601,113 +1663,8 @@
   </div>
 </div>
 
-<!-- ALL ORIGINAL SCRIPTS (modified to integrate with central state) and NEW MARKETING JS -->
+<!-- ALL ORIGINAL SCRIPTS (unchanged) and NEW MARKETING JS (appended) with modification for accordion and blueprint link -->
 <script>
-  // ==================== CENTRAL STATE ====================
-  window.GFState = {
-    // Birds
-    totalBirds: 2450,
-    birdsSoldToday: 128,
-    birdsLostToday: 12,
-    // Revenue streams (monthly)
-    revenue: {
-      liveSales: 163200,
-      prepared: 41200,
-      bulk: 97920,
-      byproduct: 12750,
-      manure: 3000,
-      subscriptions: 18240,
-      assuranceContributions: 8450,
-      marketingAttributed: 34200,
-      villageContracts: 82500,
-      stockSaleCapital: 87500,
-    },
-    // Costs (monthly)
-    costs: {
-      chicks: 34300,
-      feed: 85085,
-      transport: 4300,
-      labor: 6500,
-      utilities: 2100,
-      equipment: 900,
-      losses: 600,
-      marketingAdSpend: 12400,
-    },
-    // Computed (filled by recalculateAll)
-    computed: {
-      totalRevenue: 0,
-      totalCosts: 0,
-      netProfit: 0,
-      profitMargin: 0,
-      avgSellingPrice: 84.5,
-    },
-    consistencyWarning: false,
-  };
-
-  function recalculateAll() {
-    const s = GFState;
-    // Sum all operating revenue streams (exclude stockSaleCapital)
-    const revenueStreams = [
-      s.revenue.liveSales,
-      s.revenue.prepared,
-      s.revenue.bulk,
-      s.revenue.byproduct,
-      s.revenue.manure,
-      s.revenue.subscriptions,
-      s.revenue.assuranceContributions,
-      s.revenue.marketingAttributed,
-      s.revenue.villageContracts,
-    ];
-    s.computed.totalRevenue = revenueStreams.reduce((a, b) => a + b, 0);
-
-    const costStreams = Object.values(s.costs);
-    s.computed.totalCosts = costStreams.reduce((a, b) => a + b, 0);
-
-    s.computed.netProfit = s.computed.totalRevenue - s.computed.totalCosts;
-    s.computed.profitMargin = s.computed.totalRevenue ? (s.computed.netProfit / s.computed.totalRevenue) * 100 : 0;
-
-    // Simple consistency check: sum of revenue streams should equal totalRevenue (already true)
-    // We'll also check if any stream seems off (placeholder)
-    s.consistencyWarning = false; // can be set by external checks
-  }
-
-  function refreshDashboard() {
-    const s = GFState;
-    setText('totalBirdsDisplay', s.totalBirds.toLocaleString());
-    setText('soldTodayDisplay', s.birdsSoldToday);
-    setText('lostTodayDisplay', s.birdsLostToday);
-    const todayRevenue = s.birdsSoldToday * s.computed.avgSellingPrice;
-    setText('revenueTodayValue', 'R ' + todayRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('revenueTodayDisplay', 'R ' + todayRevenue.toFixed(0));
-    setText('monthlyRevenueDisplay', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('remainingStockDisplay', (s.totalBirds - s.birdsSoldToday).toLocaleString());
-    setText('netProfitMonthDisplay', 'R ' + s.computed.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('netMonthly', 'R ' + s.computed.netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('profitPerChicken', 'R ' + (s.computed.netProfit / (s.totalBirds || 1)).toFixed(2));
-    setText('projectedProfit', 'R ' + (s.computed.netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('kpiActiveBirds', (s.totalBirds - s.birdsSoldToday).toLocaleString());
-    setText('kpiMortality', ((s.birdsLostToday / s.totalBirds) * 100).toFixed(1) + '%');
-    setText('kpiAvgPrice', 'R ' + s.computed.avgSellingPrice.toFixed(2));
-    setText('kpiByproduct', 'R ' + s.revenue.byproduct.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('totalRevenue', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('plRevenue', 'R ' + s.computed.totalRevenue.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('totalExpenses', 'R ' + s.computed.totalCosts.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-    setText('plMargin', s.computed.profitMargin.toFixed(1) + '% (R ' + s.computed.netProfit.toFixed(0) + ')');
-
-    const warnEl = document.getElementById('consistencyWarning');
-    if (s.consistencyWarning) {
-      warnEl.style.display = 'block';
-      warnEl.innerText = '⚠️ Revenue streams do not sum correctly';
-    } else {
-      warnEl.style.display = 'none';
-    }
-  }
-
-  function setText(id, val) {
-    const el = document.getElementById(id);
-    if (el) el.innerText = val;
-  }
-
   // ----- tab switching (updated with 'marketing' and support for data-href) -----
   (function() {
     const navItems = document.querySelectorAll('.nav-item');
@@ -1753,13 +1710,16 @@
       morePanel.classList.toggle('show');
     });
 
+    // Modified more-item click handler to support data-href navigation
     document.querySelectorAll('.more-item').forEach(item => {
       item.addEventListener('click', (e) => {
+        // If the item has a data-href attribute, navigate to that URL
         const href = item.dataset.href;
         if (href) {
           window.location.href = href;
-          return;
+          return; // Stop further handling
         }
+        // Otherwise, treat it as a tab switch
         const tabId = item.dataset.tab;
         setActiveTab(tabId);
       });
@@ -1772,8 +1732,9 @@
     });
   })();
 
-  // ========== ORIGINAL DASHBOARD SCRIPT (modified to use GFState) ==========
+  // ========== ORIGINAL DASHBOARD SCRIPT (full version) ==========
   (function() {
+    // rewards data & settings (identical to original)
     let rewardsData = [
       { customerId: 101, name: 'Spier Wines', type: 'bulk discount', progress: 8, target: 10, status: 'active', expiry: '2025-04-15', discount: 8, byproductBoost: true, referralCredit: 0 },
       { customerId: 102, name: 'Kyle’s Grill', type: 'premium', progress: 5, target: 7, status: 'active', expiry: '2025-03-30', discount: 5, byproductBoost: false, referralCredit: 0 },
@@ -1791,30 +1752,44 @@
       referralCredit: 50
     };
 
+    const rewardsClaimedSpan = document.getElementById('rewardsClaimed');
+    const activeRewardsSpan = document.getElementById('activeRewards');
+    const upcomingRewardsSpan = document.getElementById('upcomingRewards');
+    const byproductBonusSpan = document.getElementById('byproductBonusUptake');
+    const referralCreditsSpan = document.getElementById('referralCredits');
+    const rewardCardsContainer = document.getElementById('rewardCardsContainer');
+    const rewardsTableBody = document.getElementById('rewardsTableBody');
+
+    const enableRewardsChk = document.getElementById('enableRewards');
+    const chickensPerRewardInp = document.getElementById('chickensPerReward');
+    const streakDaysInp = document.getElementById('streakDays');
+    const rewardDiscountInp = document.getElementById('rewardDiscount');
+    const doubleByproductChk = document.getElementById('doubleByproduct');
+    const referralCreditInp = document.getElementById('referralCreditValue');
+    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
+
     function updateRewardsUI() {
       const claimed = rewardsData.filter(r => r.status === 'claimed').length;
       const active = rewardsData.filter(r => r.status === 'active').length;
       const upcoming = rewardsData.filter(r => r.status === 'upcoming').length;
       const byproductUptake = rewardsData.filter(r => r.byproductBoost && r.status === 'active').length;
       const totalReferral = rewardsData.reduce((acc, r) => acc + (r.referralCredit || 0), 0);
-      setText('rewardsClaimed', claimed);
-      setText('activeRewards', active);
-      setText('upcomingRewards', upcoming);
-      setText('byproductBonusUptake', byproductUptake);
-      setText('referralCredits', 'R ' + totalReferral.toLocaleString());
+      if(rewardsClaimedSpan) rewardsClaimedSpan.innerText = claimed;
+      if(activeRewardsSpan) activeRewardsSpan.innerText = active;
+      if(upcomingRewardsSpan) upcomingRewardsSpan.innerText = upcoming;
+      if(byproductBonusSpan) byproductBonusSpan.innerText = byproductUptake;
+      if(referralCreditsSpan) referralCreditsSpan.innerText = 'R ' + totalReferral.toLocaleString();
 
       let cardsHtml = '';
       rewardsData.filter(r => r.status === 'active' || r.status === 'upcoming').forEach(r => {
         cardsHtml += `<div class="reward-card"><small>${r.name}</small><br><strong>${r.type}</strong><br>📊 ${r.progress}/${r.target}<br>${r.status} · ${r.expiry}<br>💰 ${r.discount}% disc</div>`;
       });
-      const rewardCardsContainer = document.getElementById('rewardCardsContainer');
       if(rewardCardsContainer) rewardCardsContainer.innerHTML = cardsHtml || '<div class="reward-card">no active rewards</div>';
 
       let rows = '';
       rewardsData.forEach(r => {
         rows += `<tr><td>${r.name}</td><td>${r.type}</td><td>${r.progress}/${r.target}</td><td>${r.status}</td><td>${r.expiry}</td><td>${r.discount}%</td></tr>`;
       });
-      const rewardsTableBody = document.getElementById('rewardsTableBody');
       if(rewardsTableBody) rewardsTableBody.innerHTML = rows;
     }
 
@@ -1904,71 +1879,64 @@
 
       const netProfit = monthlyRevenue + byproductRev - totalCost;
 
-      // Update GFState
-      GFState.totalBirds = TOTAL_BIRDS;
-      GFState.birdsSoldToday = SOLD_TODAY;
-      GFState.birdsLostToday = 12;
-      GFState.revenue.liveSales = MONTHLY_SOLD * 100;
-      GFState.revenue.prepared = MONTHLY_SOLD * 20;
-      GFState.revenue.bulk = MONTHLY_SOLD * 30;
-      GFState.revenue.byproduct = byproductRev;
-      GFState.revenue.manure = 3000;
-      GFState.costs.chicks = chicks;
-      GFState.costs.feed = feed;
-      GFState.costs.transport = transport;
-      GFState.costs.labor = labor;
-      GFState.costs.utilities = utilities;
-      GFState.costs.equipment = equipment;
-      GFState.costs.losses = losses;
-      GFState.computed.avgSellingPrice = avgPrice;
-
-      recalculateAll();
-      refreshDashboard();
-
-      // Also update other UI elements that are not in dashboard but are in this module
-      setText('weightedAvgPrice', 'R ' + avgPrice.toFixed(2));
-      setText('todaySalesAvgPrice', `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`);
-      const todayRevenueCalc = document.getElementById('todayRevenueCalc');
-      if(todayRevenueCalc) todayRevenueCalc.innerText = 'R ' + revenueToday.toFixed(0);
-      setText('costPerChicken', 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2));
-      setText('plChickens', 'R ' + chicks.toLocaleString());
-      setText('plFeed', 'R ' + feed.toLocaleString());
-      setText('plLogistics', 'R ' + transport.toLocaleString());
-      setText('plLabor', 'R ' + labor.toLocaleString());
-      setText('revLive', 'R ' + GFState.revenue.liveSales.toLocaleString());
-      setText('revPrep', 'R ' + GFState.revenue.prepared.toLocaleString());
-      setText('revBulk', 'R ' + GFState.revenue.bulk.toLocaleString());
-      setText('revByproduct', 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-      setText('revManure', 'R 3,000');
-      setText('kpiCostPerBird', 'R ' + adjCostPerBird.toFixed(2));
-      setText('wholesaleVal', wholesalePct?.value || 68);
-      setText('retailVal', retailPct?.value || 22);
-      setText('restaurantVal', restaurantPct?.value || 10);
-      setText('totalFeedKg', '11,025 kg');
-      setText('feedBags', '221 bags');
-      setText('feedCostEstimate', 'R 85,085');
-      setText('triggerSuggestions', '<p>🚀 next: vehicle at R40,000</p>');
-      setText('triggerProgress', 'you are 216% toward vehicle trigger');
-      setText('currentProfitLevel', 'R3 (86.4k)');
-      setText('nextTargetDisplay', 'R5 (150k)');
-      document.getElementById('profitGapFill') && (document.getElementById('profitGapFill').style.width = '57%');
-      setText('gapText', 'gap to next level: R 63,600');
-      setText('deathRateDisplay', (MORTALITY_RATE * 100).toFixed(1) + '%');
-      setText('laborPerBird', 'R ' + (labor / MONTHLY_SOLD).toFixed(2));
-      setText('profitPerWorker', 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      if(document.getElementById('totalRevenue')) document.getElementById('totalRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('revenuePerChicken')) document.getElementById('revenuePerChicken').innerText = 'R ' + avgPrice.toFixed(2);
+      if(document.getElementById('monthlyRevenueDisplay')) document.getElementById('monthlyRevenueDisplay').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('revenueTodayValue')) document.getElementById('revenueTodayValue').innerText = 'R ' + revenueToday.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('revenueTodayDisplay')) document.getElementById('revenueTodayDisplay').innerText = 'R ' + revenueToday.toFixed(0);
+      if(document.getElementById('netMonthly')) document.getElementById('netMonthly').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('profitPerChicken')) document.getElementById('profitPerChicken').innerText = 'R ' + (netProfit / MONTHLY_SOLD).toFixed(2);
+      if(document.getElementById('weightedAvgPrice')) document.getElementById('weightedAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      if(document.getElementById('todaySalesAvgPrice')) document.getElementById('todaySalesAvgPrice').innerHTML = `avg price R ${avgPrice.toFixed(2)} → <span id="todayRevenueCalc">R ${revenueToday.toFixed(0)}</span> revenue`;
+      if(document.getElementById('todayRevenueCalc')) document.getElementById('todayRevenueCalc').innerText = 'R ' + revenueToday.toFixed(0);
+      if(document.getElementById('totalExpenses')) document.getElementById('totalExpenses').innerText = 'R ' + totalCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('costPerChicken')) document.getElementById('costPerChicken').innerText = 'R ' + (totalCost / MONTHLY_SOLD).toFixed(2);
+      if(document.getElementById('plChickens')) document.getElementById('plChickens').innerText = 'R ' + chicks.toLocaleString();
+      if(document.getElementById('plFeed')) document.getElementById('plFeed').innerText = 'R ' + feed.toLocaleString();
+      if(document.getElementById('plLogistics')) document.getElementById('plLogistics').innerText = 'R ' + transport.toLocaleString();
+      if(document.getElementById('plLabor')) document.getElementById('plLabor').innerText = 'R ' + labor.toLocaleString();
+      if(document.getElementById('plRevenue')) document.getElementById('plRevenue').innerText = 'R ' + (monthlyRevenue + byproductRev).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('plMargin')) document.getElementById('plMargin').innerText = ((netProfit / (monthlyRevenue + byproductRev) * 100) || 0).toFixed(1) + '% (R ' + netProfit.toFixed(0) + ')';
+      if(document.getElementById('revLive')) document.getElementById('revLive').innerText = 'R ' + (MONTHLY_SOLD * 100).toLocaleString();
+      if(document.getElementById('revPrep')) document.getElementById('revPrep').innerText = 'R ' + (MONTHLY_SOLD * 20).toLocaleString(); // mock
+      if(document.getElementById('revBulk')) document.getElementById('revBulk').innerText = 'R ' + (MONTHLY_SOLD * 30).toLocaleString(); // mock
+      if(document.getElementById('revByproduct')) document.getElementById('revByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('revManure')) document.getElementById('revManure').innerText = 'R 3,000'; // mock
+      if(document.getElementById('totalBirdsDisplay')) document.getElementById('totalBirdsDisplay').innerText = TOTAL_BIRDS;
+      if(document.getElementById('soldTodayDisplay')) document.getElementById('soldTodayDisplay').innerText = SOLD_TODAY;
+      if(document.getElementById('lostTodayDisplay')) document.getElementById('lostTodayDisplay').innerText = '12';
+      if(document.getElementById('remainingStockDisplay')) document.getElementById('remainingStockDisplay').innerText = TOTAL_BIRDS - SOLD_TODAY;
+      if(document.getElementById('netProfitMonthDisplay')) document.getElementById('netProfitMonthDisplay').innerText = 'R ' + netProfit.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('kpiActiveBirds')) document.getElementById('kpiActiveBirds').innerText = TOTAL_BIRDS - SOLD_TODAY;
+      if(document.getElementById('kpiMortality')) document.getElementById('kpiMortality').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      if(document.getElementById('kpiAvgPrice')) document.getElementById('kpiAvgPrice').innerText = 'R ' + avgPrice.toFixed(2);
+      if(document.getElementById('kpiCostPerBird')) document.getElementById('kpiCostPerBird').innerText = 'R ' + adjCostPerBird.toFixed(2);
+      if(document.getElementById('kpiSubPct')) document.getElementById('kpiSubPct').innerText = '18%';
+      if(document.getElementById('kpiByproduct')) document.getElementById('kpiByproduct').innerText = 'R ' + byproductRev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('projectedProfit')) document.getElementById('projectedProfit').innerText = 'R ' + (netProfit * 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      if(document.getElementById('profitTrend')) document.getElementById('profitTrend').innerHTML = '<i class="fas fa-arrow-up"></i> profit trend: +5.2% vs last month';
+      if(document.getElementById('wholesaleVal')) document.getElementById('wholesaleVal').innerText = wholesalePct?.value || 68;
+      if(document.getElementById('retailVal')) document.getElementById('retailVal').innerText = retailPct?.value || 22;
+      if(document.getElementById('restaurantVal')) document.getElementById('restaurantVal').innerText = restaurantPct?.value || 10;
+      if(document.getElementById('totalFeedKg')) document.getElementById('totalFeedKg').innerText = '11,025 kg';
+      if(document.getElementById('feedBags')) document.getElementById('feedBags').innerText = '221 bags';
+      if(document.getElementById('feedCostEstimate')) document.getElementById('feedCostEstimate').innerText = 'R 85,085';
+      if(document.getElementById('triggerSuggestions')) document.getElementById('triggerSuggestions').innerHTML = '<p>🚀 next: vehicle at R40,000</p>';
+      if(document.getElementById('triggerProgress')) document.getElementById('triggerProgress').innerText = 'you are 216% toward vehicle trigger';
+      if(document.getElementById('currentProfitLevel')) document.getElementById('currentProfitLevel').innerText = 'R3 (86.4k)';
+      if(document.getElementById('nextTargetDisplay')) document.getElementById('nextTargetDisplay').innerText = 'R5 (150k)';
+      if(document.getElementById('profitGapFill')) document.getElementById('profitGapFill').style.width = '57%';
+      if(document.getElementById('gapText')) document.getElementById('gapText').innerText = 'gap to next level: R 63,600';
+      if(document.getElementById('deathRateDisplay')) document.getElementById('deathRateDisplay').innerText = (MORTALITY_RATE * 100).toFixed(1) + '%';
+      if(document.getElementById('laborPerBird')) document.getElementById('laborPerBird').innerText = 'R ' + (labor / MONTHLY_SOLD).toFixed(2);
+      if(document.getElementById('profitPerWorker')) document.getElementById('profitPerWorker').innerText = 'R ' + (netProfit / 3).toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
       updateRewardsUI();
     }
 
+    // attach listeners
     const costInputs = [chicksInput, feedInput, transportInput, laborInput, utilitiesInput, equipmentInput, lossesInput, adjustableCostPerBird, wholesalePct, retailPct, restaurantPct, subDiscount, refDiscount, byproductPerBirdInput, vehicleTrigger, stockTrigger, farmTrigger].filter(el => el);
     costInputs.forEach(inp => inp.addEventListener('input', updateAll));
-
-    const enableRewardsChk = document.getElementById('enableRewards');
-    const chickensPerRewardInp = document.getElementById('chickensPerReward');
-    const streakDaysInp = document.getElementById('streakDays');
-    const rewardDiscountInp = document.getElementById('rewardDiscount');
-    const doubleByproductChk = document.getElementById('doubleByproduct');
-    const referralCreditInp = document.getElementById('referralCreditValue');
 
     [enableRewardsChk, chickensPerRewardInp, streakDaysInp, rewardDiscountInp, doubleByproductChk, referralCreditInp].forEach(inp => {
       if(inp) inp.addEventListener('change', () => {
@@ -1982,7 +1950,6 @@
       });
     });
 
-    const simulatePurchaseBtn = document.getElementById('simulatePurchaseBtn');
     if(simulatePurchaseBtn) simulatePurchaseBtn.addEventListener('click', () => {
       const activeIdx = rewardsData.findIndex(r => r.status === 'active');
       if (activeIdx >= 0) {
@@ -2002,15 +1969,17 @@
     growthBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const growth = parseInt(btn.dataset.growth) / 100;
-        const netProfit = GFState.computed.netProfit || 86400;
+        const netProfit = parseFloat(document.getElementById('netMonthly')?.innerText.replace('R', '').replace(',', '')) || 86400;
         const projected = netProfit * 3 * (1 + growth);
-        setText('projectedProfit', 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
-        setText('growthHint', `simulating +${btn.dataset.growth}% growth`);
+        const projSpan = document.getElementById('projectedProfit');
+        if(projSpan) projSpan.innerText = 'R ' + projected.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        const hint = document.getElementById('growthHint');
+        if(hint) hint.innerText = `simulating +${btn.dataset.growth}% growth`;
       });
     });
   })();
 
-  // ========== INFRASTRUCTURE MODULE (modified to use GFState) ==========
+  // ========== INFRASTRUCTURE MODULE (original) ==========
   (function() {
     const currentCapacity = document.getElementById('currentCapacity');
     if (!currentCapacity) return;
@@ -2046,7 +2015,10 @@
     const infraNotifications = document.getElementById('infraNotifications');
 
     function getMonthlyNetProfit() {
-      return GFState.computed.netProfit || 86400;
+      const netElem = document.getElementById('netMonthly');
+      if (!netElem) return 86400;
+      const text = netElem.innerText.replace('R', '').replace(/,/g, '').trim();
+      return parseFloat(text) || 86400;
     }
 
     function validateCategorySum() {
@@ -2177,7 +2149,7 @@
     updateInfraModule();
   })();
 
-  // ========== CRM minor interactivity (unchanged) ==========
+  // ========== CRM minor interactivity (original) ==========
   (function() {
     const crmPane = document.getElementById('crmPane');
     if (!crmPane) return;
@@ -2193,7 +2165,7 @@
     });
   })();
 
-  // ========== FESTIVE PLAN MODULE (modified to update GFState) ==========
+  // ========== FESTIVE PLAN MODULE (modified to generate accordion) ==========
   (function() {
     const festivePane = document.getElementById('festivePane');
     if (!festivePane) return;
@@ -2206,33 +2178,52 @@
     ];
 
     function updateFestiveUI() {
-      setText('totalVillages', villages.length);
+      if(document.getElementById('totalVillages')) document.getElementById('totalVillages').innerText = villages.length;
       const totalParticipants = villages.reduce((acc, v) => acc + v.participants, 0);
       const totalChickens = villages.reduce((acc, v) => acc + v.chickensRequired, 0);
       const totalContributions = villages.reduce((acc, v) => acc + v.contributions, 0);
-      setText('totalParticipants', totalParticipants);
-      setText('totalChickensReq', totalChickens.toLocaleString());
-      setText('totalContributions', 'R ' + totalContributions.toLocaleString());
+      if(document.getElementById('totalParticipants')) document.getElementById('totalParticipants').innerText = totalParticipants;
+      if(document.getElementById('totalChickensReq')) document.getElementById('totalChickensReq').innerText = totalChickens.toLocaleString();
+      if(document.getElementById('totalContributions')) document.getElementById('totalContributions').innerText = 'R ' + totalContributions.toLocaleString();
 
-      // Update GFState (village contracts revenue is a separate stream, we'll set it to totalContributions as profit? Actually contributions may not be pure profit. For simplicity, we'll set villageContracts to totalContributions as expected profit.)
-      GFState.revenue.villageContracts = totalContributions;
-      recalculateAll();
-      refreshDashboard();
-
-      let html = '';
+      // Generate accordion items
+      let accordionHtml = '';
       villages.forEach(v => {
         const fillPercent = Math.min(100, (v.participants / v.capacity) * 100);
         const lockIcon = v.locked ? '🔒' : '🔓';
-        html += `<div class="batch-row">
-          <div class="batch-info"><h4>${lockIcon} ${v.name}</h4><p>${v.participants} part · ${v.chickensRequired} chks</p></div>
-          <div class="batch-numbers"><span class="quantity">R ${v.contributions}</span><br><span class="badge">due ${v.deadline}</span></div>
-          <div class="village-status"><div class="capacity-bar"><div class="capacity-fill" style="width:${fillPercent}%"></div></div>
-          <button class="btn-small" data-id="${v.id}" data-action="adj">adj</button>
-          <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button></div>
-        </div>`;
+        const summary = `
+          <span><strong>${lockIcon} ${v.name}</strong></span>
+          <span class="badge">${fillPercent.toFixed(0)}% filled</span>
+          <span>📅 ${v.deadline}</span>
+          <span class="badge ${v.locked ? 'alert-badge' : ''}">${v.locked ? 'Locked' : 'Open'}</span>
+        `;
+        const expandedContent = `
+          <div class="batch-row"><span>Participants:</span> <span>${v.participants}</span></div>
+          <div class="batch-row"><span>Chickens required:</span> <span>${v.chickensRequired}</span></div>
+          <div class="batch-row"><span>Contributions:</span> <span>R ${v.contributions}</span></div>
+          <div class="batch-row"><span>Capacity:</span> <span>${v.capacity}</span></div>
+          <div class="batch-row"><span>Deadline:</span> <span>${v.deadline}</span></div>
+          <div class="batch-row"><span>Payment tracking:</span> <span>78% collected</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-id="${v.id}" data-action="adj">adjust capacity</button>
+            <button class="btn-small" data-id="${v.id}" data-action="lock">${v.locked?'unlock':'lock'}</button>
+            <button class="btn-small" data-id="${v.id}" data-action="approve">approve</button>
+            <button class="btn-small" data-id="${v.id}" data-action="refund">refund</button>
+          </div>
+          <p class="helper-text">Production allocation: 75% · Audit log: last edited 2d ago</p>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expandedContent}</div>
+          </div>
+        `;
       });
       const container = document.getElementById('villageListContainer');
-      if(container) container.innerHTML = html;
+      if(container) container.innerHTML = accordionHtml;
 
       let selectOpts = '<option>-- select village --</option>';
       villages.forEach(v => selectOpts += `<option value="${v.id}">${v.name}</option>`);
@@ -2299,7 +2290,7 @@
     updateFestiveUI();
   })();
 
-  // ========== SUBSCRIPTION ADMIN MODULE (modified to update GFState) ==========
+  // ========== SUBSCRIPTION ADMIN MODULE (modified to generate accordion) ==========
   (function() {
     const subPane = document.getElementById('subscriptionPane');
     if (!subPane) return;
@@ -2313,34 +2304,54 @@
     ];
 
     function updateSubUI() {
-      setText('subTotalMembers', members.length);
+      document.getElementById('subTotalMembers').innerText = members.length;
       const monthlyRev = members.reduce((acc, m) => acc + m.total, 0);
-      setText('subMonthlyRev', 'R ' + monthlyRev.toLocaleString());
+      document.getElementById('subMonthlyRev').innerText = 'R ' + monthlyRev.toLocaleString();
       const expectedDel = members.reduce((acc, m) => acc + m.monthlyQty, 0);
-      setText('subExpectedDel', expectedDel);
+      document.getElementById('subExpectedDel').innerText = expectedDel;
       const priority = (members.filter(m => m.vip).length / members.length * 100).toFixed(0) + '%';
-      setText('subPriorityFulfill', priority);
-      setText('subForecast', 'R ' + (monthlyRev * 1.15).toFixed(0));
+      document.getElementById('subPriorityFulfill').innerText = priority;
+      document.getElementById('subForecast').innerText = 'R ' + (monthlyRev * 1.15).toFixed(0);
 
       const outstanding = members.reduce((acc, m) => acc + (m.total - m.depositPaid), 0);
-      setText('outstandingBalance', 'R ' + outstanding.toLocaleString());
+      document.getElementById('outstandingBalance').innerText = 'R ' + outstanding.toLocaleString();
 
-      // Update GFState
-      GFState.revenue.subscriptions = monthlyRev;
-      recalculateAll();
-      refreshDashboard();
-
-      let html = '';
+      // Generate accordion for members
+      let accordionHtml = '';
       members.forEach(m => {
-        html += `<div class="batch-row">
-          <div class="batch-info"><h4>${m.name} ${m.vip ? '⭐' : ''}</h4><p>${m.tier} · ${m.monthlyQty} chickens/m</p></div>
-          <div class="batch-numbers"><span class="quantity">R ${m.total}</span><br><span class="badge">deposit R ${m.depositPaid}</span></div>
-          <div><button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️</button>
-          <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️</button>
-          <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑</button></div>
-        </div>`;
+        const summary = `
+          <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
+          <span class="badge">${m.tier}</span>
+          <span>🐔 ${m.monthlyQty}/mo</span>
+          <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
+          <span>📅 next: 2025-04-15</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
+          <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
+          <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
+          <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
+          <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
+          <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
+            <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
+            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
+            <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
+            <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
       });
-      document.getElementById('subscriptionMembersList').innerHTML = html;
+      document.getElementById('subscriptionMembersList').innerHTML = accordionHtml;
     }
 
     document.addEventListener('click', (e) => {
@@ -2391,17 +2402,42 @@
         if (tier !== 'all') {
           filtered = members.filter(m => m.tier === tier);
         }
-        let html = '';
+        // Re-render accordion with filtered members
+        let accordionHtml = '';
         filtered.forEach(m => {
-          html += `<div class="batch-row">
-            <div class="batch-info"><h4>${m.name} ${m.vip ? '⭐' : ''}</h4><p>${m.tier} · ${m.monthlyQty} chickens/m</p></div>
-            <div class="batch-numbers"><span class="quantity">R ${m.total}</span><br><span class="badge">deposit R ${m.depositPaid}</span></div>
-            <div><button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️</button>
-            <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️</button>
-            <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑</button></div>
-          </div>`;
+          const summary = `
+            <span><strong>${m.name} ${m.vip ? '⭐' : ''}</strong></span>
+            <span class="badge">${m.tier}</span>
+            <span>🐔 ${m.monthlyQty}/mo</span>
+            <span class="badge ${m.locked ? 'alert-badge' : ''}">${m.locked ? 'Paused' : 'Active'}</span>
+            <span>📅 next: 2025-04-15</span>
+          `;
+          const expanded = `
+            <div class="batch-row"><span>Subscription history:</span> <span>since Jan 2025 · 3 months</span></div>
+            <div class="batch-row"><span>Upcoming deliveries:</span> <span>Apr 15, May 15, Jun 15</span></div>
+            <div class="batch-row"><span>Holiday reservations:</span> <span>${m.holidayAlloc} chickens</span></div>
+            <div class="batch-row"><span>Deposit tracking:</span> <span>R ${m.depositPaid} paid</span></div>
+            <div class="batch-row"><span>Assurance integration:</span> <span>${m.vip ? 'VIP' : 'Standard'}</span></div>
+            <div class="batch-row"><span>Loyalty credits:</span> <span>R ${Math.floor(m.total*0.05)}</span></div>
+            <div class="flex-row">
+              <button class="btn-small" data-id="${m.id}" data-action="upgrade">⬆️ upgrade</button>
+              <button class="btn-small" data-id="${m.id}" data-action="downgrade">⬇️ downgrade</button>
+              <button class="btn-small" data-id="${m.id}" data-action="toggleVIP">👑 VIP</button>
+              <button class="btn-small" data-id="${m.id}" data-action="pause">⏸️ pause</button>
+              <button class="btn-small" data-id="${m.id}" data-action="override">⚙️ override</button>
+            </div>
+          `;
+          accordionHtml += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">${summary}</div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">${expanded}</div>
+            </div>
+          `;
         });
-        document.getElementById('subscriptionMembersList').innerHTML = html;
+        document.getElementById('subscriptionMembersList').innerHTML = accordionHtml;
       });
     });
 
@@ -2429,7 +2465,7 @@
     updateSubUI();
   })();
 
-  // ========== ASSURANCE MODULE (modified to update GFState) ==========
+  // ========== ASSURANCE MODULE (modified to generate accordion) ==========
   (function() {
     const assurancePane = document.getElementById('assurancePane');
     if (!assurancePane) return;
@@ -2445,34 +2481,51 @@
     let pendingClaims = assuranceMembers.filter(m => m.pendingClaim > 0).length;
 
     function updateAssuranceUI() {
-      setText('assuranceMembers', assuranceMembers.length);
+      document.getElementById('assuranceMembers').innerText = assuranceMembers.length;
       const monthlyTotal = assuranceMembers.reduce((acc, m) => acc + (m.active ? m.monthlyContribution : 0), 0);
-      setText('assuranceMonthlyContrib', 'R ' + monthlyTotal.toLocaleString());
-      setText('assurancePendingClaims', pendingClaims);
+      document.getElementById('assuranceMonthlyContrib').innerText = 'R ' + monthlyTotal.toLocaleString();
+      document.getElementById('assurancePendingClaims').innerText = pendingClaims;
       const loyaltyTotal = assuranceMembers.reduce((acc, m) => acc + m.loyaltyCredits, 0);
-      setText('assuranceLoyaltyCredits', 'R ' + loyaltyTotal.toLocaleString());
-      const expectedClaims = monthlyTotal * 0.3;
-      setText('assuranceExpectedClaims', 'R ' + expectedClaims.toFixed(0));
+      document.getElementById('assuranceLoyaltyCredits').innerText = 'R ' + loyaltyTotal.toLocaleString();
+      const expectedClaims = monthlyTotal * 0.3; // mock
+      document.getElementById('assuranceExpectedClaims').innerText = 'R ' + expectedClaims.toFixed(0);
       const totalAlloc = assuranceMembers.reduce((acc, m) => acc + m.totalAllocated, 0);
-      setText('assuranceAllocations', totalAlloc);
+      document.getElementById('assuranceAllocations').innerText = totalAlloc;
 
-      // Update GFState
-      GFState.revenue.assuranceContributions = monthlyTotal;
-      recalculateAll();
-      refreshDashboard();
-
-      let html = '';
+      // Generate accordion for members
+      let accordionHtml = '';
       assuranceMembers.forEach(m => {
-        html += `<div class="batch-row">
-          <div class="batch-info"><h4>${m.name} ${m.active ? '✅' : '❌'}</h4><p>monthly R ${m.monthlyContribution} · alloc ${m.totalAllocated}</p></div>
-          <div class="batch-numbers"><span class="quantity">loyalty R ${m.loyaltyCredits}</span><br><span class="badge">${m.pendingClaim ? 'claim R '+m.pendingClaim : 'no claim'}</span></div>
-          <div><button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle</button>
-          <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰</button></div>
-        </div>`;
+        const summary = `
+          <span><strong>${m.name}</strong></span>
+          <span>💰 R ${m.monthlyContribution}</span>
+          <span>🐔 ${m.totalAllocated}</span>
+          <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
+          <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
+          <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
+            <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
       });
-      document.getElementById('assuranceMembersList').innerHTML = html;
+      document.getElementById('assuranceMembersList').innerHTML = accordionHtml;
     }
 
+    // Event delegation for assurance actions
     document.addEventListener('click', (e) => {
       if (!assurancePane.contains(e.target)) return;
       const target = e.target;
@@ -2491,6 +2544,7 @@
       }
       if (target.matches('[data-action="approve-claim"]')) {
         const claimId = target.dataset.claimId;
+        // mock approve
         alert(`Claim ${claimId} approved, loyalty credits issued.`);
         pendingClaims--;
         updateAssuranceUI();
@@ -2503,6 +2557,7 @@
       }
     });
 
+    // filter chips
     document.querySelectorAll('[data-assurance-filter]').forEach(chip => {
       chip.addEventListener('click', () => {
         document.querySelectorAll('[data-assurance-filter]').forEach(c => c.classList.remove('active'));
@@ -2511,19 +2566,41 @@
         let filtered = assuranceMembers;
         if (filter === 'active') filtered = assuranceMembers.filter(m => m.active);
         else if (filter === 'pending') filtered = assuranceMembers.filter(m => m.pendingClaim > 0);
-        let html = '';
+        // Re-render accordion
+        let accordionHtml = '';
         filtered.forEach(m => {
-          html += `<div class="batch-row">
-            <div class="batch-info"><h4>${m.name} ${m.active ? '✅' : '❌'}</h4><p>monthly R ${m.monthlyContribution} · alloc ${m.totalAllocated}</p></div>
-            <div class="batch-numbers"><span class="quantity">loyalty R ${m.loyaltyCredits}</span><br><span class="badge">${m.pendingClaim ? 'claim R '+m.pendingClaim : 'no claim'}</span></div>
-            <div><button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle</button>
-            <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰</button></div>
-          </div>`;
+          const summary = `
+            <span><strong>${m.name}</strong></span>
+            <span>💰 R ${m.monthlyContribution}</span>
+            <span>🐔 ${m.totalAllocated}</span>
+            <span class="badge ${m.pendingClaim ? 'alert-badge' : ''}">${m.pendingClaim ? 'claim' : 'no claim'}</span>
+          `;
+          const expanded = `
+            <div class="batch-row"><span>Contribution history:</span> <span>6 months · R ${m.monthlyContribution*6}</span></div>
+            <div class="batch-row"><span>Claim history:</span> <span>${m.pendingClaim ? '1 pending' : 'none'}</span></div>
+            <div class="batch-row"><span>Loyalty credits generated:</span> <span>R ${m.loyaltyCredits}</span></div>
+            <div class="flex-row">
+              <button class="btn-small" data-aid="${m.id}" data-aaction="toggleActive">toggle active</button>
+              <button class="btn-small" data-aid="${m.id}" data-aaction="adjustContribution">💰 adjust</button>
+              <button class="btn-small" data-aid="${m.id}" data-aaction="approveClaim">approve claim</button>
+              <button class="btn-small" data-aid="${m.id}" data-aaction="rejectClaim">reject</button>
+            </div>
+          `;
+          accordionHtml += `
+            <div class="accordion-item">
+              <div class="accordion-header">
+                <div class="accordion-summary">${summary}</div>
+                <i class="fas fa-chevron-right arrow"></i>
+              </div>
+              <div class="accordion-body">${expanded}</div>
+            </div>
+          `;
         });
-        document.getElementById('assuranceMembersList').innerHTML = html;
+        document.getElementById('assuranceMembersList').innerHTML = accordionHtml;
       });
     });
 
+    // apply settings
     document.getElementById('applyAssuranceSettings').addEventListener('click', () => {
       const price = parseInt(document.getElementById('assurancePricePerChicken').value) || 25;
       const returnPct = parseFloat(document.getElementById('assuranceReturnPct').value) || 8;
@@ -2531,6 +2608,7 @@
       alert(`Settings applied (price: R${price}, return: ${returnPct}%, max: ${maxAlloc}) – in real app would update members.`);
     });
 
+    // quick actions
     document.getElementById('syncSubsBtn').addEventListener('click', () => {
       alert('Syncing with subscription members... (mock)');
     });
@@ -2553,11 +2631,12 @@
     updateAssuranceUI();
   })();
 
-  // ========== VILLAGE EXPANSION MODULE (modified to update GFState) ==========
+  // ========== VILLAGE EXPANSION MODULE (modified to generate accordion) ==========
   (function() {
     const pane = document.getElementById('villageExpansionPane');
     if (!pane) return;
 
+    // Mock contract data
     let contracts = [
       { id: 1, farm: 'Mvula Poultry', village: 'Lwandle', chickens: 800, margin: 12, start: '2025-01-01', end: '2025-06-30', notes: 'family owned, needs transport support', signed: true, revenue: 9600 },
       { id: 2, farm: 'Sundumbili Coop', village: 'Sundumbili', chickens: 1200, margin: 10, start: '2025-02-15', end: '2025-08-15', notes: 'bulk supplier', signed: true, revenue: 12000 },
@@ -2566,65 +2645,87 @@
       { id: 5, farm: 'Lwandle Rise', village: 'Lwandle', chickens: 500, margin: 14, start: '2025-04-01', end: '2025-10-01', notes: 'new entrant', signed: true, revenue: 7000 }
     ];
 
+    // Budget inputs
     const budgetTravel = document.getElementById('budgetTravel');
     const budgetMgmt = document.getElementById('budgetMgmt');
     const budgetSupply = document.getElementById('budgetSupply');
 
     function updateVillageUI() {
-      setText('villageCount', contracts.length);
+      // Update stats
+      document.getElementById('villageCount').innerText = contracts.length;
       const totalChickens = contracts.reduce((acc, c) => acc + c.chickens, 0);
-      setText('totalChickensVillage', totalChickens.toLocaleString());
-      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0);
-      setText('expectedProfitVillage', 'R ' + totalProfit.toLocaleString());
+      document.getElementById('totalChickensVillage').innerText = totalChickens.toLocaleString();
+      const totalProfit = contracts.reduce((acc, c) => acc + (c.chickens * c.margin/100 * 100), 0); // assume avg price R100
+      document.getElementById('expectedProfitVillage').innerText = 'R ' + totalProfit.toLocaleString();
       const expiring = contracts.filter(c => {
         const days = (new Date(c.end) - new Date()) / (1000*60*60*24);
         return days <= 30 && days > 0;
       }).length;
-      setText('expiringContracts', expiring);
+      document.getElementById('expiringContracts').innerText = expiring;
 
-      // Update GFState
-      GFState.revenue.villageContracts = totalProfit;
-      recalculateAll();
-      refreshDashboard();
-
-      let html = '';
+      // Build contracts list as accordion
+      let accordionHtml = '';
       contracts.forEach(c => {
         const status = c.signed ? '✅ signed' : '⏳ pending';
         const daysToEnd = Math.ceil((new Date(c.end) - new Date()) / (1000*60*60*24));
         const expiryBadge = daysToEnd < 30 ? `<span class="badge alert-badge">expires in ${daysToEnd}d</span>` : '';
-        html += `<div class="batch-row">
-          <div class="batch-info"><h4>${c.farm} <span class="badge">${c.village}</span></h4>
-            <p>🐔 ${c.chickens}/month · margin ${c.margin}% · ${status} ${expiryBadge}</p>
-            <small>${c.notes}</small></div>
-          <div class="batch-numbers">
-            <span class="quantity">R ${(c.chickens * 100 * c.margin/100).toFixed(0)}</span><br>
-            <span class="badge">${c.start} – ${c.end}</span>
+        const summary = `
+          <span><strong>${c.farm}</strong></span>
+          <span>🐔 ${c.chickens}/mo</span>
+          <span>💰 ${c.margin}%</span>
+          <span>📅 ${c.start} – ${c.end}</span>
+          <span class="badge">${status}</span>
+          ${expiryBadge}
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Full contract terms:</span> <span>${c.notes}</span></div>
+          <div class="batch-row"><span>Digital signature record:</span> <span>${c.signed ? 'Signed on ' + c.start : 'Not signed'}</span></div>
+          <div class="batch-row"><span>Supply allocation history:</span> <span>${c.chickens} chickens/month</span></div>
+          <div class="batch-row"><span>Performance metrics:</span> <span>98% fulfillment</span></div>
+          <div class="batch-row"><span>Payment breakdown:</span> <span>R ${c.revenue} expected</span></div>
+          <div class="batch-row"><span>Transport allocation:</span> <span>R 1,200/month</span></div>
+          <div class="batch-row"><span>Renewal alerts:</span> <span>${daysToEnd < 30 ? 'Renew soon' : 'OK'}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-contract-id="${c.id}" data-action="sign">🔗 sign</button>
+            <button class="btn-small" data-contract-id="${c.id}" data-action="edit">✎ edit</button>
+            <button class="btn-small" data-contract-id="${c.id}" data-action="terminate">⛔ terminate</button>
           </div>
-          <div><button class="btn-small" data-contract-id="${c.id}" data-action="sign">🔗 sign</button>
-          <button class="btn-small" data-contract-id="${c.id}" data-action="edit">✎</button></div>
-        </div>`;
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
       });
-      document.getElementById('contractsListContainer').innerHTML = html;
+      document.getElementById('contractsListContainer').innerHTML = accordionHtml;
 
+      // Update budget total
       const travel = parseFloat(budgetTravel?.value) || 0;
       const mgmt = parseFloat(budgetMgmt?.value) || 0;
       const supply = parseFloat(budgetSupply?.value) || 0;
       const totalBudget = travel + mgmt + supply;
-      setText('totalBudget', 'R ' + totalBudget.toLocaleString());
-      setText('projectedSupply', totalChickens + ' chickens');
+      document.getElementById('totalBudget').innerText = 'R ' + totalBudget.toLocaleString();
+      document.getElementById('projectedSupply').innerText = totalChickens + ' chickens';
       const costPer = totalChickens ? (totalBudget / totalChickens).toFixed(2) : 0;
-      setText('costPerChickenVillage', 'R ' + costPer);
-      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100);
+      document.getElementById('costPerChickenVillage').innerText = 'R ' + costPer;
+      const budgetPercent = Math.min(100, (totalBudget / 20000) * 100); // arbitrary scale
       document.getElementById('budgetBar').style.width = budgetPercent + '%';
 
-      setText('transportFees', 'R ' + (totalChickens * 0.7).toFixed(0));
+      // transport fees mock
+      document.getElementById('transportFees').innerText = 'R ' + (totalChickens * 0.7).toFixed(0);
 
+      // expiring alerts
       if (expiring > 0) {
-        setText('expiringAlerts', `⚠️ ${expiring} contract(s) expire within 30 days`);
+        document.getElementById('expiringAlerts').innerHTML = `⚠️ ${expiring} contract(s) expire within 30 days`;
       } else {
-        setText('expiringAlerts', '✅ no expiring contracts');
+        document.getElementById('expiringAlerts').innerHTML = '✅ no expiring contracts';
       }
 
+      // chart: chickens per village
       const villageMap = {};
       contracts.forEach(c => { villageMap[c.village] = (villageMap[c.village] || 0) + c.chickens; });
       const villages = Object.keys(villageMap);
@@ -2639,9 +2740,11 @@
         labelsDiv.innerHTML += `<span style="flex:1; text-align:center; font-size:0.6rem;">${v.slice(0,3)}</span>`;
       });
 
-      setText('pendingDeliveries', Math.floor(Math.random() * 5) + 2);
+      // pending deliveries (mock integration with subscription)
+      document.getElementById('pendingDeliveries').innerText = Math.floor(Math.random() * 5) + 2;
     }
 
+    // modal handling
     const modal = document.getElementById('contractModal');
     const openBtn = document.getElementById('openAddContractModal');
     const cancelBtn = document.getElementById('modalCancel');
@@ -2722,6 +2825,7 @@
       modal.style.display = 'none';
     });
 
+    // Event delegation for sign/edit buttons
     document.addEventListener('click', (e) => {
       if (!pane.contains(e.target)) return;
       const target = e.target;
@@ -2744,11 +2848,13 @@
       }
     });
 
+    // Budget listeners
     [budgetTravel, budgetMgmt, budgetSupply].forEach(inp => inp.addEventListener('input', updateVillageUI));
 
+    // Sync with subscriptions (mock)
     document.getElementById('syncDeliveriesBtn').addEventListener('click', () => {
       alert('Syncing with subscription demand: 187 chickens assigned to villages.');
-      setText('pendingDeliveries', '0');
+      document.getElementById('pendingDeliveries').innerText = '0';
     });
 
     document.getElementById('generateFarmLinkBtn').addEventListener('click', () => {
@@ -2760,11 +2866,12 @@
     updateVillageUI();
   })();
 
-  // ========== STOCK SALE MODULE (modified to update GFState) ==========
+  // ========== STOCK SALE MODULE (modified to generate accordion) ==========
   (function() {
     const pane = document.getElementById('stockSalePane');
     if (!pane) return;
 
+    // Mock offerings data
     let offerings = [
       { id: 1, name: 'Batch B2401 · Cornish', sharesTotal: 1000, sharesSold: 680, sharePrice: 70, raised: 47600, expectedDividend: 7140, status: 'active' },
       { id: 2, name: 'Batch B2402 · Ross', sharesTotal: 1500, sharesSold: 420, sharePrice: 68, raised: 28560, expectedDividend: 4284, status: 'active' },
@@ -2778,31 +2885,51 @@
       const totalDividend = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
       const avgPrice = totalShares ? (totalRaised / totalShares).toFixed(2) : 70;
 
-      setText('activeOfferings', active);
-      setText('sharesSold', totalShares.toLocaleString());
-      setText('capitalRaised', 'R ' + totalRaised.toLocaleString());
-      setText('expectedDividend', 'R ' + totalDividend.toLocaleString());
-      setText('avgSharePrice', 'R ' + avgPrice);
-      setText('projectedROI', ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%');
+      document.getElementById('activeOfferings').innerText = active;
+      document.getElementById('sharesSold').innerText = totalShares.toLocaleString();
+      document.getElementById('capitalRaised').innerText = 'R ' + totalRaised.toLocaleString();
+      document.getElementById('expectedDividend').innerText = 'R ' + totalDividend.toLocaleString();
+      document.getElementById('avgSharePrice').innerText = 'R ' + avgPrice;
+      document.getElementById('projectedROI').innerText = ((totalDividend / totalRaised * 100) || 15).toFixed(1) + '%';
 
-      // Update GFState (stockSaleCapital)
-      GFState.revenue.stockSaleCapital = totalRaised;
-      recalculateAll();
-      refreshDashboard();
-
-      let html = '';
+      // offerings list as accordion
+      let accordionHtml = '';
       offerings.forEach(o => {
         const progress = (o.sharesSold / o.sharesTotal * 100).toFixed(0);
-        html += `<div class="batch-row">
-          <div class="batch-info"><h4>${o.name}</h4><p>shares ${o.sharesSold}/${o.sharesTotal} · R ${o.sharePrice}/share</p></div>
-          <div class="batch-numbers"><span class="quantity">R ${o.raised}</span><br><span class="badge">${progress}% sold</span></div>
-          <div><button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell</button>
-          <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button></div>
-        </div>`;
+        const summary = `
+          <span><strong>${o.name}</strong></span>
+          <span>📊 ${o.sharesSold}/${o.sharesTotal}</span>
+          <span>💰 R ${o.sharePrice}</span>
+          <span>💵 ${o.expectedDividend}</span>
+          <span class="badge">${o.status}</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Investor list:</span> <span>Spier Wines, Kyle's Grill, ...</span></div>
+          <div class="batch-row"><span>Capital raised:</span> <span>R ${o.raised}</span></div>
+          <div class="batch-row"><span>Dividend payout schedule:</span> <span>quarterly, next Jun 30</span></div>
+          <div class="batch-row"><span>Risk disclosure summary:</span> <span>Standard terms apply</span></div>
+          <div class="batch-row"><span>Investor documents:</span> <span><a href="#" style="color:#d4af37;">prospectus.pdf</a></span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="sell">➕ sell shares</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="close">🔒 close</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="adjust">📈 adjust dividend</button>
+            <button class="btn-small" data-offer-id="${o.id}" data-offer-action="export">📤 export register</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
       });
-      document.getElementById('offeringsListContainer').innerHTML = html;
+      document.getElementById('offeringsListContainer').innerHTML = accordionHtml;
     }
 
+    // add new offering
     document.getElementById('addOfferingBtn').addEventListener('click', () => {
       const newId = offerings.length ? Math.max(...offerings.map(o => o.id)) + 1 : 4;
       const name = prompt('Offering name (e.g., Batch B2404):', 'Batch B2404 · Free-range');
@@ -2822,6 +2949,7 @@
       updateStockUI();
     });
 
+    // actions on offerings
     document.addEventListener('click', (e) => {
       if (!pane.contains(e.target)) return;
       const target = e.target;
@@ -2833,7 +2961,7 @@
           if (qty > 0 && offer.sharesSold + qty <= offer.sharesTotal) {
             offer.sharesSold += qty;
             offer.raised += qty * offer.sharePrice;
-            offer.expectedDividend += qty * offer.sharePrice * 0.15;
+            offer.expectedDividend += qty * offer.sharePrice * 0.15; // 15% mock dividend
             updateStockUI();
           } else {
             alert('Not enough shares available.');
@@ -2850,6 +2978,7 @@
       }
     });
 
+    // settings
     document.getElementById('applyStockSettings').addEventListener('click', () => {
       const basePrice = parseFloat(document.getElementById('baseSharePrice').value) || 70;
       const divPct = parseFloat(document.getElementById('dividendPercent').value) || 15;
@@ -2858,6 +2987,7 @@
       alert(`Stock settings updated: base price R${basePrice}, dividend ${divPct}%, ${freq}, lockup ${lockup} days.`);
     });
 
+    // quick actions
     document.getElementById('simulatePayoutBtn').addEventListener('click', () => {
       const totalDiv = offerings.reduce((acc, o) => acc + o.expectedDividend, 0);
       alert(`💸 Simulated dividend payout: R ${totalDiv.toLocaleString()} to all shareholders.`);
@@ -2875,11 +3005,12 @@
     updateStockUI();
   })();
 
-  // ========== ENHANCED MARKETING COMMAND CENTER (modified to update GFState) ==========
+  // ========== NEW ENHANCED MARKETING COMMAND CENTER (with accordion) ==========
   (function() {
     const pane = document.getElementById('marketingPane');
     if (!pane) return;
 
+    // ---------- Mock Data ----------
     const platforms = [
       { name: 'TikTok', revenue: 8200, clicks: 2100, conversions: 42, adSpend: 2800, roi: 193, topAccount: '@goldenfeather_', topCampaign: 'Behind the Scenes' },
       { name: 'Instagram', revenue: 12400, clicks: 3400, conversions: 68, adSpend: 3900, roi: 218, topAccount: '@goldenfeather_za', topCampaign: 'Sunday Braai' },
@@ -2905,26 +3036,81 @@
       { name: 'Winter Prep', platform: 'Facebook', influencer: 'Sipho Dlamini', start: '2025-03-20', end: '2025-04-05', budget: 1200, spent: 1150, revenue: 2100, profit: 950, roi: 83, clicks: 280, cvr: 2.1, status: 'completed' }
     ];
 
+    // ---------- Render Functions (accordion) ----------
     function renderPlatforms() {
-      const tbody = document.getElementById('platformTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = platforms.map(p => `<tr>
-        <td>${p.name}</td><td>R ${p.revenue}</td><td>${p.clicks}</td><td>${p.conversions}</td>
-        <td>${((p.conversions/p.clicks)*100).toFixed(1)}%</td><td>R ${p.adSpend}</td><td>${p.roi}%</td>
-      </tr>`).join('');
+      const container = document.getElementById('platformAccordionContainer');
+      if (!container) return;
+      let accordionHtml = '';
+      platforms.forEach(p => {
+        const summary = `
+          <span><strong>${p.name}</strong></span>
+          <span>💰 R ${p.revenue}</span>
+          <span>📊 R ${p.adSpend}</span>
+          <span>📈 ${p.roi}%</span>
+          <span>🎯 R ${(p.adSpend/p.conversions).toFixed(0)}</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Campaign breakdown:</span> <span>${p.topCampaign} (${p.revenue})</span></div>
+          <div class="batch-row"><span>Conversion data:</span> <span>${p.conversions} conversions, ${((p.conversions/p.clicks)*100).toFixed(1)}% CVR</span></div>
+          <div class="batch-row"><span>Click-through metrics:</span> <span>${p.clicks} clicks</span></div>
+          <div class="batch-row"><span>Subscription attribution:</span> <span>12 new subs</span></div>
+          <div class="batch-row"><span>Stock sale attribution:</span> <span>R ${(p.revenue*0.2).toFixed(0)}</span></div>
+          <div class="chart-bar" style="height:40px; background:linear-gradient(90deg, #d4af37 0% ${p.roi/3}%, #333 ${p.roi/3}%"></div>
+          <div class="flex-row">
+            <button class="btn-small" data-platform="${p.name}">adjust budget</button>
+            <button class="btn-small" data-platform="${p.name}">view details</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = accordionHtml;
     }
 
     function renderInfluencers() {
-      const tbody = document.getElementById('influencerTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = influencers.map(i => `<tr>
-        <td>${i.name}</td><td>${i.platform}</td><td><a href="#" style="color:#d4af37;">link</a></td>
-        <td>R ${i.revenue}</td><td>${i.orders}</td><td>${i.commission}%</td><td>R ${i.payout}</td><td>${i.rank}</td>
-      </tr>`).join('');
+      const container = document.getElementById('influencerAccordionContainer');
+      if (!container) return;
+      let accordionHtml = '';
+      influencers.forEach(i => {
+        const summary = `
+          <span><strong>${i.name}</strong></span>
+          <span>📱 ${i.platform}</span>
+          <span>💰 R ${i.revenue}</span>
+          <span>💸 R ${i.payout}</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Order list attributed:</span> <span>${i.orders} orders</span></div>
+          <div class="batch-row"><span>Conversion rate:</span> <span>${((i.orders/100)*100).toFixed(1)}%</span></div>
+          <div class="batch-row"><span>Commission breakdown:</span> <span>${i.commission}% of revenue</span></div>
+          <div class="batch-row"><span>Payment history:</span> <span>Last payout R ${i.payout} on Apr 1</span></div>
+          <div class="batch-row"><span>Performance ranking:</span> <span>${i.rank}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-influencer="${i.name}">adjust commission</button>
+            <button class="btn-small" data-influencer="${i.name}">disable</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = accordionHtml;
     }
 
     function renderCampaigns(view = 'top5') {
-      const container = document.getElementById('campaignViewContainer');
+      const container = document.getElementById('campaignAccordionContainer');
       if (!container) return;
       let filtered = [...campaigns];
       if (view === 'top5') filtered = campaigns.sort((a,b) => b.roi - a.roi).slice(0,5);
@@ -2932,16 +3118,40 @@
       else if (view === 'active') filtered = campaigns.filter(c => c.status === 'active');
       else if (view === 'completed') filtered = campaigns.filter(c => c.status === 'completed');
 
-      container.innerHTML = filtered.map(c => `
-        <div class="batch-row">
-          <div class="batch-info"><h4>${c.name} <span class="badge">${c.platform}</span></h4>
-            <p>influencer: ${c.influencer || 'none'} · ROI ${c.roi}%</p>
-            <small>${c.start} – ${c.end}</small></div>
-          <div class="batch-numbers"><span class="quantity">R ${c.revenue}</span><br><span class="badge">${c.status}</span></div>
-        </div>
-      `).join('');
+      let accordionHtml = '';
+      filtered.forEach(c => {
+        const summary = `
+          <span><strong>${c.name}</strong></span>
+          <span>💰 R ${c.budget}</span>
+          <span>📈 R ${c.revenue}</span>
+          <span>📊 ${c.roi}%</span>
+          <span class="badge">${c.status}</span>
+        `;
+        const expanded = `
+          <div class="batch-row"><span>Platform distribution:</span> <span>${c.platform}</span></div>
+          <div class="batch-row"><span>Influencer allocation:</span> <span>${c.influencer || 'none'}</span></div>
+          <div class="batch-row"><span>Lead volume:</span> <span>${c.clicks} clicks</span></div>
+          <div class="batch-row"><span>Conversion funnel:</span> <span>${c.cvr}% CVR</span></div>
+          <div class="batch-row"><span>Profit calculation:</span> <span>R ${c.profit}</span></div>
+          <div class="flex-row">
+            <button class="btn-small" data-campaign="${c.name}" data-action="pause">⏸️ pause</button>
+            <button class="btn-small" data-campaign="${c.name}" data-action="edit">✎ edit</button>
+          </div>
+        `;
+        accordionHtml += `
+          <div class="accordion-item">
+            <div class="accordion-header">
+              <div class="accordion-summary">${summary}</div>
+              <i class="fas fa-chevron-right arrow"></i>
+            </div>
+            <div class="accordion-body">${expanded}</div>
+          </div>
+        `;
+      });
+      container.innerHTML = accordionHtml;
     }
 
+    // ---------- Chart Drawing (simple canvas) ----------
     function drawPlatformChart() {
       const canvas = document.getElementById('platformChart');
       if (!canvas) return;
@@ -2983,6 +3193,7 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
       ctx.clearRect(0,0,canvas.width,canvas.height);
+      // mock ad spend vs revenue trend over last 6 weeks
       const weeks = 6;
       const spend = [800, 950, 1100, 1300, 1200, 1400];
       const revenue = [2100, 2600, 3100, 3800, 3500, 4200];
@@ -3007,27 +3218,23 @@
       ctx.stroke();
     }
 
+    // ---------- UI Updates ----------
     function updateOverview() {
       const totalRevenue = platforms.reduce((a,p) => a + p.revenue, 0);
       const totalSpend = platforms.reduce((a,p) => a + p.adSpend, 0);
       const roi = totalSpend ? ((totalRevenue - totalSpend) / totalSpend * 100).toFixed(0) : 0;
-      setText('mktActiveCampaigns', campaigns.filter(c => c.status === 'active').length);
-      setText('mktTotalInfluencers', influencers.length);
-      setText('mktAdSpend', 'R ' + totalSpend);
-      setText('mktAttributedRev', 'R ' + totalRevenue);
-      setText('mktROI', roi + '%');
+      document.getElementById('mktActiveCampaigns').innerText = campaigns.filter(c => c.status === 'active').length;
+      document.getElementById('mktTotalInfluencers').innerText = influencers.length;
+      document.getElementById('mktAdSpend').innerText = 'R ' + totalSpend;
+      document.getElementById('mktAttributedRev').innerText = 'R ' + totalRevenue;
+      document.getElementById('mktROI').innerText = roi + '%';
       const conversions = platforms.reduce((a,p) => a + p.conversions, 0);
       const clicks = platforms.reduce((a,p) => a + p.clicks, 0);
       const cpa = conversions ? (totalSpend / conversions).toFixed(0) : 0;
-      setText('mktCPA', 'R ' + cpa);
-
-      // Update GFState
-      GFState.revenue.marketingAttributed = totalRevenue;
-      GFState.costs.marketingAdSpend = totalSpend;
-      recalculateAll();
-      refreshDashboard();
+      document.getElementById('mktCPA').innerText = 'R ' + cpa;
     }
 
+    // ---------- Event Listeners ----------
     document.querySelectorAll('[data-campaign-view]').forEach(chip => {
       chip.addEventListener('click', (e) => {
         document.querySelectorAll('[data-campaign-view]').forEach(c => c.classList.remove('active'));
@@ -3052,14 +3259,16 @@
       const platform = document.getElementById('attributionPlatform').value;
       const start = document.getElementById('attributionStart').value;
       const end = document.getElementById('attributionEnd').value;
+      // mock filter
       let filteredRev = platforms.reduce((a,p) => a + p.revenue, 0);
       if (platform !== 'all') {
         const p = platforms.find(p => p.name.toLowerCase() === platform);
         filteredRev = p ? p.revenue : 0;
       }
-      setText('filteredRevenue', 'R ' + filteredRev);
+      document.getElementById('filteredRevenue').innerText = 'R ' + filteredRev;
     });
 
+    // populate influencer dropdown
     const infSelect = document.getElementById('attributionInfluencer');
     if (infSelect) {
       infSelect.innerHTML = '<option value="all">all influencers</option>' + influencers.map(i => `<option value="${i.name}">${i.name}</option>`).join('');
@@ -3069,6 +3278,7 @@
       campSelect.innerHTML = '<option value="all">all campaigns</option>' + campaigns.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
     }
 
+    // initial render
     renderPlatforms();
     renderInfluencers();
     renderCampaigns('top5');
@@ -3077,6 +3287,7 @@
     drawInfluencerChart();
     drawTrendChart();
 
+    // redraw charts on tab show (simple)
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((m) => {
         if (m.target.classList.contains('active') && m.target.id === 'marketingPane') {
@@ -3089,9 +3300,19 @@
     observer.observe(pane, { attributes: true, attributeFilter: ['class'] });
   })();
 
-  // Initial recalc
-  recalculateAll();
-  refreshDashboard();
+  // ========== GLOBAL ACCORDION TOGGLE ==========
+  document.addEventListener('click', function(e) {
+    const header = e.target.closest('.accordion-header');
+    if (!header) return;
+    e.preventDefault();
+    const item = header.closest('.accordion-item');
+    const body = item.querySelector('.accordion-body');
+    const arrow = header.querySelector('.arrow');
+    if (body) {
+      body.classList.toggle('expanded');
+      header.classList.toggle('expanded');
+    }
+  });
 </script>
 </body>
 </html>
